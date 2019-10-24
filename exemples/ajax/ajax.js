@@ -24,14 +24,3 @@ let chuckButton = document.getElementById("chuckButton");
 chuckButton.addEventListener("click", function(){
         ajaxCall("GET", "https://api.chucknorris.io/jokes/random", displayChuck);
 });
-
-// Kaamelott.
-function displayKaamelott(jsonResponse){
-    let jsonParse = JSON.parse(jsonResponse);
-    document.getElementById("kaamelott").innerHTML = jsonParse["quote"]["text"];
-}
-
-let kaamelottButton = document.getElementById("kaamelottButton");
-kaamelottButton.addEventListener("click", function(){
-        ajaxCall("GET", "https://kaamelott.kyane.fr/api/v1/quote/random", displayKaamelott);
-});

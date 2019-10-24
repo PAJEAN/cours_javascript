@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+    <head>
+        <title>My title</title>
+        <style>
+
+          .colorized1{
+              color: blue;
+          }
+          #span1{
+              color: red;
+          }
+
+        </style>
+    </head>
+    <body>
+				<h3> Code HTML </h3>
+				&lt;span class="colorized1">My header 4 (#1)&lt;/span> <br>
+				&lt;span class="colorized1">My header 4 (#2)&lt;/span> <br>
+        &lt;span name="tagP">My header 4 (#3)&lt;/span> <br>
+
+				&lt;button id="bonsoir">Dire BONSOIR&lt;/button> <br>
+
+        &lt;p name="tagP">My paragraph&lt;/p> <br>
+				&lt;p class="colorized1">My paragraph&lt;/p> <br><br>
+
+				<hr>
+
+				<h3> Resultats </h3>
+        <span class="colorized1">My span (#1)</span> <br>
+        <span class="colorized1">My span (#2)</span> <br>
+        <span name="tagP">My span (#3)</span> <br>
+
+				<button id="bonsoir">Dire BONSOIR</button>
+
+        <p name="tagP">My paragraph</p>
+				<p class="colorized1">My paragraph</p>
+
+				<script>
+					console.log('document.getElementsByClassName("colorized1")');
+					console.log(document.getElementsByClassName("colorized1"));
+					console.log('document.getElementsByName("tagP")');
+					console.log(document.getElementsByName("tagP"));
+					console.log('document.getElementsByTagName("span")');
+					console.log(document.getElementsByTagName("span"));
+
+					console.log("Identifier le boutton par rapport à son identifiant.")
+					var but = document.getElementById("bonsoir");
+					but.addEventListener("click", function(){
+						var tag = document.getElementsByTagName("span");
+						for(var i = 0; i < tag.length; i++){
+							tag[i].innerHTML = "BONSOIR";
+						}
+					});
+
+					console.log('document.querySelectorAll("span.colorized1")');
+					console.log(document.querySelectorAll("span.colorized1"));
+					var qsa = document.querySelectorAll("span.colorized1");
+
+					[...qsa].map(function(valeur){
+						console.log(valeur.innerHTML);
+					});
+
+
+
+
+				</script>
+
+    </body>
+</html>

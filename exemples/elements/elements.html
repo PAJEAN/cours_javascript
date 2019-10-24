@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+    <head>
+        <title>My title</title>
+        <style>
+
+          .colorized1{
+              color: blue;
+          }
+          #span1{
+              color: red;
+          }
+
+        </style>
+    </head>
+    <body>
+				<span style="border:1px solid red">Je suis une span</span>
+
+				<script>
+					var new_elements = function(element){
+						element.addEventListener("click", function(){
+							var new_div = document.createElement("span");
+							new_div.innerHTML = " Je suis une span";
+							element.appendChild(new_div);
+
+							setTimeout(function(){
+								element.removeChild(new_div);
+							}, 5000);
+
+						});
+					}
+
+					var spans = document.getElementsByTagName("span");
+					for(var i = 0; i < spans.length; i++){
+						new_elements(spans[i]);
+					}
+				</script>
+
+    </body>
+</html>
