@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+    <head>
+        <title>My title</title>
+    </head>
+    <body>
+				<div id="mydiv">My Div</div>
+
+				<script>
+					var d = document.getElementById("mydiv");
+					if(d.hasAttribute("id")){
+						console.log(d.getAttribute("id"));
+						d.setAttribute("id", "mynewdiv");
+						console.log(d.getAttribute("id"));
+					}
+
+					d.setAttribute("data-clics", "0");
+					d.setAttribute("data-last-clic", new Date().getTime());
+					d.addEventListener("click", function(){
+						let clics = parseInt(d.getAttribute("data-clics"));
+						clics += 1;
+						d.setAttribute("data-clics", clics);
+						console.log(d.getAttribute("data-clics"));
+						d.setAttribute("data-last-clic", new Date().getTime());
+					});
+				</script>
+
+    </body>
+</html>
