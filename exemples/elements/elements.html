@@ -19,12 +19,12 @@
 				<script>
 					var new_elements = function(element){
 						element.addEventListener("click", function(){
-							var new_div = document.createElement("span");
-							new_div.innerHTML = " Je suis une span";
-							element.appendChild(new_div);
+							var new_div = document.createElement("span"); // Création de l'élément.
+							new_div.innerHTML = " Je suis une span"; // Modification du contenu.
+							element.appendChild(new_div); // Ajout de l'élement au DOM.
 
 							setTimeout(function(){
-								element.removeChild(new_div);
+								element.removeChild(new_div); // Suppression de l'élément dans 5s.
 							}, 5000);
 
 						});

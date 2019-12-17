@@ -47,17 +47,17 @@
 					console.log("Identifier le boutton par rapport à son identifiant.")
 					var but = document.getElementById("bonsoir");
 					but.addEventListener("click", function(){
-						var tag = document.getElementsByTagName("span");
+						var tag = document.getElementsByTagName("span"); // Récupérer toutes les span.
 						for(var i = 0; i < tag.length; i++){
-							tag[i].innerHTML = "BONSOIR";
+							tag[i].innerHTML = "BONSOIR"; // Modifie le contenu des spans.
 						}
 					});
 
 					console.log('document.querySelectorAll("span.colorized1")');
 					console.log(document.querySelectorAll("span.colorized1"));
-					var qsa = document.querySelectorAll("span.colorized1");
+					var qsa = document.querySelectorAll("span.colorized1"); // Récupérer toutes les spans avec la classe css colorized1.
 
-					[...qsa].map(function(valeur){
+					[...qsa].map(function(valeur){ /* [...qsa] https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Syntaxe_d%C3%A9composition permet de formater qsa sous la forme d'un tableau */
 						console.log(valeur.innerHTML);
 					});
 
