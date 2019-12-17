@@ -94,7 +94,7 @@ Stucture HTML (BST.html):
 
 La fonction *update()* de la classe BST doit mettre les champs Minimum et Maximum à jour et afficher le graphe à partir de la librairie *viz.js*.
 
-Exemple de la librairie [*viz.js*](https://github.com/mdaines/viz.js/wiki/Usage).
+Exemple de la librairie [*viz.js*](https://github.com/mdaines/viz.js/wiki/Usage). Les fichiers de la librairie graphique sont présents dans le dossier TP/librairies.
 
 ```
 <script src="viz.js"></script>
