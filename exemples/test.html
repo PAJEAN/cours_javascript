@@ -7,20 +7,37 @@
 				<div id="mydiv">My Div</div>
 
 				<script>
-					let PV = 10;
-
-					let degats = () => {
-						PV -= 1;
+				x = 9;
+				var module = {
+					x: 81,
+					getX: function () {
+							return this.x;
 					}
+				};
 
-					let esquive = false;
-					esquive || degats();
-					console.log(PV);
-					esquive = true;
-					esquive || degats();
-					console.log(PV);
+				console.log(module.getX()); // 81
 
-					console.log()
+				var getX = module.getX;
+				console.log(getX()); // 9, because in this case, "this" refers to the global object
+
+				// create a new function with 'this' bound to module
+				var boundGetX = getX.bind(module);
+				console.log(boundGetX()); // 81
+
+				// // // // //
+				var a = 38;
+				var objet = {
+				    a: "A",
+				    getA: function(){
+				        let innerFunction = () => {
+				            console.log(this.a);
+				        }
+				        innerFunction();
+				    }
+				}
+
+				objet.getA();
+
 				</script>
 
     </body>
