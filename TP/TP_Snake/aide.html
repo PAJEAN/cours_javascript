@@ -1,0 +1,79 @@
+<script>
+class Model {
+  constructor() {}
+
+  bindPropF1(callback){
+    this.PropF1 = callback; // Définition d'une nouvelle propriété pouvant être utilisée à partir d'une instance de Model.
+  }
+
+	bindPropF2(callback){
+    this.PropF2 = callback; // Définition d'une nouvelle propriété pouvant être utilisée à partir d'une instance de Model.
+  }
+
+  execPropF1(){
+    this.PropF1();
+  }
+
+	execPropF2(){
+    this.PropF2();
+  }
+}
+
+class View {
+  constructor() {}
+
+  PropV(){
+		console.log("Fonction de View !");
+  }
+}
+
+class Controller {
+  constructor(model, view) {
+    this.model = model
+    this.view = view
+    // Binding.
+    this.model.bindPropF1(this.bindPropF1ToPropV);
+		this.model.bindPropF2(this.bindPropF2ToPropV);
+		// Exécution de fonctions de Model.
+		this.model.execPropF1();
+		this.model.execPropF2();
+  }
+
+  // Dans Controller.prototype bindPropF1ToPropV apparaît.
+  bindPropF1ToPropV(){
+		console.log("PropF1: ");
+    console.log(this); // --> this = Model car cette fonction est appelée depuis Model()
+    //this.view.PropV(); // --> Erreur, view n'est pas défini car view n'est pas défini dans Model.
+  }
+
+  // Dans Controller.prototype bindPropF2ToPropV n'apparaît pas, il apparaît dans les propriétés de l'instance de Controller = app.
+	// Ainsi, déclarer bindPropF2ToPropV ici ou dans le constructor de la class Controller est identique.
+	bindPropF2ToPropV = () => {
+		console.log("PropF2: ");
+    console.log(this); // --> this = Controller car c'est une fonction fléchée donc le this n'est pas liée à l'objet qui l'appelle mais au contexte englobant = Controller.
+    this.view.PropV();
+  }
+}
+
+const app = new Controller(new Model(), new View())
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
