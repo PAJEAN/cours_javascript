@@ -30,7 +30,7 @@
 				    a: "A",
 				    getA: function(){
 				        let innerFunction = () => {
-				            console.log(this.a);
+				            console.log(this.a); // Print "A" because innerFunction is an arrow function and his "this" refers to the getA function "this".
 				        }
 				        innerFunction();
 				    }
