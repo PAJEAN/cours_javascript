@@ -31,6 +31,10 @@ Le sommaire du cours est le suivant:
     6. Le dessin et les canvas
 5. Références
 
+# Procédure d'installation de Jupyter
+
+Installez jupyterlab à l'aide de la procédure suivante: https://jupyter.org/install et utilisez la commande jupyter-lab au sein de votre terminal favoris (selon les cas de figure, vous devez renseigner votre variable d'environnement PATH).
+
 # Auteur
 
 Pierre-Antoine Jean (IMT Mines Alès).
