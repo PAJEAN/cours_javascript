@@ -33,7 +33,7 @@ Le sommaire du cours est le suivant:
 
 # Procédure d'installation de Jupyter
 
-Installez jupyterlab à l'aide de la procédure suivante: https://jupyter.org/install et utilisez la commande jupyter-lab au sein de votre terminal favoris (selon les cas de figure, vous devez renseigner votre variable d'environnement PATH).
+Installez jupyterlab à l'aide de la procédure suivante: https://jupyter.org/install et utilisez la commande jupyter-lab au sein de votre terminal favori (selon les cas de figure, vous devez renseigner votre variable d'environnement PATH).
 
 # Auteur
 
