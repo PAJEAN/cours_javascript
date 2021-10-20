@@ -1,4 +1,6 @@
 <script>
+// https://medium.com/@charpeni/arrow-functions-in-class-properties-might-not-be-as-great-as-we-think-3b3551c440b1
+
 class Model {
   constructor() {}
 
@@ -29,8 +31,8 @@ class View {
 
 class Controller {
   constructor(model, view) {
-    this.model = model
-    this.view = view
+    this.model = model;
+    this.view = view;
     // Binding.
     this.model.bindPropF1(this.bindPropF1ToPropV);
 		this.model.bindPropF2(this.bindPropF2ToPropV);

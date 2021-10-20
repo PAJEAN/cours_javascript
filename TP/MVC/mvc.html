@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: rgb(18, 18, 18);
+      color: rgb(255, 255, 255);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container__0 {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 5px;
+      text-align: center;
+      padding: 10px;
+      width: 500px;
+    }
+
+    .container__0 p {
+      padding: 20px;
+    }
+
+    .container__0 button {
+      background: rgb(3, 218, 197);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 5px 10px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    
+  </style>
+
+</head>
+<body>
+    
+  <div id="mvc" class="container__0"></div>
+
+  <script>
+
+    class Model {
+      constructor() {
+        this.URL = 'https://api.chucknorris.io/jokes/random';
+      }
+    
+      // Binding.
+      bindDisplayCNF (callback) {
+        // Définition d'une nouvelle propriété pouvant être utilisée à partir d'une instance de Model.
+        this.DisplayCNF = callback; // On veut pouvoir actualiser la View (depuis le Controller) quand nous récupérons les données.
+      }
+
+      getCNF () {
+        fetch(this.URL)
+          .then(response => response.json())
+          .then(response => {
+            let text = 'No Chuck Norris Fact found.';
+            if (response.value) {
+              text = response.value;
+            }
+            this.DisplayCNF(text);
+          })
+          .catch(error => {
+            console.log("Error : " + error);
+          });
+      }
+    }
+    
+    class View {
+      constructor(div_id) {
+        this.div_id = div_id;
+        this.p_tag;
+        this.initView();
+      }
+
+      // Binding.
+      bindGetCNF (callback) {
+        this.getCNF = callback; // On veut pouvoir demander au Model (depuis le Controller) une nouvelle Chuck Norris Fact.
+      }
+
+      initView () {
+        let div = document.querySelector(`#${this.div_id}`);
+        this.p_tag = document.createElement('p');
+        this.p_tag.innerHTML = 'Click to display a new Chuck Norris Fact.';
+        let button = document.createElement('button');
+        button.innerHTML = 'New Chuck Norris Fact';
+        button.addEventListener('click', () => {
+          this.getCNF();
+        });
+        div.appendChild(this.p_tag);
+        div.appendChild(button);
+      }
+    
+      displayCNF (cnf_value) {
+        if (this.p_tag) {
+          this.p_tag.innerHTML = cnf_value;
+        }
+      }
+    }
+    
+    class Controller {
+      constructor(model, view) {
+        this.model = model;
+        this.view = view;
+        /*** Bindings ***
+          La fonction bind() permet de sceller le contexte dans lequel la fonction sera appelée.
+          Dans cet exemple, on veut toujours que les fonctions bindDisplayCNF() et bindGetCNF() (de cette classe) soient appelées dans le contexte du Controller.
+          Ce contexte est primordial car il permet d'accéder aux attributs de notre classe.
+          ---
+          Sans la fonction bind(), les différentes fonctions passées en callback seraient appelées dans le contexte de la classe qu'il l'exécute.
+          Par conséquent, nous ne pourrions pas accéder à la View depuis le Model ou au Model depuis la View.
+        */ 
+        this.bindDisplayCNF = this.bindDisplayCNF.bind(this);
+        this.model.bindDisplayCNF(this.bindDisplayCNF);
+
+        this.bindGetCNF = this.bindGetCNF.bind(this);
+        this.view.bindGetCNF(this.bindGetCNF);
+      }
+      
+      bindDisplayCNF (cnf_value) {
+        this.view.displayCNF(cnf_value);
+      }
+
+      bindGetCNF () {
+        this.model.getCNF();
+      }
+    }
+
+    const app = new Controller(new Model(), new View('mvc'));
+    
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
