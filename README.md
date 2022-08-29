@@ -31,9 +31,21 @@ Le sommaire du cours est le suivant:
     6. Le dessin et les canvas
 5. Références
 
-# Procédure d'installation de Jupyter
 
-Installez jupyterlab à l'aide de la procédure suivante: https://jupyter.org/install et utilisez la commande jupyter-lab au sein de votre terminal favori (selon les cas de figure, vous devez renseigner votre variable d'environnement PATH).
+# *Notebooks* Jupyter
+
+Consulter le cours (javascript.ipynb) en ligne à l'aide de mybinder.org ou installer Jupyter sur votre machine pour une utilisation en local.
+
+## MyBinder.org (en ligne)
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PAJEAN/cours_javascript/HEAD)
+
+Visualiser et exploiter les fonctionnalités du *notebook* Jupyter directement en ligne.
+
+
+## Procédure d'installation de Jupyter (en local)
+
+Installer Jupyterlab à l'aide de la procédure suivante: https://jupyter.org/install et utiliser la commande jupyter-lab au sein de votre terminal favori (selon les cas de figure, vous devez renseigner votre variable d'environnement PATH).
 
 # Auteur
 
