@@ -1,6 +1,6 @@
 <h1> Projet de développement: Système multi-agents et recherche des plus courts chemins </h1>
 
-<div style="text-align:center;margin-top:10px;margin-bottom:10px;">
+<div align="center" style="margin-top:10px;margin-bottom:10px;">
     <img src="images/startDemo.png" height="400">
     <img src="images/endDemo.png" height="400">
 </div>
@@ -22,7 +22,7 @@ Dans le cadre de ce projet, l'environnement est représenté par une grille dans
     <li> libre, capable de sauvegarder une valeur numérique (cardinalité 0 à n) </li>
   </ul>
 
-  <div style="text-align:center;margin-top:10px;margin-bottom:10px;">
+  <div align="center" style="margin-top:10px;margin-bottom:10px;">
     <img src="images/cellules.png" height="200">
   </div>
 </div>
