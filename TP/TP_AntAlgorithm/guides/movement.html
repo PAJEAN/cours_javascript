@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="my_canvas" width="110" height="100" style="border: 1px solid red"></canvas>
+
+    <script>
+        let _startTime     = Date.now();
+        let _lag           = 0;
+        let _fps           = 60; // Set the frame rate.
+        let _frameDuration = 1000 / _fps;
+        let _position      = {x: 0, y:0};
+        let _cellSize      = 100; // px.
+        let _speed         = 1; // Nous voulons que 1 unité (de la grille) soit parcourue en 1 seconde (donc dépendant des FPS fixées car la fonction est appelée à chaque frame). Soit unité/seconde.
+        let _direction     = 0; // rad.
+        let _timer         = 0;
+
+        /*
+            Nous appelons la méthode de déplacement toutes les frames.
+            Par conséquent, nous devons moduler notre vitesse qui va correspondre au nombre de cases parcourues par seconde en fonction des fps indiquées.
+            Car si nous voulons 1 unité par seconde alors le cube doit parcourir 1 / 60 % de la case par frame (si 60fps).
+        */
+
+        let Move = function(durationFrame) {
+            // Define the normalized distance.
+            let dx = Math.cos(_direction); // cos(0) = 1 ; cos(pi) = -1 ; cos(pi/2) = 0.
+            let dy = Math.sin(_direction) * -1; // sin(0) = 0 ; sin(pi) = 0 ; sin(pi/2) = 1 (-1 because JS Canvas inverse Y axis).
+            // Multiply this distance with a speed.
+            _position.x += dx * _speed / _fps; // cellGrid/seconde. On divise par les fps car la fonction est appelée toutes les frames.
+            _position.y += dy * _speed / _fps;
+        }
+
+        let Display = function() {
+            let x = _position.x * _cellSize;
+            let y = _position.y * _cellSize;
+            let canvas = document.getElementById('my_canvas');
+            let ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.beginPath(); // Start a new path
+            ctx.moveTo(100, 0); // Move the pen to (100, 0)
+            ctx.lineTo(100, 100); // Draw a line to (150, 100)
+            ctx.stroke(); // Render the path
+            
+            ctx.fillRect(x, y, 10, 10);
+        }
+
+        let Update = function() {
+            // Compute deltaTime.
+            let currentTime = Date.now();
+            let deltaTime   = currentTime - _startTime;
+            _lag += deltaTime;
+            _startTime = currentTime;
+            _timer += deltaTime;
+
+            // Update the logic if the lag counter is greater than or equal to the frame duration.
+            while (_lag >= _frameDuration) {
+                // Update the logic and view.
+                Move(_frameDuration);
+                Display();
+                // Reduce the lag counter by the frame duration.
+                _lag -= _frameDuration;
+            }
+
+            if (_position.x < 1) {
+                requestAnimationFrame(Update);
+            }
+
+            console.log(_position, _timer / 1000);
+        }
+
+        Update();
+    </script>
+    
+</body>
+</html>

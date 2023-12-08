@@ -1,8 +1,8 @@
 <h1> Projet de développement: Système multi-agents et recherche des plus courts chemins </h1>
 
-<div align="center" style="margin-top:10px;margin-bottom:10px;">
-    <img src="images/startDemo.png" height="400">
-    <img src="images/endDemo.png" height="400">
+<div align="center">
+    <img src="images/startDemo.png" height="300">
+    <img src="images/endDemo.png" height="300">
 </div>
 
 <h2>Objectif et positionnement du projet</h2>
@@ -22,10 +22,12 @@ Dans le cadre de ce projet, l'environnement est représenté par une grille dans
     <li> libre, capable de sauvegarder une valeur numérique (cardinalité 0 à n) </li>
   </ul>
 
-  <div align="center" style="margin-top:10px;margin-bottom:10px;">
-    <img src="images/cellules.png" height="200">
+  <div align="center">
+    <img src="images/cellules.png" height="150" />
   </div>
 </div>
+
+<br>
 
 ``` javascript
 /* La classe mère */
@@ -82,22 +84,43 @@ Le but des agents est de ramener à leur point de départ tous les objectifs pr�
 Ce projet est inspiré de l'algorithme de colonies de fourmis qui est une méthode d'optimisation elle-même inspirée par le comportement des fourmis réelles lorsqu'elles cherchent des chemins optimaux entre leur colonie et une source de nourriture. Cet algorithme simule le comportement des fourmis en utilisant des agents virtuels appelés "fourmis". Ces dernières se déplacent à travers un espace de solutions potentielles et lorsque l'une d'entre elles en trouve une, elle laisse derrière elle une trace chimique appelée "phéromone". Ces phéromones servent de communication indirecte entre les fourmis, indiquant la qualité des solutions trouvées. Ainsi, les fourmis explorent différentes solutions tout en favorisant les chemins contenant des phéromones plus fortes. Cela permet un équilibre entre l'exploration de nouvelles possibilités et l'exploitation des solutions connues. Les phéromones s'évaporent avec le temps, simulant le phénomène naturel où les traces chimiques laissées par les fourmis disparaissent progressivement.
 </div>
 
-<div style="text-align:center;margin-top:10px;margin-bottom:10px;">
-    <img src="images/algoAnt.png" height="400">
-    <p style="font-size:10px">https://fr.wikipedia.org/wiki/Algorithme_de_colonies_de_fourmis#/media/Fichier:Aco_branches.svg</p>
+<br>
+
+<div align="center">
+    <img src="images/algoAnt.png" height="300"/>
+    <h6>https://fr.wikipedia.org/wiki/Algorithme_de_colonies_de_fourmis#/media/Fichier:Aco_branches.svg</h6>
 </div>
 
-Dans le cadre de ce projet, nous pouvons résumer l'algorithme de colonies de fourmis par ses 3 formules:
+<div style="text-align:justify">
+Dans le cadre de ce projet, nous pouvons résumer l'algorithme de colonies de fourmis par 3 équations. La première permet de calculer la probabilité associée aux différentes positions possibles.
 
-<div style="text-align:center;margin-top:10px;margin-bottom:10px;">
-    <img src="images/proba.svg" height="100">
+<br>
+
+  <div align="center">
+    <img src="images/formule1.png" width="250">
+  </div>
+
+<br>
+
+où $J^k_i$ est la liste des déplacements possibles pour une fourmi k lorsqu’elle se trouve à une position i (dans notre cas, si elles existent les cellules au dessus, en dessous et sur les côtés), $η_{ij}$ la visibilité, qui est égale à l’inverse de la distance de deux positions i et j ($1/d_{ij}$) et $τ_{ij}$(t) l’intensité de la piste à une itération donnée t. Les deux principaux paramètres contrôlant l’algorithme sont α et β, qui contrôlent l’importance relative de l’intensité et de la visibilité d’une arête. Enfin, pour que les fourmis explorent des pistes non découvertes, on attribue une probabilité non nulle d'exploration des positions « inconnues », contrôlée par le paramètre γ. 
+<b><i>Nota Bene</i></b> : la contrainte liée au voisinage visible par une fourmi (1 case autour d'elle), le paramètre de visibilité n'est pas exploité (ou alors est égal à 1/1 pour toutes les cases). Nous pourrions l'utiliser si nous avions un système de difficulté associée au déplacement par rapport à la nature des tuiles. Par exemple, une fourmi se déplace plus facilement sur la terre que dans l'herbe.
+
+La seconde équation permet, une fois la fourmi retournée à son point de départ pour déposer la nourriture, de calculer la quantité de phéromone $\Delta \tau _{{ij}}^{k}$ à déposer sur l'ensemble des cellules qui compose le trajet emprunté par la fourmi entre la nourriture et son point de départ. Cette quantité vient s'additionner à la quantité déjà présente sur la cellule.
+
+<br>
+
+  <div align="center">
+    <img src="images/formule2.png" width="250">
+  </div>
+
+<br>
+
+où $T^k(t)$ est le trajet emprunté entre la nourriture et la colonie (son point de départ) par la fourmi k à l’itération t, $L^k(t)$ la longueur du trajet et Q un paramètre de réglage.
+<b><i>Nota Bene</i></b> : la fourmi est capable de choisir le chemin le plus court à emprunter pour revenir à sa colonie en tenant compte uniquement des cellules qu'elle a exploré durant son trajet actuel.
+
+Enfin, la troisième équation permet à une fréquence donnée de simuler le phénomène d'évaporation des phéromones: $\textstyle \rho \tau _{ij}(t)$ avec ρ un paramètre de réglage.
+
 </div>
-
-où $J^k_i$ est la liste des déplacements possibles pour une fourmi k lorsqu’elle se trouve à une position i, $η_{ij}$ la visibilité, qui est égale à l’inverse de la distance de deux positions i et j (1/dij) et $τ_{ij}$(t) l’intensité de la piste à une itération donnée t. Les deux principaux paramètres contrôlant l’algorithme sont α et β, qui contrôlent l’importance relative de l’intensité et de la visibilité d’une arête.
-
-En pratique, pour que les fourmis explorent des pistes non découvertes, on attribue une probabilité non nulle d'exploration de ces villes « inconnues », contrôlée par le paramètre γ. De cette façon, la probabilité de déplacement s'écrit:
-
-
 
 <h2> Les grandes étapes du projet </h2>
 
@@ -114,15 +137,11 @@ En pratique, pour que les fourmis explorent des pistes non découvertes, on attr
 <h2> Cahier des charges du projet </h2>
 
 <ul>
-    <li> Utiliser tous les tetrominos. </li>
-    <li> Pouvoir réaliser une rotation des tétrominos. </li>
-    <li> Pouvoir faire chuter directement les tetrominos. </li>
-    <li> Affichage d'un score. </li>
-    <li> Accélérer la chute des tetrominos à mesure que le score augmente. </li>
-    <li> Animation de chute des tetrominos. </li>
-    <li> Animation lorsqu'une ligne est détruite. </li>
-    <li> (Parcours Développement logiciel) Implémenter l'algorithme génétique pour optimiser les actions d'un <i>bot</i>. </li>
-    <li> (Parcours Développement logiciel) Bouton pour activer/désactiver le <i>bot</i> en cours de partie. </li>
+    <li> Représenter l'environnement, les différents types de cellule et les agents. Une source de nourriture a une quantité initiale de 1 et un agent est capable de transporter 0.1 lors d'un trajet. </li>
+    <li> Implémenter les équations ci-dessus de l'algorithme de colonies de fourmis pour rendre le déplacement/ la recherche des agents (fourmis) optimisé. </li>
+    <li> Les fourmis doivent revenir à leur point de départ (colonie) lorsqu'elles trouvent de la nourriture. Pour cela, implémenter un algorithme de <i>pathfinding</i> pour permettre aux fourmis de trouver le chemin le plus court pour revenir à la colonie. Ce pathfinding doit uniquement tenir compte des cellules visités par la fourmi lors de son trajet pour trouver de la nourriture (le trajet est réiniatilisés lorsqu'elle atteint la colonie). </li>
+    <li> Représenter numériquement et graphiquement les traces de phéromones. </li>
+    <li> La possibilité de mettre en pause la simulation. </li>
 </ul>
 
 <div style="text-align:justify">
@@ -137,18 +156,9 @@ L'évaluation portera sur la qualité des rendus graphiques, de la rigueur du co
 
 <h3> Découpage des points</h3>
 <ul>
-    <li> Parcours Systèmes et Réseaux </li>
-        <ul>
-            <li> Respect du cahier des charges : 10 (découpage des points en fonction du cahier des charges: 1, 2, 1, 1, 2, 1, 2). </li>
-            <li> Rigueur du code source (architecture MVC) : 6. </li>
-            <li> Présentation orale : 4. </li>
-        </ul>
-    <li> Parcours Développement logiciel </li>
-        <ul>
-            <li> Respect du cahier des charges : 12 (découpage des points en fonction du cahier des charges: 0.5, 1, 0.5, 1, 1, 1, 1, 5, 1). </li>
-            <li> Rigueur du code source (architecture MVC) : 4. </li>
-            <li> Présentation orale : 4. </li>
-        </ul>
+    <li> Respect du cahier des charges : 12 (découpage des points en fonction du cahier des charges: 1, 3, 3, 4, 1). </li>
+    <li> Rigueur du code source (architecture MVC) : 4. </li>
+    <li> Présentation orale : 4. </li>
 </ul>
 
 <h2> Rôle de l'encadrant </h2>
@@ -161,6 +171,6 @@ L'évaluation portera sur la qualité des rendus graphiques, de la rigueur du co
 <h2> Soutenance orale et rendu </h2>
 
 <div style="text-align:justify">
-À la fin du projet <b>le 23/01/2023</b>, vous devez présenter vos travaux à l'oral (10 min de présentation et 5 min de question). Vous présenterez votre rendu, les choix techniques et algorithmiques et l'architecture de votre code. La présentation doit être accompagnée d'un support (<i>e.g.</i> diapo). Suite à cet oral, vous devez également envoyer votre code source par mail à l'encadrant sous la forme d'une archive compressée.
+À la fin du projet <b>le 02/02/2024</b>, vous devez présenter vos travaux à l'oral (10 min de présentation et 5 min de question). Vous présenterez votre rendu, les choix techniques et algorithmiques et l'architecture de votre code. La présentation doit être accompagnée d'un support (<i>e.g.</i> diapo). Suite à cet oral, vous devez également envoyer votre code source par mail à l'encadrant sous la forme d'une archive compressée.
 </div>
 
