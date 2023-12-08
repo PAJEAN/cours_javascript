@@ -14,7 +14,7 @@ L’objectif de ce projet, orienté pratique et réalisé en groupe, est de vous
 <div style="text-align:justify">
 Un système multi-agents (SMA) est un système informatique composé de multiples entités autonomes, appelées agents, qui interagissent entre elles pour atteindre des objectifs individuels ou collectifs. Chaque agent dans un SMA est capable de percevoir son environnement, de prendre des décisions autonomes et d'agir en conséquence pour influencer cet environnement.
 
-Dans le cadre de ce projet, l'environnement est représenté par une grille où chaque cellule est caractérisée par sa nature. Il y a quatre types de cellules distincts :
+Dans le cadre de ce projet, l'environnement est représenté par une grille dans laquelle il existe quatre types de cellules distincts :
   <ul>
     <li> point de départ des agents (cardinalité 1) </li>
     <li> obstacle, empêche le déplacement d'un agent (cardinalité 0 à n) </li>
@@ -24,6 +24,7 @@ Dans le cadre de ce projet, l'environnement est représenté par une grille où 
 
   <div style="text-align:center;margin-top:10px;margin-bottom:10px;">
     <img src="images/cellules.png" height="200">
+  </div>
 </div>
 
 ``` javascript
@@ -71,8 +72,11 @@ class Free extends Cell {
 }
 ```
 
+<div style="text-align:justify">
 Le but des agents est de ramener à leur point de départ tous les objectifs présents dans l'environnement. Ces objectifs sont caractérisés par un attribut représentant une quantité disponible. Étant donné que les agents ont une capacité de charge limitée et qu'ils conservent uniquement leur trajet depuis leur dernière visite au point de départ (se réinitialise à chaque passage), ils doivent élaborer une stratégie de mémorisation/communication pour signaler aux autres agents la possible existence d'un objectif. Cette communication se fait exclusivement par le biais d'une valeur numérique stockée dans les cellules libres. Par ailleurs, les agents ne perçoivent que les cellules qui sont adjacentes à eux (diagonales non comprises).
 </div>
+
+<h2> Algorithme de colonies de fourmis </h2>
 
 <div style="text-align:justify">
 Ce projet est inspiré de l'algorithme de colonies de fourmis qui est une méthode d'optimisation elle-même inspirée par le comportement des fourmis réelles lorsqu'elles cherchent des chemins optimaux entre leur colonie et une source de nourriture. Cet algorithme simule le comportement des fourmis en utilisant des agents virtuels appelés "fourmis". Ces dernières se déplacent à travers un espace de solutions potentielles et lorsque l'une d'entre elles en trouve une, elle laisse derrière elle une trace chimique appelée "phéromone". Ces phéromones servent de communication indirecte entre les fourmis, indiquant la qualité des solutions trouvées. Ainsi, les fourmis explorent différentes solutions tout en favorisant les chemins contenant des phéromones plus fortes. Cela permet un équilibre entre l'exploration de nouvelles possibilités et l'exploitation des solutions connues. Les phéromones s'évaporent avec le temps, simulant le phénomène naturel où les traces chimiques laissées par les fourmis disparaissent progressivement.
@@ -83,6 +87,17 @@ Ce projet est inspiré de l'algorithme de colonies de fourmis qui est une métho
     <p style="font-size:10px">https://fr.wikipedia.org/wiki/Algorithme_de_colonies_de_fourmis#/media/Fichier:Aco_branches.svg</p>
 </div>
 
+Dans le cadre de ce projet, nous pouvons résumer l'algorithme de colonies de fourmis par ses 3 formules:
+
+<div style="text-align:center;margin-top:10px;margin-bottom:10px;">
+    <img src="images/proba.svg" height="100">
+</div>
+
+où $J^k_i$ est la liste des déplacements possibles pour une fourmi k lorsqu’elle se trouve à une position i, $η_{ij}$ la visibilité, qui est égale à l’inverse de la distance de deux positions i et j (1/dij) et $τ_{ij}$(t) l’intensité de la piste à une itération donnée t. Les deux principaux paramètres contrôlant l’algorithme sont α et β, qui contrôlent l’importance relative de l’intensité et de la visibilité d’une arête.
+
+En pratique, pour que les fourmis explorent des pistes non découvertes, on attribue une probabilité non nulle d'exploration de ces villes « inconnues », contrôlée par le paramètre γ. De cette façon, la probabilité de déplacement s'écrit:
+
+
 
 <h2> Les grandes étapes du projet </h2>
 
@@ -91,8 +106,8 @@ Ce projet est inspiré de l'algorithme de colonies de fourmis qui est une métho
       <li> Constitution des équipes. </li>
       <li> S'approprier les bases du Javascript (et de la programmation orientée objet) à l'aide du cours en ligne (<a href="https://github.com/PAJEAN/cours_javascript/blob/master/javascript.ipynb">lien vers le cours</a> --> à ouvrir avec l'outil Jupyter-lab pour profiter de toutes les fonctionnalités - vous pouvez également le consulter directement sur la plateforme Github, par le biais de VSCode ou de l'outil <i>online mybinder.org</i>). </li>
       <li> S'approprier l'environnement &lt;canvas&gt; de HTML5 et Javascript. </li>
-      <li> Modéliser et implémenter votre solution à travers une architecture <a href="../MVC/mvc.html">MVC</a> (Modèle, Vue, Contrôleur). Cette architecture permet de compartimenter le développement. Le modèle (M) gère la logique et les données du jeu. La vue (V) inclut la manière de représenter visuellement la grille du Tetris, les tetrominos (blocs) actuels et suivants, les animations et le score. Enfin, le contrôleur (C) connecte la vue et le modèle pour faire transiter les données de l'utilisateur vers le système afin de modifier les données actuelles. </li>
-      <li> Comprendre et implémenter un algorithme de colonies de fourmis pour rechercher les chemins les plus courts. </li>
+      <li> Modéliser et implémenter votre solution à travers une architecture <a href="../MVC/mvc.html">MVC</a> (Modèle, Vue, Contrôleur). Cette architecture permet de compartimenter le développement. Le modèle (M) gère la logique et les données du jeu. La vue (V) inclut la manière de représenter visuellement l'environnement, les agents, les phéromones et le temps. Enfin, le contrôleur (C) connecte la vue et le modèle pour faire transiter les données de l'utilisateur vers le système afin de modifier les données actuelles. </li>
+      <li> Comprendre et implémenter un algorithme semblable à l'algorithme de colonies de fourmis pour rechercher les chemins les plus courts. </li>
   </ul>
 </div>
 
