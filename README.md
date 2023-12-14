@@ -42,6 +42,9 @@ Consulter le cours (javascript.ipynb) en ligne à l'aide de mybinder.org ou inst
 
 Visualiser et exploiter les fonctionnalités du *notebook* Jupyter directement en ligne.
 
+## VS Code
+
+Visual Studio Code est capable de lire et exécuter les fichiers *ipynb*.
 
 ## Procédure d'installation de Jupyter (en local)
 
