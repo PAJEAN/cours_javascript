@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un pied à l'étrier</title>
+    <style>
+        body {
+            background-color: antiquewhite;
+        }
+    </style>
+</head>
+<body>
+    <div style="display: flex; gap: 20px; align-items: flex-start;">
+        <div style="display: flex; gap: 10px; flex-direction: column;">
+            <select id="my_shape">
+                <option value="0"> Carré </option>
+                <option value="1"> Cercle </option>
+            </select>
+            <select id="my_color">
+                <option value="black"> Noir </option>
+                <option value="blue"> Bleu </option>
+                <option value="red"> Rouge </option>
+                <option value="green"> Vert </option>
+            </select>
+            <button id="my_button"> Valider </button>
+        </div>
+    
+        <canvas id="my_canvas"></canvas>
+    </div>
+
+    <script>
+        /* -- DECLARATION ET INITIALISATION DE PLUSIEURS VARIABLES (AVEC UNE PORTEE GLOBALE) -- */
+
+        let _grid = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]
+        ]; // Déclaration et initialisation d'un Array.
+        
+        let _nbLines   = _grid.length; // Nombre d'éléments dans le tableau (nombre de lignes).
+        let _nbColumns = _grid[0].length; // Nombre de colonnes.
+        let _cellSize  = 100; // La taille d'une cellule en pixel.
+
+
+        /* -- DECLARATION DE PLUSIEURS FONCTIONS -- */
+
+        /**
+         * Déclaration d'une fonction nommée pour dessiner un carré au sein d'un canvas.
+         * En JavaScript, les fonctions sont des objets. Cela signifie qu'elles peuvent être manipulées et échangées.
+         * Dans cet exemple, le paramètre DrawingFunction est une fonction.
+         * @param {Function}
+         * return {void}
+         */
+        function Display(DrawingFunction) {
+            // Boucles for pour afficher la grille.
+            for (let i_line = 0; i_line <= _nbLines; i_line++) {
+                for (let i_col = 0; i_col <= _nbColumns; i_col++) {
+                    DrawingFunction(
+                        {x: i_col * _cellSize, y: i_line * _cellSize},
+                        _cellSize
+                    );
+                }
+            }
+        }
+
+        /**
+         * Le nom d'une fonction est facultatif. Dans ces cas là, la fonction est dite anonyme.
+         * @param {string}
+         * return {Function}
+         */
+        let DrawColoredSquare = function(ctx, shape, color) {
+            ctx.fillStyle = color;
+            
+            /**
+             * Déclaration d'une fonction nommée pour dessiner un carré au sein d'un canvas.
+             * @param {CanvasRenderingContext2D} - Surface de dessin.
+             * @param {Object.<number, number>}
+             * @param {number}
+             * @return {void}
+             */
+            function DrawSquare(startPosition, width) {
+                let padding = 2; // Permet d'avoir une ligne entre les carrés de notre grille.
+                /* ctx fait référence aux paramètres de la fonction externe */
+                ctx.fillRect(startPosition.x, startPosition.y, width - padding, width - padding); // Dessine un carré plein.
+            }
+
+            /**
+             * Déclaration d'une fonction nommée pour dessiner un cercle au sein d'un canvas.
+             * @param {CanvasRenderingContext2D} - Surface de dessin.
+             * @param {Object.<number, number>}
+             * @param {number}
+             * @return {void}
+             */
+            function DrawCircle(startPosition, width) {
+                radius = width / 2;
+                /* ctx fait référence aux paramètres de la fonction externe */
+                ctx.beginPath(); // Nouveau tracé.
+                ctx.arc(startPosition.x + radius, startPosition.y + radius, radius, 0, 2 * Math.PI); // Déssiner un cercle.
+                ctx.fill(); // Afficher le cercle plein (la fonction stroke pour obtenir un cercle vide).
+            }
+
+            /*
+                Création d'une fermeture (closure en anglais).
+                Une fermeture donne accès à la portée d'une fonction externe à partir d'une fonction interne (on dit aussi que la fonction « capture son environnement »).
+                La fonction interne doit être créée directement au sein de la fonction externe pour bénéficer de l'effet de la closure.
+            */
+            return shape == 0 ? DrawSquare: DrawCircle; // Condition ternaire. La fonction renvoyée se souviendra de son environnement et donc du contexte de dessin (ctx).
+        };
+
+
+        /* -- INITIALISATION DE L'APPLICATION -- */
+
+        /**
+         * Déclaration d'une fonction auto-exécutée (s'exécute lorsque la page est chargée).
+         * @return {void}
+         */
+        (function() {
+            /* Les variables déclarées au sein de cette fonction sont uniquement accessibles à l'intérieur de cette fonction (on ne peut pas y faire référence à l'extérieur) */
+            let canvas = document.getElementById('my_canvas'); // Récupération d'une balise HTML par son ID.
+            canvas.width  = _nbColumns * _cellSize;
+            canvas.height = _nbLines * _cellSize;
+            let ctx = canvas.getContext('2d'); // Récupération de la surface de dessin.
+
+            let button = document.getElementById('my_button');
+            /* Exécuter une action lors d'un évènement de changement de valeur */
+            button.addEventListener('click', function(event) {
+                let shape = document.getElementById('my_shape');
+                let color = document.getElementById('my_color');
+                /* Effet de closure pour la récupération du contexte de dessin */
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // Réinitialise en totalité (ou en partie) le canvas.
+                /*
+                    ColoredSquareFunction est une variable qui fait référence à une fonction.
+                    Cette fonction est issue du return de la fonction DrawColoredSquare.
+                    Par conséquent, cette fonction peut accéder aux éléments de la fonction dont elle provient (DrawColoredSquare) tel que son paramètre color (à l'aide du phénomène de closure).
+                    Ce paramètre correspond dans cet exemple à la value de nos balises <option> issues de notre balise <select>.
+                */
+                let ColoredSquareFunction = DrawColoredSquare(ctx, shape.value, color.value);
+                Display(ColoredSquareFunction); // Exécuter la fonction Display avec notre fonction issue du return de DrawColoredSquare.
+            });
+            button.click(); // Trigger l'évènement de click du bouton.
+        })();
+
+
+        /*
+            Exercice 1:
+            -----------
+            A l'aide de la fonction ctx.drawImage (https://developer.mozilla.org/fr/docs/Web/API/CanvasRenderingContext2D/drawImage) afficher une grille d'images.
+            Les valeurs au sein de la grille vont déterminer l'image à afficher.
+            Afficher la grille suivante:
+            let _grid = [
+                [0, 0, 0],
+                [0, 1, 0],
+                [0, 2, 0],
+                [0, 0, 0],
+            ];
+            Utiliser les trois premières tuiles (en ligne) de 32px provenant de l'image TP_AntAlgorithm/tiles/foodAndColony.png.
+            Utiliser le code suivant pour charger le png.
+
+            ```
+            const HEXTILES_IMAGE = new Image();
+            HEXTILES_IMAGE.src = 'path/of/png';
+            Promise.all([
+                new Promise( (resolve) => {HEXTILES_IMAGE.addEventListener('load', () => { resolve();}); })
+            ])
+            .then(() => {
+                // Votre code ici.
+            });
+            ```
+
+            ########################################################
+
+            Exercice 2:
+            -----------
+            Effectuer ce même exercice à travers l'architecture MVC.
+        */
+    </script>
+    
+</body>
+</html>
