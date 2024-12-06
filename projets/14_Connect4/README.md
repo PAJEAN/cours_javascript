@@ -17,7 +17,7 @@ L’objectif de ce projet,	orienté	pratique et réalisé	en groupe, est de vous
       <li> Constitution des équipes. </li>
       <li> S'approprier les bases du Javascript (et de la programmation orientée objet) à l'aide du cours en ligne (<a href="https://github.com/PAJEAN/cours_javascript/blob/master/javascript.ipynb">lien vers le cours</a> --> à ouvrir avec l'outil Jupyter-lab pour profiter de toutes les fonctionnalités - vous pouvez également le consulter directement sur la plateforme Github ou par le biais de VSCode). </li>
       <li> S'approprier l'environnement &lt;canvas&gt; de HTML5 et Javascript. </li>
-      <li> Comprendre l'algorithme du <i>minimax alpha bêta</i> (<a href="Minimax.pdf">PDF</a> sur l'algorithme du <i>minimax</i>). </li>
+      <li> Comprendre l'algorithme du <i>minimax alpha bêta</i> (<a href="../Ressources/Minimax.pdf">PDF</a> sur l'algorithme du <i>minimax</i>). </li>
       <li> Modélisation et implémentation de votre solution au travers d'un modèle <a href="../MVC/mvc.html">MVC</a>. Au sein de cet exercice, le modèle gère la logique du jeu Puissance 4 et le comportement du <i>bot</i>. La vue, quant à elle, contient la manière de représenter visuellement la grille du Puissance 4, les jetons, les animations, l'affichage de la victoire et les événements déclenchés à partir du panneau de contrôle. Enfin, le controleur connecte la vue et le modèle pour faire transiter les données de l'utilisateur vers le système afin de modifier les données actuelles. </li>
   </ul>
 </div>

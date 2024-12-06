@@ -76,4 +76,4 @@ BFS.html
 </html>
 ```
 
-Les librairies graphiques nécessaires sont présents dans le dossier TP/librairies.
+Les librairies graphiques nécessaires sont présents dans le dossier exemples/librairies.

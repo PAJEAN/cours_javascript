@@ -22,7 +22,7 @@ L’objectif de ce projet, orienté pratique et réalisé en groupe, est de vous
       <li> S'approprier les bases du Javascript (et de la programmation orientée objet) à l'aide du cours en ligne (<a href="https://github.com/PAJEAN/cours_javascript/blob/master/javascript.ipynb">lien vers le cours</a> --> à ouvrir avec l'outil Jupyter-lab pour profiter de toutes les fonctionnalités - vous pouvez également le consulter directement sur la plateforme Github, par le biais de VSCode ou de l'outil <i>online mybinder.org</i>). </li>
       <li> S'approprier l'environnement &lt;canvas&gt; de HTML5 et Javascript. </li>
       <li> Modéliser et implémenter votre solution à travers une architecture <a href="../MVC/mvc.html">MVC</a> (Modèle, Vue, Contrôleur). Cette architecture permet de compartimenter le développement. Le modèle (M) gère la logique et les données du jeu. La vue (V) inclut la manière de représenter visuellement la grille du Tetris, les tetrominos (blocs) actuels et suivants, les animations et le score. Enfin, le contrôleur (C) connecte la vue et le modèle pour faire transiter les données de l'utilisateur vers le système afin de modifier les données actuelles. </li>
-      <li> Pour le parcours Développement logiciel: Comprendre et implémenter un algorithme génétique pour optimiser les actions automatiques d'un <i>bot</i> (<a href="Algorithme_génétique.pdf">PDF</a>). </li>
+      <li> Pour le parcours Développement logiciel: Comprendre et implémenter un algorithme génétique pour optimiser les actions automatiques d'un <i>bot</i> (<a href="../Ressources/AlgorithmeGenetique.pdf">PDF</a>). </li>
   </ul>
 </div>
 
