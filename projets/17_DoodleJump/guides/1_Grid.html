@@ -30,6 +30,15 @@
     </div>
 
     <script>
+        
+        /*  -----------------------------------------------------------
+                                     OBJECTIF                          
+            
+            Dessiner des carrés ou des ronds colorés en fonction des 
+            informations renseignées par l'utilisateur.
+            ----------------------------------------------------------- */
+
+
         /* -- DECLARATION ET INITIALISATION DE PLUSIEURS VARIABLES (AVEC UNE PORTEE GLOBALE) -- */
 
         let _grid = [
@@ -37,6 +46,8 @@
             [0, 0, 0, 0],
             [0, 0, 0, 0]
         ]; // Déclaration et initialisation d'un Array.
+
+        // Privilégier le mot-clé "let" pour déclarer une variable au lieu du mot-clé "var". Le mot-clé "let" protège de la re-déclaration d'une même variable et à une portée de bloc contrairement à la portée de fonction du mot-clé "var".
         
         let _nbLines   = _grid.length; // Nombre d'éléments dans le tableau (nombre de lignes).
         let _nbColumns = _grid[0].length; // Nombre de colonnes.
@@ -56,7 +67,7 @@
          */
 
         /**
-         * Déclaration d'une fonction nommée pour dessiner un carré au sein d'un canvas.
+         * Déclaration d'une fonction nommée pour dessiner un carré ou un rond coloré au sein d'un canvas html.
          * @param {DrawingCallback} DrawingFunction
          */
         function Display(DrawingFunction) { // Le paramètre DrawingFunction est une fonction.
@@ -81,7 +92,7 @@
          * @param {string} color
          * return {function(startPosition: {x: number, y: number}, width: number): void}
          */
-        let DrawColoredSquare = function(ctx, shape, color) { // Initialisation de la variable DrawColoredSquare à partir de la déclaration d'une fonction anonyme.
+        let DrawColoredShape = function(ctx, shape, color) { // Initialisation de la variable DrawColoredShape à partir de la déclaration d'une fonction anonyme.
             ctx.fillStyle = color;
             
             /* ------------------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -138,14 +149,14 @@
                 /* Effet de closure pour la récupération du contexte de dessin */
                 ctx.clearRect(0, 0, canvas.width, canvas.height); // Réinitialise en totalité (ou en partie) le canvas (ici en totalité).
                 
-                /* ------------------------------------------------------------------------------------------------------------------------------------------------------------- */
-                /*    ColoredSquareFunction est une variable qui fait référence à une fonction.                                                                                  */
-                /*    Cette fonction est issue du return de la fonction DrawColoredSquare.                                                                                       */
-                /*    Grâce au phénomène de closure, cette fonction peut accéder aux éléments de sa fonction externe (DrawColoredSquare) tel que le context de dessin.           */
-                /* --------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+                /* -------------------------------------------------------------------------------------------------------------------------------------------------- */
+                /*    ColoredShapeFunction est une variable qui fait référence à une fonction.                                                                        */
+                /*    Cette fonction est issue du return de la fonction DrawColoredShape.                                                                             */
+                /*    Grâce au phénomène de closure, cette fonction peut accéder aux éléments de sa fonction externe (DrawColoredShape) tel que le context de dessin. */
+                /* -------------------------------------------------------------------------------------------------------------------------------------------------- */
 
-                let ColoredSquareFunction = DrawColoredSquare(ctx, shape.value, color.value); // Récupération des value de nos balises <select>.
-                Display(ColoredSquareFunction); // Exécuter la fonction Display avec notre fonction issue du return de DrawColoredSquare.
+                let ColoredShapeFunction = DrawColoredShape(ctx, shape.value, color.value); // Récupération des value de nos balises <select>.
+                Display(ColoredShapeFunction); // Exécuter la fonction Display avec notre fonction issue du return de DrawColoredShape.
             });
             button.click(); // Trigger l'évènement de click du bouton.
         })();
@@ -167,7 +178,10 @@
                 [0, 0, 0],
             ];
 
-            * les trois premières tuiles de 32px (en ligne) issues de l'image TP_AntAlgorithm/tiles/foodAndColony.png.
+            * les plateformes au sein de l'image ../tiles/game-tiles.png sont situées aux coordonnées suivantes:
+                - 0, plateforme normale: 1, 1, 57, 15
+                - 1, plateforme mouvante: 1, 19, 57, 15
+                - 2, plateforme disparaisante: 1, 55, 57, 15
             * le code suivant pour charger le png et écrire votre programme.
 
             ```

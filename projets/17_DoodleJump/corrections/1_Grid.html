@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un pied à l'étrier</title>
+    <style>
+        body {
+            background-color: antiquewhite;
+        }
+        canvas {
+            border: 1px dashed cyan;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <canvas id="my_canvas"></canvas>
+    </div>
+
+    <script>
+
+        class Grid {
+            constructor(rawGrid) {
+                this._rawGrid = rawGrid;
+            }
+
+            get NbLines()   { return this._rawGrid.length; }
+            get NbColumns() { return this._rawGrid[0].length; }
+
+            ValueAt(i, j) {
+                return this._rawGrid[i][j];
+            }
+        }
+
+        class Model {
+            constructor(rawGrid) {
+                this._grid = new Grid(rawGrid);
+            }
+
+            get Grid() { return this._grid; }            
+        }
+
+        class View {
+            constructor(nbLines, nbColumns) {
+                this._widthCell   = 57; // Largeur d'une cellule en pixel.
+                this._heightCell  = 17; // Hauteur d'une cellule en pixel.
+                this.canvas = document.getElementById('my_canvas'); // Récupération d'une balise HTML par son ID.
+                this.canvas.width  = nbColumns * this._widthCell;
+                this.canvas.height = nbLines * this._heightCell;
+                this.ctx = this.canvas.getContext('2d'); // Récupération de la surface de dessin.   
+            }
+
+            BindGetGrid(callback) {
+                this.M_Grid = callback;
+            }
+
+            /**
+             * Déclaration d'une fonction nommée pour dessiner un carré ou un rond coloré au sein d'un canvas html.
+             * @param {DrawingCallback} DrawingFunction
+             */
+             Display() {
+                let grid = this.M_Grid();
+                for (let i_line = 0; i_line < grid.NbLines; i_line++) { // Boucles for pour afficher la grille.
+                    for (let i_col = 0; i_col < grid.NbColumns; i_col++) {
+                        switch(grid.ValueAt(i_line, i_col)) {
+                            case 0:
+                                this.ctx.drawImage(HEXTILES_IMAGE, 1, 1, this._widthCell, this._heightCell, i_col * this._widthCell, i_line * this._heightCell, this._widthCell, this._heightCell);
+                                break;
+                            case 1:
+                                this.ctx.drawImage(HEXTILES_IMAGE, 1, 19, this._widthCell, this._heightCell, i_col * this._widthCell, i_line * this._heightCell, this._widthCell, this._heightCell);
+                                break;
+                            case 2:
+                                this.ctx.drawImage(HEXTILES_IMAGE, 1, 55, this._widthCell, this._heightCell, i_col * this._widthCell, i_line * this._heightCell, this._widthCell, this._heightCell);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
+        class Controller {
+            constructor(grid) {
+                this._model = new Model(grid);
+                this._view = new View(this._model.Grid.NbLines, this._model.Grid.NbColumns);
+
+                /* Fonction de "binding" pour faire le lien entre le modèle et la vue via le controller */
+                this._view.BindGetGrid(this.GetGrid.bind(this));
+                this._view.Display();
+            }
+
+            GetGrid() {
+                return this._model.Grid;
+            }
+        }
+
+
+        const HEXTILES_IMAGE = new Image();
+        HEXTILES_IMAGE.src = '../tiles/game-tiles.png';
+        Promise.all([
+            new Promise( (resolve) => {HEXTILES_IMAGE.addEventListener('load', () => { resolve();}); })
+        ])
+        .then(() => {
+            const app = new Controller(
+                [
+                    [0, 0, 0],
+                    [0, 1, 0],
+                    [0, 2, 0],
+                    [0, 0, 0],
+                    [0, 1, 2],
+                ]
+            )
+        });
+    </script>
+    
+</body>
+</html>
