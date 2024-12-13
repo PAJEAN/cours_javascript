@@ -25,6 +25,10 @@
             get direction() { return this._direction; }
             set direction(value) { return this._direction = value; }
             
+            BindDisplay(callback) {
+                this.b_Display = callback;
+            }
+
             Move(fps) {
                 this._gravitySpeed += Model.GRAVITY;
                 this._position.y += this._gravitySpeed / fps;
@@ -33,6 +37,8 @@
                 if (this._position.y > 100) {
                     this.Jump();
                 }
+
+                this.b_Display(this._position);
             }
 
             Jump() {
@@ -50,8 +56,8 @@
                 this.Events();
             }
 
-            B_SetDirection(callback) {
-                this.SetDirection = callback;
+            BindSetDirection(callback) {
+                this.b_SetDirection = callback;
             }
 
             Events() {
@@ -60,11 +66,11 @@
                         switch (evt.key) {
                             case 'ArrowLeft': // Move left.
                                 this._hold_left = true;
-                                this.SetDirection(-1);
+                                this.b_SetDirection(-1);
                                 break;
                             case 'ArrowRight': // Move right.
-                            this._hold_right = true;
-                                this.SetDirection(1);
+                                this._hold_right = true;
+                                this.b_SetDirection(1);
                                 break;
                         }
                     }
@@ -74,13 +80,13 @@
                     switch (evt.key) {
                         case 'ArrowLeft': // Move left.
                             if (!this._hold_right) {
-                                this.SetDirection(0);
+                                this.b_SetDirection(0);
                             }
                             this._hold_left = false;
                             break;
                         case 'ArrowRight': // Move right.
                             if (!this._hold_left) {
-                                this.SetDirection(0);
+                                this.b_SetDirection(0);
                             }
                             this._hold_right = false;
                             break;
@@ -119,7 +125,12 @@
                 this._fps           = 60; // Frame rate.
                 this._frameDuration = 1000 / this._fps; // Avec 60 frame par seconde, la frame va durer 16.7ms.
 
-                this._view.B_SetDirection(this.SetDirection.bind(this));
+                this._model.BindDisplay(this.Display.bind(this));
+                this._view.BindSetDirection(this.SetDirection.bind(this));
+            }
+
+            Display(position) {
+                this._view.Display(position);
             }
 
             SetDirection(newDirection) {
@@ -136,9 +147,8 @@
 
                 /* Mettre à jour la logique si la variable _lag est supérieure ou égale à la durée d'une frame */
                 while (this._lag >= this._frameDuration) {
-                    /* Mise à jour de la logique et de la vue */
+                    /* Mise à jour de la logique */
                     this._model.Move(this._fps);
-                    this._view.Display(this._model.position);
                     /* Réduire la variable _lag par la durée d'une frame */
                     this._lag -= this._frameDuration;
                 }

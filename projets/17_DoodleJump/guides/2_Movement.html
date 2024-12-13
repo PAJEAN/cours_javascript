@@ -100,31 +100,30 @@
             ```
             document.addEventListener('keydown', (evt) => {
                 if (evt.key == 'ArrowLeft' || evt.key == 'ArrowRight') {
-                    callback(evt.key, true);
 
                     switch (evt.key) {
                         case 'ArrowLeft': // Move left.
                             this._hold_left = true;
+                            // Change direction.
                             break;
                         case 'ArrowRight': // Move right.
                             this._hold_right = true;
+                            // Change direction.
                             break;
                     }
-                } else if (evt.key == ' ') {
-                    callback(evt.key, true);
                 }
             });
             document.addEventListener('keyup', (evt) => {
                 switch (evt.key) {
                     case 'ArrowLeft': // Move left.
                         if (!this._hold_right) {
-                            callback(evt.key, false);
+                            // Change direction.
                         }
                         this._hold_left = false;
                         break;
                     case 'ArrowRight': // Move right.
                         if (!this._hold_left) {
-                            callback(evt.key, false);
+                            // Change direction.
                         }
                         this._hold_right = false;
                         break;

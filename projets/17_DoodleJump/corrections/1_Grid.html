@@ -48,11 +48,11 @@
                 this.canvas = document.getElementById('my_canvas'); // Récupération d'une balise HTML par son ID.
                 this.canvas.width  = nbColumns * this._widthCell;
                 this.canvas.height = nbLines * this._heightCell;
-                this.ctx = this.canvas.getContext('2d'); // Récupération de la surface de dessin.   
+                this.ctx = this.canvas.getContext('2d'); // Récupération de la surface de dessin.
             }
 
             BindGetGrid(callback) {
-                this.M_Grid = callback;
+                this.b_Grid = callback;
             }
 
             /**
@@ -60,7 +60,7 @@
              * @param {DrawingCallback} DrawingFunction
              */
              Display() {
-                let grid = this.M_Grid();
+                let grid = this.b_Grid();
                 for (let i_line = 0; i_line < grid.NbLines; i_line++) { // Boucles for pour afficher la grille.
                     for (let i_col = 0; i_col < grid.NbColumns; i_col++) {
                         switch(grid.ValueAt(i_line, i_col)) {

@@ -52,12 +52,16 @@
         document.addEventListener('keyup', (evt) => {
             switch (evt.key) {
                 case 'ArrowLeft': // Move left.
-                    this._hold_left = false;
-                    _direction = 0;
+                    if (!_hold_right) {
+                        _direction = 0;
+                    }
+                    _hold_left = false;
                     break;
                 case 'ArrowRight': // Move right.
-                    this._hold_right = false;
-                    _direction = 0;
+                    if (!_hold_left) {
+                        _direction = 0;
+                    }
+                    _hold_right = false;
                     break;
             }
         });
