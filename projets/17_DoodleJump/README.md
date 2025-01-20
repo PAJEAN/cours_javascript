@@ -1,4 +1,4 @@
-<h1> Projet de développement : Système multi-agents et recherche des plus courts chemins </h1>
+<h1> Projet de développement : Version simplifiée de Doodle Jump (et mise en place d'un bot) </h1>
 
 <div align="center">
     <img src="images/doodlejump_1.png" height="300">

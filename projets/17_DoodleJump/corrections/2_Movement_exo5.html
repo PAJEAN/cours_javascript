@@ -35,13 +35,13 @@
                 this._position.x += this._direction * Model.SPEED / fps;
 
                 if (this._position.y > 100) {
-                    this.Jump();
+                    this._Jump();
                 }
 
                 this.b_Display(this._position);
             }
 
-            Jump() {
+            _Jump() {
                 this._gravitySpeed = -Model.JUMP_FORCE;
             }
         }

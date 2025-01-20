@@ -17,22 +17,14 @@
         let _timer         = 0;
 
         let _gravitySpeed = 0;
-        let _gravity = 20;
-
-        /*
-            Nous appelons la méthode de déplacement selon un taux de rafraichissement donné (disons 60fps).
-            Nous modulons notre vitesse pour qu'elle corresponde au nombre de cellules de notre grille parcourues par seconde (dépendant des fps indiquées).
-            Si nous voulons qu'une cellule soit parcourue en 1 seconde alors le cube doit se déplacer de (1 / 60)% de la case par frame (si 60fps).
-            Lorsque le taux de rafraîchissement est diminué à 30fps alors la boucle while empêche l'exécution d'une frame sur 2 environ car le deltaTime est toujours identique à 16ms (dépendant de la fonction requestAnimationFrame).
-            A l'inverse si le taux est plus élevé, par exemple à 90fps, alors la durée d'une frame sera de 11ms. Le deltaTime sera toujours de 16ms et nous accumulerons un retard de 5ms par appel. Ainsi, toutes les 3 frames environ, il y aura une régularisation à l'aide de la boucle while.
-        */
+        let _gravity = 2;
 
         /**
          * Déplacement de notre cube au sein du canvas.
          */
         let Move = function() {
             _gravitySpeed += _gravity;
-            _position.y += _gravitySpeed / _fps;
+            _position.y += _gravitySpeed / _fps; // px par seconde (avec la régularisation de la vitesse par le nombre de fps et le nombre de fois ou la fonction Move est appelée par seconde).
         }
 
         /**
@@ -63,8 +55,13 @@
          * Actualisation du canvas selon un fps donné.
          */
         let Update = function() {
-            /* Calcul du deltaTime */
+            /*
+                Lorsque le taux de rafraîchissement est diminué à 30fps (la durée d'une frame sera de 33ms) alors la boucle while empêche l'exécution d'une frame sur 2 environ car le deltaTime est toujours identique à 16ms (dépendant de la fonction requestAnimationFrame).
+                A l'inverse si le taux est plus élevé, par exemple à 90fps, alors la durée d'une frame sera de 11ms. Le deltaTime sera toujours de 16ms et nous accumulerons un retard de 5ms par appel. Ainsi, toutes les 3 frames environ, il y aura une régularisation à l'aide de la boucle while.
+            */
+
             let currentTime = Date.now();
+            /* Calcul du deltaTime */
             let deltaTime   = currentTime - _startTime; // La durée entre deux appels (entre 2 frames).
             _lag += deltaTime;
             _startTime = currentTime;
@@ -83,7 +80,7 @@
                 requestAnimationFrame(Update); // La fonction de rappel est généralement appelée 60 fois par seconde.
             }
             
-            console.log(_position, _timer / 1000);
+            console.log(_gravitySpeed, _position, _timer / 1000);
         }
 
         Update();
@@ -98,6 +95,8 @@
             Déplacer le carré de gauche à droite à l'aide des évènements liés au clavier.
 
             ```
+            this._hold_right = false;
+            this._hold_left = false;
             document.addEventListener('keydown', (evt) => {
                 if (evt.key == 'ArrowLeft' || evt.key == 'ArrowRight') {
 
@@ -113,16 +112,16 @@
                     }
                 }
             });
-            document.addEventListener('keyup', (evt) => {
+            document.addEventListener('keyup', (evt) => { // Réinitialisation de la direction.
                 switch (evt.key) {
                     case 'ArrowLeft': // Move left.
-                        if (!this._hold_right) {
+                        if (!this._hold_right) { // Vérification que je ne maintiens pas une autre touche pour réinitialiser la direction.
                             // Change direction.
                         }
                         this._hold_left = false;
                         break;
                     case 'ArrowRight': // Move right.
-                        if (!this._hold_left) {
+                        if (!this._hold_left) { // Vérification que je ne maintiens pas une autre touche pour réinitialiser la direction.
                             // Change direction.
                         }
                         this._hold_right = false;
