@@ -6,7 +6,7 @@ Un modèle MVC est une manière d'organiser votre code.
 * La vue (*View*) est la représentation visuelle du modèle.
 * Le controleur (*Controller*) réalise le lien entre l'utilisateur (la vue) et le système (le modèle).
 
-![MVC](../TP_Snake/images/readme/mvc-role-diagram.png "MVC")
+![MVC](MVC.png "MVC")
 
 ```
 class Model {
