@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Le JavaScript</title>
+    <style>
+        :root {
+            --radius: 16px;
+            --radius-sm: 12px;
+        }
+
+        .dark {
+            --bg: #0b0c10;
+            --border: #232736;            
+            
+            --text: #e6edf3;
+            --muted: #9aa5b1;
+            --accent: #7c9cff;
+            --ok: #42d392;
+            --err: #ff6b6b;
+
+            --cell-bg: #151823;
+            --code-bg: #0d1117;
+            --code-output-bg: #0f1320;
+            --code-border:#2b3245;
+
+            --btn-bg: #111827;
+
+            --exercise-bg: #1e293b;
+            --exercise-border: #60a5fa;
+            --exercise-text: #bfdbfe;
+        }
+
+        .light {
+            --bg: #fdfdfd;
+            --border: #cccccc;
+            
+            --text: #1a1a1a;
+            --muted: #555555;
+            --accent: #0077ff;
+            --ok: #42d392;
+            --err: #fb1212;
+
+            --cell-bg: #fdfdfd;
+            --code-bg: #f5f5f5;
+            --code-output-bg: #ffffff;
+            --code-border: #d0d0d0;
+
+            --btn-bg: #e9e9e9;
+
+            --exercise-bg: #f0f9ff;
+            --exercise-border: #3b82f6;
+        }
+
+        /* Layout */
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            line-height: 1.6;
+        }
+
+        .wrapper {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 210mm;
+            /* A4 width */
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: clamp(16px, 3vw, 32px);
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .title {
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: .2px;
+        }
+
+        .subtle {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .exercise-box {
+            background: var(--exercise-bg);
+            border-left: 6px solid var(--exercise-border);
+            padding: 1em;
+            margin: 1.5em 0;
+            border-radius: 8px;
+        }
+
+        .exercise-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: var(--exercise-text);
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5em;
+        }
+
+        .exercise-icon {
+            font-size: 1.3em;
+            margin-right: 0.5em;
+        }
+
+        .exercise-content {
+            font-size: 0.95em;
+            line-height: 1.5em;
+        }
+
+        /* Content */
+        h1,
+        h2,
+        h3 {
+            line-height: 1.25;
+            margin: 1.2em 0 .5em;
+        }
+
+        h1 {
+            font-size: clamp(22px, 3vw, 32px);
+        }
+
+        h2 {
+            font-size: clamp(20px, 2.5vw, 26px);
+        }
+
+        h3 {
+            font-size: clamp(18px, 2vw, 22px);
+        }
+
+        p {
+            margin: .5em 0 1em;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            appearance: none;
+            border: 1px solid var(--border);
+            background: var(--bg-btn);
+            color: var(--text);
+            padding: 10px 14px;
+            border-radius: 999px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .icon {
+            margin-right: 6px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Code Cell */
+        .cell {
+            background: var(--cell-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 14px;
+            margin: 18px 0;
+        }
+
+        .cell header {
+            margin: 0 0 10px;
+        }
+
+        .cell-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .cell-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .editor,
+        .output {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: clamp(12px, 1.4vw, 14px);
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+        }
+
+        .editor {
+            position: relative;
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
+            line-height: 1.5;
+            color: var(--text);
+            resize: vertical;
+            min-height: 120px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .output {
+            margin-top: 10px;
+            background: var(--code-output-bg);
+            border: 1px dashed var(--code-border);
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+            min-height: 48px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 999px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .ok {
+            color: var(--ok);
+        }
+
+        .err {
+            color: var(--err);
+        }
+
+        /* Print styles (A4) */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .wrapper {
+                padding: 0;
+            }
+
+            .page {
+                box-shadow: none;
+                border: none;
+                max-width: 100%;
+            }
+
+            @page {
+                size: A4;
+                margin: 15mm;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .btn .label {
+                display: none;
+            }
+
+            .btn .icon {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+            <header>
+                <h1 class="title">Le JavaScript</h1>
+                <div class="toolbar">
+                    <button class="btn" id="btn-print" title="Imprimer / Exporter en PDF">🖨️ Imprimer</button>
+                    <button class="btn" id="btn-theme" title="Changer le thème" data-initial="light">🌗 Thème</button>
+                </div>
+            </header>
+
+            <p>Ce cours présente les concepts fondamentaux du JavaScript (côté client) et sa syntaxe. Vous utiliserez un éditeur de texte (par exemple : <a href="https://code.visualstudio.com/">Visual Studio Code</a>) ainsi qu'un navigateur Web (par exemple : Google Chrome, Firefox ou Opera). Tout au long du cours, différents exercices vous seront proposés et seront signalés par le cadre suivant.</p>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="exercise-icon">💡</span>
+                    <span class="exercise-title">Exercice</span>
+                </div>
+                <div class="exercise-content">
+                    Cette zone contient les instructions de l'exercice.
+                </div>
+            </div>
+
+            <p>Les cellules sont interactives : vous pouvez y exécuter directement le code. À noter que certains exemples ne sont pas fonctionnels et sont fournis uniquement à des fins pédagogiques.</p>
+
+
+            <!-- ----------------------------------------------------------- -->
+            <!--                 Créer sa première page web                  -->
+            <!-- ----------------------------------------------------------- -->
+
+            <h2>Créer sa première page web</h2>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="exercise-icon">💡</span>
+                    <span class="exercise-title">Exercice</span>
+                </div>
+                <div class="exercise-content">
+                    <ul>
+                        <li> Ouvrez un éditeur de texte et copier/coller le code ci-dessous. </li>
+                        <li> Sauvegardez votre fichier et nommez le <code>hello_world.html</code>. </li>
+                        <li> Double-cliquez sur votre fichier pour l'ouvrir avec votre navigateur. </li>
+                        <li> Accédez à la console de développement (touche F12 sur Google Chrome). </li>
+                    </ul>
+                </div>
+
+<textarea class="editor" spellcheck="false">
+&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+    &lt;title>Hello World&lt;/title>
+&lt;/head>
+&lt;body>
+    <!-- Un commentaire HTML -->
+    &lt;h1 style="color:red">Bonjour&lt;/h1>
+
+    &lt;script type="text/javascript">
+    // Un premier commentaire en JavaScript.
+    /*
+        Un second commentaire en Javascript.
+    */
+    console.log("Hello World");
+    &lt;/script>
+&lt;/body>
+&lt;/html></textarea>
+            </div>
+
+            <p>Tirons des enseignements de l'exemple ci-dessus:
+                <ul>
+                    <li> Une page HTML est constituée d'une balise <code>&lt;head&gt;</code> contenant tous les éléments de l'en-tête du document et d'une balise <code>&lt;body&gt;</code> représentant le contenu du document. </li>
+                    <li> Le code JavaScript est ici directement intégré au code HTML de la page Web via la balise <code>&lt;script&gt;</code>. </li>
+                    <li> Les deux façons d'ajouter un commentaire au sein d'un code JavaScript (// et /* */). </li>
+                    <li> Le code JavaScript exploite la méthode <code>log()</code> de l'objet <code>console</code> pour afficher un message au sein de la console du navigateur (F12 pour l'ouvrir avec Chrome). </li>
+                    <li> Une instruction JavaScript se termine par un point-virgule (lorsqu'il n'est pas explicitement indiqué l'interprète exploite l'ASI (<i>Automatic Semicolon Insertion</i>) pour automatiquement ajouter les point-virgules. <b>Cependant, prenez garde.</b> </li>
+                </ul>
+            </p>
+
+            <div id="cells1"></div>
+
+            <button class="btn toggle-answer">
+                Afficher l'explication
+            </button>
+            <div class="hidden">
+                <p>
+                    Une erreur est levée car JavaScript tente d'exécuter le code ci-dessous.
+                </p>
+<textarea class="editor" spellcheck="false">
+const a = 1
+const b = 2
+const c = a + b(a + b).toString()</textarea>                
+            </div>
+
+            <p class="subtle">La fonction <b><i>toString()</i></b> est utilisée ici pour convertir le nombre en une chaîne de caractères.</p>
+
+
+            <!-- ----------------------------------------------------------- -->
+            <!--                        Les variables                        -->
+            <!-- ----------------------------------------------------------- -->
+
+            <h2>Les variables</h2>
+
+            <p>Une variable est une zone de mémoire destinée à stocker une information. Elle est définie par un nom qui doit commencer par une lettre et pouvant contenir ensuite des lettres, en majuscules ou en minuscules, des chiffres et certains caractères spéciaux comme l'underscore "_". Le caractère tiret "-" n'est pas autorisé car il correspond à l'opérateur de soustraction (de même pour le symbole "*"). Le nom d'une variable ne peut être un mot réservé par le langage comme <code>var</code>, <code>if</code> ou <code>window</code>. <b>Les variables sont sensibles à la casse.</b></p>
+
+            <h3> Déclaration de variables </h3>
+
+            La phase de création d'une variable est appelée <b>déclaration</b>. Tandis que la phase où une valeur est attribuée à une variable est appelée <b>instanciation</b>. En JavaScript, il existe 2 mots-clés pour déclarer une variable <b><code>var</code></b> et <b><code>let</code></b>.
+
+            <div id="cells2"></div>
+        </div>
+    </div>
+
+
+<!--
+88888888888                              888          888            
+    888                                  888          888            
+    888                                  888          888            
+    888   .d88b.  88888b.d88b.  88888b.  888  8888b.  888888 .d88b.  
+    888  d8P  Y8b 888 "888 "88b 888 "88b 888     "88b 888   d8P  Y8b 
+    888  88888888 888  888  888 888  888 888 .d888888 888   88888888 
+    888  Y8b.     888  888  888 888 d88P 888 888  888 Y88b. Y8b.     
+    888   "Y8888  888  888  888 88888P"  888 "Y888888  "Y888 "Y8888  
+                                888                                  
+                                888                                  
+                                888                                  
+-->
+
+    <template id="cell-template">
+        <section class="cell">
+            <header>
+                <div class="cell-title">
+                    <span class="badge"><span class="dot"></span> JavaScript</span>
+                </div>
+                <div class="cell-actions">
+                    <button class="btn run">
+                        <span class="icon">▶</span>
+                        <span class="label">Exécuter</span>
+                    </button>
+                    <button class="btn reset">
+                        <span class="icon">⟳</span>
+                        <span class="label">Réinitialiser</span>
+                    </button>
+
+                    <button class="btn clear">
+                        <span class="icon">🧹</span>
+                        <span class="label">Effacer</span>
+                    </button>
+                </div>
+            </header>
+            <textarea class="editor" spellcheck="false"></textarea>
+            <div class="output" aria-live="polite"></div>
+        </section>
+    </template>
+
+
+<!--
+ .d8888b.                   d8b          888    
+d88P  Y88b                  Y8P          888    
+Y88b.                                    888    
+ "Y888b.    .d8888b 888d888 888 88888b.  888888 
+    "Y88b. d88P"    888P"   888 888 "88b 888    
+      "888 888      888     888 888  888 888    
+Y88b  d88P Y88b.    888     888 888 d88P Y88b.  
+ "Y8888P"   "Y8888P 888     888 88888P"   "Y888 
+                                888             
+                                888             
+                                888             
+-->
+
+    <script>
+        /* ==== Document initialization ==== */
+        (() => {
+            /* Theme */
+            let theme_name_attribute = 'data-initial';
+            const btn_theme = document.getElementById('btn-theme');
+            if (!btn_theme.hasAttribute(theme_name_attribute)) {
+                console.warn(`The button to change the theme does not have the ${theme_name_attribute} attribute`);
+                return;
+            }
+
+            const body = document.body;
+            body.classList.add(btn_theme.getAttribute(theme_name_attribute));
+
+            btn_theme.addEventListener('click', () => {
+                let old_theme = btn_theme.getAttribute(theme_name_attribute);
+                let new_theme = old_theme == 'light'? 'dark': 'light';
+                body.classList.remove(old_theme);
+                body.classList.add(new_theme);
+                btn_theme.setAttribute(theme_name_attribute, new_theme);
+            });
+        })();
+
+        (() => {
+            /* Print button */
+            const btn_print = document.querySelector('#btn-print');
+            btn_print.addEventListener('click', () => window.print());
+        })();
+
+        (() => {
+            /* Auto-resize textarea on input */
+            let editors = document.querySelectorAll('.editor');
+            editors.forEach(editor => {
+                const autoSize = () => { editor.style.height = 'auto'; editor.style.height = Math.min(editor.scrollHeight + 2, 800) + 'px'; };
+                editor.addEventListener('input', autoSize); autoSize();
+            })
+        })();
+
+        (() => {
+            /* Toggle hidden answer */
+            let btn_answers = document.querySelectorAll('.toggle-answer');
+            btn_answers.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answer = button.nextElementSibling;
+                    const is_hidden = answer.classList.contains('hidden');
+        
+                    if (is_hidden) {
+                        answer.classList.remove('hidden');
+                        button.textContent = "Masquer la réponse";
+                    } else {
+                        answer.classList.add('hidden');
+                        button.textContent = "Afficher la réponse";
+                    }
+                });
+            });
+        })();
+    
+        
+        /* ==== Managing code cells ==== */
+        function createSandboxIframe() {
+            /* Creating the code execution environment within an iframe */
+            const iframe = document.createElement('iframe');
+            iframe.setAttribute('sandbox', 'allow-scripts');
+            iframe.style.display = 'none';
+            const src = `
+            <!DOCTYPE html>
+            <html>
+                <head>
+                    <meta charset=\"utf-8\">
+                </head>
+                <body>
+                    <script>
+                    // Send message to main document.
+                    const send = (type, payload) => parent.postMessage({type, payload}, '*');
+
+                    // Capture console message.
+                    console.log = (...args) => { send('log', args.map(format)); };
+                    console.warn = (...args) => { send('warn', args.map(format)); };
+                    console.error = (...args) => { send('error', args.map(format)); };
+                    
+                    function format(v){
+                        try { if (typeof v === 'object') return JSON.stringify(v, null, 2); } catch(e) {}
+                        return String(v);
+                    }
+
+                    async function run(code) {
+                        try {
+                            const wrapped = '(async()=>{\\n' + code + '\\n})();';
+                            // eval() execute a string like javascript code.
+                            const result = await eval(wrapped);
+                        } catch (e) {
+                            send('error', [String(e && e.stack ? e.stack : e)]);
+                        } finally {
+                            send('done');
+                        }
+                    }
+
+                    // Capture message from main document.
+                    window.addEventListener('message', ev => {
+                        if (!ev.data || ev.data.type !== 'exec') return;
+                        run(ev.data.code);
+                    });
+                    <\/script>
+                </body>
+            </html>`;
+            iframe.srcdoc = src;
+            return iframe;
+        }
+
+        function appendLines(out, lines, cls = '') {
+            /* Add a line in the result of a code cell */
+            const div = document.createElement('div');
+            if (cls) div.className = cls;
+            div.textContent = lines.join(' ');
+            out.appendChild(div);
+            out.scrollTop = out.scrollHeight;
+        }
+
+        function attachCellBehavior(cell, prefilledCode) {
+            /* Adds logic and interactions to the code cell */
+            const editor = cell.querySelector('.editor');
+            const out = cell.querySelector('.output');
+            const btn_run = cell.querySelector('.run');
+            const btn_reset = cell.querySelector('.reset');
+            const btn_clear = cell.querySelector('.clear');
+
+            // Auto-resize textarea on input.
+            const autoSize = () => { editor.style.height = 'auto'; editor.style.height = Math.min(editor.scrollHeight + 2, 800) + 'px'; };
+            editor.addEventListener('input', autoSize); autoSize();
+
+            // Create the sandbox iframe.
+            let iframe = createSandboxIframe();
+            cell.appendChild(iframe);
+
+            function clearOutput() {
+                out.textContent = '';
+            }
+
+            function resetSandbox() {
+                editor.value = prefilledCode;
+            }
+
+            function run() {
+                clearOutput();
+                const code = editor.value;
+
+                // Listen for this cell's messages only while running.
+                const handler = (ev) => {
+                    const { type, payload } = ev.data || {};
+                    if (!type) return;
+                    if (type === 'log') appendLines(out, payload);
+                    if (type === 'warn') appendLines(out, payload, 'warn');
+                    if (type === 'error') appendLines(out, payload, 'err');
+                    if (type === 'done') window.removeEventListener('message', handler);
+                };
+                // Add a listener to the main document.
+                window.addEventListener('message', handler);
+                // Send a message to the sandbox iframe.
+                iframe.contentWindow.postMessage({ type: 'exec', code }, '*');
+            }
+
+            // Init buttons.
+            btn_run.addEventListener('click', run);
+            btn_reset.addEventListener('click', resetSandbox);
+            btn_clear.addEventListener('click', clearOutput);
+
+            // Ctrl/Cmd+Enter to run
+            editor.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                    e.preventDefault();
+                    run();
+                }
+            });
+        }
+
+        function addCell(id_cell, code = '') {
+            const tpl = document.querySelector('#cell-template');
+            const node = tpl.content.firstElementChild.cloneNode(true);
+            node.querySelector('.editor').value = code.trim();
+            const cellsRoot = document.querySelector(`#${id_cell}`);
+            cellsRoot.appendChild(node);
+            attachCellBehavior(node, code.trim());
+        }
+
+        /* ==== Add cells ==== */
+        addCell('cells1', `
+// D'après vous, est ce que ce code déclenche une erreur ?
+const a = 1
+const b = 2
+const c = a + b
+(a + b).toString()
+        `);
+
+        // addCell('cellsXXX', `// Exemple : quelques bases JS\nconst name = 'Mon nouveau cours JS';\nconsole.log('Bienvenue dans', name);\n\n// Fonction\nfunction add(a, b){ return a * b }\nconsole.log('2 + 3 =', add(2,3));\n\n// Objet\nconst user = { id: 1, name: 'Ada' };\nconsole.log(user);\n\n// Top-level await (fetch exemple simulé)\nawait new Promise(r => setTimeout(r, 300));\nconsole.log('Async OK');`);
+
+    </script>
+</body>
+</html>
