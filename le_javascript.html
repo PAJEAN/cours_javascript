@@ -31,6 +31,10 @@
             --exercise-bg: #1e293b;
             --exercise-border: #60a5fa;
             --exercise-text: #bfdbfe;
+
+            --nota-bene-bg: #422006;    /* brun très sombre avec une touche de jaune */
+            --nota-bene-border: #facc15; /* jaune vif */
+            --nota-bene-text: #fef9c3;
         }
 
         .light {
@@ -52,6 +56,9 @@
 
             --exercise-bg: #f0f9ff;
             --exercise-border: #3b82f6;
+
+            --nota-bene-bg: #fefce8;    /* jaune très pâle */
+            --nota-bene-border: #eab308; /* jaune doré */
         }
 
         /* Layout */
@@ -104,32 +111,52 @@
             font-size: 0.95rem;
         }
 
+        .nota-bene-box,
         .exercise-box {
-            background: var(--exercise-bg);
-            border-left: 6px solid var(--exercise-border);
             padding: 1em;
             margin: 1.5em 0;
             border-radius: 8px;
         }
 
+        .nota-bene-box {
+            background: var(--nota-bene-bg);
+            border-left: 6px solid var(--nota-bene-border);            
+        }
+
+        .exercise-box {
+            background: var(--exercise-bg);
+            border-left: 6px solid var(--exercise-border);
+        }
+
+        .nota-bene-header,
         .exercise-header {
             font-weight: bold;
             font-size: 1.1em;
-            color: var(--exercise-text);
+            
             display: flex;
             align-items: center;
             margin-bottom: 0.5em;
         }
 
-        .exercise-icon {
+        .nota-bene-header {
+            color: var(--nota-bene-text);
+        }
+
+        .exercise-header {
+            color: var(--exercise-text);
+        }
+
+        .box-icon {
             font-size: 1.3em;
             margin-right: 0.5em;
         }
 
-        .exercise-content {
+        .box-content {
             font-size: 0.95em;
             line-height: 1.5em;
         }
+
+        
 
         /* Content */
         h1,
@@ -198,6 +225,14 @@
             display: none;
         }
 
+        .my {
+            margin: 0.5em 0;
+        }
+
+        .mt {
+            margin-top: 0.5em;
+        }
+
         /* Code Cell */
         .cell {
             background: var(--cell-bg);
@@ -231,13 +266,11 @@
         }
 
         .editor {
-            position: relative;
             background: var(--code-bg);
             border: 1px solid var(--code-border);
             line-height: 1.5;
             color: var(--text);
             resize: vertical;
-            min-height: 120px;
             width: 100%;
             box-sizing: border-box;
         }
@@ -323,10 +356,10 @@
 
             <div class="exercise-box">
                 <div class="exercise-header">
-                    <span class="exercise-icon">💡</span>
-                    <span class="exercise-title">Exercice</span>
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
                 </div>
-                <div class="exercise-content">
+                <div class="box-content">
                     Cette zone contient les instructions de l'exercice.
                 </div>
             </div>
@@ -342,10 +375,10 @@
 
             <div class="exercise-box">
                 <div class="exercise-header">
-                    <span class="exercise-icon">💡</span>
-                    <span class="exercise-title">Exercice</span>
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
                 </div>
-                <div class="exercise-content">
+                <div class="box-content">
                     <ul>
                         <li> Ouvrez un éditeur de texte et copier/coller le code ci-dessous. </li>
                         <li> Sauvegardez votre fichier et nommez le <code>hello_world.html</code>. </li>
@@ -373,6 +406,18 @@
     &lt;/script>
 &lt;/body>
 &lt;/html></textarea>
+
+                <div class="mt">
+                    Pour organiser votre code, vous pouvez séparer la structure de la page (HTML) et la logique (JavaScript). Créez deux fichiers distincts :
+                    <ul>
+                        <li>un fichier HTML (par exemple <code>index.html</code>),</li>
+                        <li>un fichier JavaScript (par exemple <code>script.js</code>).</li>
+                    </ul>
+                    Ensuite, vous pouvez lier le fichier JavaScript à la page HTML en utilisant la balise :
+                    
+<textarea class="editor my" spellcheck="false">&lt;script src="script.js">&lt;/script></textarea>
+                </div>
+
             </div>
 
             <p>Tirons des enseignements de l'exemple ci-dessus:
@@ -409,13 +454,166 @@ const c = a + b(a + b).toString()</textarea>
 
             <h2>Les variables</h2>
 
-            <p>Une variable est une zone de mémoire destinée à stocker une information. Elle est définie par un nom qui doit commencer par une lettre et pouvant contenir ensuite des lettres, en majuscules ou en minuscules, des chiffres et certains caractères spéciaux comme l'underscore "_". Le caractère tiret "-" n'est pas autorisé car il correspond à l'opérateur de soustraction (de même pour le symbole "*"). Le nom d'une variable ne peut être un mot réservé par le langage comme <code>var</code>, <code>if</code> ou <code>window</code>. <b>Les variables sont sensibles à la casse.</b></p>
+            <div>
+                <p>Une <b>variable</b> est un espace de mémoire qui sert à stocker une information. Elle est identifiée par un <b>nom</b>, qui doit respecter certaines règles :</p>
+                <ul>
+                    <li>Il peut contenir :</li>
+                        <ul>
+                            <li>des lettres (majuscules ou minuscules),</li>
+                            <li>des chiffres,</li>
+                            <li>les caractères spéciaux <code>_</code> et <code>$</code>.</li>                                
+                        </ul>
+                    <li>❌ Le tiret <code>-</code> est interdit (il est interprété comme une soustraction).</li>
+                    <li>❌ D’autres symboles comme <code>*</code> sont aussi interdits.</li>
+                    <li>❌ On ne peut pas utiliser les <b>mots réservés</b> du langage (ex. <code>var</code>, <code>if</code>, <code>window</code>...).</li>
+                    <li>⚠️ Les noms de variables sont <b>sensibles à la casse</b> (<code>maVariable</code> et <code>mavariable</code> sont différents).</li>
+                </ul>
+            </div>
 
-            <h3> Déclaration de variables </h3>
+            <h3> Déclaration </h3>
 
-            La phase de création d'une variable est appelée <b>déclaration</b>. Tandis que la phase où une valeur est attribuée à une variable est appelée <b>instanciation</b>. En JavaScript, il existe 2 mots-clés pour déclarer une variable <b><code>var</code></b> et <b><code>let</code></b>.
+            <p>La phase de création d'une variable est appelée <b>déclaration</b>. Tandis que la phase où une valeur est attribuée à une variable est appelée <b>instanciation</b>. En JavaScript, il existe 3 mots-clés pour déclarer une variable <b><code>var</code></b>, <b><code>let</code></b> et <b><code>const</code></b>.</p>
 
+<textarea class="editor" spellcheck="false">
+let compteur1 = 0;
+var compteur2 = 0, texte = "Hello", maxi;
+maxi = 100;</textarea>
+
+            <p>Les différences entre <code>var</code>, <code>let</code> et <code>const</code> résident dans la portée des variables (fonctionnelle ou bloc), dans leur comportement vis-à-vis du hissage, ainsi que dans la possibilité ou non de réaffecter leur valeur.</p>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <ul>
+                        <li> La <b>portée</b> d'une variable est l'ensemble des éléments du code source où la variable existe et est manipulable.</li>
+                        <li> Le phénomène de <b>hissage</b> (<i>hoisting</i> en anglais) correspond au mécanisme par lequel JavaScript place certaines déclarations (<code>var</code>, <code>function</code>) en haut de leur portée (<i>scope</i>) avant l’exécution du code. Concernant les variables, il s’agit uniquement de leur déclaration, et non de leur initialisation. </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h4>Le mot-clé <code>var</code></h4>
+            
+            <p>Il permet de déclarer une variable avec une <b>portée de fonction</b>.</p>
+
+            <p>La portée de la variable dépendra du contexte dans lequel elle est déclarée:</p>
+            <ul>
+                <li>Si elle est déclarée dans une fonction, la portée est celle de la fonction, qu'importe le bloc dans lequel elle se trouve.</li>
+                <li>Si elle est délcarée hors d'une fonction, la portée sera celle du contexte global.</li>
+            </ul>
+            
             <div id="cells2"></div>
+
+            <p>Les variables déclarées avec <code>var</code> sont également <b>hissées</b>, mais leur valeur n’est pas encore attribuée. Elles sont donc accessibles avant leur déclaration, mais valent <code>undefined</code>.</p>
+
+            <div id="cells3"></div>
+
+            <p>Les variables déclarées avec <code>var</code> peuvent être redéclarées.</p>
+
+            <div id="cells3-1"></div>
+
+            <div id="cells4"></div>
+
+            <button class="btn toggle-answer">
+                Afficher l'explication
+            </button>
+            <div class="hidden">
+                <p>
+                    Le mot-clé <code>var</code> possède une portée limitée à la fonction. Ainsi, lorsqu’une variable est déclarée avec <code>var</code> au sein d'une fonction, sa déclaration est hissée au début de la fonction, et non au niveau du contexte global.
+                </p>             
+            </div>
+
+            <h4>Le mot-clé <code>let</code></h4>
+
+            <p>Il permet de déclarer des variables visibles uniquement au sein du <b>bloc d'instructions</b> dans lequel la variable est définie. Un bloc en JavaScript est représenté par les instructions que l'on retrouve entre les accolades <i>e.g. if</i>, <i>while</i>...</p>
+
+            <div id="cells5"></div>
+
+            <p>Les variables déclarées avec <code>let</code> ne peuvent pas être redéclarées.</p>
+
+            <div id="cells5-1"></div>
+
+            <p>Les variables déclarées avec <code>let</code> (ou <code>const</code>) sont aussi <b>hissées</b>, mais elles restent dans une <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/let#zone_morte_temporaire_temporal_dead_zone_tdz_et_les_erreurs_li%C3%A9es_%C3%A0_let">zone morte temporaire (TDZ)</a> jusqu’à leur <b>initialisation</b>.</p>
+
+            <div id="cells6"></div>
+
+            <div id="cells7"></div>
+
+            <h4>Le mot-clé <code>const</code></h4>
+
+            <p>Une variable déclarée avec le mot-clé <code>const</code> se comporte de manière similaire à une variable déclarée avec <code>let</code>, à ceci près qu’elle définit <b>une constante accessible uniquement en lecture</b>. Cela ne signifie pas que la valeur stockée est immuable, mais simplement que l’identifiant ne peut pas être réaffecté. De plus, une déclaration <code>const</code> doit toujours être initialisée dès sa création.</p>
+
+            <div id="cells7-1"></div>
+
+            <div id="cells7-2"></div>
+
+            <div id="cells7-3"></div>
+
+            <h3> Types de variables </h3>
+
+            <p>Le JavaScript est faiblement typé, c'est-à-dire qu'il <b>autorise une variable à contenir n'importe quel type de données</b> et à en <b>changer en cours d'exécution</b>. L'opérateur <code>typeof</code> permet d'identifier la nature d'une variable.</p>
+
+            <div id="cells8"></div>
+
+            <p>En JavaScript, tout est objet (ou doit être au moins traité comme tel), excepté pour les <a href="https://developer.mozilla.org/en-US/docs/Glossary/Primitive">primitives</a>. Une primitive est une donnée. <b>Elle n'est pas un objet, ne possède pas de méthode et n'est pas mutable</b> (en d'autres termes, elle ne peut pas être altérée contrairement aux objets). Voici les primitives existantes :</p>
+            <ul>            
+                <li> <b>undefined</b> par exemple lorsqu'une variable est déclarée sans être initialisée. </li>
+                <li> <b>number</b> englobe différents types de nombres (<code>integer</code>, <code>float</code>, etc.). </li>
+                <li> <b>bigint</b> représente des valeurs plus grandes que celles correctement représentables par une valeur primitive numérique (<code>number</code>). </li>
+                <li> <b>string</b> désignant les chaînes de caractères. </li>
+                <li> <b>boolean</b> pour symboliser les états <code>true</code> et <code>false</code>. </li>
+                <li> <b>null</b> représente la nullité au sens où aucune valeur pour l'objet n'est présente (une variable déclarée peut être instanciée à <code>null</code>). L'opérateur <code>typeof</code> affiche le type <code>object</code> pour une variable instanciée avec le type <code>null</code> (un <a href="https://stackoverflow.com/questions/18808226/why-is-typeof-null-object">comportement historique</a> de JavaScript).</li>
+                <li> <b>symbol</b> représente une donnée unique et inchangeable qui peut être utilisée afin de représenter des identifiants pour des propriétés d'un objet. </li>
+            </ul>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    Les enveloppes objet <code>String</code>, <code>Number</code>, <code>Boolean</code>, <code>Symbol</code> et <code>BigInt</code> sont exploités lorsque l'on essaye d'accéder à une propriété ou à une fonction directement à partir d'une primitive.
+                </div>
+            </div>
+
+            <div id="cells9"></div>
+
+            <p>L'opérateur <code><b>==</b></code> teste l'égalité de valeur entre deux variables et l'opérateur <code><b>===</b></code> teste l'égalité de valeur et de type entre deux variables.</p>
+
+            <div id="cells10"></div>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>Quand on utilise <code>==</code> en JavaScript des conversions de type sont réalisées. Par exemple, si l’un des deux côtés est un booléen, JavaScript le convertit en nombre :</p>
+                    <ul>
+                        <li><code>true</code> devient 1,</li>
+                        <li><code>false</code> devient 0.</li>
+                    </ul>            
+                    <p>Par contre, <code>null</code> n'est pas converti en nombre dans ce cas-là (pourtant <code>Number(null) == 0</code>). La seule valeur avec laquelle <code>null</code> est égal via <code>==</code> est <code>undefined</code> (ou <code>null</code> lui-même).</p>
+
+                    <p>A noter que lorsqu'on utilise <code>===</code>, il n'y a jamais de conversion (type différent équivaut à <code>false</code>)</p>
+                </div>
+            </div>
+
+            <div id="cells11"></div>
+
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                               Les nombres                               -->
+            <!-- ----------------------------------------------------------------------- -->
+
+            <h2> Les nombres </h2>
+
+            <div id="cells12"></div>
+
+
+
         </div>
     </div>
 
@@ -438,7 +636,10 @@ const c = a + b(a + b).toString()</textarea>
         <section class="cell">
             <header>
                 <div class="cell-title">
-                    <span class="badge"><span class="dot"></span> JavaScript</span>
+                    <span class="badge">
+                        <span class="dot"></span>
+                        <span class="title-text">JavaScript</span>
+                    </span>
                 </div>
                 <div class="cell-actions">
                     <button class="btn run">
@@ -510,7 +711,8 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
             let editors = document.querySelectorAll('.editor');
             editors.forEach(editor => {
                 const autoSize = () => { editor.style.height = 'auto'; editor.style.height = Math.min(editor.scrollHeight + 2, 800) + 'px'; };
-                editor.addEventListener('input', autoSize); autoSize();
+                editor.addEventListener('input', autoSize);
+                autoSize();
             })
         })();
 
@@ -525,6 +727,10 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
                     if (is_hidden) {
                         answer.classList.remove('hidden');
                         button.textContent = "Masquer la réponse";
+                        let textareas = answer.querySelectorAll('textarea');
+                        if (textareas.length > 0) {
+                            textareas.forEach(textarea => textarea.dispatchEvent(new Event('input')));
+                        }
                     } else {
                         answer.classList.add('hidden');
                         button.textContent = "Afficher la réponse";
@@ -557,7 +763,10 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
                     console.error = (...args) => { send('error', args.map(format)); };
                     
                     function format(v){
-                        try { if (typeof v === 'object') return JSON.stringify(v, null, 2); } catch(e) {}
+                        try {
+                            if (typeof v === 'object')
+                                return JSON.stringify(v, null, 2);
+                            } catch(e) {}
                         return String(v);
                     }
 
@@ -594,17 +803,22 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
             out.scrollTop = out.scrollHeight;
         }
 
-        function attachCellBehavior(cell, prefilledCode) {
+        function attachCellBehavior(cell, title, prefilledCode) {
             /* Adds logic and interactions to the code cell */
             const editor = cell.querySelector('.editor');
             const out = cell.querySelector('.output');
             const btn_run = cell.querySelector('.run');
             const btn_reset = cell.querySelector('.reset');
             const btn_clear = cell.querySelector('.clear');
+            const cell_title = cell.querySelector('.title-text');
+
+            // Title of the cell.
+            cell_title.innerHTML = title == '' ? 'JavaScript': title;
 
             // Auto-resize textarea on input.
             const autoSize = () => { editor.style.height = 'auto'; editor.style.height = Math.min(editor.scrollHeight + 2, 800) + 'px'; };
-            editor.addEventListener('input', autoSize); autoSize();
+            editor.addEventListener('input', autoSize);
+            autoSize();
 
             // Create the sandbox iframe.
             let iframe = createSandboxIframe();
@@ -624,7 +838,7 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
 
                 // Listen for this cell's messages only while running.
                 const handler = (ev) => {
-                    const { type, payload } = ev.data || {};
+                    const { type, payload } = ev.data || {};                    
                     if (!type) return;
                     if (type === 'log') appendLines(out, payload);
                     if (type === 'warn') appendLines(out, payload, 'warn');
@@ -651,23 +865,139 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
             });
         }
 
-        function addCell(id_cell, code = '') {
+        function addCell(id_cell, title = '', code = '') {
             const tpl = document.querySelector('#cell-template');
             const node = tpl.content.firstElementChild.cloneNode(true);
             node.querySelector('.editor').value = code.trim();
             const cellsRoot = document.querySelector(`#${id_cell}`);
             cellsRoot.appendChild(node);
-            attachCellBehavior(node, code.trim());
+            attachCellBehavior(node, title, code.trim());
         }
 
         /* ==== Add cells ==== */
-        addCell('cells1', `
-// D'après vous, est ce que ce code déclenche une erreur ?
+        addCell('cells1', 'Question', `
+/* == D'après vous, est ce que ce code déclenche une erreur ? == */
+
 const a = 1
 const b = 2
 const c = a + b
 (a + b).toString()
         `);
+
+        addCell('cells2', 'Portée du mot-clé <code>var</code>', `
+for (var i = 0; i < 2; i++) {
+    console.log(i);
+}
+console.log('La variable i = ' + i);        
+        `);
+
+        addCell('cells3', 'Hissage du mot-clé <code>var</code>', `
+console.log('v1: ' + v1);
+var v1 = 0;      
+`);
+
+        addCell('cells3-1', 'Redéclarer une variable avec le mot-clé <code>var</code>', `
+var x = 'John Doe';
+var x = 0;
+console.log(x);
+`);
+
+        addCell('cells4', 'Question', `
+/* == Est ce que ce code contient une erreur ? == */
+
+function g() {
+    var h = 0;
+}
+g();            // Exécution de la fonction nommée g.
+console.log(h); // Affichage de la variable h ?
+        `);
+
+        addCell('cells5', 'Portée du mot-clé <code>let</code', `
+for (let i = 0; i < 2; i++) {
+    console.log(i);
+}
+console.log('La variable i = ' + i);
+        `);
+
+        addCell('cells5-1', 'Redéclarer une variable avec le mot-clé <code>let</code>', `
+let x = 'John Doe';
+let x = 0;
+console.log(x);
+`);
+
+        addCell('cells6', 'Hissage du mot-clé <code>let</code>', `
+console.log('v1: ' + v1);
+let v1 = 0;      
+        `);
+
+        addCell('cells7', 'Question', `
+/* == Quel sera le résultat de ce code ? == */
+
+if (true) {
+    var g = 0;
+    let h = 1;
+}
+console.log('Variable g = ' + g);
+console.log('Variable h = ' + h);
+        `);
+
+        addCell('cells7-1', 'let vs const (1/2)', `
+let x = 'John Doe';
+x = 0;
+console.log(x);
+        `);
+
+        addCell('cells7-2', 'let vs const (2/2)', `
+const x = 'John Doe';
+x = 0;
+console.log(x);
+        `);
+
+        addCell('cells7-3', 'Une valeur muable', `
+const TABLEAU = [1,2,3];
+TABLEAU[0] = 2;
+console.log(TABLEAU.toString());
+        `);
+
+        addCell('cells8', 'Types et réaffectation', `
+var a = 2;
+console.log('type de la variable a :' + typeof a);
+a = a + '3';
+console.log('a = ' + a + ' et est de type ' + typeof a);
+var b;
+console.log('type de la variable b :' + typeof b);
+        `);
+
+        addCell('cells9', 'Comparaison entre les types (1/2)', `
+console.log('null == undefined :', null == undefined); // Exception: représente tous les deux une valeur fausse (falsy).
+console.log('null === undefined :', null === undefined);
+console.log('typeof null : ', typeof null);
+const s1 = Symbol();
+const s2 = Symbol();
+console.log('s1 === s2 :', s1 === s2);
+        `);
+
+        addCell('cells10', 'Comparaison entre les types (2/2)', `
+console.log('false == 0:', false == 0);
+console.log('true == 1:', true == 1);
+console.log('false === 0:', false === 0);
+console.log('null == false:', null == false);
+console.log('Number(null) == false:', Number(null) == false)
+        `);
+
+        addCell('cells11', 'Question', `
+/* == Quel sera le résultat de l'instruction suivante ? == */
+
+console.log(typeof typeof 1);
+        `);
+
+        addCell('cells12', 'Opérations élémentaires', `
+var a = 3 + 2;
+var b = 4 * 2;
+var c = 5 / 2;
+var d = 6 % 2;
+console.log(a + '; ' + b + '; ' + c + '; ' + d);
+        `);  
 
         // addCell('cellsXXX', `// Exemple : quelques bases JS\nconst name = 'Mon nouveau cours JS';\nconsole.log('Bienvenue dans', name);\n\n// Fonction\nfunction add(a, b){ return a * b }\nconsole.log('2 + 3 =', add(2,3));\n\n// Objet\nconst user = { id: 1, name: 'Ada' };\nconsole.log(user);\n\n// Top-level await (fetch exemple simulé)\nawait new Promise(r => setTimeout(r, 300));\nconsole.log('Async OK');`);
 
