@@ -464,7 +464,7 @@ const c = a + b(a + b).toString()</textarea>
                             <li>les caractères spéciaux <code>_</code> et <code>$</code>.</li>                                
                         </ul>
                     <li>❌ Le tiret <code>-</code> est interdit (il est interprété comme une soustraction).</li>
-                    <li>❌ D’autres symboles comme <code>*</code> sont aussi interdits.</li>
+                    <li>❌ D'autres symboles comme <code>*</code> sont aussi interdits.</li>
                     <li>❌ On ne peut pas utiliser les <b>mots réservés</b> du langage (ex. <code>var</code>, <code>if</code>, <code>window</code>...).</li>
                     <li>⚠️ Les noms de variables sont <b>sensibles à la casse</b> (<code>maVariable</code> et <code>mavariable</code> sont différents).</li>
                 </ul>
@@ -479,7 +479,7 @@ let compteur1 = 0;
 var compteur2 = 0, texte = "Hello", maxi;
 maxi = 100;</textarea>
 
-            <p>Les différences entre <code>var</code>, <code>let</code> et <code>const</code> résident dans la portée des variables (fonctionnelle ou bloc), dans leur comportement vis-à-vis du hissage, ainsi que dans la possibilité ou non de réaffecter leur valeur.</p>
+            <p>Les différences entre <code>var</code>, <code>let</code> et <code>const</code> résident dans la <b>portée</b> des variables (fonctionnelle ou bloc), dans leur comportement vis-à-vis du <b>hissage</b>, ainsi que dans la possibilité ou non de <b>réaffecter leur valeur</b>.</p>
 
             <div class="nota-bene-box">
                 <div class="nota-bene-header">
@@ -489,7 +489,7 @@ maxi = 100;</textarea>
                 <div class="box-content">
                     <ul>
                         <li> La <b>portée</b> d'une variable est l'ensemble des éléments du code source où la variable existe et est manipulable.</li>
-                        <li> Le phénomène de <b>hissage</b> (<i>hoisting</i> en anglais) correspond au mécanisme par lequel JavaScript place certaines déclarations (<code>var</code>, <code>function</code>) en haut de leur portée (<i>scope</i>) avant l’exécution du code. Concernant les variables, il s’agit uniquement de leur déclaration, et non de leur initialisation. </li>
+                        <li> Le phénomène de <b>hissage</b> (<i>hoisting</i> en anglais) correspond au mécanisme par lequel JavaScript place certaines déclarations (<code>var</code>, <code>function</code>) en haut de leur portée (<i>scope</i>) avant l'exécution du code. Concernant les variables, il s'agit uniquement de leur déclaration, et non de leur initialisation. </li>
                     </ul>
                 </div>
             </div>
@@ -506,7 +506,7 @@ maxi = 100;</textarea>
             
             <div id="cells2"></div>
 
-            <p>Les variables déclarées avec <code>var</code> sont également <b>hissées</b>, mais leur valeur n’est pas encore attribuée. Elles sont donc accessibles avant leur déclaration, mais valent <code>undefined</code>.</p>
+            <p>Les variables déclarées avec <code>var</code> sont également <b>hissées</b>, mais leur valeur n'est pas encore attribuée. Elles sont donc accessibles avant leur déclaration, mais valent <code>undefined</code>.</p>
 
             <div id="cells3"></div>
 
@@ -521,7 +521,7 @@ maxi = 100;</textarea>
             </button>
             <div class="hidden">
                 <p>
-                    Le mot-clé <code>var</code> possède une portée limitée à la fonction. Ainsi, lorsqu’une variable est déclarée avec <code>var</code> au sein d'une fonction, sa déclaration est hissée au début de la fonction, et non au niveau du contexte global.
+                    Le mot-clé <code>var</code> possède une portée limitée à la fonction. Ainsi, lorsqu'une variable est déclarée avec <code>var</code> au sein d'une fonction, sa déclaration est hissée au début de la fonction, et non au niveau du contexte global.
                 </p>             
             </div>
 
@@ -535,7 +535,7 @@ maxi = 100;</textarea>
 
             <div id="cells5-1"></div>
 
-            <p>Les variables déclarées avec <code>let</code> (ou <code>const</code>) sont aussi <b>hissées</b>, mais elles restent dans une <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/let#zone_morte_temporaire_temporal_dead_zone_tdz_et_les_erreurs_li%C3%A9es_%C3%A0_let">zone morte temporaire (TDZ)</a> jusqu’à leur <b>initialisation</b>.</p>
+            <p>Les variables déclarées avec <code>let</code> (ou <code>const</code>) sont aussi <b>hissées</b>, mais elles restent dans une <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/let#zone_morte_temporaire_temporal_dead_zone_tdz_et_les_erreurs_li%C3%A9es_%C3%A0_let">zone morte temporaire (TDZ)</a> jusqu'à leur <b>initialisation</b>.</p>
 
             <div id="cells6"></div>
 
@@ -543,7 +543,7 @@ maxi = 100;</textarea>
 
             <h4>Le mot-clé <code>const</code></h4>
 
-            <p>Une variable déclarée avec le mot-clé <code>const</code> se comporte de manière similaire à une variable déclarée avec <code>let</code>, à ceci près qu’elle définit <b>une constante accessible uniquement en lecture</b>. Cela ne signifie pas que la valeur stockée est immuable, mais simplement que l’identifiant ne peut pas être réaffecté. De plus, une déclaration <code>const</code> doit toujours être initialisée dès sa création.</p>
+            <p>Une variable déclarée avec le mot-clé <code>const</code> se comporte de manière similaire à une variable déclarée avec <code>let</code>, à ceci près qu'elle définit <b>une constante accessible uniquement en lecture</b>. Cela ne signifie pas que la valeur stockée est immuable, mais simplement que l'identifiant ne peut pas être réaffecté. De plus, une déclaration <code>const</code> doit toujours être initialisée dès sa création.</p>
 
             <div id="cells7-1"></div>
 
@@ -590,7 +590,7 @@ maxi = 100;</textarea>
                     <span class="box-title">À savoir</span>
                 </div>
                 <div class="box-content">
-                    <p>Quand on utilise <code>==</code> en JavaScript des conversions de type sont réalisées. Par exemple, si l’un des deux côtés est un booléen, JavaScript le convertit en nombre :</p>
+                    <p>Quand on utilise <code>==</code> en JavaScript des conversions de type sont réalisées. Par exemple, si l'un des deux côtés est un booléen, JavaScript le convertit en nombre :</p>
                     <ul>
                         <li><code>true</code> devient 1,</li>
                         <li><code>false</code> devient 0.</li>
@@ -612,7 +612,214 @@ maxi = 100;</textarea>
 
             <div id="cells12"></div>
 
+            <div id="cells13"></div>
 
+            <div id="cells14"></div>
+
+            <div id="cells15"></div>
+
+
+            <!-- ----------------------------------------------------------- -->
+            <!--                  Les chaînes de caractères                  -->
+            <!-- ----------------------------------------------------------- -->
+
+            <h2> Les chaînes de caractères </h2>
+
+            <p> Une chaîne de caractères est une succession ordonnée de caractères. Si elle ne contient aucun caractère, alors c'est une chaîne vide. Les chaînes de caractères sont des primitives ainsi <b>elles ne sont pas mutables</b> (contrairement à Python par exemple). </p>
+
+            <div id="cells16"></div>
+
+            <h3> Conversion de types </h3>
+
+            <p> Une chaîne de caractères peut être créee à partir de tout objet JavaScript et de sa méthode de conversion vers une chaîne <code>toString()</code> (possibilité de surcharger cette méthode). </p>
+
+            <div id="cells17"></div>
+
+            <h3> Propriétés et méthodes associées à l'objet <code>String</code> </h3>
+
+            <p> Une chaîne de caractères <b>exploite les propriétés et les méthodes issues de l'objet <code>String</code></b> (vous pouvez retrouver l'ensemble des méthodes sur <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/String">developer.mozilla.org</a>). Pour cela, JavaScript crée un <i>wrapper</i> à partir de l'objet <code>String</code>. Ainsi, lorsque l'on essaye d'accéder à une propritété d'une chaîne de caractères <code>str</code> ou qu'une fonction y est appliquée alors JavaScript réalise l'opération <code>new String(str)</code> afin de créer un objet <code>String</code> initialisé à partir de la valeur de la primitive <code>str</code>. Détaillons certaines propriétés et méthodes. </p>
+
+            <div id="cells18"></div>
+
+            <div id="cells19"></div>
+
+            <div id="cells20"></div>
+
+            <div id="cells21"></div>
+
+            <div id="cells22"></div>
+
+            <div id="cells23"></div>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <ul>
+                        <li>Afficher en majuscule le dernier caractère de la chaîne "JavaScript".</li>
+                        <li>Afficher les caractères "JS" à partir de la chaîne "JavaScript".</li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="btn toggle-answer" data-pw="at">
+                Afficher la réponse
+            </button>
+            <div class="hidden">
+                <div id="cells24"></div>
+            </div>
+
+
+            <!-- ----------------------------------------------------------- -->
+            <!--                        Les fonctions                        -->
+            <!-- ----------------------------------------------------------- -->
+
+            <h2> Les fonctions </h2>
+
+            <p> Une fonction est un ensemble d'instructions réutilisables pouvant être effectuées à partir de paramètres et pouvant retourner un résultat. L'intérêt d'une fonction est de décrire une procédure que l'on peut utiliser autant de fois que l'on veut sans réécrire les mêmes lignes de code. </p>
+
+            <h3> Fonctions nommées </h3>
+
+            <div id="cells25"></div>
+
+            <div id="cells26"></div>
+
+            <div id="cells27"></div>
+
+            <div id="cells28"></div>
+
+            <div id="cells29"></div>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p> Une variable déclarée dans le <b>contexte global</b> est visible et manipulable dans l'ensemble du script. Une variable <b>locale</b>, déclarée dans le corps d'une fonction, n'est visible que localement à l'intérieur de cette fonction. </p>
+                    <p> Au sein du code précédent, JavaScript crée une copie locale (copie par valeur pour les variables primitives et par référence pour les objets) de l'argument passé en paramètre de la fonction. Cette copie existe uniquement à l'intérieur de la fonction et elle est accessible par le nom spécifié dans la définition de la fonction. </p>
+                </div>
+            </div>
+            
+            <p> Une fonction peut être déclarée avec un nombre indéfini de paramètres en entrée. La syntaxe utilise trois points placés devant le dernier paramètre (affectation par décomposition). Ces trois points (...) sont appelés <b>syntaxe de décomposition</b>. Ils permettent d'étendre un itérable (par exemple une expression de tableau ou une chaîne de caractères) en lieu et place de plusieurs arguments (pour les appels de fonctions) ou de plusieurs éléments (pour les tableaux).</p>
+
+            <div id="cells30"></div>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p> L'objet <code>arguments</code> est une variable locale (intrinsèque et inhérente aux fonctions) disponibles dans toutes les fonctions (qui ne sont pas des fonctions fléchées). Cet objet est semblable à un tableau, il possède une propriété <i>length</i>, mais il n'hérite pas des méthodes de l'objet <code>Array</code> (<i>e.g.</i> <code>map()</code>, <code>every()</code>, etc.). </p>
+                </div>
+            </div>
+
+            <h3> Fonctions anonymes </h3>
+
+            <p> Dans certain cas, il n'est pas utile de nommer une fonction qui ne sera pas appelée et réutilisée ailleurs dans le code. On peut donc déclarer des fonctions anonymes (qui n'ont pas de nom). L'exemple suivant exploite la fonction <code>every()</code> qui teste l'ensemble des éléments d'un tableau pour vérifier si la condition décrite par une fonction passée en argument est respectée. </p>
+
+            <div id="cells31"></div>
+
+            <p> La définition d'une fonction anonyme peut également être réalisée par l'intermédiaire du mot-clé <code>function</code> sans renseigner de nom de fonction ou bien par la syntaxe des <b>fonctions fléchées</b>. </p>
+
+            <p> Une différence importante à souligner entre les fonctions nommées et les expressions de fonction (anonymes) réside dans leur comportement vis-à-vis du phénomène de <i>hissage</i>. </p>
+            
+            <div id="cells32"></div>
+
+            <div id="cells33"></div>
+
+            <h3> Fonctions fléchées </h3>
+
+            <p> Deux facteurs sont à l'origine de la conception des fonctions fléchées : une syntaxe plus courte vis-à-vis des expressions de fonction et l'absence de <code>this</code> spécifique à la fonction. Sur ce dernier point, cela signifie qu'une fonction fléchée ne lie pas son propre <code>this</code> au sein de la fonction. La syntaxe des fonctions fléchées est souvent utilisée pour représenter une fonction anonyme <code>(valeurEntrée) => expressionRetour</code> au sein d'une méthode. </p>
+
+            <div id="cells34"></div>
+
+            <h3> Fonctions auto-exécutées </h3>
+
+            <p> JavaScript introduit une syntaxe pour exécuter une fonction immédiatement après sa création. </p>
+
+            <div id="cells35"></div>
+
+            <h2> Manipuler les fonctions </h2>
+
+            <h3> Fonction de première classe </h3>
+
+            <p> En JavaScript, <b>les fonctions sont des objets</b> de type <code>Function</code> au même titre qu'un tableau est un objet de type <code>Array</code>. Cela veut dire qu'une fonction peut :</p>
+            <ul>
+                <li> être affectée à des variables ou des structures de données (<i>e.g.</i> on référence une fonction à une variable), </li>
+                <li> être passée comme paramètre à une fonction, </li>
+                <li> être retournée par une fonction. </li>
+            </ul>
+
+            <p> Ainsi, une fonction de <b>première classe</b> correspond à une <b>propriété d'un langage</b> comme le JavaScript dans lequel les fonctions sont des objets de première classe. Cela signifie qu'on peut les stocker dans des variables, les passer en argument ou bien les retourner depuis d'autres fonctions. </p>
+
+            <div id="cells36"></div>
+
+            <h3> Fonctions d'ordre supérieur </h3>
+
+            <p> Cette propriété des fonctions de première classe permet des constructions intéressantes appelée <b>les fonctions d'ordre supérieur</b> (<i>high order functions</i>).
+            Une fonction d'ordre supérieur est une <b>fonction qui accepte au moins une autre fonction en paramètre, et/ou qui retourne une fonction en résultat</b>. Un exemple a été présenté précédemment avec la fonction <code>every()</code>.
+
+            <div id="cells37"></div>
+
+            <h3> Fonctions imbriquées et fermetures (<i>closures</i>) </h3>
+
+            <p> Il est possible d'imbriquer une fonction au sein d'une autre fonction. La fonction imbriquée (interne) est privée par rapport à la fonction (externe) qui la contient. Cela forme ce qu'on appelle une <b>fermeture</b> (ou <i>closure</i> en anglais). </p>
+
+            <p>Les fermetures sont des <b>fonctions qui se "souviennent" de l'environnement dans lequel elles ont été créées</b> (on dit aussi que la fonction capture son "environnement"). En d'autres termes, une <i>closure</i> est une fonction capable de capter des données (susceptibles de changer au cours du temps), de les enregistrer dans son espace fonctionnel et de les fournir en cas de besoin. </p>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <ul>
+                        <li> On ne peut accéder à la fonction interne seulement avec des instructions contenues dans la fonction externe. </li>
+                        <li> La fonction interne est une fermeture : la fonction interne peut utiliser les arguments et des variables de la fonction externe alors que la fonction externe ne peut pas utiliser de variables et d'arguments de la fonction interne. </li>
+                    </ul>
+                </div>
+            </div>
+            
+
+            <div id="cells38"></div>
+
+            <div id="cells39"></div>
+
+            <p> Lorsque deux arguments ou variables appartenant aux portées d'une fermeture ont le même nom, il y a un conflit de noms. La <b>portée la plus interne l'emportera</b> par rapport à la portée la plus externe. C'est ce qu'on appelle la chaîne de portée (scope chain en anglais). Le premier maillon de cette chaîne est la portée la plus interne tandis que le dernier maillon est représenté par la portée la plus externe. </p>
+
+            <div id="cells40"></div>
+            
+            <div id="cells41"></div>
+
+            <h2> La manipulation de tableaux </h2>
+
+            <p> Un tableau est une structure ordonnée de données qui permet l'accès aux informations qu'il contient par un indice. En JavaScript un tableau peut contenir plusieurs types de données à la fois. </p>
+
+            <div id="cells42"></div>
+
+            <div id="cells42-1"></div>
+
+            <div id="cells43"></div>
+
+            <div id="cells44"></div>
+
+            <h3> Méthodes associées à l'objet <code>Array</code> </h3>
+
+            <p> Vous pouvez retrouver l'ensemble des fonctions sur <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array">developer.mozilla.org</a>. </p>
+
+            <div id="cells45"></div>
+            
+            <div id="cells46"></div>
+            
+            <div id="cells47"></div>
+            
+            <div id="cells48"></div>
+
+            <div id="cells49"></div>
 
         </div>
     </div>
@@ -725,15 +932,21 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
                     const is_hidden = answer.classList.contains('hidden');
         
                     if (is_hidden) {
+                        if (button.hasAttribute('data-pw')) {
+                            const code = prompt('Veuillez entrer le code', '');
+                            if (code != button.getAttribute('data-pw')) {
+                                return;
+                            }
+                        }
                         answer.classList.remove('hidden');
-                        button.textContent = "Masquer la réponse";
+                        button.textContent = "Masquer";
                         let textareas = answer.querySelectorAll('textarea');
                         if (textareas.length > 0) {
                             textareas.forEach(textarea => textarea.dispatchEvent(new Event('input')));
                         }
                     } else {
                         answer.classList.add('hidden');
-                        button.textContent = "Afficher la réponse";
+                        button.textContent = "Réafficher";
                     }
                 });
             });
@@ -953,7 +1166,7 @@ x = 0;
 console.log(x);
         `);
 
-        addCell('cells7-3', 'Une valeur muable', `
+        addCell('cells7-3', 'Valeur muable', `
 const TABLEAU = [1,2,3];
 TABLEAU[0] = 2;
 console.log(TABLEAU.toString());
@@ -997,7 +1210,420 @@ var b = 4 * 2;
 var c = 5 / 2;
 var d = 6 % 2;
 console.log(a + '; ' + b + '; ' + c + '; ' + d);
-        `);  
+        `);
+
+        addCell('cells13', 'Incrémentation et décrémentation', `
+var a = 1;
+a = a + 1;
+a += 1;
+a++;
+a = a - 1;
+a -= 1;
+a--;
+console.log('a = ', a);
+a *= 2;
+console.log('a = ', a);
+a /= 2;
+console.log('a = ', a);
+        `);
+
+        addCell('cells14', 'Conversion de type', `
+var nombre = '3.14abc';
+console.log(nombre + ' est un ' + typeof nombre);
+console.log(parseInt(nombre) + " est un " + typeof parseInt(nombre));
+console.log(parseFloat(nombre) + " est un " + typeof parseFloat(nombre));
+console.log("1 == '1' =", 1 == '1'); // Conversion de '1' en 1.
+console.log("1 === '1", 1 === '1'); // Aucune conversion.
+        `);
+
+        addCell('cells15', 'Conversion de type dans les opérations', `
+console.log('5' - 3); // Conversion.
+console.log('5' * '2'); // Conversion.
+console.log('5' / '2'); // Conversion.
+console.log('5' + 3); // Opérateur de concaténation.
+        `);
+
+        addCell('cells16', 'Question', `
+/* == Quel sera le résultat ? == */
+
+let str = 'bonjour';
+str[0] = 'B';
+console.log(str);
+        `);
+
+        addCell('cells16', 'Déclarer une chaîne de caractères', `
+var a = "Chaîne de caractères #1.";
+var b = 'Chaîne de "caractères" #2.';
+var c = "Chaîne de \\"caractères\\" #3.";
+var d = \`Cha'î'ne de "caractères" #4.\`;
+console.log(\`a = `+'${a}'+`; b = `+'${b}'+`; c = `+'${c}'+`\`);
+console.log(d);
+        `);
+
+        addCell('cells17', 'Conversion de type', `
+let date = new Date();
+let nombre1 = 2;
+let nombre2 = 2 + '';
+let tableau = [1,2,3];
+console.log(date.toString() + " | " + nombre1.toString() + " | " + typeof nombre2 + " | " + tableau.toString());
+
+Date.prototype.toString = function() { // Surcharge de la méthode toString de l'objet Date.
+    return this.getFullYear();
+};
+console.log('Année :', date.toString());
+        `);
+
+        addCell('cells18', "Longueur d'une chaîne", `
+let str = 'JavaScript';
+/* == Quels seront les résultats de ces 3 instructions ? == */
+
+console.log(str.length);
+console.log("str".length);
+console.log("".length);
+        `);
+
+        addCell('cells19', 'Majuscules et minuscules', `
+let msg = 'JavaScript';
+console.log(msg.toUpperCase());
+console.log(msg.toLowerCase());
+        `);
+
+        addCell('cells20', 'Accéder à un caractère précis', `
+let msg = 'Javascript !';
+console.log(msg[0]);
+console.log(msg.charAt(0));
+        `);
+
+        addCell('cells21', 'Rechercher dans une chaîne', `
+let msg = 'ouagadougou';
+console.log(msg.lastIndexOf("ou"));
+console.log(msg.indexOf("ou"));
+console.log(msg.indexOf("ou", 8)); // À partir d'un indice donné (ici 8).
+        `);
+
+        addCell('cells22', 'Extraire une sous-chaîne', `
+let msg = 'JavaScript';
+console.log(msg.substring(0, 4));
+console.log(msg.substring(4));
+        `);
+
+        addCell('cells23', 'Nettoyer une chaîne de caractères', `
+let msg = \` \t \n \t  JavaScript   \`;
+console.log(msg);
+console.log(msg.trim());
+        `);
+
+        addCell('cells24', 'Exercice', `
+let msg = 'JavaScript';
+console.log(msg[msg.length - 1].toUpperCase());
+console.log(msg[0] + '' + msg[4]);
+        `);
+
+        addCell('cells25', 'Fonction nommée', `
+function direBonjour() {
+    console.log('Bonjour !');
+}
+direBonjour();
+        `);
+        
+        addCell('cells26', 'Paramètre de fonction (1/2)', `
+function direBonjour(nom){
+    return 'Bonjour ' + nom + '!';
+}
+console.log(direBonjour('Arthur'));
+        `);
+
+        addCell('cells27', 'Paramètre de fonction (2/2)', `
+function direBonjour(nom) {
+    console.log('Bonjour ' + nom + '!');
+}
+
+// Est ce que JavaScript va renvoyer une erreur ?
+
+direBonjour();
+        `);
+
+        addCell('cells28', 'Paramètre par défaut', `
+function direBonjour(nom, age = 32) { // Paramètre par défaut.
+    return 'Bonjour ' + nom + ', tu as ' + age + ' ans!';
+}
+console.log(direBonjour('Arthur'));
+console.log(direBonjour('Merlin', 884));
+        `);
+
+        addCell('cells29', 'Portée des variables', `
+var age = 22; // Variable globale.
+function direBonjour(nom, age){
+    var citation = 'Pas changer assiette pour fromage !'; // Variable locale.
+    age++;
+    return 'Bonjour ' + nom + ', tu as ' + age + ' ans! ' + citation;
+}
+console.log(direBonjour('Arthur', age));
+
+// Quelle valeur a la variable globale age ?
+console.log('Variable age: ' + age);
+
+console.log(direBonjour('Merlin', 884));
+
+// Selon vous, est ce que je peux afficher la variable citation ?
+console.log(citation);
+        `);
+
+        addCell('cells30', 'Décomposition', `
+function direBonjour(nom, ...noms) {
+    console.log('Paramètre 1: ' + nom)
+    for(let i = 0; i < noms.length; i++) {
+        console.log(noms[i]);
+    }
+    console.log('---');
+    for(let i = 0; i < arguments.length; i++) {
+        console.log(arguments[i]);
+    }
+}
+direBonjour('Arthur', 'Merlin', 'Perceval');
+        `);
+
+        addCell('cells31', 'Fonctions anonymes', `
+var tableau1 = [0,2,4,6,8];
+var tableau2 = [0,2,5,6,8];
+
+// Que recherchons nous à tester ici ?
+
+var response1 = tableau1.every(function(valeur){
+    return (valeur % 2 == 0);
+});
+
+// Même question ici ?
+
+var response2 = tableau2.every(function(valeur){
+    return (valeur % 2 == 1);
+});
+
+console.log(response1);
+console.log(response2);
+        `);
+
+        addCell('cells32', 'Phénomène de hissage (1/2)', `
+bonjour();
+function bonjour() { // Phénomène de hissage.
+    console.log('Bonjour !');
+}
+        `);
+        
+        addCell('cells33', 'Phénomène de hissage (2/2)', `
+console.log(bonjour); // Hissage de la déclaration et non de son initialisation.
+bonjour();
+var bonjour = function() {
+    console.log('Bonjour !');
+}
+        `);
+
+        addCell('cells34', 'Fonctions fléchées', `
+var tableau1 = [0,2,4,6,8];
+console.log(tableau1.every((valeur) => (valeur % 2 == 0)));
+console.log(tableau1.every(valeur => {
+    return valeur % 2 == 0
+}));
+        `);
+
+        addCell('cells35', 'Fonctions auto-exécutées', `
+// Fonction anonyme.
+(function(valeur){
+    console.log(valeur % 2);
+})(3);
+
+// Fonction fléchée.
+((valeur) => {
+    console.log(valeur % 2);
+})(3);
+
+// Fonction nommée.
+(function nom_fonction(valeur){
+    console.log(valeur % 2);
+})(3);
+        `);
+
+        addCell('cells36', 'Objet <code>Function</code>', `
+let ma_fonction = () => 3;
+console.log(ma_fonction instanceof Function);
+let mon_tableau = [1, 2];
+console.log(mon_tableau instanceof Array);
+        `);
+
+        addCell('cells37', "Fonction d'ordre supérieur", `
+function multiplierParDeux(nombre) {
+    return nombre * 2;
+}
+function afficher(nombre) {
+    console.log('La fonction afficher() affiche la valeur :', nombre);
+    return nombre;
+}
+console.log('Les fonctions imbriquées affichent :', afficher(multiplierParDeux(4)));
+
+function afficherDouble(nombre) { // Ne prend pas de fonction en entrée.
+    return afficher(multiplierParDeux(nombre)); // Ne renvoie pas de fonction en sortie.
+}
+console.log('La fonction afficherDouble() affiche :', afficherDouble(5));
+
+// Fonction d'ordre supérieur.
+// De manière plus générique, une fonction f() exploite le retour d'une fonction g().
+function compose(f, g) { // Prend deux fonctions en entrée.
+    return (nombre) => { // Renvoie une fonction en sortie.
+        return f(g(nombre));
+    };
+}
+var fonctionImbriquee = compose(afficher, multiplierParDeux);
+console.log('La fonction imbriquée fonctionImbriquee() affiche :', fonctionImbriquee(6));
+        `);
+
+        addCell('cells38', '<i>Closure</i> (1/2)', `
+function ajouteCarres(a, b) {
+   function carre(x) { // La fonction interne est une closure.
+      return x * x;
+   }
+   return carre(a) + carre(b);
+}
+let a = ajouteCarres(1, 2);
+let b = ajouteCarres(3, 4);
+let c = ajouteCarres(5, 6);
+console.log(a + "; "+ b + "; " + c);
+        `);
+
+        addCell('cells39', '<i>Closure</i> (2/2)', `
+// Définition des arguments pour la fonction externe, utilisés aussi pour la fonction interne.
+function addition(nombre1){
+    return function(nombre2){
+        return nombre1 + nombre2; // nombre1 est capturé dans l'environnement de la fonction retournée.
+    }
+}
+var additionBase10 = addition(10);
+console.log(additionBase10(5));
+// Ou.
+console.log(addition(3)(4));
+        `);
+
+        addCell('cells40', 'Chaîne de portée', `
+/* == D'après vous, que retournera la variable "resultat" ? == */
+
+function externe() {
+    var x = 10;
+    function interne(x) {
+        return x;
+    }
+    return interne; // On retourne la fonction interne pour pouvoir l'exécuter.
+}
+var resultat = externe()(20);
+console.log(resultat);
+        `);
+
+        addCell('cells41', 'Question', `
+/* == D'après vous, que retournera la variable "resultat" ? == */
+
+function externe() {
+    function interne(x) {
+        return function(y){
+            return x * 2 + y;
+        };
+    }
+    return interne;
+}
+var resultat = externe()(20);
+console.log(resultat(5));
+        `);
+
+        addCell('cells42', 'Déclarer et instancier un tableau', `
+var tableau = ["Merlin", 884, null, undefined];
+console.log(tableau[0] + ' | ' + tableau[1] + ' | ' + tableau[2] + ' | ' + tableau[3]);
+
+/* Utiliser le constructeur de l'objet  pour initialiser un tableau de taille 5 */
+let tableau1 = new Array(5);
+console.log('tableau1/Index_1: ' + tableau1[0]); // 5 valeurs undefined.
+
+var tableau2 = new Array(5).fill(5);
+console.log(tableau2.toString());
+        `);
+
+        addCell('cells42-1', "Modifier une valeur à partir d'un index", `
+let tableau1 = ["Merlin", 884];
+console.log(tableau1.toString());
+tableau1[0] = "Perceval";
+console.log(tableau1.toString());
+let tableau2 = new Array(6);
+console.log(tableau2.toString());
+tableau2[2] = 't';
+console.log(tableau2.toString());
+        `);
+
+        addCell('cells43', 'Syntaxe de décomposition', `
+let tableau = [1, 2, 3];
+let [premier, deuxieme, troisieme] = tableau;
+console.log(tableau.toString() + " | " + premier + " | " + deuxieme + " | " + troisieme);
+
+let [first, ...reste] = tableau;
+console.log(tableau.toString() + " | " + first + " | " + reste.toString());
+        `);
+
+        addCell('cells44', 'Tableau imbriqué', `
+let tableau = [['Merlin', 884], ['Lapin adulte', 9]];
+console.log(tableau[1][0]);
+        `);
+
+        addCell('cells45', "Taille d'un tableau", `
+let tableau = [1, 2, 3];
+console.log('Le tableau contient :', tableau.length, 'élements');
+        `);
+
+        addCell('cells46', 'Ajouter un élément', `
+let tableau = [1, 2];
+tableau.push(3);    // Ajout à la fin.
+tableau.unshift(0); // Ajout au début.
+console.log(tableau.toString());
+        `);
+
+        addCell('cells47', 'Supprimer un élément', `
+let tableau = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+// Suppression du dernier élément.
+var element_pop = tableau.pop();
+console.log(element_pop + " | " + typeof element_pop + " | " + tableau.toString());
+
+// Suppression du premier élément.
+element_pop = tableau.shift();
+console.log(element_pop + " | " + typeof element_pop + " | " + tableau.toString());
+
+// Suppression d'un élément de taille 1 à partir de l'index 0.
+element_pop = tableau.splice(0, 1);
+console.log(element_pop.toString() + " | " + typeof element_pop + " | " + tableau.toString());
+
+// Suppression d'un élément de taille 3 à partir de l'index 1.
+element_pop = tableau.splice(1, 3);
+console.log(element_pop.toString() + " | " + typeof element_pop + " | " + tableau.toString());
+        `);
+
+        addCell('cells48', "Rechercher l'index d'un élément", `
+let tableau = [1, 2, 'Arthur', 3, 4, 'Arthur'];
+console.log(tableau.indexOf(2));
+console.log(tableau.indexOf("Arthur"));
+console.log(tableau.indexOf("Arthur", 3));
+console.log(tableau.lastIndexOf("Arthur"));
+console.log(tableau.indexOf("Perceval"));
+        `);
+
+        addCell('cells49', 'Concaténation de tableaux', `
+let tableau1 = [0, 1];
+let tableau2 = [2, 3];
+let tableau3 = [4, 5];
+let tableau4 = tableau1.concat(tableau2, tableau3);
+let tableau5 = [...tableau1, ...tableau2, ...tableau3]
+console.log(tableau4.toString());
+console.log(tableau5.toString());
+        `);
+
+/*        
+        addCell('cells00', '', `
+
+        `);
+*/
 
         // addCell('cellsXXX', `// Exemple : quelques bases JS\nconst name = 'Mon nouveau cours JS';\nconsole.log('Bienvenue dans', name);\n\n// Fonction\nfunction add(a, b){ return a * b }\nconsole.log('2 + 3 =', add(2,3));\n\n// Objet\nconst user = { id: 1, name: 'Ada' };\nconsole.log(user);\n\n// Top-level await (fetch exemple simulé)\nawait new Promise(r => setTimeout(r, 300));\nconsole.log('Async OK');`);
 
