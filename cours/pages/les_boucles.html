@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Le JavaScript</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+            <header>
+                <h1 class="title">Les boucles</h1>
+                <div class="toolbar">
+                    <button class="btn" id="btn-print" title="Imprimer / Exporter en PDF">🖨️ Imprimer</button>
+                    <button class="btn" id="btn-theme" title="Changer le thème" data-initial="light">🌗 Thème</button>
+                </div>
+            </header>
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                               Les boucles                               -->
+            <!-- ----------------------------------------------------------------------- -->
+
+            <p> Une boucle en programmation est un traitement répété plusieurs fois grâce à un bloc d'instructions codé une seule fois. </p>
+
+            <div id="cells68"></div>
+
+            <p> L'instruction <code>for...of</code> permet de créer une boucle Array qui parcourt un <code>objet itérable</code> (ce qui inclut notamment les objets <code>Array</code> et <code>Map</code>) et qui permet d'exécuter une ou plusieurs instructions sur la valeur de chaque propriété. </p>
+
+            <div id="cells69"></div>
+            
+        </div>
+    </div>
+
+
+<!--
+88888888888                              888          888            
+    888                                  888          888            
+    888                                  888          888            
+    888   .d88b.  88888b.d88b.  88888b.  888  8888b.  888888 .d88b.  
+    888  d8P  Y8b 888 "888 "88b 888 "88b 888     "88b 888   d8P  Y8b 
+    888  88888888 888  888  888 888  888 888 .d888888 888   88888888 
+    888  Y8b.     888  888  888 888 d88P 888 888  888 Y88b. Y8b.     
+    888   "Y8888  888  888  888 88888P"  888 "Y888888  "Y888 "Y8888  
+                                888                                  
+                                888                                  
+                                888                                  
+-->
+
+    <template id="cell-template">
+        <section class="cell">
+            <header>
+                <div class="cell-title">
+                    <span class="badge">
+                        <span class="dot"></span>
+                        <span class="title-text">JavaScript</span>
+                    </span>
+                </div>
+                <div class="cell-actions">
+                    <button class="btn run">
+                        <span class="icon">▶</span>
+                        <span class="label">Exécuter</span>
+                    </button>
+                    <button class="btn reset">
+                        <span class="icon">⟳</span>
+                        <span class="label">Réinitialiser</span>
+                    </button>
+
+                    <button class="btn clear">
+                        <span class="icon">🧹</span>
+                        <span class="label">Effacer</span>
+                    </button>
+                </div>
+            </header>
+            <textarea class="editor" spellcheck="false"></textarea>
+            <div class="output" aria-live="polite"></div>
+        </section>
+    </template>
+
+
+<!--
+ .d8888b.                   d8b          888    
+d88P  Y88b                  Y8P          888    
+Y88b.                                    888    
+ "Y888b.    .d8888b 888d888 888 88888b.  888888 
+    "Y88b. d88P"    888P"   888 888 "88b 888    
+      "888 888      888     888 888  888 888    
+Y88b  d88P Y88b.    888     888 888 d88P Y88b.  
+ "Y8888P"   "Y8888P 888     888 88888P"   "Y888 
+                                888             
+                                888             
+                                888             
+-->
+
+    <script src="../js/main.js"></script>
+
+    <script>
+        /* ==== Add cells ==== */
+   
+    addCell('cells68', 'Boucle <code>for</code>', `
+let tableau = [];
+for(let i = 0; i < 10; i++) {
+    if (i == 0) {
+        continue;
+    }
+
+    if(i > 5) {
+        break;
+    }
+        
+    tableau.push(i);
+}
+console.log(tableau.toString());
+    `);
+
+    addCell('cells69', 'Boucle <code>for...of</code>', `
+
+    `);
+
+
+/*        
+    addCell('cells00', '', `
+
+    `);
+*/
+
+    </script>
+</body>
+</html>

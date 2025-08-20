@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Le JavaScript</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+            <header>
+                <h1 class="title">Les conditions</h1>
+                <div class="toolbar">
+                    <button class="btn" id="btn-print" title="Imprimer / Exporter en PDF">🖨️ Imprimer</button>
+                    <button class="btn" id="btn-theme" title="Changer le thème" data-initial="light">🌗 Thème</button>
+                </div>
+            </header>
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                             Les conditions                              -->
+            <!-- ----------------------------------------------------------------------- -->
+
+            <p> Les tests conditionnels permettent d'orienter l'éxécution vers des embranchements d'instructions selon le résultat de conditions définies par le développeur. </p>
+
+            <div id="cells61"></div>
+
+            <div id="cells62"></div>
+
+            <div id="cells63"></div>
+
+            <div id="cells64"></div>
+
+            <div id="cells65"></div>
+
+            <p> Les expressions logiques étant évaluées de gauche à droite, le moteur d'exécution utilise les <b>courts-circuits</b> dans les cas suivants : </p>
+            <ul>
+                <li> <code>false && nimportequoi</code> sera court-circuitée pour être évaluée en <code>false</code>. </li>
+                <li> <code>true || nimportequoi</code> sera court-circuitée pour être évaluée en <code>true</code>. </li>
+            </ul>
+
+            <div id="cells66"></div>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <ul>
+                        <li> Créer une fonction anonyme prenant en paramètre l'âge d'une personne. La fonction doit retourner la valeur "Majeur" ou "Non-majeur" en fonction de l'age indiqué. Utiliser un opérateur ternaire et tester votre fonction. </li>
+                        <li> Créer une variable de type entier pour représenter les points de vie d'un personnage fictif. Ensuite, créer une fonction anonyme pour décrémenter de 1 les points de vie (symbolisés par la variable). Enfin, créer une variable pour représenter l'esquive d'un personnage. Si un personnage esquive alors il ne subit pas de dégâts sinon appliquer la fonction de dégâts. Réprésenter un combat en utilisant une évaluation court-circuit (et plusieurs valeurs pour la variable esquive). </li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="btn toggle-answer" data-pw="ce">
+                Afficher la réponse
+            </button>
+            <div class="hidden">
+                <div id="cells67"></div>
+            </div>
+            
+        </div>
+    </div>
+
+
+<!--
+88888888888                              888          888            
+    888                                  888          888            
+    888                                  888          888            
+    888   .d88b.  88888b.d88b.  88888b.  888  8888b.  888888 .d88b.  
+    888  d8P  Y8b 888 "888 "88b 888 "88b 888     "88b 888   d8P  Y8b 
+    888  88888888 888  888  888 888  888 888 .d888888 888   88888888 
+    888  Y8b.     888  888  888 888 d88P 888 888  888 Y88b. Y8b.     
+    888   "Y8888  888  888  888 88888P"  888 "Y888888  "Y888 "Y8888  
+                                888                                  
+                                888                                  
+                                888                                  
+-->
+
+    <template id="cell-template">
+        <section class="cell">
+            <header>
+                <div class="cell-title">
+                    <span class="badge">
+                        <span class="dot"></span>
+                        <span class="title-text">JavaScript</span>
+                    </span>
+                </div>
+                <div class="cell-actions">
+                    <button class="btn run">
+                        <span class="icon">▶</span>
+                        <span class="label">Exécuter</span>
+                    </button>
+                    <button class="btn reset">
+                        <span class="icon">⟳</span>
+                        <span class="label">Réinitialiser</span>
+                    </button>
+
+                    <button class="btn clear">
+                        <span class="icon">🧹</span>
+                        <span class="label">Effacer</span>
+                    </button>
+                </div>
+            </header>
+            <textarea class="editor" spellcheck="false"></textarea>
+            <div class="output" aria-live="polite"></div>
+        </section>
+    </template>
+
+
+<!--
+ .d8888b.                   d8b          888    
+d88P  Y88b                  Y8P          888    
+Y88b.                                    888    
+ "Y888b.    .d8888b 888d888 888 88888b.  888888 
+    "Y88b. d88P"    888P"   888 888 "88b 888    
+      "888 888      888     888 888  888 888    
+Y88b  d88P Y88b.    888     888 888 d88P Y88b.  
+ "Y8888P"   "Y8888P 888     888 88888P"   "Y888 
+                                888             
+                                888             
+                                888             
+-->
+
+    <script src="../js/main.js"></script>
+
+    <script>
+        /* ==== Add cells ==== */
+    addCell('cells61', 'Condition simple', `
+console.log("--> i = 50, limit = 50;")
+var i = 50, limit = 50;
+if(i <= limit){
+    console.log(i + ' inférieur ou égal à ' + limit);
+}
+
+console.log("Conversion de type réalisée par l'opérateur ==");
+console.log("--> i = '50', limit = 50;")
+var i = '50', limit = 50;
+if(i == limit) {
+    console.log('i et limit ont une valeur égale car "==" convertit la variable i en number.');
+}
+
+console.log('--> i !== limit')
+if(i !== limit){
+    console.log('i et limit ont une valeur ou un type différent.');
+}
+console.log("L'opérateur !== ou === n'effectue pas de conversion de type.")
+
+console.log("--> i = '000000050.0'")
+i = '000000050.0'
+if(i == limit) {
+    console.log('i et limit ont une valeur égale.');
+}
+console.log(Number(i));
+    `);
+
+    addCell('cells62', 'Opérateurs logiques', `
+let nom1 = 'Arthur', nom2 = 'Anne', nom3 = 'Arborer';
+if(nom1[0] == nom3[0] && nom1[nom1.length-1] == nom3[nom3.length-1]){
+    console.log(nom1 + ' et ' + nom3 + ' ont la première ET la dernière lettres identiques.');
+}
+
+if(nom1[0] == nom2[0] || nom1[nom1.length-1] == nom2[nom2.length-1]){
+    console.log(nom1 + ' et ' + nom2 + ' ont la première OU la dernière lettres identiques.');
+}
+
+console.log(!false);
+        `);
+    
+    addCell('cells63', 'Test si - sinon', `
+let i = 50, limit = 50;
+if(i < limit) {
+    console.log(i + ' inférieur à ' + limit);
+}
+else if(i > limit) {
+    console.log(i + ' supérieur à ' + limit);
+}
+else {
+    console.log(i + ' égal à ' + limit);
+}
+    `);
+
+    addCell('cells64', 'Syntaxe <code>switch</code>', `
+function legume(i){
+    switch(i){
+        case 1:
+            console.log(i + ' Carotte');
+            break;
+        case 2:
+        case 3:
+            console.log(i + ' Navet');
+            break;
+        default:
+            console.log(i + ' Autres légumes');
+    }
+}
+let i = 1, j = 2, k = 3, l = 4;
+legume(i), legume(j), legume(k), legume(l);
+    `);
+
+    addCell('cells65', 'Opérateur ternaire', `
+let nom = 'Arthur';
+nom[0] == 'A' ? console.log("Couhière !") : console.log("Interprèèèète !");
+    `);
+
+    addCell('cells66', 'Évaluation en court-circuit', `
+function direBonjour(){
+    console.log('Bonjour !');
+}
+    
+let aimable = true;
+console.log(1);
+aimable && direBonjour(); // aimable == true nécessite d'évaluer également le second terme (&&).
+
+console.log(2);
+aimable = false;
+aimable && direBonjour(); // aimable == false ne nécessite pas d'évaluer le second terme (&&).
+
+console.log(3);
+aimable || direBonjour(); // aimable == false donc on évalue le second terme (||).
+
+console.log(4);
+aimable = true;
+aimable || direBonjour(); // aimable == true ne nécessite pas d'évaluer le second terme (||).
+    `);
+
+    addCell('cells67', '', `
+let est_majeur = (age) => age >= 18 ? 'Majeur': 'Mineur';
+console.log(est_majeur(17));
+console.log(est_majeur(77));
+
+let pv = 10;
+let degat = () => pv--;
+let a_esquive = false;
+
+console.log('Combat 1');
+a_esquive || degat();
+console.log(pv);
+
+console.log('Combat 1');
+a_esquive = true;
+a_esquive || degat();
+console.log(pv);
+
+    `);
+
+/*        
+    addCell('cells00', '', `
+
+    `);
+*/
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Le JavaScript</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+            <header>
+                <h1 class="title">Les tableaux</h1>
+                <div class="toolbar">
+                    <button class="btn" id="btn-print" title="Imprimer / Exporter en PDF">🖨️ Imprimer</button>
+                    <button class="btn" id="btn-theme" title="Changer le thème" data-initial="light">🌗 Thème</button>
+                </div>
+            </header>
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                              Les tableaux                               -->
+            <!-- ----------------------------------------------------------------------- -->
+
+            <p> Un tableau est une structure ordonnée de données qui permet l'accès aux informations qu'il contient par un indice. En JavaScript un tableau peut <b>contenir plusieurs types de données à la fois</b>. </p>
+
+            <div id="cells42"></div>
+
+            <div id="cells42-1"></div>
+
+            <div id="cells43"></div>
+
+            <div id="cells44"></div>
+
+            <h2> Méthodes associées à l'objet <code>Array</code> </h2>
+
+            <p> Vous pouvez retrouver l'ensemble des fonctions sur <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array">developer.mozilla.org</a>. </p>
+
+            <div id="cells45"></div>
+            
+            <div id="cells46"></div>
+            
+            <div id="cells47"></div>
+            
+            <div id="cells48"></div>
+
+            <div id="cells49"></div>
+
+            <p> La méthode <code>slice()</code> renvoie un objet tableau contenant une <b>copie superficielle</b> d'une portion du tableau d'origine. La portion est définie par un indice de début et un indice de fin (exclu). Contrairement à la méthode <code>splice()</code> le tableau d'origine ne sera pas modifié. </p>
+
+            <div id="cells50"></div>
+
+            <div id="cells51"></div>
+
+            <button class="btn toggle-answer">
+                Afficher l'explication
+            </button>
+            <div class="hidden">
+                <p> La méthode <code>slice()</code> effectue une copie superficielle du tableau. JavaScript <b>copie par valeur les primitives et par référence les objets</b>. </p>
+            </div>
+
+            <p> La méthode <code>every()</code> permet de tester si le tableau respecte une condition, décrite au sein d'une fonction, sur l'ensemble de ses éléments. Un exemple de la fonction est décrite dans la section "Fonctions anonymes". </p>
+
+            <div id="cells52"></div>
+
+            <p> La méthode <code>filter()</code> retourne un nouveau tableau contenant tous les éléments du tableau initial qui remplissent la condition définie dans la fonction passée en paramètre. </p>
+
+            <div id="cells53"></div>
+
+            <p> La méthode <code>map()</code> retourne un nouveau tableau composé des éléments du tableau initial sur lesquels une fonction a été appliquée. </p>
+            
+            <div id="cells54"></div>
+
+            <p> La méthode <code>reduce()</code> réduit le tableau en appliquant une fonction qui accumule deux éléments pour n'en retourner qu'un seul. La fonction accumulatrice est appelée jusqu'à retourner qu'un seul élément. Pour cela, elle nécessite 4 paramètres: </p>
+            <ul>
+                <li> <i>accumulateur</i> : valeur retournée par le précédent appel à la fonction.</li>
+                <li> <i>element</i> : l'élément en cours de traitement.</li>
+                <li> <i>index</i> : l'indice de l'élément (optionnel).</li>
+                <li> <i>origine</i> : le tableau d'origine (optionnel). </li>
+            </ul>
+
+            <p> La valeur initiale de l’accumulateur est soit celle fournie en paramètre, soit, à défaut, le premier élément de l’itérable. Dans ce dernier cas, l’itération commence au deuxième élément. </p>
+
+            <p> Si on appelle <code>reduce()</code> sur un tableau vide sans fournir de valeur initiale, on aura une erreur. </p>
+
+            <div id="cells54-1"></div>
+            
+            <p> La méthode <code>join()</code> retourne une chaîne de caractères composées des éléments du tableau séparés par un séparateur passé en paramètre. </p>
+
+            <div id="cells55"></div>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <p>Exercice n°1</p>
+                    <ul>
+                        <li> À partir du tableau suivant: let tableau = ['mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'] ajouter 'lundi' au début du tableau et 'dimanche' à la fin du tableau. </li>
+                        <li> À partir de la syntaxe de décomposition, répéter l'exercice ci-dessus en une seule étape. </li>
+                        <li> Afficher la longueur en caractères de chaque jour de la semaine en une ligne de code. </li>
+                    </ul>
+                    
+                    <p>Exercice n°2</p>
+                    <ul>
+                        <li> Calculer la moyenne du tableau suivant: let tableau = [8, 15, 12, 5, 2, 18] en une ligne de code. </li>
+                        <li> Calculer la somme à partir du tableau suivant: let tableau1 =  [['a', 8], ['b', 15], ['c', 12], ['d', 5], ['e', 2], ['f', 18]]. Vous devez considérer les valeurs en position 1 de chacun des éléments. </li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="btn toggle-answer" data-pw="as">
+                Afficher la réponse
+            </button>
+            <div class="hidden">
+                <div id="cells56"></div>
+
+                <div id="cells57"></div>
+            </div>
+
+            <p> La méthode <code>sort()</code> trie les éléments d'un tableau, dans ce même tableau, et renvoie le tableau. Par défaut, le tri s'effectue sur les <b>éléments du tableau convertis en chaînes de caractères</b> et triées selon les valeurs des unités de code UTF-16 des caractères. </p>
+
+            <div id="cells58"></div>
+
+            <p> Pour réaliser un tri numérique, une fonction est passée en paramètre de la fonction <code>sort()</code>. Elle prend deux paramètres <code>a</code> et <code>b</code> qui représentent deux éléments du tableau. Les éléments sont ensuite triés en fonction du retour de la fonction :</p>
+            <ul>
+                <li> Si le retour est une valeur négative alors <code>a</code> sera ordonné avant <code>b</code>. </li>
+                <li> Si le retour est égal à 0, alors l'odre de <code>a</code> et <code>b</code> ne change pas. </li>
+                <li> Si le retour est une valeur positive alors <code>b</code> sera ordonné avant <code>a</code>. </li>
+            </ul>
+
+            <div id="cells59"></div>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <p> Afin de mettre en pratique les différentes notions vues précédement, nous allons réaliser un CRUD (create, read, update, delete) à partir uniquement de fonctions. Construisez une liste de courses (avec l'objet <code>Array</code>) dans laquelle chaque élement de ma liste est un tableau de taille 2 dans lequel l'index 0 correspond au nom de l'élément et l'index 1 à la quantité achetée. </p>
+                    <ul>
+                        <li> Créer une fonction pour ajouter un élément à la liste. Cette fonction prend en paramètre le nom de l'élément et la quantité.
+                        <li> Créer une fonction qui permet d'afficher les éléments de la liste avec leur quantité respective en les séparant avec " | ". </li>
+                        <li> Ajouter à la liste: 1 Balai, 2 Dentifrices et 3 Camemberts à partir d'une fonction auto-éxécutées (et de la fonction permettant d'ajouter un élément à la liste). </li>
+                        <li> Créer une fonction pour modifier la quantité d'un élément de la liste en fonction de son index. </li>
+                        <li> Incrémenter la quantité de Camembert acheté de 1. </li>
+                        <li> Créer une fonction pour supprimer un élément de la liste en fonction de son index. </li>
+                        <li> Supprimer de la liste le Balai. </li>
+                        <li> Créer une fonction qui exploite la méthode <i>reduce()</i> pour comptabiliser le nombre d'articles au total. </li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="btn toggle-answer" data-pw="al">
+                Afficher la réponse
+            </button>
+            <div class="hidden">
+                <div id="cells60"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+<!--
+88888888888                              888          888            
+    888                                  888          888            
+    888                                  888          888            
+    888   .d88b.  88888b.d88b.  88888b.  888  8888b.  888888 .d88b.  
+    888  d8P  Y8b 888 "888 "88b 888 "88b 888     "88b 888   d8P  Y8b 
+    888  88888888 888  888  888 888  888 888 .d888888 888   88888888 
+    888  Y8b.     888  888  888 888 d88P 888 888  888 Y88b. Y8b.     
+    888   "Y8888  888  888  888 88888P"  888 "Y888888  "Y888 "Y8888  
+                                888                                  
+                                888                                  
+                                888                                  
+-->
+
+    <template id="cell-template">
+        <section class="cell">
+            <header>
+                <div class="cell-title">
+                    <span class="badge">
+                        <span class="dot"></span>
+                        <span class="title-text">JavaScript</span>
+                    </span>
+                </div>
+                <div class="cell-actions">
+                    <button class="btn run">
+                        <span class="icon">▶</span>
+                        <span class="label">Exécuter</span>
+                    </button>
+                    <button class="btn reset">
+                        <span class="icon">⟳</span>
+                        <span class="label">Réinitialiser</span>
+                    </button>
+
+                    <button class="btn clear">
+                        <span class="icon">🧹</span>
+                        <span class="label">Effacer</span>
+                    </button>
+                </div>
+            </header>
+            <textarea class="editor" spellcheck="false"></textarea>
+            <div class="output" aria-live="polite"></div>
+        </section>
+    </template>
+
+
+<!--
+ .d8888b.                   d8b          888    
+d88P  Y88b                  Y8P          888    
+Y88b.                                    888    
+ "Y888b.    .d8888b 888d888 888 88888b.  888888 
+    "Y88b. d88P"    888P"   888 888 "88b 888    
+      "888 888      888     888 888  888 888    
+Y88b  d88P Y88b.    888     888 888 d88P Y88b.  
+ "Y8888P"   "Y8888P 888     888 88888P"   "Y888 
+                                888             
+                                888             
+                                888             
+-->
+
+    <script src="../js/main.js"></script>
+
+    <script>
+        /* ==== Add cells ==== */
+        
+    addCell('cells42', 'Déclarer et instancier un tableau', `
+var tableau = ["Merlin", 884, null, undefined];
+console.log(tableau[0] + ' | ' + tableau[1] + ' | ' + tableau[2] + ' | ' + tableau[3]);
+
+/* Utiliser le constructeur de l'objet  pour initialiser un tableau de taille 5 */
+let tableau1 = new Array(5);
+console.log('tableau1/Index_1: ' + tableau1[0]); // 5 valeurs undefined.
+
+var tableau2 = new Array(5).fill(5);
+console.log(tableau2.toString());
+        `);
+
+        addCell('cells42-1', "Modifier une valeur à partir d'un index", `
+let tableau1 = ["Merlin", 884];
+console.log(tableau1.toString());
+
+tableau1[0] = "Perceval";
+console.log(tableau1.toString());
+
+let tableau2 = new Array(6);
+console.log(tableau2.toString());
+
+tableau2[2] = 't';
+console.log(tableau2.toString());
+        `);
+
+        addCell('cells43', 'Syntaxe de décomposition', `
+let tableau = [1, 2, 3];
+let [premier, deuxieme, troisieme] = tableau;
+console.log(tableau.toString() + " | " + premier + " | " + deuxieme + " | " + troisieme);
+
+let [first, ...reste] = tableau;
+console.log(tableau.toString() + " | " + first + " | " + reste.toString());
+        `);
+
+        addCell('cells44', 'Tableau imbriqué', `
+let tableau = [['Merlin', 884], ['Lapin adulte', 9]];
+console.log(tableau[1][0]);
+        `);
+
+        addCell('cells45', "Taille d'un tableau", `
+let tableau = [1, 2, 3];
+console.log('Le tableau contient :', tableau.length, 'élements');
+        `);
+
+        addCell('cells46', 'Ajouter un élément', `
+let tableau = [1, 2];
+tableau.push(3);    // Ajout à la fin.
+tableau.unshift(0); // Ajout au début.
+console.log(tableau.toString());
+        `);
+
+        addCell('cells47', 'Supprimer un élément', `
+let tableau = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+// Suppression du dernier élément.
+var element_pop = tableau.pop();
+console.log(element_pop + " | " + typeof element_pop + " | " + tableau.toString());
+
+// Suppression du premier élément.
+element_pop = tableau.shift();
+console.log(element_pop + " | " + typeof element_pop + " | " + tableau.toString());
+
+// Suppression d'un élément de taille 1 à partir de l'index 0.
+element_pop = tableau.splice(0, 1);
+console.log(element_pop.toString() + " | " + typeof element_pop + " | " + tableau.toString());
+
+// Suppression d'un élément de taille 3 à partir de l'index 1.
+element_pop = tableau.splice(1, 3);
+console.log(element_pop.toString() + " | " + typeof element_pop + " | " + tableau.toString());
+        `);
+
+        addCell('cells48', "Rechercher l'index d'un élément", `
+let tableau = [1, 2, 'Arthur', 3, 4, 'Arthur'];
+console.log(tableau.indexOf(2));
+console.log(tableau.indexOf('Arthur') + " est l'index du premier élément trouvé.");
+console.log(tableau.indexOf('Arthur', 3) + " est l'index du premier élément trouvé à partir de l'index 3.");
+console.log(tableau.lastIndexOf('Arthur') + " est l'index du dernier élément trouvé.");
+console.log(tableau.indexOf('Perceval') + " signifie que l'élément n'a pas été trouvé.");
+        `);
+
+        addCell('cells49', 'Concaténation de tableaux', `
+let tableau1 = [0, 1];
+let tableau2 = [2, 3];
+let tableau3 = [4, 5];
+let tableau4 = tableau1.concat(tableau2, tableau3);
+let tableau5 = [...tableau1, ...tableau2, ...tableau3]
+console.log(tableau4.toString());
+console.log(tableau5.toString());
+        `);
+
+        addCell('cells50', 'Méthode <code>slice()<code>', `
+let tableau = [1, 2, 3, 4, 5, 6];
+let portion1 = tableau.slice(1, 3);
+console.log(tableau.toString() + " | " + portion1.toString());
+
+let portion2 = tableau.slice(-3); // Index négatif.
+console.log(tableau.toString() + " | " + portion2.toString());
+
+portion1[0] = 1000;
+console.log(portion1.toString());
+console.log(tableau.toString());
+        `);
+
+        addCell('cells51', 'Question', `
+let tableau = [[1, 2], [3, 4], [5, 6]];
+let portion1 = tableau.slice(1,2);
+console.log('portion1 :');
+console.log(portion1.map(el => el.toString()));
+
+/* == Que contient le tableau après la modification de portion1 ? == */
+
+console.log('Modification de portion1');
+portion1[0][1] = 1000;
+console.log('portion1 :');
+console.log(portion1.map(el => el.toString()));
+console.log('tableau :')
+console.log(tableau.map(el => el.toString()));
+        `);
+
+        addCell('cells52', 'Méthode <code>every()<code>', `
+var tableau = [0, 2, 4, 6, 8];
+
+var response = tableau.every(function(valeur) {
+    return (valeur % 2 == 0);
+});
+
+console.log(response);
+        `);
+
+        addCell('cells53', 'Méthode <code>filter()<code>', `
+var tableau = [0, 2, 4, 5, 6, 7, 8];
+var tableau_paire = tableau.filter(function(valeur) {
+    return (valeur % 2 == 0);
+});
+console.log(tableau.toString());
+console.log(tableau_paire.toString());
+        `);
+
+        addCell('cells54', 'Méthode <code>map()<code>', `
+var tableau1 = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"];
+var tableau2 = tableau1.map(function(valeur){
+   return valeur.toUpperCase();
+});
+console.log(tableau1.toString());
+console.log(tableau2.toString());
+        `);
+
+        addCell('cells54-1', 'Méthode <code>reduce()<code>', `
+let tableau = [1, 2, 3, 4, 5]; // 1+2 | 3+3 | 6+4 | 10+5.
+let somme = tableau.reduce(function(accumulateur, element) {
+    return accumulateur + element;
+})
+console.log('Mon tableau : ' + tableau.toString());
+console.log('Ma somme : ' + somme);
+
+// Modification de la valeur initial de l'accumulateur.
+let somme_plus_5 = tableau.reduce(function(accumulateur, element) {
+    return accumulateur + element;
+}, 5);
+console.log('Ma somme + 5 : ' + somme_plus_5);
+        `);
+
+        addCell('cells55', 'Méthode <code>join()<code>', `
+var tableau = [0, 1, 2, 3];
+console.log(tableau.join(" -*- "));
+        `);
+
+    addCell('cells56', 'Exercice n°1', `
+let tableau = ['mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+// Q1.
+tableau.unshift('lundi');
+tableau.push('dimanche');
+console.log(tableau.toString());
+// Q2.
+tableau = ['mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+tableau = ['lundi', ...tableau, 'dimanche'];
+console.log(tableau.toString());
+// Q3.
+console.log(tableau.map(el => el.length).toString());
+        `);
+
+        addCell('cells57', 'Exercice n°2', `
+// Q1.
+let tableau = [8, 15, 12, 5, 2, 18];
+console.log(tableau.reduce((acc, el) => acc + el) / tableau.length);
+//Q2.
+let tableau1 =  [['a', 8], ['b', 15], ['c', 12], ['d', 5], ['e', 2], ['f', 18]];
+console.log(tableau1.reduce((acc, el) => acc + el[1], 0));
+        `);
+
+    addCell('cells58', 'Méthodes <code>sort()<code> et <code>toSorted()<code>', `
+var tableau = ['mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+tableau.sort();
+console.log(tableau.toString());
+
+var tableau = [4, 5, 3, 1, 22];
+var tableau1 = tableau.toSorted();
+console.log('- Fonction toSorted()');
+console.log('tableau : ' + tableau.toString());
+console.log('tableau1 : ' + tableau1.toString());
+console.log('- Fonction sort()');
+tableau.sort();
+console.log(tableau.toString());
+        `);
+
+        addCell('cells59', 'Tri numérique', `
+let tableau = [4, 5, 3, 1, 22];
+tableau.sort((a, b) => {
+    return a - b;
+});
+console.log(tableau.toString());
+        `);
+
+        addCell('cells60', 'Réponses', `
+// Q1.
+let liste = [];
+
+function ajouter(nom, quantite) {
+	liste.push([nom, quantite]);
+}
+
+// Q2.
+function afficher() {
+	console.log(liste.join(" | "));
+}
+
+// Q3.
+(function() {
+	ajouter("Balai", 1);
+	ajouter("Dentifrice", 2);
+	ajouter("Camembert", 3);
+})();
+afficher();
+
+// Q4.
+function editerQuantite(index, quantite) {
+	liste[index][1] = quantite;
+}
+
+// Q5.
+editerQuantite(2, 4);
+afficher();
+
+// Q6.
+function supprimer(index) {
+	liste.splice(index, 1);
+}
+
+// Q7.
+supprimer(0);
+afficher();
+
+// Q8.
+function total(){
+	let somme = liste.reduce(function(accumulateur, element) {
+			return accumulateur + element[1];
+	}, 0);
+	return somme;
+}
+console.log(total());
+        `);
+
+/*        
+        addCell('cells00', '', `
+
+        `);
+*/
+
+    </script>
+</body>
+</html>

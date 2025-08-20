@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Le JavaScript</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+            <header>
+                <h1 class="title">Le JavaScript</h1>
+                <div class="toolbar">
+                    <button class="btn" id="btn-print" title="Imprimer / Exporter en PDF">🖨️ Imprimer</button>
+                    <button class="btn" id="btn-theme" title="Changer le thème" data-initial="light">🌗 Thème</button>
+                </div>
+            </header>
+
+            <p>Ce cours présente les concepts fondamentaux du JavaScript (côté client) et sa syntaxe. Vous utiliserez un éditeur de texte (par exemple : <a href="https://code.visualstudio.com/">Visual Studio Code</a>) ainsi qu'un navigateur Web (par exemple : Google Chrome, Firefox ou Opera). </p>
+
+            <p>Les cellules sont interactives : vous pouvez y exécuter directement le code. À noter que certains exemples ne sont pas fonctionnels et sont fournis uniquement à des fins pédagogiques.</p>
+
+
+            <!-- ----------------------------------------------------------- -->
+            <!--                 Créer sa première page web                  -->
+            <!-- ----------------------------------------------------------- -->
+
+            <h2>Créer sa première page web</h2>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <ul>
+                        <li> Ouvrez un éditeur de texte et copier/coller le code ci-dessous. </li>
+                        <li> Sauvegardez votre fichier et nommez le <code>hello_world.html</code>. </li>
+                        <li> Double-cliquez sur votre fichier pour l'ouvrir avec votre navigateur. </li>
+                        <li> Accédez à la console de développement (touche F12 sur Google Chrome). </li>
+                    </ul>
+                </div>
+
+<textarea class="editor" spellcheck="false">
+&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+    &lt;title>Hello World&lt;/title>
+&lt;/head>
+&lt;body>
+    <!-- Un commentaire HTML -->
+    &lt;h1 style="color:red">Bonjour&lt;/h1>
+
+    &lt;script type="text/javascript">
+    // Un premier commentaire en JavaScript.
+    /*
+        Un second commentaire en Javascript.
+    */
+    console.log("Hello World");
+    &lt;/script>
+&lt;/body>
+&lt;/html></textarea>
+
+                <div class="mt">
+                    Pour organiser votre code, vous pouvez séparer la structure de la page (HTML) et la logique (JavaScript). Créez deux fichiers distincts :
+                    <ul>
+                        <li>un fichier HTML (par exemple <code>index.html</code>),</li>
+                        <li>un fichier JavaScript (par exemple <code>script.js</code>).</li>
+                    </ul>
+                    Ensuite, vous pouvez lier le fichier JavaScript à la page HTML en utilisant la balise :
+                    
+<textarea class="editor my" spellcheck="false">&lt;script src="script.js">&lt;/script></textarea>
+                </div>
+
+            </div>
+
+            <p>Tirons des enseignements de l'exemple ci-dessus:
+                <ul>
+                    <li> Une page HTML est constituée d'une balise <code>&lt;head&gt;</code> contenant tous les éléments de l'en-tête du document et d'une balise <code>&lt;body&gt;</code> représentant le contenu du document. </li>
+                    <li> Le code JavaScript est ici directement intégré au code HTML de la page Web via la balise <code>&lt;script&gt;</code>. </li>
+                    <li> Les deux façons d'ajouter un commentaire au sein d'un code JavaScript (// et /* */). </li>
+                    <li> Le code JavaScript exploite la méthode <code>log()</code> de l'objet <code>console</code> pour afficher un message au sein de la console du navigateur (F12 pour l'ouvrir avec Chrome). </li>
+                    <li> Une instruction JavaScript se termine par un point-virgule (lorsqu'il n'est pas explicitement indiqué l'interprète exploite l'ASI (<i>Automatic Semicolon Insertion</i>) pour automatiquement ajouter les point-virgules. <b>Cependant, prenez garde.</b> </li>
+                </ul>
+            </p>
+
+            <div id="cells1"></div>
+
+            <button class="btn toggle-answer">
+                Afficher l'explication
+            </button>
+            <div class="hidden">
+                <p>
+                    Une erreur est levée car JavaScript tente d'exécuter le code ci-dessous.
+                </p>
+<textarea class="editor" spellcheck="false">
+const a = 1
+const b = 2
+const c = a + b(a + b).toString()</textarea>                
+            </div>
+
+            <p class="subtle">La fonction <b><i>toString()</i></b> est utilisée ici pour convertir le nombre en une chaîne de caractères.</p>
+
+            <!-- ----------------------------------------------------------- -->
+            <!--                        Les variables                        -->
+            <!-- ----------------------------------------------------------- -->            
+
+            <!-- ----------------------------------------------------------- -->
+            <!--                        Les fonctions                        -->
+            <!-- ----------------------------------------------------------- -->
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                              Les tableaux                               -->
+            <!-- ----------------------------------------------------------------------- -->
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                             Les conditions                              -->
+            <!-- ----------------------------------------------------------------------- -->
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                               Les boucles                               -->
+            <!-- ----------------------------------------------------------------------- -->
+
+        </div>
+    </div>
+
+
+<!--
+88888888888                              888          888            
+    888                                  888          888            
+    888                                  888          888            
+    888   .d88b.  88888b.d88b.  88888b.  888  8888b.  888888 .d88b.  
+    888  d8P  Y8b 888 "888 "88b 888 "88b 888     "88b 888   d8P  Y8b 
+    888  88888888 888  888  888 888  888 888 .d888888 888   88888888 
+    888  Y8b.     888  888  888 888 d88P 888 888  888 Y88b. Y8b.     
+    888   "Y8888  888  888  888 88888P"  888 "Y888888  "Y888 "Y8888  
+                                888                                  
+                                888                                  
+                                888                                  
+-->
+
+    <template id="cell-template">
+        <section class="cell">
+            <header>
+                <div class="cell-title">
+                    <span class="badge">
+                        <span class="dot"></span>
+                        <span class="title-text">JavaScript</span>
+                    </span>
+                </div>
+                <div class="cell-actions">
+                    <button class="btn run">
+                        <span class="icon">▶</span>
+                        <span class="label">Exécuter</span>
+                    </button>
+                    <button class="btn reset">
+                        <span class="icon">⟳</span>
+                        <span class="label">Réinitialiser</span>
+                    </button>
+
+                    <button class="btn clear">
+                        <span class="icon">🧹</span>
+                        <span class="label">Effacer</span>
+                    </button>
+                </div>
+            </header>
+            <textarea class="editor" spellcheck="false"></textarea>
+            <div class="output" aria-live="polite"></div>
+        </section>
+    </template>
+
+
+<!--
+ .d8888b.                   d8b          888    
+d88P  Y88b                  Y8P          888    
+Y88b.                                    888    
+ "Y888b.    .d8888b 888d888 888 88888b.  888888 
+    "Y88b. d88P"    888P"   888 888 "88b 888    
+      "888 888      888     888 888  888 888    
+Y88b  d88P Y88b.    888     888 888 d88P Y88b.  
+ "Y8888P"   "Y8888P 888     888 88888P"   "Y888 
+                                888             
+                                888             
+                                888             
+-->
+
+    <script src="js/main.js"></script>
+
+    <script>
+        /* ==== Add cells ==== */
+        addCell('cells1', 'Question', `
+/* == D'après vous, est ce que ce code déclenche une erreur ? == */
+
+const a = 1
+const b = 2
+const c = a + b
+(a + b).toString()
+        `);
+
+/*        
+        addCell('cells00', '', `
+
+        `);
+*/
+
+        // addCell('cellsXXX', `// Exemple : quelques bases JS\nconst name = 'Mon nouveau cours JS';\nconsole.log('Bienvenue dans', name);\n\n// Fonction\nfunction add(a, b){ return a * b }\nconsole.log('2 + 3 =', add(2,3));\n\n// Objet\nconst user = { id: 1, name: 'Ada' };\nconsole.log(user);\n\n// Top-level await (fetch exemple simulé)\nawait new Promise(r => setTimeout(r, 300));\nconsole.log('Async OK');`);
+
+    </script>
+</body>
+</html>
