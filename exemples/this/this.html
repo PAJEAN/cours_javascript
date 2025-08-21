@@ -26,7 +26,7 @@
 	<pre>
 		<span class="redcolor">// Code 0.</span>
 		<span class="greencolor">/* Lorsqu'on utilise le mot-clé 'this' dans une fonction classique,
-		il retourne l'objet global (dans un navigateur, il retourne l'objet global 'window') */</span>
+		il retourne l'<b>objet global</b> (dans un navigateur, il retourne l'objet global 'window') */</span>
 		function getThis(){
 			console.log(this);
 		};
@@ -38,11 +38,11 @@
 	<pre>
 		<span class="redcolor">// Code 1.</span>
 		<span class="greencolor">/* Lorsqu'on utilise le mot-clé 'this' dans une méthode appartenant à un objet,
-		il retourne l'objet dans lequel la méthode est définie */</span>
+		<b>il retourne l'objet dans lequel la méthode est définie</b> */</span>
 		var objet = {
-				getA: function(){
-						console.log(this);
-				}
+			getA: function(){
+				console.log(this);
+			}
 		}
 		objet.getA();
 	</pre>
@@ -54,15 +54,15 @@
 		<b>var a = 38</b> // <span class="greencolor">Revient à définir window.a = 38;</span>;
 
 		<span class="greencolor">/* Lorsqu'on utilise le mot-clé 'this' dans <b><u>une expression de fonction</u></b> à l'intérieur d'une méthode appartenant à un objet,
-		il retourne l'objet global car une fonction à sa propre valeur pour 'this' qui correspond par défaut à l'objet global */</span>
+		il retourne l'objet global car une fonction à sa propre valeur pour 'this' qui correspond par défaut à l'objet global (code 0) */</span>
 		var objet = {
-				a: "A",
-				getA: function(){
-						let innerFunction = <b>function()</b>{ <span class="greencolor">/* Création d'un nouveau contexte */</span>
-								console.log(this.a);
-						}
-						innerFunction();
+			a: "A",
+			getA: function(){
+				let innerFunction = <b>function()</b>{ <span class="greencolor">/* Création d'un nouveau contexte */</span>
+					console.log(this.a);
 				}
+				innerFunction();
+			}
 		}
 		objet.getA();
 	</pre>
@@ -72,32 +72,32 @@
 	<pre>
 		<span class="redcolor">// Code 3.</span>
 		<span class="greencolor">/* Lorsqu'on utilise le mot-clé 'this' dans une <b><u>fonction fléchée</u></b> à l'intérieur d'une méthode appartenant à un objet,
-		il retourne l'objet global */</span>
+		il retourne l'objet dans lequel la méthode est définie */</span>
 		var objet = {
-				a: "AA",
-				getA: function(){
-						let innerFunction = <b>() => </b>{ <span class="greencolor">/* Pas de création de nouveau contexte, on utilise celui la méthode */</span>
-								console.log(this.a);
-						}
-						innerFunction();
-				}
+			a: "AA",
+			getA: function(){
+					let innerFunction = <b>() => </b>{ <span class="greencolor">/* Pas de création de nouveau contexte, on utilise celui de la méthode */</span>
+						console.log(this.a);
+					}
+					innerFunction();
+			}
 		}
 		objet.getA();
 
-		<span class="greencolor">/* Les fonctions fléchées sont différentes des autres fonctions au sens où elles ne possèdent pas de valeur propre pour <i>this</i>
-		Ainsi, les fonctions fléchées ne créent pas de nouveau contexte et utilisent la valeur <i>this</i> de leur contexte actuel
-		Aussi, si le mot-clé <i>this</i> est utilisé dans le corps de la fonction, le moteur recherchera la référence à cette valeur dans une portée parente */</span>
+		<span class="greencolor">/* Les fonctions fléchées sont différentes des autres fonctions au sens où elles ne possèdent pas de valeur propre pour <i>this</i>.
+		Ainsi, les fonctions fléchées ne créent pas de nouveau contexte et utilisent la valeur <i>this</i> de leur contexte actuel.
+		Aussi, si le mot-clé <i>this</i> est utilisé dans le corps de la fonction, le moteur recherchera la référence à cette valeur dans une portée parente. */</span>
 	</pre>
 </div>
 
 		<script>
-			console.log("Code 1");
+			console.log("Code 0");
 			function getThis(){
 				console.log(this);
 			};
 			getThis();
 
-			console.log("Code 2");
+			console.log("Code 1");
 			var a = 38;
 			var objet = {
 					getA: function(){
@@ -106,7 +106,7 @@
 			}
 			objet.getA();
 
-			console.log("Code 3");
+			console.log("Code 2");
 			var objet = {
 			    a: "A",
 			    getA: function(){
@@ -118,7 +118,7 @@
 			}
 			objet.getA();
 
-			console.log("Code 4");
+			console.log("Code 3");
 			var objet = {
 			    a: "AA",
 			    getA: function(){

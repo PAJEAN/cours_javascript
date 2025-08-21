@@ -330,3 +330,53 @@ a:hover {
         margin-right: 0;
     }
 }
+
+
+.sommaire {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  border: 1px solid var(--exercise-border);
+  border-radius: 8px;
+  overflow: hidden; /* colle les li ensemble */
+  font-family: sans-serif;
+}
+
+/* chaque item */
+.sommaire li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* espace flèche / texte */
+  padding: 0.8rem 1rem;
+  background: var(--exercise-bg);
+  color: var(--exercise-text);
+  border-bottom: 1px solid var(--exercise-border);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+/* dernier item sans bordure */
+.sommaire li:last-child {
+  border-bottom: none;
+}
+
+/* la flèche */
+.sommaire li::before {
+  content: "›";
+  color: var(--exercise-border);
+  font-weight: bold;
+  flex-shrink: 0; /* garde la flèche bien collée */
+}
+
+/* liens */
+.sommaire li a {
+  text-decoration: none;
+  color: inherit;
+  flex: 1; /* prend tout l’espace dispo */
+}
+
+/* effet hover */
+.sommaire li:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(3px);
+}

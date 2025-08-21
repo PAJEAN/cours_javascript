@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Le JavaScript</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+            <header>
+                <h1 class="title">Les objets</h1>
+                <div class="toolbar">
+                    <button class="btn" id="btn-print" title="Imprimer / Exporter en PDF">🖨️ Imprimer</button>
+                    <button class="btn" id="btn-theme" title="Changer le thème" data-initial="light">🌗 Thème</button>
+                </div>
+            </header>
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                               Les objets                                -->
+            <!-- ----------------------------------------------------------------------- -->
+
+            <p> Un objet est un ensemble de propriétés, où chaque propriété associe un nom (ou clé) à une valeur. Si cette valeur est une fonction, la propriété est alors appelée méthode. Le nom d’une propriété peut être une chaîne de caractères ou un nombre. </p>
+
+            <h2> Création d'un objet </h2>
+
+            Il y a plusieurs façon de créer un objet (notamment depuis ES6).
+
+            <div id="cells74"></div>
+
+            <p> Une façon alternative de créer une instance de <code>Object</code> au travers de son constructeur est d'exploiter le mot-clé <code>new</code>. </p>
+
+            <div id="cells75"></div>
+
+            <p> Les deux précédentes méthodes ne sont pas les plus courantes lorsque nous devons généraliser l'objet que nous manipulons (c'est-à-dire utiliser l'objet comme un <i>template</i> - classe - pour créer de nouveaux objets). Dans ce cas, il faut définir un <b>constructeur</b> personnalisé. </p>
+
+            <p> Les constructeurs, comme la plupart des autres langages orientés objets, <b>fournissent un <i>template</i> pour créer des objets</b>. En d'autres termes, ils définissent un ensemble de propriétés et méthodes qui pourrait être commun à tous les objets initialisés par le constructeur. </p>
+
+            <div id="cells76"></div>
+
+            <p> Depuis la spécification ECMAScript 6 (pour information ES6 a été validé et publié le 17 juin 2015) une syntaxe alternative a été introduite pour créer des objets et gérer l'héritage. </p>
+
+            <div id="cells77"></div>
+
+            <p> Toutes les fonctions en JavaScript ont une propriété spéciale intitulée <b>prototype</b>. </p>
+
+            <div id="cells78"></div>
+
+            <h2> Héritage et la chaîne de prototypage </h2>
+
+            <p> JavaScript est un langage orienté prototype, qui est un style de programmation orienté objet. Les prototypes sont un mécanisme au sein de JavaScript qui permettent aux objets JavaScript d'hériter des propriétés d'autres objets. </p>
+
+            <h3> Propriétés héritées </h3>
+
+            <p> Chaque objet possède une propriété privée qui contient un lien vers un autre objet appelé le <b>prototype</b>. Ce prototype possède également son prototype et ainsi de suite, jusqu'à ce qu'un objet ait <code>null</code> comme prototype. Les objets JavaScript sont des instances de <code>Object</code> qui est l'avant dernier maillon de la chaîne de prototype. </p>
+
+            <p> Lorsqu'on explore l'<b>instance</b> d'un objet, nous rencontrons le mot-clé <b><code>__proto__</code></b>. Ce mot-clé est un objet qui pointe vers le prototype qui l'a créé. </p>
+
+            <div id="cells79"></div>
+
+            <p> Les propriétés directement rattachées à un objet sont appelées propriétés propres (<i>own properties</i>). Lorsqu'on tente d'accéder aux propriétés d'une instance d'un objet, la propriété sera recherchée tout d'abord sur ses propriétés propres puis sur son prototype, puis sur le prototype du prototype et ainsi de suite jusqu'à ce qu'elle soit trouvée ou que la fin de la chaîne de prototype ait été atteinte. </p>
+
+            <div id="cells80"></div>
+
+            <p> Il est possible d'utiliser la fonction <code>call()</code> de l'objet <code>Function</code> pour chaîner le constructeur d'un objet. </p>
+
+            <div id="cells81"></div>
+
+            <h3> Méthodes héritées </h3>
+
+            <p> En JavaScript, toute fonction associée à un objet est également une propriété. Par conséquent, une fonction héritée se comportera comme n'importe quelle autre propriété. </p>
+
+            <p> Par exemple, le <code>__proto__</code> d'un tableau pointe vers le prototype de l'objet <code>Array</code>. C'est pourquoi, un tableau hérite de toutes les propriétés et méthodes de l'objet <code>Array</code> (<code>length</code>, <code>map</code>, etc.). </p>
+
+            <p> La programmation orientée prototype offre, par conséquent, la possibilité d'ajouter des méthodes à tout moment en dehors de la fonction constructeur. Il est possible par exemple d'ajouter une méthode au prototype de l'objet <code>Array</code> (cette pratique, d'ajouter des fonctions aux objets natifs, est cependant déconseillée). </p>
+
+            <div id="cells82"></div>
+
+            <p> Voici un exemple complet d'héritage avant la version ES6. </p>
+
+            <div id="cells83"></div>
+
+            <p> Voici un exemple complet d'héritage après la version ES6. Le sucre syntaxique ajouté lors de la version ES6 exploite le mot-clé <code>extends</code> pour hériter des attributs et des méthodes d'une classe. </p>
+
+            <div id="cells84"></div>
+            
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p> JavaScript ne supporte pas l'héritage multiple. </p>
+                </div>
+            </div>
+            
+            <h3> Méthodes statiques </h3>
+
+            <p> Le mot-clé <code>static</code> permet de définir une méthode statique d'une classe. Les méthodes statiques ne sont pas disponibles sur les instances d'une classe mais sont appelées sur la classe elle-même. Les méthodes statiques sont généralement des fonctions utilitaires (qui peuvent permettre de créer ou de cloner des objets par exemple). </p>
+
+            <div id="cells85"></div>
+
+            <h3> La copie d'un objet </h3>
+
+            <p> Les <b>objets en JavaScript sont muables</b>. La copie d'un objet <b>s'effectue par référence</b> et non par valeur. </p>
+
+            <div id="cells86"></div>
+
+            <div id="cells87"></div>
+
+            <p> La méthode <code>Object.assign()</code> est utilisée afin de copier les valeurs de toutes les propriétés propres d'un objet qui sont énumérables sur une autre objet. </p>
+
+            <div id="cells88"></div>
+
+            <h3> Le mot-clé <code>this</code> </h3>
+
+            <p> Lorsque l'on manipule des objets, le mot-clé <code>this</code> est utilisé avec les méthodes de l'objet pour accéder à des informations stockées dans l'objet. Le mot-clé <code>this</code> va dans ce cas être substitué par l’objet utilisant la méthode lors de son appel. </p>
+
+            <p> Pour aller plus loin, vous devez savoir qu'en JavaScript, à la différence de la plupart des langages, le mot-clé <code>this</code> n'est pas lié à un objet en particulier. En effet, la valeur de <code>this</code> va être évaluée au moment de l’appel de la méthode dans laquelle il est présent en JavaScript. </p>
+
+            <p> Ainsi, la valeur de <code>this</code> ne va pas dépendre de l'endroit où la méthode a été déclarée mais de l'objet qui l’appelle. Cela permet notamment à une méthode d'être réutilisée par différents objets. </p>
+
+            <div id="cells89"></div>
+
+            <p> <code>this</code> est un opérateur qui permet de retourner une valeur en fonction de son contexte <i>confer</i> <a href="../../exemples/this/this.html">l'exemple suivant</a>. </p>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <ul>
+                        <li> Rendez-vous au lien suivant: <b>https://github.com/PAJEAN/cours_javascript/tree/master/exemples/bfs</b> pour réaliser le TP sur le parcours en largeur de graphe. </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+<!--
+88888888888                              888          888            
+    888                                  888          888            
+    888                                  888          888            
+    888   .d88b.  88888b.d88b.  88888b.  888  8888b.  888888 .d88b.  
+    888  d8P  Y8b 888 "888 "88b 888 "88b 888     "88b 888   d8P  Y8b 
+    888  88888888 888  888  888 888  888 888 .d888888 888   88888888 
+    888  Y8b.     888  888  888 888 d88P 888 888  888 Y88b. Y8b.     
+    888   "Y8888  888  888  888 88888P"  888 "Y888888  "Y888 "Y8888  
+                                888                                  
+                                888                                  
+                                888                                  
+-->
+
+    <template id="cell-template">
+        <section class="cell">
+            <header>
+                <div class="cell-title">
+                    <span class="badge">
+                        <span class="dot"></span>
+                        <span class="title-text">JavaScript</span>
+                    </span>
+                </div>
+                <div class="cell-actions">
+                    <button class="btn run">
+                        <span class="icon">▶</span>
+                        <span class="label">Exécuter</span>
+                    </button>
+                    <button class="btn reset">
+                        <span class="icon">⟳</span>
+                        <span class="label">Réinitialiser</span>
+                    </button>
+
+                    <button class="btn clear">
+                        <span class="icon">🧹</span>
+                        <span class="label">Effacer</span>
+                    </button>
+                </div>
+            </header>
+            <textarea class="editor" spellcheck="false"></textarea>
+            <div class="output" aria-live="polite"></div>
+        </section>
+    </template>
+
+
+<!--
+ .d8888b.                   d8b          888    
+d88P  Y88b                  Y8P          888    
+Y88b.                                    888    
+ "Y888b.    .d8888b 888d888 888 88888b.  888888 
+    "Y88b. d88P"    888P"   888 888 "88b 888    
+      "888 888      888     888 888  888 888    
+Y88b  d88P Y88b.    888     888 888 d88P Y88b.  
+ "Y8888P"   "Y8888P 888     888 88888P"   "Y888 
+                                888             
+                                888             
+                                888             
+-->
+
+    <script src="../js/main.js"></script>
+
+    <script>
+        /* ==== Add cells ==== */
+   
+    addCell('cells74', 'Syntaxe littérale', `
+let ma_cle = 'nom_magicien';
+let heros = {
+    nom: 'Geralt', //Propriété de l'objet.
+    profession: 'Sorceleur', // Propriété de l'objet.
+    10: 'Une partie de Gwent ?', // Propriété de l'objet.
+    'monstres tués': 134, // Propriété de l'objet.
+    direBonjour: function() { // Méthode de l'objet.
+        console.log('Humm !');
+    },
+    [ma_cle]: 'Yennefer' // Instanciation d'une clé 
+}
+console.log(heros.nom);
+console.log(heros[10]);
+console.log(heros['monstres tués']);
+heros.direBonjour();
+console.log(heros[ma_cle]);
+console.log(heros.nom_magicien);
+    `);
+
+    addCell('cells75', 'Constructeur <code>Object</code>', `
+let heros = new Object(); // On créé une instance de Object grâce à son constructeur.
+heros.nom = 'Geralt'; // Propriété.
+heros.direBonjour = function() { // Méthode de l'objet.
+    console.log('Humm !');
+};
+heros.direBonjour();
+    `);
+
+    addCell('cells76', 'Constructeur personnalisé', `
+function afficher() {
+    console.log(this.nom + ' ' + this.age);
+}
+
+function Animal(nom, age) { // Constructeur.
+    this.nom = nom;
+    this.age = age;
+    // Définition de la méthode toString à partir de la fonction afficher.
+    this.toString = afficher;
+}
+
+let animal1 = new Animal('Flipper', 8);
+let animal2 = new Animal('Beethoven', 4);
+console.log(animal1.nom);
+console.log(animal2.nom);
+
+// Utilisation de la méthode toString().
+animal1.toString();
+    `);
+
+    addCell('cells77', 'Constructeur personnalisé (syntaxe alternative)', `
+class Animal {
+    constructor(nom, age) {
+        this.nom = nom;
+        this.age = age;
+    }
+
+    // Définition de la méthode toString().
+    toString() {
+        console.log(this.nom + ' ' + this.age);
+    }
+}
+
+var animal1 = new Animal('Flipper', 8);
+console.log(animal1.nom);
+animal1.toString();
+    `);
+
+    addCell('cells78', 'Propriété <code>prototype</code>', `
+function Animal(nom) { // Constructeur.
+    this.nom = nom;
+}
+
+console.log(Animal.prototype);
+    `);
+
+    addCell('cells79', 'Chaîne de prototypage (1/2)', `
+function creation_objet(){
+    this.a = "A";
+};
+var un_objet = new creation_objet();
+// Protoype de creation_objet.
+console.log('Prototype de un_objet :');
+console.log(un_objet.__proto__);
+// Prototype de Object.
+console.log('Prototype de Object: ');
+console.log(un_objet.__proto__.__proto__);
+// Fin de la chaîne de prototypage.
+console.log('Prototype du prototype de Object: ');
+console.log(un_objet.__proto__.__proto__.__proto__ );
+    `);
+
+    addCell('cells80', 'Chaîne de prototypage (2/2)', `
+let un_objet = function(){
+    this.a = 1;
+    this.b = 2;
+}
+
+un_objet.prototype.b = 3;
+un_objet.prototype.c = 4;
+
+let o1 = new un_objet();
+
+// Quelles sont les sorties de ces instructions ?
+console.log('o1.a ' + o1.a);
+console.log('o1.b ' + o1.b);
+/* Je n'ai pas la propriété "c" dans mes propriétés propres
+Je remonte la chaîne de prototypage, est ce que le prototype de mon constructeur (un_objet) a cette propriété ?
+Oui la propriété est présente, je l'affiche */
+console.log('o1.c ' + o1.c);
+    `);
+
+    addCell('cells81', 'Héritage et chaîne de prototypage', `
+function afficher() {
+    console.log(this.nom + ' ' + this.age);
+}
+
+function Animal(nom, age) { // Création d'une fonction constructeur.
+    this.nom = nom;
+    this.age = age;
+    this.toString = afficher;
+}
+
+function Chien(nom, age, race) {
+    Animal.call(this, nom, age); // Héritage des attributs.
+    // Dans le cas où le constructeur de Animal n'a pas de paramètre, nous pouvons écrire Animal.call(this).
+    this.race = race;
+}
+
+var animal1 = new Animal('Flipper', 8);
+var chien1 = new Chien('Beethoven' , 4, "Saint-Bernard");
+
+console.log(animal1.nom + ' et ' + chien1.nom);
+chien1.toString();
+    `);
+
+    addCell('cells82', 'Extension du prototype', `
+function Animal(nom, age) { // Création d'une fonction constructeur.
+    this.nom = nom;
+    this.age = age;
+}
+
+Animal.prototype.manger = function() { 
+    console.log(this.nom + ' est en train de manger.');
+}
+
+var animal1 = new Animal('Flipper', 4);
+animal1.manger();
+/* La propriété (méthode) manger() n'est pas présent dans les propriétés propres
+on remonte vers le prototype de Animal */
+    `);
+
+    addCell('cells83', 'Héritage', `
+function Animal(nom, age){ // Création d'une fonction constructeur.
+    this.nom = nom;
+    this.age = age;
+}
+
+Animal.prototype.manger = function() { 
+    console.log(this.nom + " est en train de manger. <br>");
+}
+
+function Chien(nom, age, race) {
+    Animal.call(this, nom, age); // Héritage des attributs.
+    this.race = race;
+}
+
+Chien.prototype = Object.create(Animal.prototype); // Héritage des méthodes.
+
+var chien1 = new Chien('Snoopy', 10, 'Labrador');
+console.log(chien1.nom + ' est un(e) ' + chien1.race);
+
+chien1.manger();
+
+Animal.prototype.getAge = function() {
+    return this.age;
+}
+
+console.log(chien1.getAge());
+    `);
+
+    addCell('cells84', 'Héritage (syntaxe alternative)', `
+class Animal{
+    constructor(nom, age){
+        this.nom = nom;
+        this.age = age;
+    }
+    
+    manger(){
+        console.log(this.nom + ' est en train de manger.');
+    }
+}
+
+class Chien extends Animal{
+    constructor(nom, age, race){
+        super(nom, age);
+        this.race = race;
+    }
+    
+    manger(){
+        super.manger();
+        console.log('Il mange des croquettes.');
+    }
+    
+}
+
+var chien1 = new Chien('Snoopy', 10, 'Labrador');
+console.log(chien1.nom);
+chien1.manger();
+    `);
+
+    addCell('cells85', 'Attribut et méthode statiques', `
+class Animal {
+    static cost = 100;
+
+    constructor(nom, age) {
+        this.nom = nom;
+        this.age = age;
+        Animal.count++;
+    }
+    
+    manger() {
+        console.log(this.nom + ' est en train de manger.');
+    }
+    
+    static Count() {
+        return Animal.count;
+    }
+}
+
+console.log(Animal.cost);
+
+Animal.count = 0; // Déclaration de l'attribut statique.
+
+var animal1 = new Animal('Flipper', 8);
+console.log(Animal.Count());
+var animal2 = new Animal('Snoopy', 10);
+console.log(Animal.Count());
+
+/* == Cette instruction est-elle viable ? == */
+
+animal2.Count();
+    `);
+
+    addCell('cells86', 'Copie par référence', `
+function Animal(nom, age) { // Création d'une fonction constructeur.
+    this.nom = nom;
+    this.age = age;
+}
+
+var animal1 = new Animal('Flipper', 8);
+// Adressage par référence.
+var animal2 = animal1;
+
+/* == Quel sera le résultat ? == */
+
+console.log(animal1.nom + ' ' + animal2.nom);
+
+animal2.nom = "Beethoven";
+
+console.log(animal1.nom + ' ' + animal2.nom);
+    `);
+
+        addCell('cells87', 'Copie par valeur', `
+var str1 = 'Hello';
+// Adressage par valeur.
+var str2 = str1;
+
+// Quel sera le résultat ?
+console.log(str1);
+console.log(str2);
+
+str2 = 'World';
+
+console.log(str1);
+console.log(str2);
+    `);
+
+    addCell('cells88', 'Méthode <code>assign()</code>', `
+function Animal(nom, age) { // Création d'une fonction constructeur.
+    this.nom = nom;
+    this.age = age;
+}
+
+var animal1 = new Animal('Flipper', 8);
+var animal2 = Object.assign(Animal, animal1);
+
+/* == Quel sera le résultat ? == */
+console.log(animal1.nom + ' ' + animal2.nom);
+
+animal2.nom = "Beethoven";
+
+console.log(animal1.nom + ' ' + animal2.nom);
+    `);
+
+    addCell('cells89', '', `
+let pierre = {name: 'Pierre'};
+let mathilde = {name: 'Mathilde'};
+
+function disBonjour(){
+  console.log('Bonjour ' + this.name);
+}
+
+pierre.bonjour = disBonjour;
+mathilde.bonjour = disBonjour;
+
+pierre.bonjour();
+mathilde.bonjour();
+    `);
+    
+/*        
+    addCell('cells00', '', `
+
+    `);
+*/
+
+    </script>
+</body>
+</html>

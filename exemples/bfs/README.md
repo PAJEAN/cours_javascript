@@ -1,7 +1,7 @@
 # Algorithme de parcours en largeur (BFS - *Breadth-first search*)
 
 L'algorithme de parcours en largeur permet le parcours d'un graphe ou d'un arbre de la manière suivante : on commence par explorer un nœud source, puis ses successeurs, puis les successeurs non explorés des successeurs, etc. L'algorithme de parcours en largeur permet de calculer les distances de tous les nœuds depuis un nœud source dans un graphe non pondéré (orienté ou non orienté). Ce dernier point constitue l'objectif de ce TP.
-À partir de la représentation matricielle d'un graphe orienté, vous allez devoir déterminer la distance, c'est-à-dire le nombre de noeuds (sommets), qui sépare un noeud source à tous les autres noeuds du graphe.
+À partir de la représentation matricielle d'un graphe orienté (dont les arêtes sont associées à une direction), vous allez devoir déterminer la distance, c'est-à-dire le nombre de noeuds (sommets), qui sépare un noeud source à tous les autres noeuds du graphe.
 
 ![BFS](images/Animated_BFS.gif "BFS")
 
@@ -29,7 +29,7 @@ correspond au graphe suivant:
 
 # Structure du code
 
-Le code doit contenir une classe représentant le graphe et ayant deux méthodes, l'une permettant de calculer les distances entre les noeuds à partir d'une racine donnée et l'autre affichant le graphe à partir de la matrice d'adjacence.
+Le code doit contenir une classe représentant le graphe et ayant deux méthodes, l'une permettant de calculer les distances entre les noeuds à partir d'un noeud donné et l'autre affichant le graphe à partir de la matrice d'adjacence.
 
 
 BFS.js

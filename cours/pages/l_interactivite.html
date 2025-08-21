@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Le JavaScript</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+            <header>
+                <h1 class="title">L'intéractivité</h1>
+                <div class="toolbar">
+                    <button class="btn" id="btn-print" title="Imprimer / Exporter en PDF">🖨️ Imprimer</button>
+                    <button class="btn" id="btn-theme" title="Changer le thème" data-initial="light">🌗 Thème</button>
+                </div>
+            </header>
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                             L'intéractivité                             -->
+            <!-- ----------------------------------------------------------------------- -->
+            
+            <h2> Les évènements </h2>
+
+            <p> Le JavaScript est un langage événementiel, c'est-à-dire qu'il détecte les événements qui surviennent sur la page, y réagit et déclenche de nouveaux traitements. Un événement est un changement d'état qui survient sur la page (mouvements de souris, clic sur un élément, chargement d'un élément de la page, *etc.*). </p>
+
+            <div style="width:100%;text-align:center;">
+                <img src="../../images/javascript-events.png" alt="Événements" style="border-radius: 15px"/>
+                <div style="margin:auto">Source: <a href="https://openclassrooms.com/fr/courses/1916641-dynamisez-vos-sites-web-avec-javascript/1918968-les-evenements">openclassrooms</a>.</div>
+            </div>
+
+            <h2> La détection dans le code HTML </h2>
+
+<textarea class="editor" spellcheck="false">
+<button onclick="alert('Pas changer assiette pour fromage !');"> ARTHOUUUUR </button>
+<button onclick="compteur++; alert(compteur);"> Je sais compter </button>
+<button id="button3" onclick="colorChange();"> Poème </button>
+
+<script type="text/javascript">
+    var compteur = 0;
+    function colorChange(){
+        color = document.getElementById("button3").style.color;
+        switch(color){
+            case "red":
+                document.getElementById("button3").style.color = "blue";
+                document.getElementById("button3").innerHTML = "Violets are blue";
+                break;
+            case "blue":
+                document.getElementById("button3").style.color = "red";
+                document.getElementById("button3").innerHTML = "Roses are red";
+                break;
+            default:
+                document.getElementById("button3").style.color = "red";
+                document.getElementById("button3").innerHTML = "Roses are red";
+        }
+    }
+</script></textarea>
+
+            <button onclick="alert('Pas changer assiette pour fromage !');"> ARTHOUUUUR </button>
+            <button onclick="compteur++; alert(compteur);"> Je sais compter </button>
+            <button id="button3" onclick="colorChange();"> Poème </button>
+            
+            <script type="text/javascript">
+                var compteur = 0;
+                function colorChange(){
+                    color = document.getElementById("button3").style.color;
+                    switch(color){
+                        case "red":
+                            document.getElementById("button3").style.color = "blue";
+                            document.getElementById("button3").innerHTML = "Violets are blue";
+                            break;
+                        case "blue":
+                            document.getElementById("button3").style.color = "red";
+                            document.getElementById("button3").innerHTML = "Roses are red";
+                            break;
+                        default:
+                            document.getElementById("button3").style.color = "red";
+                            document.getElementById("button3").innerHTML = "Roses are red";
+                    }
+                }
+            </script>
+
+            <p> Cette manière de déclarer des événements par attribut est rapide mais présente l'inconvénient de mélanger le traitement JavaScript à la mise en forme des données via HTML. </p>
+
+            <h2> La détection par le gestionnaire d'événements </h2>
+
+            <p> Le gestionnaire d'événements permet de centraliser la déclaration des événements dans un bloc JavaScript sans modifier le code HTML gardant ainsi la séparation entre traitements et données. </p>
+
+            <b><code>target.addEventListener(String myEvent, Function toDo, [options]);</code></b>
+
+            <ul>
+                <li> <i>target</i> : correspond à l'élément ciblé dans le code HTML. </li>
+                <li> <i>myEvent</i> : le type d'événement à détecter. </li>
+                <li> <i>toDo</i> : une fonction qui reçoit en paramètre l'objet de type *Event* détecté. </li>
+                <li> Le paramètre facultatif <i>options</i> spécifie les caractéristiques de l'écouteur d'évènements (<i>e.g.</i> <code>{"once": true}</code> supprime automatiquement le <i>listener</i> après son premier appel. </li>
+            </ul>
+
+<textarea class="editor" spellcheck="false">
+<button id="button1"> Poème </button>
+    
+<script type="text/javascript">
+    function colorChange(evt) {
+        let color = evt.currentTarget.style.color;
+        switch(color){
+        case "red":
+            evt.currentTarget.style.color = "blue";
+            evt.currentTarget.innerHTML = "Violets are blue";
+            break;
+        case "blue":
+            evt.currentTarget.style.color = "red";
+            evt.currentTarget.innerHTML = "Roses are red";
+            break;
+        default:
+            evt.currentTarget.style.color = "red";
+            evt.currentTarget.innerHTML = "Roses are red";
+        }
+        var button1 = document.getElementById("button1");
+        button1.addEventListener("click", colorChange); // {"once": true}
+    }
+</script></textarea>
+
+            <button id="button1"> Poème </button>
+    
+            <script type="text/javascript">
+                function colorChange(evt) {
+                    let color = evt.currentTarget.style.color;
+                    switch(color){
+                    case "red":
+                        evt.currentTarget.style.color = "blue";
+                        evt.currentTarget.innerHTML = "Violets are blue";
+                        break;
+                    case "blue":
+                        evt.currentTarget.style.color = "red";
+                        evt.currentTarget.innerHTML = "Roses are red";
+                        break;
+                    default:
+                        evt.currentTarget.style.color = "red";
+                        evt.currentTarget.innerHTML = "Roses are red";
+                    }
+                }
+                var button1 = document.getElementById("button1");
+                button1.addEventListener("click", colorChange); // {"once": true}
+            </script>
+
+            <p> La fonction <code>colorChange()</code> reçoit en paramètre <code>evt</code> un objet de type <code>Event</code>. Un objet <code>Event</code> contient deux propriétés de cible. La propriété *currentTarget* référence l'objet sur lequel l'événement a été attaché et la propriété <code>target</code> référence l'objet sur lequel l'événement s'est produit. </p>
+
+<textarea class="editor" spellcheck="false">
+<ul id="ul1">
+    <li> Arthur </li>
+    <li> Perceval </li>
+    <li> Merlin </li>
+</ul>
+
+<div id="maDiv"> Cliquez sur un nom! </div>
+
+<script type="text/javascript">
+    var ul1 = document.getElementById("ul1");
+    ul1.addEventListener("click", direBonjour);
+    function direBonjour(evt){
+        if(evt.target.nodeName == "LI"){ // Évite de considérer UL dans le retour.
+            document.getElementById("maDiv").innerHTML = "Bonjour " + evt.target.innerHTML +
+                " (" + (evt.currentTarget.id) + ") !";
+        }
+    }
+</script></textarea>
+            
+            <ul id="ul1" style="cursor: pointer;">
+                <li> Arthur </li>
+                <li> Perceval </li>
+                <li> Merlin </li>
+            </ul>
+            
+            <div id="maDiv"> <b>Cliquez sur un nom ci-dessus!</b> </div>
+            
+            <script type="text/javascript">
+                var ul1 = document.getElementById("ul1");
+                ul1.addEventListener("click", direBonjour);
+                function direBonjour(evt) {
+                    if(evt.target.nodeName == "LI"){ // Évite de considérer UL dans le retour.
+                        document.getElementById("maDiv").innerHTML = "Bonjour " + evt.target.innerHTML +
+                            " (" + (evt.currentTarget.id) + ") !";
+                    }
+                }
+            </script>
+
+        </div>
+    </div>
+
+
+<!--
+88888888888                              888          888            
+    888                                  888          888            
+    888                                  888          888            
+    888   .d88b.  88888b.d88b.  88888b.  888  8888b.  888888 .d88b.  
+    888  d8P  Y8b 888 "888 "88b 888 "88b 888     "88b 888   d8P  Y8b 
+    888  88888888 888  888  888 888  888 888 .d888888 888   88888888 
+    888  Y8b.     888  888  888 888 d88P 888 888  888 Y88b. Y8b.     
+    888   "Y8888  888  888  888 88888P"  888 "Y888888  "Y888 "Y8888  
+                                888                                  
+                                888                                  
+                                888                                  
+-->
+
+    <template id="cell-template">
+        <section class="cell">
+            <header>
+                <div class="cell-title">
+                    <span class="badge">
+                        <span class="dot"></span>
+                        <span class="title-text">JavaScript</span>
+                    </span>
+                </div>
+                <div class="cell-actions">
+                    <button class="btn run">
+                        <span class="icon">▶</span>
+                        <span class="label">Exécuter</span>
+                    </button>
+                    <button class="btn reset">
+                        <span class="icon">⟳</span>
+                        <span class="label">Réinitialiser</span>
+                    </button>
+
+                    <button class="btn clear">
+                        <span class="icon">🧹</span>
+                        <span class="label">Effacer</span>
+                    </button>
+                </div>
+            </header>
+            <textarea class="editor" spellcheck="false"></textarea>
+            <div class="output" aria-live="polite"></div>
+        </section>
+    </template>
+
+
+<!--
+ .d8888b.                   d8b          888    
+d88P  Y88b                  Y8P          888    
+Y88b.                                    888    
+ "Y888b.    .d8888b 888d888 888 88888b.  888888 
+    "Y88b. d88P"    888P"   888 888 "88b 888    
+      "888 888      888     888 888  888 888    
+Y88b  d88P Y88b.    888     888 888 d88P Y88b.  
+ "Y8888P"   "Y8888P 888     888 88888P"   "Y888 
+                                888             
+                                888             
+                                888             
+-->
+
+    <script src="../js/main.js"></script>
+
+    <script>
+        /* ==== Add cells ==== */
+   
+    // addCell('cells00', '', `
+
+    // `);
+
+
+/*        
+    addCell('cells00', '', `
+
+    `);
+*/
+
+    </script>
+</body>
+</html>
