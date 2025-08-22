@@ -42,10 +42,6 @@ class BST{
 		/* Insert code */
 	}
 
-	remove(){
-		/* Insert code */
-	}
-
 	update(){
 		/* Insert code */
 	}
@@ -57,7 +53,6 @@ Descriptif des fonctions:
 * *findMin()* se déplacer sur le noeud le plus à gauche dans le graphe.
 * *findMax()* se déplacer sur le noeud le plus à droite dans le graphe.
 * *isPresent()* vérifie la présence d'un noeud dans le graphe en tenant compte des propriétés du BST.
-* *remove()* permet de supprimer un noeud dans le graphe. Lorsqu'un noeud est supprimé il est remplacé par le noeud le plus à gauche en partant de son noeud droite. En d'autres termes, le noeud le plus à gauche du sous-arbre droit. Une variante peut être de sélectionner le noeud le plus à droite du sous-arbre gauche.
 
 Stucture HTML (BST.html):
 
@@ -76,10 +71,6 @@ Stucture HTML (BST.html):
 		<div>
 			<input type="text" id="add">
 			<button id="add-button">Ajouter</button>
-		</div>
-		<div>
-			<input type="text" id="erase">
-			<button id="erase-button">Effacer</button>
 		</div>
 
 		<div id="graph"></div>
@@ -100,19 +91,15 @@ Exemple de la librairie [*viz.js*](https://github.com/mdaines/viz.js/wiki/Usage)
 <script src="viz.js"></script>
 <script src="full.render.js"></script>
 <script>
-  var viz = new Viz();
-
-  viz.renderSVGElement('digraph { a -> b }')
-  .then(function(element) {
-    document.body.appendChild(element); /* A changer en fonction de la balise #graph */
-  })
-  .catch(error => {
-    // Create a new Viz instance (@see Caveats page for more info)
-    viz = new Viz();
-
-    // Possibly display the error
-    console.error(error);
-  });
+	let viz = new Viz();
+	viz.renderSVGElement('digraph { a -> b [dir="both"] }')
+	.then(function(element) {
+		document.body.appendChild(element);
+	})
+	.catch(error => {
+		// Possibly display the error
+		console.error(error);
+	});
 </script>
 ```
 

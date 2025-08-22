@@ -4,67 +4,73 @@
         <title>My title</title>
         <style>
 
-          .colorized1{
+          .colorized1 {
               color: blue;
           }
-          #span1{
+          #span1 {
               color: red;
           }
 
         </style>
     </head>
     <body>
-				<h3> Code HTML </h3>
-				&lt;span class="colorized1">My header 4 (#1)&lt;/span> <br>
-				&lt;span class="colorized1">My header 4 (#2)&lt;/span> <br>
-        &lt;span name="tagP">My header 4 (#3)&lt;/span> <br>
+		<h3> Code HTML </h3>
+		&lt;span class="colorized1">My header 4 (#1)&lt;/span> <br>
+		&lt;span class="colorized1">My header 4 (#2)&lt;/span> <br>
+		&lt;span name="tagP">My header 4 (#3)&lt;/span> <br>
 
-				&lt;button id="bonsoir">Dire BONSOIR&lt;/button> <br>
+		&lt;button id="bonsoir">Dire BONSOIR&lt;/button> <br>
 
-        &lt;p name="tagP">My paragraph&lt;/p> <br>
-				&lt;p class="colorized1">My paragraph&lt;/p> <br><br>
+		&lt;p name="tagP">My paragraph&lt;/p> <br>
+		&lt;p class="colorized1">My paragraph&lt;/p> <br><br>
 
-				<hr>
+		<hr>
 
-				<h3> Resultats </h3>
+		<h3> Resultats </h3>
         <span class="colorized1">My span (#1)</span> <br>
         <span class="colorized1">My span (#2)</span> <br>
         <span name="tagP">My span (#3)</span> <br>
 
-				<button id="bonsoir">Dire BONSOIR</button>
+		<br>
+
+		<button id="bonsoir">Modifie le contenu de tous les éléments &lt;span> ci-dessus (getElementsByTagName) !</button>
 
         <p name="tagP">My paragraph</p>
-				<p class="colorized1">My paragraph</p>
+		<p class="colorized1">My paragraph</p>
 
-				<script>
-					console.log('document.getElementsByClassName("colorized1")');
-					console.log(document.getElementsByClassName("colorized1"));
-					console.log('document.getElementsByName("tagP")');
-					console.log(document.getElementsByName("tagP"));
-					console.log('document.getElementsByTagName("span")');
-					console.log(document.getElementsByTagName("span"));
+		<script>
+			console.log('document.getElementsByClassName("colorized1")');
+			console.log(document.getElementsByClassName("colorized1"));
 
-					console.log("Identifier le boutton par rapport à son identifiant.")
-					var but = document.getElementById("bonsoir");
-					but.addEventListener("click", function(){
-						var tag = document.getElementsByTagName("span"); // Récupérer toutes les span.
-						for(var i = 0; i < tag.length; i++){
-							tag[i].innerHTML = "BONSOIR"; // Modifie le contenu des spans.
-						}
-					});
+			console.log('document.getElementsByName("tagP")');
+			console.log(document.getElementsByName("tagP"));
 
-					console.log('document.querySelectorAll("span.colorized1")');
-					console.log(document.querySelectorAll("span.colorized1"));
-					var qsa = document.querySelectorAll("span.colorized1"); // Récupérer toutes les spans avec la classe css colorized1.
+			console.log('document.getElementsByTagName("span")');
+			console.log(document.getElementsByTagName("span"));
 
-					[...qsa].map(function(valeur){ /* [...qsa] https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Syntaxe_d%C3%A9composition permet de formater qsa sous la forme d'un tableau */
-						console.log(valeur.innerHTML);
-					});
+			console.log("Identifier le boutton par rapport à son identifiant.");
+			
+			var but = document.getElementById("bonsoir");
+			but.addEventListener("click", function() {
+				var tag = document.getElementsByTagName("span"); // Récupérer toutes les span.
+				for(var i = 0; i < tag.length; i++){
+					tag[i].innerHTML = "Le contenu de cet élément span a bien été modifié !"; // Modifie le contenu des spans.
+				}
+			});
+
+			console.log('document.querySelectorAll("span.colorized1")');
+			console.log(document.querySelectorAll("span.colorized1"));
+			var qsa = document.querySelectorAll("span.colorized1"); // Récupérer toutes les spans avec la classe css colorized1.
+
+			/* [...qsa] https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Syntaxe_d%C3%A9composition permet d'exploiter les méthodes de l'objet Array */
+			[...qsa].map(function(valeur) {
+				console.log(valeur.innerHTML);
+			});
 
 
 
 
-				</script>
+		</script>
 
     </body>
 </html>

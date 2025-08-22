@@ -36,22 +36,19 @@ BFS.js
 
 ```
 class Graph{
-    constructor(matrix){
+    constructor(matrix) {
         this.matrix = matrix;
     }
 
-    distance(root){
-    }
+    distance(i_root) {}
 
-    display(){
+    display() {
+        let viz = new Viz();
         viz.renderSVGElement('digraph { a -> b [dir="both"] }')
         .then(function(element) {
             document.body.appendChild(element);
         })
         .catch(error => {
-            // Create a new Viz instance (@see Caveats page for more info)
-            viz = new Viz();
-
             // Possibly display the error
             console.error(error);
         });
@@ -76,4 +73,9 @@ BFS.html
 </html>
 ```
 
-Les librairies graphiques nécessaires sont présents dans le dossier exemples/librairies.
+Les librairies graphiques nécessaires sont présentes dans le dossier exemples/librairies. Elles exploitent le Dot language. Pour construire un graphe dirigé, on utilise le mot-clé <code>digraph</code>. Les arêtes se représentent avec la syntaxe *a -> b*. Si l’on souhaite que le lien soit bidirectionnel, on précise l’attribut *[dir="both"]*, ce qui donnera par exemple :
+
+```
+// Graphe orienté avec 3 sommets a, b et c et 2 arêtes : a vers b (bidirectionnelle) et b vers c.
+digraph { a -> b [dir="both"] b -> c }
+```

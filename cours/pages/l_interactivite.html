@@ -186,6 +186,123 @@
                 }
             </script>
 
+            <p> La fonction <b><code>target.removeEventListener(String myEvent, Function toDo, [options]);</code></b> permet de supprimer l'événement de type <code>myEvent</code> associé à la fonction <code>toDo</code>. </p>
+
+            <h2> La manipulation du document </h2>
+
+            <h3> Le DOM </h3>
+
+            <p> Le DOM (<i>Document Object Model</i>) est une organisation hiérarchisée en arborescence de l'ensemble des éléments du document. Chaque élément forme un noeud (<code>node</code>) dans le document.
+
+            <p> L'objet <code>document</code> représente la page HTML chargée dans le navigateur. Il constitue l'objet racine du DOM et permet d'accéder à l'ensemble des éléments de la page, ainsi que de les rechercher, les manipuler et d'en créer de nouveaux. </p>
+
+            <div style="width:100%;text-align:center;">
+                <img src="../../images/pic_htmltree.gif" alt="DOM" style="border-radius: 15px"/>
+                <div style="margin:auto">Source: <a href="https://www.w3schools.com/js/js_htmldom_navigation.asp">W3Schools</a>.</div>
+            </div>
+
+            <h3> Trouver les éléments du document </h3>
+
+            Il existe plusieurs méthodes permettant de rechercher des éléments au sein du DOM qui se basent sur la nature des balises ou de leurs attributs.
+
+            <li> La méthode <code>getElementById(String param)</code> de <code>document</code> retourne le premier élément HTML du DOM ayant l'attribut <i>id</i> passé en paramètre. </li>
+            <li> La méthode <code>getElementsByClassName(String param)</code> retourne une liste d'éléments dont la classe CSS correspond au nom de classe passé en paramètre. </li>
+            <li> La méthode <code>getElementsByTagName(String param)</code> retourne une liste d'éléments dont la balise correspond à la balise passée en paramètre. </li>
+            <li> La méthode <code>getElementsByName(String param)</code> retourne une liste  d'éléments dont l'attribut <i>name</i> correspond au nom passé en paramètre (l'attibut <i>name</i> est généralement utilisé pour envoyer des données côté serveur par l'intermédiaire d'un formulaire). </li>
+            <li> La méthode <code>querySelectorAll(String param)</code> retourne tous les éléments trouvés dans le DOM répondant au sélecteur CSS (la notation CSS pour accéder aux éléments) passé en paramètre. Cette méthode permet notamment de réaliser des requêtes plus précises par rapport à <code>getElementsByClassName()</code>. </li>
+            <li> La méthode <code>querySelector(String param)</code> retourne le premier élément trouvé dans le DOM répondant au sélecteur CSS passé en paramètre. </li>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    Les fonctions ci-dessus retournent des éléments de type <i>HTMLCollection</i> ou de type <i>NodeList</i>. Ces types <b>n'héritent pas</b> du type <i>Array</i> et des méthodes attachées <i>e.g. map()</i>.
+                </div>
+            </div>
+
+            <p> Voir <a href="../../exemples/manipulation_document/manipulation.html"> l'exemple</a>. </p>
+
+            <h3> Créer de nouveaux éléments </h3>
+
+            <p> JavaScript permet de créer, d'ajouter ou bien de supprimer des éléments HTML. </p>
+
+            <h4> La méthode <code>createElement()</code> </h4>
+
+            <p> La création d'un nouvel élément est réalisée avec la méthode <code>document.createElement(String typeElement)</code>. Le paramètre <i>typeElement</i> est une chaîne désignant la balise de l'élément à créer. </p>
+
+<textarea class="editor" spellcheck="false">
+var new_div = document.createElement("div");
+new_div.innerHTML = "Je suis une nouvelle div.";</textarea>
+
+            <h4> Ajouter des éléments dans le document </h4>
+
+            <p> À ce moment, la <code>div</code> n'est pas encore sur le document. Il n'est qu'un objet JavaScript en mémoire. La seconde étape est de l'ajouter à l'endroit voulu au sein du DOM. La méthodes <b><code>parent.appendChild(HTMLElement enfant)</code></b> permet d'ajouter la balise à l'élément <code>parent</code>. </p>
+
+            <h4> Supprimer un élément HTML </h4>
+
+            <p> La méthode <code>removeChild()</code> retire du DOM l'élement enfant de son élément parent. Voir <a href="../../exemples/elements/elements.html">l'exemple</a>. </p>
+
+            <h3> Accéder aux attributs </h3>
+
+            <h4> Les attributs simples </h4>
+
+            <p> Le JavaScript dispose de méthodes pour accéder aux attributs d'un élément HTML. </p>
+
+            <ul>
+                <li> La méthode <code>hasAttribute(String nomAttribut)</code> retourne <code>true</code> si l'attribut passé en paramètre est présent dans la balise. </li>
+                <li> La méthode <code>getAttribute(String nomAttribut)</code> retourne le contenu de l'attribut passé en paramètre. </li>
+                <li> La méthode <code>setAttribute(String nomAttribut, String valeur)</code> modifie le contenu d'un attribut. </li>
+            </ul>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <p> À partir de la balise suivante <code>&lt;div id="mydiv">My div.&lt;/div></code> vérifier si l'attribut <i>id</i> est bien présent et modifier sa valeur par <i>mynewdiv</i>. </p>
+                </div>
+            </div>
+
+            <button class="btn toggle-answer" data-pw="av">
+                Afficher la réponse
+            </button>
+            <div class="hidden">
+<textarea class="editor mt" spellcheck="false">
+let all_div = document.querySelectorAll('div');
+all_div.forEach(div => {
+    if (div.hasAttribute('id') && div.getAttribute('id') == 'mydiv') {
+        div.id = 'mynewdiv';        
+    }
+});</textarea>                
+            </div>
+
+            <h4> Les attributs de données </h4>
+
+            <p> La norme HTML du W3C définit strictement les attributs et les noms autorisés par balise. Cependant, il est possible de stocker directement dans le DOM des données via des attributs. Pour respecter la norme HTML, les noms des attributs doivent commencer par <code>data-</code> suivi d'un nom au choix (c'est une convention). Par exemple, il est possible de créer la balise <code>&lt;div data-clics="0">Nombre de clics&lt;/div></code>. </p>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <p> À partir de la balise suivante <i>&lt;div id="mydiv">Cliquer.&lt;/div></i> ajouter l'attribut de données <i>data-clics</i> et <i>data-last-clics</i> qui permet respectivement de stocker le nombre de fois où l'utilisateur a cliqué sur la balise et la date de son dernier clic. Vous pouvez utiliser la méthode <i>new Date().getTime()</i> (= nombre de millisecondes écoulées depuis le 1er janvier 1970). </p>
+                </div>
+            </div>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <p> Rendez-vous au lien suivant: <b>https://github.com/PAJEAN/cours_javascript/tree/master/exemples/bst</b> pour réaliser le TP sur l'arbre binaire de recherche (BST). </p>
+                </div>
+            </div>
+
         </div>
     </div>
 

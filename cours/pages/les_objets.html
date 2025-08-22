@@ -133,10 +133,89 @@
                     <span class="box-title">Exercice</span>
                 </div>
                 <div class="box-content">
-                    <ul>
-                        <li> Rendez-vous au lien suivant: <b>https://github.com/PAJEAN/cours_javascript/tree/master/exemples/bfs</b> pour réaliser le TP sur le parcours en largeur de graphe. </li>
-                    </ul>
+                    <p> Rendez-vous au lien suivant: <b>https://github.com/PAJEAN/cours_javascript/tree/master/exemples/bfs</b> pour réaliser le TP sur le parcours en largeur de graphe. </p>
                 </div>
+            </div>
+
+            <button class="btn toggle-answer" data-pw="re">
+                Afficher la réponse
+            </button>
+            <div class="hidden">
+<textarea class="editor mt" spellcheck="false">
+class Graph{
+    constructor(matrix) {
+        this.matrix = matrix;
+    }
+    /* Node name from their index */
+    _nodeName(index) { return `n${index}`; }
+    /* Convert the adjacency matrix to dot language in order to use viz.js */
+    _toDotLanguage() {
+        let _createId = (num1, num2) => `${num1}${num2}`;
+
+        let graph = [];
+        let seen_indexes = {};
+        for (let i = 0; i < this.matrix.length; i++) {
+            for (let j = 0; j < this.matrix.length; j++) { // this.matrix is a square matrix (same number of rows and columns).
+                let id = _createId(i, j);
+
+                if (id in seen_indexes || this.matrix[i][j] == 0) continue;
+
+                let is_dir_both = false;
+                if (this.matrix[j][i] == 1) {
+                    is_dir_both = true;
+                    seen_indexes[_createId(j, i)] = true;
+                }
+                graph.push(`${this._nodeName(i)} -> ${this._nodeName(j)}${is_dir_both ? ' [dir="both"]': ''}`);
+            }
+        }
+        return `digraph { ${graph.join(' ')} }`;
+    }
+    /* Compute all distances between all nodes and a given node */
+    distance(i_root) {
+        let distances = {[this._nodeName(i_root)]: 0};
+        let current_distance = 1;
+        let queue = [i_root];
+        while (queue.length > 0) {
+            let current_node_index = queue.shift();
+            let current_node = this.matrix[current_node_index];
+            for (let j = 0; j < current_node.length; j++) {
+                if (this._nodeName(j) in distances || current_node[j] == 0) continue;
+                distances[this._nodeName(j)] = current_distance;
+                queue.push(j);
+            }
+            current_distance += 1;
+        }
+        console.log(distances);
+        return distances;
+    }
+    /* Display graph */
+    display() {                    
+        let viz = new Viz();
+        viz.renderSVGElement(this._toDotLanguage())
+        .then(function(element) {
+            document.body.appendChild(element);
+        })
+        .catch(error => {
+            // Possibly display the error
+            console.error(error);
+        });
+    }
+}
+
+var matrix = [
+    [0, 1, 1, 1, 0],
+    [0, 0, 1, 0, 0],
+    [1, 1, 0, 0, 0],
+    [0, 0, 0, 1, 0],
+    [0, 1, 0, 0, 0]
+];
+
+let graph = new Graph(matrix);
+graph.display();
+for (let i = 0; i < this.matrix.length; i++) {
+    graph.distance(i);
+}
+</textarea>
             </div>
 
         </div>
