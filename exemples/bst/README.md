@@ -38,10 +38,6 @@ class BST{
 		/* Insert code */
 	}
 
-	isPresent(){
-		/* Insert code */
-	}
-
 	update(){
 		/* Insert code */
 	}
@@ -50,9 +46,10 @@ class BST{
 
 Descriptif des fonctions:
 * *add(data)* permet d'ajouter un nouveau noeud dans le graphe actuel. L'ajout de ce noeud doit considérer les propriétés du BST.
-* *findMin()* se déplacer sur le noeud le plus à gauche dans le graphe.
-* *findMax()* se déplacer sur le noeud le plus à droite dans le graphe.
+* *findMin()* recherche le noeud le plus à gauche dans le graphe.
+* *findMax()* recherche le noeud le plus à droite dans le graphe.
 * *isPresent()* vérifie la présence d'un noeud dans le graphe en tenant compte des propriétés du BST.
+* *update()* met les inputs Minimum et Maximum de la page web à jour et affiche le graphe à partir de la librairie *viz.js*.
 
 Stucture HTML (BST.html):
 
@@ -74,7 +71,6 @@ Stucture HTML (BST.html):
 		</div>
 
 		<div id="graph"></div>
-		<div id="table"></div>
 
 		<script src="viz.js"></script>
 		<script src="full.render.js"></script>
@@ -82,8 +78,6 @@ Stucture HTML (BST.html):
 	</body>
 </html>
 ```
-
-La fonction *update()* de la classe BST doit mettre les champs Minimum et Maximum à jour et afficher le graphe à partir de la librairie *viz.js*.
 
 Exemple de la librairie [*viz.js*](https://github.com/mdaines/viz.js/wiki/Usage). Les fichiers de la librairie graphique sont présents dans le dossier exemples/librairies.
 

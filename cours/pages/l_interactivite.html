@@ -222,7 +222,7 @@
                 </div>
             </div>
 
-            <p> Voir <a href="../../exemples/manipulation_document/manipulation.html"> l'exemple</a>. </p>
+            <p> Voir <a href="../../exemples/dom/manipulation.html"> l'exemple</a>. </p>
 
             <h3> Créer de nouveaux éléments </h3>
 
@@ -242,7 +242,7 @@ new_div.innerHTML = "Je suis une nouvelle div.";</textarea>
 
             <h4> Supprimer un élément HTML </h4>
 
-            <p> La méthode <code>removeChild()</code> retire du DOM l'élement enfant de son élément parent. Voir <a href="../../exemples/elements/elements.html">l'exemple</a>. </p>
+            <p> La méthode <code>removeChild()</code> retire du DOM l'élement enfant de son élément parent. Voir <a href="../../exemples/dom/elements.html">l'exemple</a>. </p>
 
             <h3> Accéder aux attributs </h3>
 
@@ -301,6 +301,230 @@ all_div.forEach(div => {
                 <div class="box-content">
                     <p> Rendez-vous au lien suivant: <b>https://github.com/PAJEAN/cours_javascript/tree/master/exemples/bst</b> pour réaliser le TP sur l'arbre binaire de recherche (BST). </p>
                 </div>
+            </div>
+
+            <button class="btn toggle-answer" data-pw="rt">
+                Afficher la réponse
+            </button>
+            <div class="hidden">
+
+                <p> Fichier HTML.</p>
+
+<textarea class="editor mt" spellcheck="false">
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>BST</title>
+	</head>
+	<body>
+		<table>
+			<tr><td>Minimum</td><td id="minimum"></td></tr>
+			<tr><td>Maximum</td><td id="maximum"></td></tr>
+		</table>
+		<div>
+			<input type="text" id="add">
+			<button id="add-button">Ajouter</button>
+		</div>
+        
+		<!-- <div>
+			<input type="text" id="erase">
+			<button id="erase-button">Effacer</button>
+		</div> -->
+
+		<div id="graph"></div>
+
+		<script src="viz.js"></script>
+		<script src="full.render.js"></script>
+		<script src="BST.js"></script>
+	</body>
+</html></textarea>
+
+                <p> Fichier JavaScript.</p>
+
+<textarea class="editor mt" spellcheck="false">
+class Node{
+    constructor(data, left = null, right = null) {
+        this.data = data;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class BST{
+    constructor(){
+        this.root = null;
+        this.parents = {};
+        this.nodes = {};
+    }
+    
+    /* Convert the adjacency matrix to dot language in order to use viz.js */
+    _toDotLanguage() {
+        let graph = [];
+
+        if (this.root.left == null && this.root.right == null) {
+            graph.push(this.root.data);
+            return `digraph { ${graph.join(' ')} }`;
+        }
+
+        let queue = [this.root];
+        while (queue.length > 0) {
+            let current_node = queue.pop();
+            if (current_node.left != null) {
+                graph.push(`${current_node.data} -> ${current_node.left.data}`);
+                queue.push(current_node.left);
+            }
+            if (current_node.right != null) {
+                graph.push(`${current_node.data} -> ${current_node.right.data}`);
+                queue.push(current_node.right);
+            }
+        }
+        return `digraph { ${graph.join(' ')} }`;
+    }
+
+    add(data) {
+        if (this.root == null) {
+            this.root = new Node(data);
+            return;
+        }
+        let queue = [this.root];
+        while (queue.length > 0) {
+            let current_node = queue.pop();
+            if (data < current_node.data) {
+                if (current_node.left == null) {
+                    this.nodes[data] = new Node(data);
+                    current_node.left = this.nodes[data];
+                    this.parents[data] = current_node.data;
+                    return;
+                }
+                queue.push(current_node.left);
+            } else if (data > current_node.data) {
+                if (current_node.right == null) {
+                    this.nodes[data] = new Node(data);
+                    current_node.right = this.nodes[data];
+                    this.parents[data] = current_node.data;
+                    return;
+                }
+                queue.push(current_node.right);
+            }
+        }
+    }
+
+    findMin(root_node = this.root) {
+        if (this.root == null) { return ''; }
+
+        let queue = [root_node];
+        while (queue.length > 0) {
+            let current_node = queue.pop();
+            if (current_node.left == null) {                            
+                return current_node.data;
+            }
+            queue.push(current_node.left);
+        }
+    }
+
+    findMax(root_node = this.root) {
+        if (this.root == null) { return ''; }
+        
+        let queue = [root_node];
+        while (queue.length > 0) {
+            let current_node = queue.pop();
+            if (current_node.right == null) {
+                return current_node.data;
+            }
+            queue.push(current_node.right);
+        }
+    }
+
+    remove(data) {
+        this.root = this._removeNode(this.root, data);
+    }
+
+    _removeNode(node, data) {
+        console.log('----------------');                    
+        if (node == null) return null;
+
+        if (data < node.data) {
+            node.left = this._removeNode(node.left, data);
+            return node;
+        } else if (data > node.data) {
+            node.right = this._removeNode(node.right, data);
+            return node;
+        } else {
+            // Cas 1 : feuille
+            if (node.left === null && node.right === null) {
+                return null;
+            }
+
+            // Cas 2 : un seul enfant
+            if (node.left === null) return node.right;
+            if (node.right === null) return node.left;
+
+            // Cas 3 : deux enfants
+            // → On cherche le plus petit élément du sous-arbre droit (successeur)
+            let minRight = node.right;
+            while (minRight.left !== null) {
+                minRight = minRight.left;
+            }
+            node.data = minRight.data;
+            node.right = this._removeNode(node.right, minRight.data);
+            return node;
+        }
+    }
+
+    update(){
+        let minimum = document.querySelector('#minimum');
+        let maximum = document.querySelector('#maximum');
+        minimum.textContent = this.findMin();
+        maximum.textContent = this.findMax();
+    }
+
+    display() {
+        let graph_tag = document.querySelector('#graph');
+        graph_tag.textContent = '';                    
+
+        if (this.root == null) { return; }
+
+        let viz = new Viz();
+        viz.renderSVGElement(this._toDotLanguage())
+        .then(function(element) {
+            graph_tag.appendChild(element);
+        })
+        .catch(error => {
+            // Possibly display the error
+            console.error(error);
+        });
+    }
+}
+
+
+let bst = new BST();
+bst.add(12);
+bst.add(14);
+bst.add(13);
+bst.add(15);
+bst.display();
+
+let add_btn = document.querySelector('#add-button');
+let add_input = document.querySelector('#add');
+add_btn.addEventListener('click', evt => {
+    if (isNaN(Number(add_input.value))) return;
+    bst.add(Number(add_input.value));
+    bst.update();
+    bst.display();
+    console.log('Added');
+});
+
+let erase_btn = document.querySelector('#erase-button');
+let erase_input = document.querySelector('#erase');
+erase_btn.addEventListener('click', evt => {
+    if (isNaN(Number(erase_input.value))) return;
+    bst.remove(Number(erase_input.value));
+    bst.update();
+    bst.display();
+    console.log('Erased');
+});
+</textarea>
             </div>
 
         </div>

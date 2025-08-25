@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Le JavaScript</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+            <header>
+                <h1 class="title">L'asynchronicité</h1>
+                <div class="toolbar">
+                    <button class="btn" id="btn-print" title="Imprimer / Exporter en PDF">🖨️ Imprimer</button>
+                    <button class="btn" id="btn-theme" title="Changer le thème" data-initial="light">🌗 Thème</button>
+                </div>
+            </header>
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                                  AJAX                                   -->
+            <!-- ----------------------------------------------------------------------- -->
+
+            <p> 
+            JavaScript est un langage <b>monothread</b> : il n'exécute qu'une seule instruction à la fois. Si une opération longue (comme un appel réseau ou la lecture d'un fichier) bloquait le fil d'exécution, l'application entière deviendrait inutilisable. Pour éviter cela, JavaScript repose sur l'<b>asynchronicité</b> : certaines opérations sont exécutées en arrière-plan, et leur résultat est traité plus tard, sans bloquer l'interface.
+            </p>
+
+            <h2> Les promesses (<i>Promises</i>) </h2>
+
+            <p>
+            Une <b>promesse</b> est un objet qui représente la valeur d'une opération asynchrone, mais qui n'est pas encore disponible au moment de sa création. Elle peut être dans l'un des trois états suivants :
+            </p>
+
+            <ul>
+                <li><code>pending</code> : en attente, l'opération est en cours.</li>
+                <li><code>fulfilled</code> : terminée avec succès, la promesse renvoie une valeur.</li>
+                <li><code>rejected</code> : échouée, la promesse renvoie une erreur.</li>
+            </ul>
+
+            <p>
+            Lorsqu'une promesse est résolue (<code>fulfilled</code> ou <code>rejected</code>), on peut accéder à son résultat via les méthodes <code>.then()</code> (succès) et <code>.catch()</code> (erreur).
+            </p>
+
+            <div id="cells90"></div>
+
+            <p>
+            Les promesses sont aujourd'hui la base de l'asynchronicité en JavaScript. Elles sont utilisées par de nombreuses API modernes, comme <code>fetch()</code>. Elles peuvent aussi être utilisées avec <code>async/await</code> pour convertir une opération asynchrone en code synchrone.
+            </p>
+
+            <p>
+                Vous pouvez exploiter la méthode <code>Promise.all([])</code> pour exécuter plusieurs promesses en parallèle et attendre que toutes soient terminées (ou qu'une échoue).
+            </p>
+
+            <div id="cells91"></div>
+
+            <h2> Les appels AJAX </h2>
+
+            <p>Les appels AJAX (<i>Asynchronous JavaScript & XML</i>) permettent de communiquer entre le <b>client</b> et le <b>serveur</b> de manière asynchrone, c'est-à-dire sans rechargement complet de la page. Historiquement, on utilisait pour cela l'objet <code>XMLHttpRequest</code> (XHR), mais dans les applications modernes, on préfère la méthode <code>fetch()</code>, <a href="https://www.greatfrontend.com/questions/quiz/what-are-the-differences-between-xmlhttprequest-and-fetch">plus simple et plus puissante</a>. </p>
+
+            <p> La méthode <code>fetch(url, options)</code> permet d'envoyer une requête HTTP. Elle renvoie une <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Promise">promesse</a> qui sera résolue lorsque la réponse du serveur est disponible. Par défaut, <code>fetch()</code> effectue une requête <code>GET</code>, mais il est possible de configurer d'autres méthodes (<code>POST</code>, <code>PUT</code>, <code>DELETE</code>…) via l'objet <code>options</code>. </p>
+
+            <div id="cells92"></div>
+
+            <p> L'objet <code>Response</code> ne contient pas directement le corps de la réponse en JSON mais <b>fournit une représentation de l'ensemble de la réponse HTTP</b>. Aussi, pour extraire le corps en JSON de l'objet Response, on utilise la méthode <code>json()</code>, qui renvoie une deuxième promesse dont la résolution fournit le résultat de l'analyse du corps de la réponse au format JSON (<a href="https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch">developer.mozilla.org</a>). </p>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <p> A partir d'une liste d'URLs d'API publiques (<i>"https://jsonplaceholder.typicode.com/todos/1", "https://jsonplaceholder.typicode.com/todos/2" et "https://jsonplaceholder.typicode.com/todos/3"</i>) : </p>
+                    <ul>
+                        <li> Écrire une fonction <code>chargerDonnees(urls)</code> qui prend en paramètre le tableau d'URLs. </li>
+                        <li> Utiliser <code>fetch</code> pour récupérer les données de chaque URL. </li>
+                        <li> Attendre que toutes les requêtes soient terminées avec <code>Promise.all</code>. </li>
+                        <li> Afficher les résultats dans la console (ou sur la page HTML). </li>
+                    </ul>
+                </div>
+            </div>
+
+            <button class="btn toggle-answer" data-pw="al">
+                Afficher la réponse
+            </button>
+            <div class="hidden">
+                <div id="cells93"></div>
+            </div>
+            
+        </div>
+    </div>
+
+
+<!--
+88888888888                              888          888            
+    888                                  888          888            
+    888                                  888          888            
+    888   .d88b.  88888b.d88b.  88888b.  888  8888b.  888888 .d88b.  
+    888  d8P  Y8b 888 "888 "88b 888 "88b 888     "88b 888   d8P  Y8b 
+    888  88888888 888  888  888 888  888 888 .d888888 888   88888888 
+    888  Y8b.     888  888  888 888 d88P 888 888  888 Y88b. Y8b.     
+    888   "Y8888  888  888  888 88888P"  888 "Y888888  "Y888 "Y8888  
+                                888                                  
+                                888                                  
+                                888                                  
+-->
+
+    <template id="cell-template">
+        <section class="cell">
+            <header>
+                <div class="cell-title">
+                    <span class="badge">
+                        <span class="dot"></span>
+                        <span class="title-text">JavaScript</span>
+                    </span>
+                </div>
+                <div class="cell-actions">
+                    <button class="btn run">
+                        <span class="icon">▶</span>
+                        <span class="label">Exécuter</span>
+                    </button>
+                    <button class="btn reset">
+                        <span class="icon">⟳</span>
+                        <span class="label">Réinitialiser</span>
+                    </button>
+
+                    <button class="btn clear">
+                        <span class="icon">🧹</span>
+                        <span class="label">Effacer</span>
+                    </button>
+                </div>
+            </header>
+            <textarea class="editor" spellcheck="false"></textarea>
+            <div class="output" aria-live="polite"></div>
+        </section>
+    </template>
+
+
+<!--
+ .d8888b.                   d8b          888    
+d88P  Y88b                  Y8P          888    
+Y88b.                                    888    
+ "Y888b.    .d8888b 888d888 888 88888b.  888888 
+    "Y88b. d88P"    888P"   888 888 "88b 888    
+      "888 888      888     888 888  888 888    
+Y88b  d88P Y88b.    888     888 888 d88P Y88b.  
+ "Y8888P"   "Y8888P 888     888 88888P"   "Y888 
+                                888             
+                                888             
+                                888             
+-->
+
+    <script src="../js/main.js"></script>
+
+    <script>
+        /* ==== Add cells ==== */
+
+    addCell('cells90', "L'objet <code>Promise</code>", `
+/* /!\\ async/await est utilisé uniquement pour le bon fonctionnement de la cellule. */
+
+async function getData() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+        const ok = Math.random() > 0.5; // Succès ou erreur aléatoire.
+        if (ok) {
+            resolve('Données reçues !');
+        } else {
+            reject('Une erreur est survenue.');
+        }
+        }, 1000); // Exécution après 1 seconde.
+    });
+}
+
+await getData()
+    .then(result => console.log(result))   // "Données reçues !" si succès.
+    .catch(error => console.error(error)); // "Une erreur est survenue." si échec.
+    `);
+
+    addCell('cells91', 'La fonction <code>Promise.all([])</code>', `
+/* /!\\ await est utilisé uniquement pour le bon fonctionnement de la cellule. */
+
+function attendre(ms, message) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(message), ms);
+  });
+}
+
+// On lance 3 promesses en parallèle.
+const p1 = attendre(500,  'Résultat de la promesse 1 (0.5s)');
+const p2 = attendre(1500, 'Résultat de la promesse 2 (1.5s)');
+const p3 = attendre(1000, 'Résultat de la promesse 3 (1s)');
+
+// Promise.all attend que TOUTES les promesses soient terminées.
+await Promise.all([p1, p2, p3])
+    .then(resultats => {
+        console.log('Toutes les promesses sont résolues !');
+        console.log(resultats); 
+        // ["Résultat de la promesse 1 (1s)", 
+        //  "Résultat de la promesse 2 (2s)", 
+        //  "Résultat de la promesse 3 (1.5s)"]
+    })
+    .catch(erreur => {
+        console.error("Une promesse a échoué :", erreur);
+    });
+    `);
+
+    addCell('cells92', 'La fonction <code>fetch()</code>', `
+/* /!\\ await est utilisé uniquement pour le bon fonctionnement de la cellule. */
+
+await fetch('https://api.chucknorris.io/jokes/random', {
+        method: 'GET',
+        // body: ...
+    })
+    .then(response => {
+        if (!response.ok) {
+        throw new Error("Erreur HTTP: " + response.status);
+        }
+        return response.json(); // conversion de la réponse en JSON
+    })
+    .then(data => {
+        console.log('Données reçues :', data.value);
+    })
+    .catch(error => {
+        console.error('Une erreur est survenue :', error);
+    });
+    `);
+
+    addCell('cells93', 'Réponse', `
+/* /!\\ await est utilisé uniquement pour le bon fonctionnement de la cellule. */
+
+const urls = [
+    "https://jsonplaceholder.typicode.com/todos/1",
+    "https://jsonplaceholder.typicode.com/todos/2",
+    "https://jsonplaceholder.typicode.com/todos/3"
+];
+
+async function chargerDonnees(urls) {
+    let promises = [];
+    for (let url of urls) {
+        promises.push(fetch(url, { method: 'GET' })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Erreur HTTP: " + response.status);
+            }
+            return response.json(); // conversion de la réponse en JSON
+        }));
+    }
+
+    await Promise.all(promises)
+    .then(data => {
+        console.log('Données reçues :', data);
+    })
+    .catch(error => {
+        console.error('Une erreur est survenue :', error);
+    });
+}
+
+await chargerDonnees(urls);	
+    `);
+
+
+/*        
+    addCell('cells00', '', `
+
+    `);
+*/
+
+    </script>
+</body>
+</html>
