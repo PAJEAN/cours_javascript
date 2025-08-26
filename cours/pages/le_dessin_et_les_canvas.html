@@ -11,29 +11,22 @@
 <body>
     <div class="wrapper">
         <div class="page" id="page">
-            <header>
-                <h1 class="title">Le canvas</h1>
-                <div class="toolbar">
-                    <button class="btn" id="btn-print" title="Imprimer / Exporter en PDF">🖨️ Imprimer</button>
-                    <button class="btn" id="btn-theme" title="Changer le thème" data-initial="light">🌗 Thème</button>
-                </div>
-            </header>
+            <div id="header-container">Le dessin et les canvas</div>
 
-            <!-- ----------------------------------------------------------------------- -->
-            <!--                         Le dessin et les canvas                         -->
-            <!-- ----------------------------------------------------------------------- -->
+
+            
 
             <h2> Le dessin et les canvas </h2>
 
             
             <p> 
-            Depuis HTML5, le navigateur met à disposition l'élément <code>&lt;canvas></code>, qui offre une "toile blanche" sur laquelle on peut dessiner directement en JavaScript. Cet outil est utilisé dans de nombreux domaines : graphiques interactifs, animations, visualisations de données, ou encore petits jeux vidéo.
+                Depuis HTML5, le navigateur met à disposition l'élément <code>&lt;canvas></code>, qui offre une "toile blanche" sur laquelle on peut dessiner directement en JavaScript. Cet outil est utilisé dans de nombreux domaines : graphiques interactifs, animations, visualisations de données, ou encore petits jeux vidéo.
             </p>
 
             <h3> L'élément <code>&lt;canvas></code> </h3>
 
             <p>
-            Un <code>canvas</code> est une simple zone rectangulaire de la page, définie par ses attributs width et height (en pixels). Par défaut, il est vide : c'est JavaScript qui se charge d'y dessiner. Pour dessiner, on doit d'abord obtenir un contexte de rendu à partir du canvas. Cela se fait avec la méthode :
+                Un <code>canvas</code> est une simple zone rectangulaire de la page, définie par ses attributs width et height (en pixels). Par défaut, il est vide : c'est JavaScript qui se charge d'y dessiner. Pour dessiner, on doit d'abord obtenir un contexte de rendu à partir du canvas. Cela se fait avec la méthode :
             </p>
 
 <textarea class="editor mt" spellcheck="false">
@@ -46,11 +39,11 @@ const ctx = canvas.getContext('2d');</textarea>
             </ul>
 
             <p>
-            Le contexte 2D (objet <code>CanvasRenderingContext2D</code>) fournit ensuite toutes les méthodes de dessin : tracer des formes, écrire du texte, afficher des images, gérer des couleurs, etc.
+                Le contexte 2D (objet <code>CanvasRenderingContext2D</code>) fournit ensuite toutes les méthodes de dessin : tracer des formes, écrire du texte, afficher des images, gérer des couleurs, etc.
             </p>
 
             <p>
-            Le repérage des positions dans un canvas exploite des coordonnées cartésiennes <i>(x, y)</i> et l'origine du point <i>(0, 0)</i> est située en <b>haut à gauche de l'élément</b>.
+                Le repérage des positions dans un canvas exploite des coordonnées cartésiennes <i>(x, y)</i> et l'origine du point <i>(0, 0)</i> est située en <b>haut à gauche de l'élément</b>.
             </p>
 
             <div style="width:100%;text-align:center;">
@@ -59,7 +52,7 @@ const ctx = canvas.getContext('2d');</textarea>
             </div>
 
             <p>
-            L'unité des angles est <b>le radian</b>. Pour rappel, 2pi radians équivalent à 360°, soit un tour complet. Le sens de rotation est l'inverse du sens trigonométrique soit celui des aiguilles d'une montre.
+                L'unité des angles est <b>le radian</b>. Pour rappel, 2pi radians équivalent à 360°, soit un tour complet. Le sens de rotation est l'inverse du sens trigonométrique soit celui des aiguilles d'une montre.
             </p>
 
             <div style="width:100%;text-align:center;">
@@ -70,7 +63,7 @@ const ctx = canvas.getContext('2d');</textarea>
             <h3> Tracer des lignes </h3>
 
             <p>
-            Pour tracer des lignes dans un canvas, il faut d'abord définir un chemin avec un ou plusieurs segments de ligne. Un chemin est initialisé avec l'appel à la méthode <b><code>beginPath()</code></b>. Ensuite, les méthodes <code>moveTo()</code> et <code>lineTo()</code> permettent respectivement de déplacer le curseur et d'ajouter des lignes au chemin.
+                Pour tracer des lignes dans un canvas, il faut d'abord définir un chemin avec un ou plusieurs segments de ligne. Un chemin est initialisé avec l'appel à la méthode <b><code>beginPath()</code></b>. Ensuite, les méthodes <code>moveTo()</code> et <code>lineTo()</code> permettent respectivement de déplacer le curseur et d'ajouter des lignes au chemin.
             </p>
 
             <ul>
@@ -81,7 +74,7 @@ const ctx = canvas.getContext('2d');</textarea>
 
 
             <p>
-            Enfin, la méthode *stroke()* permet d'afficher les ligne du chemin à l'écran.
+                Enfin, la méthode *stroke()* permet d'afficher les ligne du chemin à l'écran.
             </p>
 
             <div class="exercise-box">
@@ -90,7 +83,9 @@ const ctx = canvas.getContext('2d');</textarea>
                     <span class="box-title">Exercice</span>
                 </div>
                 <div class="box-content">
-                    <p> À partir des fonctions précédentes, construisez un carré de 100px de largeur en partant de la position <i>(10, 10)</i>. </p>
+                    <p>
+                        À partir des fonctions précédentes, construisez un carré de 100px de largeur en partant de la position <i>(10, 10)</i>.
+                    </p>
                 </div>
             </div>
 
@@ -112,7 +107,7 @@ context.stroke();</textarea>
             </div>
 
             <p>
-            Le <code>context</code> a des propriétés permettant de personnaliser les traits du dessin.
+                Le <code>context</code> a des propriétés permettant de personnaliser les traits du dessin.
             </p>
             
             <ul>
@@ -127,7 +122,7 @@ context.stroke();</textarea>
                 </div>
                 <div class="box-content">
                     <p>
-                    Les fonctions <code>save()</code> et <code>restore()</code> permettent respectivement de sauvegarder le contexte et toutes les mises en forme en cours pour ensuite les reprendre.
+                        Les fonctions <code>save()</code> et <code>restore()</code> permettent respectivement de sauvegarder le contexte et toutes les mises en forme en cours pour ensuite les reprendre.
                     </p>
                 </div>
             </div>
@@ -137,53 +132,99 @@ context.stroke();</textarea>
             <h4> Les arcs de cercle </h4>
 
             <p>
-            Un arc de cercle centré sur <i>(x, y)</i> et de rayon <code>r</code>, entre les angles <code>a1</code> et <code>a2</code> (exprimés en radians) est dessiné avec la méthode <code>arc(x, y, r, a1, a2)<code>. Cette méthode ne fait que compléter le chemin mais n'affiche rien dans le canvas. Pour afficher un arc de cercle, il faut commencer par initialiser le chemin avec la fonction <code>beginPath()</code> puis l'afficher avec la fonction <code>stroke()</code>.
+                Un arc de cercle centré sur <i>(x, y)</i> et de rayon <code>r</code>, entre les angles <code>a1</code> et <code>a2</code> (exprimés en radians) est dessiné avec la méthode <code>arc(x, y, r, a1, a2)</code>. Cette méthode ne fait que compléter le chemin mais n'affiche rien dans le canvas. Pour afficher un arc de cercle, il faut commencer par initialiser le chemin avec la fonction <code>beginPath()</code> puis l'afficher avec la fonction <code>stroke()</code>.
             </p>
 
-            
-
-            <br>
-
-            <div>
-                <hr>
-                <div style="padding: 20px; min-width: 30px; max-width: 30px; margin: auto; background: white; border-radius: 50%;">
-                    <img src="images/writing.png" alt="writing" width="30"/>
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        Réaliser la figure ci-dessous à partir du carré précédent (rayon = 25).
+                    </p>
+                    <div style="text-align: center;"><img src="../../images/canvas-square-arc.png" alt="writing"/></div>
                 </div>
             </div>
-            <ul>
-                <li> Réaliser la figure suivante à partir du carré précédent (rayon = 25). <br>
-                <img src="images/canvas-square-arc.png" alt="writing"/>
-                </li>
-            </ul>
-            <hr>
 
-            #### Les courbes de Bézier
-
-            Une courbe de Bézier est une ligne courbe entre un point de départ et un point d'arrivée. La forme de la courbe est définie par deux points de contrôle, qui attirent et déforment la ligne initiale. La méthode *bezierCurveTo(xc1, yc1, xc2, yc2, x2, y2)* permet de créer une courbe entre la position du pointeur actuel et la position *(x2, y2)* avec les points de contrôle *(xc1, yc1)* et *(xc2, yc2)*.
-
-
-            <div style="width:100%;text-align:center;">
-                <img src="images/bezier-curve.png" alt="canvas"/>
-                <div style="margin: auto">Source: <a href="https://fr.wikipedia.org/wiki/Courbe_de_B%C3%A9zier">Wikipedia</a>.</div>
+            <button class="btn toggle-answer" data-pw="rn">
+                Afficher la réponse
+            </button>
+            <div class="hidden">
+<textarea class="editor mt" spellcheck="false">
+let canvas = document.getElementById('mycanvas')
+let context = canvas.getContext('2d');
+context.strokeStyle = 'green';
+context.beginPath();
+context.moveTo(0, 0);
+context.lineTo(100,0);
+context.lineTo(100,100);
+context.lineTo(0,100);
+context.closePath();
+context.stroke();
+context.beginPath();
+context.arc(100, 100, 25, 1.5*Math.PI, Math.PI);
+context.stroke();</textarea>
             </div>
 
-            Par exemple: *context.bezierCurveTo(0,25,100,25,100,0);*
+            <h4> Le rectangle </h4>
+
+            <p>
+                La méthode <code>rect(x, y, largeur, hauteur)</code> permet de dessiner les contours d'un rectangle de <i>largeur x hauteur</i> dont le coin supérieur gauche est en <i>(x, y)</i>.
+            </p>
+
+            <h4> Le remplissage </h4>
+
+            <p>
+                Les formes dessinées sur le canvas peuvent non seulement être tracées, mais aussi remplies grâce à la méthode <code>fill()</code>. Le style de remplissage se définit dans le contexte via la propriété <code>fillStyle</code>. La méthode <code>fillRect(x, y, largeur, hauteur)</code> permet quant à elle de dessiner directement un rectangle rempli.
+            </p>
+
+<textarea class="editor mt" spellcheck="false">
+context.fillStyle = '#0f0';
+context.fillStyle = 'rgb(0, 255, 0)';
+context.fillStyle = 'rgb(0, 255, 0, 0.5)';
+</textarea>
+
+
+            <h4> Écrire du texte </h4>
+
+            <p>
+                L'écriture de texte dans le canvas se fait avec la méthode <code>strokeText(String texte, Integer x, Integer y)</code> qui affiche le contour des lettres ou bien avec la méthode <code>fillText(String texte, Integer x, Integer y)</code> qui remplit les lettres. Par défaut, le point <i>(x, y)</i> est en bas à gauche. La propriété <i>textBaseline</i> indique comment le texte doit s'appuyer sur la ligne d'écriture (<i>alphabetic, middle, top, hanging, bottom</i>).
+            </p>
+
+            <h3> Transformation et rotation </h3>
+
+            <p>
+                Il est possible d'appliquer au contexte une matrice de transformation avec <code>setTransform(echelleX, inclineX, inclineY, echelleY, translateX, translateY)</code>. La méthode <code>rotate(angle)</code> permet d'affecter un effet de rotation au contexte.
+            </p>
 
             <div style="width:100%;text-align:center;">
-                <img src="images/canvas-bezier.png" alt="canvas"/>
+                <img src="../../images/correct-rotate-grid.png" alt="canvas"/>
+                <div>Source: <a href="https://processing.org/tutorials/transform2d/">processing.org</a>.</div>
             </div>
 
-            #### Le rectangle
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        Pour réinitialiser la matrice de transformation <i>setTransform(1, 0, 0, 1, 0, 0)</i>.
+                    </p>
+                </div>
+            </div>
 
-            La méthode *rect(x, y, largeur, hauteur)* permet de dessiner les contours d'un rectangle de *largeur x hauteur* dont le coin supérieur gauche est en *(x, y)*.
+            <p>
+                Par défaut, les échelles <code>x</code> et <code>y</code> du canvas correspondent à une unité égale à un pixel. Modifier le facteur d’échelle revient donc à changer la taille de cette unité. Par exemple, un facteur de <code>0.5</code> réduit l’unité à un demi-pixel, et les formes sont alors dessinées deux fois plus petites. À l’inverse, un facteur de <code>2.0</code> fait correspondre une unité à deux pixels, et les formes apparaissent deux fois plus grandes.
+            </p>
 
-            #### Le remplissage
 
-            Tous les chemins dessinés jusqu'à maintenant peuvent également être remplis avec la méthode *fill()*. Le style de remplissage est défini dans le contexte par la propriété *fillStyle*.
+
 
         </div>
     </div>
-
 
 <!--
 88888888888                              888          888            
@@ -196,39 +237,10 @@ context.stroke();</textarea>
     888   "Y8888  888  888  888 88888P"  888 "Y888888  "Y888 "Y8888  
                                 888                                  
                                 888                                  
-                                888                                  
--->
+                                888                                      
+ -->
 
-    <template id="cell-template">
-        <section class="cell">
-            <header>
-                <div class="cell-title">
-                    <span class="badge">
-                        <span class="dot"></span>
-                        <span class="title-text">JavaScript</span>
-                    </span>
-                </div>
-                <div class="cell-actions">
-                    <button class="btn run">
-                        <span class="icon">▶</span>
-                        <span class="label">Exécuter</span>
-                    </button>
-                    <button class="btn reset">
-                        <span class="icon">⟳</span>
-                        <span class="label">Réinitialiser</span>
-                    </button>
-
-                    <button class="btn clear">
-                        <span class="icon">🧹</span>
-                        <span class="label">Effacer</span>
-                    </button>
-                </div>
-            </header>
-            <textarea class="editor" spellcheck="false"></textarea>
-            <div class="output" aria-live="polite"></div>
-        </section>
-    </template>
-
+    <div id="template-container"></div>
 
 <!--
  .d8888b.                   d8b          888    

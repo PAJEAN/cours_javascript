@@ -11,17 +11,7 @@
 <body>
     <div class="wrapper">
         <div class="page" id="page">
-            <header>
-                <h1 class="title">L'intéractivité</h1>
-                <div class="toolbar">
-                    <button class="btn" id="btn-print" title="Imprimer / Exporter en PDF">🖨️ Imprimer</button>
-                    <button class="btn" id="btn-theme" title="Changer le thème" data-initial="light">🌗 Thème</button>
-                </div>
-            </header>
-
-            <!-- ----------------------------------------------------------------------- -->
-            <!--                             L'intéractivité                             -->
-            <!-- ----------------------------------------------------------------------- -->
+            <div id="header-container">L'intéractivité</div>
             
             <h2> Les évènements </h2>
 
@@ -545,35 +535,7 @@ erase_btn.addEventListener('click', evt => {
                                 888                                  
 -->
 
-    <template id="cell-template">
-        <section class="cell">
-            <header>
-                <div class="cell-title">
-                    <span class="badge">
-                        <span class="dot"></span>
-                        <span class="title-text">JavaScript</span>
-                    </span>
-                </div>
-                <div class="cell-actions">
-                    <button class="btn run">
-                        <span class="icon">▶</span>
-                        <span class="label">Exécuter</span>
-                    </button>
-                    <button class="btn reset">
-                        <span class="icon">⟳</span>
-                        <span class="label">Réinitialiser</span>
-                    </button>
-
-                    <button class="btn clear">
-                        <span class="icon">🧹</span>
-                        <span class="label">Effacer</span>
-                    </button>
-                </div>
-            </header>
-            <textarea class="editor" spellcheck="false"></textarea>
-            <div class="output" aria-live="polite"></div>
-        </section>
-    </template>
+    <div id="template-container"></div>
 
 
 <!--

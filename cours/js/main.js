@@ -1,5 +1,22 @@
 /* ==== Document initialization ==== */
 (() => {
+    // Include header to document */
+    let header = document.querySelector('#header-container');
+    let title = header.textContent;
+    header.outerHTML = /* html */`
+        <header>
+            <h1 class="title">${title}</h1>
+            <div class="toolbar">
+                <button class="btn" id="btn-print" title="Imprimer / Exporter en PDF">🖨️ Imprimer</button>
+                <button class="btn" id="btn-theme" title="Changer le thème" data-initial="light">🌗 Thème</button>
+            </div>
+            <!-- Bouton retour accueil -->
+            <a href="../index.html" class="back-home">🏠</a>
+        </header>
+    `;
+})();
+
+(() => {
     /* Theme */
     let theme_name_attribute = 'data-initial';
     const btn_theme = document.getElementById('btn-theme');
@@ -65,6 +82,41 @@
     });
 })();
 
+(() => {
+    /* Include template html to document */
+    let template = document.querySelector('#template-container');
+    template.outerHTML = /* html */`
+        <template id="cell-template">
+            <section class="cell">
+                <header>
+                    <div class="cell-title">
+                        <span class="badge">
+                            <span class="dot"></span>
+                            <span class="title-text">JavaScript</span>
+                        </span>
+                    </div>
+                    <div class="cell-actions">
+                        <button class="btn run">
+                            <span class="icon">▶</span>
+                            <span class="label">Exécuter</span>
+                        </button>
+                        <button class="btn reset">
+                            <span class="icon">⟳</span>
+                            <span class="label">Réinitialiser</span>
+                        </button>
+
+                        <button class="btn clear">
+                            <span class="icon">🧹</span>
+                            <span class="label">Effacer</span>
+                        </button>
+                    </div>
+                </header>
+                <textarea class="editor" spellcheck="false"></textarea>
+                <div class="output" aria-live="polite"></div>
+            </section>
+        </template>`;
+})();
+
 
 /* ==== Managing code cells ==== */
 function createSandboxIframe() {
@@ -72,11 +124,11 @@ function createSandboxIframe() {
     const iframe = document.createElement('iframe');
     iframe.setAttribute('sandbox', 'allow-scripts');
     iframe.style.display = 'none';
-    const src = `
+    const src = /* html */`
     <!DOCTYPE html>
     <html>
         <head>
-            <meta charset=\"utf-8\">
+            <meta charset="utf-8">
         </head>
         <body>
             <script>
@@ -113,7 +165,7 @@ function createSandboxIframe() {
                 if (!ev.data || ev.data.type !== 'exec') return;
                 run(ev.data.code);
             });
-            <\/script>
+            </script>
         </body>
     </html>`;
     iframe.srcdoc = src;

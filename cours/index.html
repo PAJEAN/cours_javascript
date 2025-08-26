@@ -11,102 +11,27 @@
 <body>
     <div class="wrapper">
         <div class="page" id="page">
-            <header>
-                <h1 class="title">Le JavaScript</h1>
-                <div class="toolbar">
-                    <button class="btn" id="btn-print" title="Imprimer / Exporter en PDF">🖨️ Imprimer</button>
-                    <button class="btn" id="btn-theme" title="Changer le thème" data-initial="light">🌗 Thème</button>
-                </div>
-            </header>
 
-            <p>Ce cours présente les concepts fondamentaux du JavaScript (côté client) et sa syntaxe. Vous utiliserez un éditeur de texte (par exemple : <a href="https://code.visualstudio.com/">Visual Studio Code</a>) ainsi qu'un navigateur Web (par exemple : Google Chrome, Firefox ou Opera). </p>
+            <div id="header-container"> Le JavaScript </div>
 
-            <p>Les cellules sont interactives : vous pouvez y exécuter directement le code. À noter que certains exemples ne sont pas fonctionnels et sont fournis uniquement à des fins pédagogiques.</p>
-
-
-            <!-- ----------------------------------------------------------- -->
-            <!--                 Créer sa première page web                  -->
-            <!-- ----------------------------------------------------------- -->
-
-            <h2>Créer sa première page web</h2>
-
-            <div class="exercise-box">
-                <div class="exercise-header">
-                    <span class="box-icon">💡</span>
-                    <span class="box-title">Exercice</span>
-                </div>
-                <div class="box-content">
-                    <ul>
-                        <li> Ouvrez un éditeur de texte et copier/coller le code ci-dessous. </li>
-                        <li> Sauvegardez votre fichier et nommez le <code>hello_world.html</code>. </li>
-                        <li> Double-cliquez sur votre fichier pour l'ouvrir avec votre navigateur. </li>
-                        <li> Accédez à la console de développement (touche F12 sur Google Chrome). </li>
-                    </ul>
-                </div>
-
-<textarea class="editor" spellcheck="false">
-&lt;!DOCTYPE html>
-&lt;html>
-&lt;head>
-    &lt;title>Hello World&lt;/title>
-&lt;/head>
-&lt;body>
-    <!-- Un commentaire HTML -->
-    &lt;h1 style="color:red">Bonjour&lt;/h1>
-
-    &lt;script type="text/javascript">
-    // Un premier commentaire en JavaScript.
-    /*
-        Un second commentaire en Javascript.
-    */
-    console.log("Hello World");
-    &lt;/script>
-&lt;/body>
-&lt;/html></textarea>
-
-                <div class="mt">
-                    Pour organiser votre code, vous pouvez séparer la structure de la page (HTML) et la logique (JavaScript). Créez deux fichiers distincts :
-                    <ul>
-                        <li>un fichier HTML (par exemple <code>index.html</code>),</li>
-                        <li>un fichier JavaScript (par exemple <code>script.js</code>).</li>
-                    </ul>
-                    Ensuite, vous pouvez lier le fichier JavaScript à la page HTML en utilisant la balise :
-                    
-<textarea class="editor my" spellcheck="false">&lt;script src="script.js">&lt;/script></textarea>
-                </div>
-
-            </div>
-
-            <p>Tirons des enseignements de l'exemple ci-dessus:
-                <ul>
-                    <li> Une page HTML est constituée d'une balise <code>&lt;head&gt;</code> contenant tous les éléments de l'en-tête du document et d'une balise <code>&lt;body&gt;</code> représentant le contenu du document. </li>
-                    <li> Le code JavaScript est ici directement intégré au code HTML de la page Web via la balise <code>&lt;script&gt;</code>. </li>
-                    <li> Les deux façons d'ajouter un commentaire au sein d'un code JavaScript (// et /* */). </li>
-                    <li> Le code JavaScript exploite la méthode <code>log()</code> de l'objet <code>console</code> pour afficher un message au sein de la console du navigateur (F12 pour l'ouvrir avec Chrome). </li>
-                    <li> Une instruction JavaScript se termine par un point-virgule (lorsqu'il n'est pas explicitement indiqué l'interprète exploite l'ASI (<i>Automatic Semicolon Insertion</i>) pour automatiquement ajouter les point-virgules. <b>Cependant, prenez garde.</b> </li>
-                </ul>
+            <p>
+                JavaScript est le langage qui <b>donne vie aux pages web</b>. Là où HTML définit la structure et CSS le style, JavaScript permet d'ajouter de <b>l'interactivité</b>, de la <b>logique</b> et du <b>dynamisme</b>. Avec lui, un site peut réagir aux actions de l'utilisateur, mettre à jour son contenu sans recharger la page, afficher des animations ou même héberger de véritables applications complètes (jeux, outils collaboratifs, etc.). Mais JavaScript ne se limite plus au navigateur : grâce à des environnements comme <i>Node.js</i>, il permet également de créer des <b>applications côté serveur</b>, des <b>outils bureautiques</b> (<i>Electron</i>), ou même des <b>applications mobiles</b> (<i>React Native</i>). Ce langage polyvalent est aujourd'hui incontournable dans de nombreux domaines du développement informatique.
             </p>
 
-            <div id="cells1"></div>
+            <p>
+                Dans ce cours, vous allez découvrir les bases du langage et sa syntaxe à travers des exemples pratiques. Un environnement de développement léger, comme <a href="https://code.visualstudio.com/">Visual Studio Code</a>, et un navigateur moderne (Chrome, Firefox, Opera…) suffisent pour expérimenter.
+            </p>
 
-            <button class="btn toggle-answer">
-                Afficher l'explication
-            </button>
-            <div class="hidden">
-                <p>
-                    Une erreur est levée car JavaScript tente d'exécuter le code ci-dessous.
-                </p>
-<textarea class="editor" spellcheck="false">
-const a = 1
-const b = 2
-const c = a + b(a + b).toString()</textarea>
-            </div>
+            <p>
+                Les extraits de code peuvent être exécutés directement grâce aux cellules interactives intégrées dans le cours, de la même manière qu'un notebook. Certains exemples ne sont pas fonctionnels : c'est volontaire, car ils servent à illustrer des erreurs ou de mauvaises pratiques à éviter.
+            </p>
 
-            <p class="subtle">La fonction <b><i>toString()</i></b> est utilisée ici pour convertir le nombre en une chaîne de caractères.</p>
+            <div id="cells0"></div>
 
-            <h2>Sommaire</h2>
+            <h2> Sommaire </h2>
 
             <ul class="sommaire">
+                <li> <a href="pages/la_creation_d_une_page_web.html">La création d'une page web</a></li>
                 <li> <a href="pages/les_variables.html">Les variables</a></li>
                 <li> <a href="pages/les_fonctions.html">Les fonctions</a></li>
                 <li> <a href="pages/les_tableaux.html">Les tableaux</a></li>
@@ -136,35 +61,7 @@ const c = a + b(a + b).toString()</textarea>
                                 888                                  
 -->
 
-    <template id="cell-template">
-        <section class="cell">
-            <header>
-                <div class="cell-title">
-                    <span class="badge">
-                        <span class="dot"></span>
-                        <span class="title-text">JavaScript</span>
-                    </span>
-                </div>
-                <div class="cell-actions">
-                    <button class="btn run">
-                        <span class="icon">▶</span>
-                        <span class="label">Exécuter</span>
-                    </button>
-                    <button class="btn reset">
-                        <span class="icon">⟳</span>
-                        <span class="label">Réinitialiser</span>
-                    </button>
-
-                    <button class="btn clear">
-                        <span class="icon">🧹</span>
-                        <span class="label">Effacer</span>
-                    </button>
-                </div>
-            </header>
-            <textarea class="editor" spellcheck="false"></textarea>
-            <div class="output" aria-live="polite"></div>
-        </section>
-    </template>
+    <div id="template-container"></div>
 
 
 <!--
@@ -185,19 +82,15 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
 
     <script>
         /* ==== Add cells ==== */
-        addCell('cells1', 'Question', `
-/* == D'après vous, est ce que ce code déclenche une erreur ? == */
 
-const a = 1
-const b = 2
-const c = a + b
-(a + b).toString()
-        `);
+addCell('cells0', 'Hello World', `
+console.log('Hello World !');
+`);
 
 /*        
-        addCell('cells00', '', `
+addCell('cells00', '', `
 
-        `);
+`);
 */
 
         // addCell('cellsXXX', `// Exemple : quelques bases JS\nconst name = 'Mon nouveau cours JS';\nconsole.log('Bienvenue dans', name);\n\n// Fonction\nfunction add(a, b){ return a * b }\nconsole.log('2 + 3 =', add(2,3));\n\n// Objet\nconst user = { id: 1, name: 'Ada' };\nconsole.log(user);\n\n// Top-level await (fetch exemple simulé)\nawait new Promise(r => setTimeout(r, 300));\nconsole.log('Async OK');`);

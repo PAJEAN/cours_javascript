@@ -172,11 +172,16 @@ h3 {
 
 p {
     margin: .5em 0 1em;
+    text-align: justify;
 }
 
 a {
     color: var(--accent);
     text-decoration: none;
+}
+
+ul li {
+    text-align: justify;
 }
 
 a:hover {
@@ -336,10 +341,11 @@ a:hover {
   list-style: none;
   padding: 0;
   margin: 1rem 0;
-  border: 1px solid var(--exercise-border);
+  /* border: 1px solid var(--exercise-border); */
   border-radius: 8px;
   overflow: hidden; /* colle les li ensemble */
   font-family: sans-serif;
+  font-weight: 500;
 }
 
 /* chaque item */
@@ -348,9 +354,9 @@ a:hover {
   align-items: center;
   gap: 0.5rem; /* espace flèche / texte */
   padding: 0.8rem 1rem;
-  background: var(--exercise-bg);
+  border-radius: 8px;
   color: var(--exercise-text);
-  border-bottom: 1px solid var(--exercise-border);
+  /* border-bottom: 1px solid var(--exercise-border); */
   cursor: pointer;
   transition: background 0.2s ease, transform 0.2s ease;
 }
@@ -377,6 +383,40 @@ a:hover {
 
 /* effet hover */
 .sommaire li:hover {
-  background: rgba(255, 255, 255, 0.08);
+  /* background: rgba(255, 255, 255, 0.08); */
+  background: var(--exercise-bg);
   transform: translateX(3px);
+}
+
+.back-home {
+  position: fixed;
+  bottom: 1.75rem;   /* légèrement au-dessus du bord */
+  right: 1.75rem;
+  height: 2rem;
+  width: 2rem;
+  background: var(--exercise-border);
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 0.8rem 0.8rem;
+  text-align: center;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+/* Effet hover (surtout utile sur PC) */
+.back-home:hover {
+  background: #2563eb;
+  transform: scale(1.05);
+  text-decoration: none;
+}
+
+/* Sur mobile : bouton encore plus discret */
+@media (max-width: 600px) {
+  .back-home {
+    padding: 0.5rem 0.5rem;
+    bottom: 10px;  /* plus proche du bord, évite de masquer le contenu */
+    right: 10px;
+  }
 }

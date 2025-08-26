@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Le JavaScript</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+            <div id="header-container">La création d'une page web</div>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <ul>
+                        <li> Ouvrir un éditeur de texte et copier/coller le code ci-dessous. </li>
+                        <li> Sauvegarder votre fichier. </li>
+                        <li> Double-cliquer sur le fichier pour l'ouvrir avec votre navigateur. </li>
+                        <li> Accéder à la console de développement (touche F12 sur Google Chrome). </li>
+                    </ul>
+                </div>
+
+<textarea class="editor" spellcheck="false">
+&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+    &lt;title>Hello World&lt;/title>
+&lt;/head>
+&lt;body>
+    <!-- Un commentaire HTML -->
+    &lt;h1 style="color:red">Bonjour&lt;/h1>
+
+    &lt;script type="text/javascript">
+    // Un premier commentaire en JavaScript.
+    /*
+        Un second commentaire en Javascript.
+    */
+    console.log("Hello World");
+    &lt;/script>
+&lt;/body>
+&lt;/html></textarea>
+
+                <div class="mt">
+                    <p>
+                        Pour organiser votre code, vous pouvez séparer la structure de la page (HTML) et la logique (JavaScript). Créez deux fichiers distincts :
+                    </p>
+                    <ul>
+                        <li>un fichier HTML (par exemple <code>index.html</code>),</li>
+                        <li>un fichier JavaScript (par exemple <code>script.js</code>).</li>
+                    </ul>
+                    
+                    <p>
+                        Ensuite, vous pouvez lier le fichier JavaScript à la page HTML en utilisant la balise :
+                    </p>
+                    
+<textarea class="editor my" spellcheck="false">
+&lt;script src="script.js">&lt;/script></textarea>
+
+                </div>
+            </div>
+
+            <h2> Anatomie de la page web </h2>
+            <ul>
+                <li>Une page HTML se compose principalement de deux parties : <code>&lt;head&gt;</code>, qui contient les éléments d'en-tête (titre, métadonnées, liens vers styles ou scripts externes…), et <code>&lt;body&gt;</code>, qui contient le contenu visible de la page.</li>
+                <li>Il existe deux types de commentaires en JavaScript : les commentaires sur une seule ligne <code>//</code> et les commentaires sur plusieurs lignes <code>/* … */</code>.</li>
+                <li>La méthode <code>console.log()</code> permet d'afficher un message dans la console du navigateur (accessible par <kbd>F12</kbd> dans Chrome).</li>
+                <li>En JavaScript, chaque instruction se termine généralement par un point-virgule. Lorsqu'il est omis, l'interpréteur utilise l'ASI (<i>Automatic Semicolon Insertion</i>) pour l'ajouter automatiquement. <b>Attention toutefois : il est recommandé d'ajouter explicitement le point-virgule pour éviter certains comportements inattendus.</b></li>
+            </ul>
+             
+            <div id="cells1"></div>
+
+            <button class="btn toggle-answer">
+                Afficher l'explication
+            </button>
+            <div class="hidden">
+                <p>
+                    Une erreur est levée car JavaScript tente d'exécuter le code ci-dessous.
+                </p>
+<textarea class="editor" spellcheck="false">
+const a = 1
+const b = 2
+const c = a + b(a + b).toString()</textarea>
+            </div>
+
+            <h2> L'objet <code>console</code> </h2>
+
+            <p>
+                L'objet <code>console</code> permet d'interagir avec la console du navigateur pour <b>afficher des informations</b> ou <b>déboguer</b> votre code JavaScript. Elle présente trois méthodes principales :
+            </p>
+
+            <ul>
+                <li><code>console.log(message)</code> : affiche un message standard dans la console.</li>
+                <li><code>console.warn(message)</code> : affiche un avertissement, généralement en jaune.</li>
+                <li><code>console.error(message)</code> : affiche une erreur, généralement en rouge.</li>
+            </ul>
+
+            <p>
+                Il est possible de personnaliser l'affichage des messages avec du CSS, en utilisant un <b>spécificateur <code>%c</code></b> dans le texte du message et en fournissant le style en second paramètre. Par exemple :
+            </p>
+
+<textarea class="editor" spellcheck="false">
+console.log('%cMessage stylé', 'color: white; background-color: blue; padding: 2px 4px; border-radius: 6px;');
+</textarea>
+
+            <p>
+                Ce message apparaîtra avec le texte blanc sur fond bleu dans la console, ce qui peut être pratique pour mettre en évidence certaines informations lors du débogage.
+            </p>
+            
+        </div>
+    </div>
+
+
+<!--
+88888888888                              888          888            
+    888                                  888          888            
+    888                                  888          888            
+    888   .d88b.  88888b.d88b.  88888b.  888  8888b.  888888 .d88b.  
+    888  d8P  Y8b 888 "888 "88b 888 "88b 888     "88b 888   d8P  Y8b 
+    888  88888888 888  888  888 888  888 888 .d888888 888   88888888 
+    888  Y8b.     888  888  888 888 d88P 888 888  888 Y88b. Y8b.     
+    888   "Y8888  888  888  888 88888P"  888 "Y888888  "Y888 "Y8888  
+                                888                                  
+                                888                                  
+                                888                                  
+-->
+
+    <div id="template-container"></div>
+
+
+<!--
+ .d8888b.                   d8b          888    
+d88P  Y88b                  Y8P          888    
+Y88b.                                    888    
+ "Y888b.    .d8888b 888d888 888 88888b.  888888 
+    "Y88b. d88P"    888P"   888 888 "88b 888    
+      "888 888      888     888 888  888 888    
+Y88b  d88P Y88b.    888     888 888 d88P Y88b.  
+ "Y8888P"   "Y8888P 888     888 88888P"   "Y888 
+                                888             
+                                888             
+                                888             
+-->
+
+    <script src="../js/main.js"></script>
+
+    <script>
+        /* ==== Add cells ==== */
+addCell('cells1', 'Question', `
+/* == D'après vous, est ce que ce code déclenche une erreur ? == */
+
+const a = 1
+const b = 2
+const c = a + b
+(a + b).toString()
+`);
+
+/*        
+    addCell('cells00', '', `
+
+    `);
+*/
+
+    </script>
+</body>
+</html>
