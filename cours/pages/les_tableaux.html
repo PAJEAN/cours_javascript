@@ -13,7 +13,9 @@
         <div class="page" id="page">
             <div id="header-container">Les tableaux</div>
 
-            <p> Un tableau est une structure ordonnée de données qui permet l'accès aux informations qu'il contient par un indice. En JavaScript un tableau peut <b>contenir plusieurs types de données à la fois</b>. </p>
+            <p>
+                Un tableau est une structure ordonnée de données qui permet l'accès aux informations qu'il contient par un indice. En JavaScript un tableau peut <b>contenir plusieurs types de données à la fois</b>.
+            </p>
 
             <div id="cells42"></div>
 
@@ -25,21 +27,44 @@
 
             <h2> Méthodes associées à l'objet <code>Array</code> </h2>
 
-            <p> Vous pouvez retrouver l'ensemble des fonctions sur <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array">developer.mozilla.org</a>. </p>
+            <p>
+                Vous pouvez retrouver l'ensemble des fonctions sur <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array">developer.mozilla.org</a>.
+            </p>
 
             <div id="cells45"></div>
             
             <div id="cells46"></div>
             
             <div id="cells47"></div>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        La méthode <code>splice()</code> retourne un tableau contenant les éléments supprimés. Si un seul élément est supprimé, un tableau contenant un unique élément est retourné.
+                    </p>
+                </div>
+            </div>
             
             <div id="cells48"></div>
 
             <div id="cells49"></div>
 
-            <p> La méthode <code>slice()</code> renvoie un objet tableau contenant une <b>copie superficielle</b> d'une portion du tableau d'origine. La portion est définie par un indice de début et un indice de fin (exclu). Contrairement à la méthode <code>splice()</code> le tableau d'origine ne sera pas modifié. </p>
+            <p>
+                La méthode <code>slice()</code> renvoie un objet tableau contenant une <b>copie superficielle</b> d'une portion du tableau d'origine. La portion est définie par un indice de début et un indice de fin (exclu). Contrairement à la méthode <code>splice()</code> le tableau d'origine ne sera pas modifié.
+            </p>
 
             <div id="cells50"></div>
+
+            <button class="btn toggle-answer">
+                Afficher la réponse
+            </button>
+            <div class="hidden">
+                <div id="cells50-1"></div>
+            </div>
 
             <div id="cells51"></div>
 
@@ -47,22 +72,33 @@
                 Afficher l'explication
             </button>
             <div class="hidden">
-                <p> La méthode <code>slice()</code> effectue une copie superficielle du tableau. JavaScript <b>copie par valeur les primitives et par référence les objets</b>. </p>
+                <p>
+                    La méthode <code>slice()</code> effectue une copie superficielle du tableau. JavaScript <b>copie par valeur les primitives et par référence les objets</b>.
+                </p>
             </div>
 
-            <p> La méthode <code>every()</code> permet de tester si le tableau respecte une condition, décrite au sein d'une fonction, sur l'ensemble de ses éléments. Un exemple de la fonction est décrite dans la section "Fonctions anonymes". </p>
+            <p>
+                La méthode <code>every()</code> permet de tester si le tableau respecte une condition, décrite au sein d'une fonction, sur l'ensemble de ses éléments.
+            </p>
 
             <div id="cells52"></div>
 
-            <p> La méthode <code>filter()</code> retourne un nouveau tableau contenant tous les éléments du tableau initial qui remplissent la condition définie dans la fonction passée en paramètre. </p>
+            <p>
+                La méthode <code>filter()</code> retourne un nouveau tableau contenant tous les éléments du tableau initial qui remplissent la condition définie dans la fonction passée en paramètre.
+            </p>
 
             <div id="cells53"></div>
 
-            <p> La méthode <code>map()</code> retourne un nouveau tableau composé des éléments du tableau initial sur lesquels une fonction a été appliquée. </p>
+            <p>
+                La méthode <code>map()</code> retourne un nouveau tableau composé des éléments du tableau initial sur lesquels une fonction a été appliquée.
+            </p>
             
             <div id="cells54"></div>
 
-            <p> La méthode <code>reduce()</code> réduit le tableau en appliquant une fonction qui accumule deux éléments pour n'en retourner qu'un seul. La fonction accumulatrice est appelée jusqu'à retourner qu'un seul élément. Pour cela, elle nécessite 4 paramètres: </p>
+            <p>
+                La méthode <code>reduce()</code> réduit le tableau en appliquant une fonction qui accumule deux éléments pour n'en <b>retourner qu'un seul</b>. La fonction accumulatrice est appelée jusqu'à retourner qu'un seul élément. Pour cela, elle prend 4 paramètres :
+            </p>
+
             <ul>
                 <li> <i>accumulateur</i> : valeur retournée par le précédent appel à la fonction.</li>
                 <li> <i>element</i> : l'élément en cours de traitement.</li>
@@ -70,9 +106,13 @@
                 <li> <i>origine</i> : le tableau d'origine (optionnel). </li>
             </ul>
 
-            <p> La valeur initiale de l’accumulateur est soit celle fournie en paramètre, soit, à défaut, le premier élément de l’itérable. Dans ce dernier cas, l’itération commence au deuxième élément. </p>
+            <p>
+                La valeur initiale de l’accumulateur est soit celle fournie en paramètre, soit, à défaut, le premier élément de l’itérable. Dans ce dernier cas, l’itération commence au deuxième élément.
+            </p>
 
-            <p> Si on appelle <code>reduce()</code> sur un tableau vide sans fournir de valeur initiale, on aura une erreur. </p>
+            <p>
+                Si on appelle <code>reduce()</code> sur un tableau vide sans fournir de valeur initiale, on aura une erreur.
+            </p>
 
             <div id="cells54-1"></div>
             
@@ -101,7 +141,7 @@
                 </div>
             </div>
 
-            <button class="btn toggle-answer" data-pw="as">
+            <button class="btn toggle-answer" data-pw="es">
                 Afficher la réponse
             </button>
             <div class="hidden">
@@ -190,7 +230,7 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
     <script>
         /* ==== Add cells ==== */
         
-    addCell('cells42', 'Déclarer et instancier un tableau', `
+addCell('cells42', 'Déclarer et instancier un tableau', `
 var tableau = ["Merlin", 884, null, undefined];
 console.log(tableau[0] + ' | ' + tableau[1] + ' | ' + tableau[2] + ' | ' + tableau[3]);
 
@@ -198,11 +238,11 @@ console.log(tableau[0] + ' | ' + tableau[1] + ' | ' + tableau[2] + ' | ' + table
 let tableau1 = new Array(5);
 console.log('tableau1/Index_1: ' + tableau1[0]); // 5 valeurs undefined.
 
-var tableau2 = new Array(5).fill(5);
+let tableau2 = new Array(5).fill(5);
 console.log(tableau2.toString());
-        `);
+    `);
 
-        addCell('cells42-1', "Modifier une valeur à partir d'un index", `
+addCell('cells42-1', "Modifier une valeur à partir d'un index", `
 let tableau1 = ["Merlin", 884];
 console.log(tableau1.toString());
 
@@ -214,64 +254,66 @@ console.log(tableau2.toString());
 
 tableau2[2] = 't';
 console.log(tableau2.toString());
-        `);
+`);
 
-        addCell('cells43', 'Syntaxe de décomposition', `
+addCell('cells43', 'Syntaxe de décomposition', `
 let tableau = [1, 2, 3];
 let [premier, deuxieme, troisieme] = tableau;
 console.log(tableau.toString() + " | " + premier + " | " + deuxieme + " | " + troisieme);
 
 let [first, ...reste] = tableau;
 console.log(tableau.toString() + " | " + first + " | " + reste.toString());
-        `);
+`);
 
-        addCell('cells44', 'Tableau imbriqué', `
+addCell('cells44', 'Tableau imbriqué', `
 let tableau = [['Merlin', 884], ['Lapin adulte', 9]];
 console.log(tableau[1][0]);
-        `);
+`);
 
-        addCell('cells45', "Taille d'un tableau", `
+addCell('cells45', "Taille d'un tableau", `
 let tableau = [1, 2, 3];
 console.log('Le tableau contient :', tableau.length, 'élements');
-        `);
+`);
 
-        addCell('cells46', 'Ajouter un élément', `
+addCell('cells46', 'Ajouter un élément', `
 let tableau = [1, 2];
 tableau.push(3);    // Ajout à la fin.
 tableau.unshift(0); // Ajout au début.
 console.log(tableau.toString());
-        `);
+`);
 
-        addCell('cells47', 'Supprimer un élément', `
+addCell('cells47', 'Supprimer un élément', `
 let tableau = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+console.log('tableau :', tableau.toString());
 
-// Suppression du dernier élément.
+console.log('Suppression du dernier élément.');
 var element_pop = tableau.pop();
 console.log(element_pop + " | " + typeof element_pop + " | " + tableau.toString());
 
-// Suppression du premier élément.
+console.log('Suppression du premier élément.');
 element_pop = tableau.shift();
 console.log(element_pop + " | " + typeof element_pop + " | " + tableau.toString());
 
-// Suppression d'un élément de taille 1 à partir de l'index 0.
+console.log("Suppression d'un élément de taille 1 à partir de l'index 0.");
 element_pop = tableau.splice(0, 1);
-console.log(element_pop.toString() + " | " + typeof element_pop + " | " + tableau.toString());
+console.log(element_pop + " | " + typeof element_pop + " | " + tableau.toString());
 
-// Suppression d'un élément de taille 3 à partir de l'index 1.
+console.log("Suppression d'un élément de taille 3 à partir de l'index 1.");
 element_pop = tableau.splice(1, 3);
-console.log(element_pop.toString() + " | " + typeof element_pop + " | " + tableau.toString());
-        `);
+console.log(element_pop + " | " + typeof element_pop + " | " + tableau.toString());
+`);
 
-        addCell('cells48', "Rechercher l'index d'un élément", `
+addCell('cells48', "Rechercher l'index d'un élément", `
 let tableau = [1, 2, 'Arthur', 3, 4, 'Arthur'];
-console.log(tableau.indexOf(2));
-console.log(tableau.indexOf('Arthur') + " est l'index du premier élément trouvé.");
-console.log(tableau.indexOf('Arthur', 3) + " est l'index du premier élément trouvé à partir de l'index 3.");
-console.log(tableau.lastIndexOf('Arthur') + " est l'index du dernier élément trouvé.");
-console.log(tableau.indexOf('Perceval') + " signifie que l'élément n'a pas été trouvé.");
-        `);
 
-        addCell('cells49', 'Concaténation de tableaux', `
+console.log('tableau.indexOf(2) :', tableau.indexOf(2));
+console.log(tableau.indexOf('Arthur') + " est l'index du premier Arthur.");
+console.log(tableau.indexOf('Arthur', 3) + " est l'index du premier Arthur à partir de l'index 3.");
+console.log(tableau.lastIndexOf('Arthur') + " est l'index du dernier Arthur.");
+console.log(tableau.indexOf('Perceval') + " signifie que l'élément n'a pas été trouvé.");
+`);
+
+addCell('cells49', 'Concaténation de tableaux', `
 let tableau1 = [0, 1];
 let tableau2 = [2, 3];
 let tableau3 = [4, 5];
@@ -279,9 +321,9 @@ let tableau4 = tableau1.concat(tableau2, tableau3);
 let tableau5 = [...tableau1, ...tableau2, ...tableau3]
 console.log(tableau4.toString());
 console.log(tableau5.toString());
-        `);
+`);
 
-        addCell('cells50', 'Méthode <code>slice()<code>', `
+addCell('cells50', 'Méthode <code>slice()<code>', `
 let tableau = [1, 2, 3, 4, 5, 6];
 let portion1 = tableau.slice(1, 3);
 console.log(tableau.toString() + " | " + portion1.toString());
@@ -289,60 +331,72 @@ console.log(tableau.toString() + " | " + portion1.toString());
 let portion2 = tableau.slice(-3); // Index négatif.
 console.log(tableau.toString() + " | " + portion2.toString());
 
+// Copie des primitives par valeur.
 portion1[0] = 1000;
 console.log(portion1.toString());
 console.log(tableau.toString());
-        `);
 
-        addCell('cells51', 'Question', `
+/* == En utilisant des indexes négatifs, afficher la portion 2, 3, 4 == */
+`);
+
+addCell('cells50-1', 'Réponse', `
+let tableau = [1, 2, 3, 4, 5, 6];
+console.log(tableau.slice(-5, -2).toString());
+`);
+
+addCell('cells51', 'Question', `
 let tableau = [[1, 2], [3, 4], [5, 6]];
-let portion1 = tableau.slice(1,2);
+let portion1 = tableau.slice(1, 2);
+
 console.log('portion1 :');
 console.log(portion1.map(el => el.toString()));
 
 /* == Que contient le tableau après la modification de portion1 ? == */
 
 console.log('Modification de portion1');
+
 portion1[0][1] = 1000;
 console.log('portion1 :');
 console.log(portion1.map(el => el.toString()));
 console.log('tableau :')
 console.log(tableau.map(el => el.toString()));
-        `);
+`);
 
-        addCell('cells52', 'Méthode <code>every()<code>', `
-var tableau = [0, 2, 4, 6, 8];
+addCell('cells52', 'Méthode <code>every()<code>', `
+let tableau = [0, 2, 4, 6, 8];
 
-var response = tableau.every(function(valeur) {
+let response = tableau.every(function(valeur) {
     return (valeur % 2 == 0);
 });
 
 console.log(response);
-        `);
+`);
 
-        addCell('cells53', 'Méthode <code>filter()<code>', `
-var tableau = [0, 2, 4, 5, 6, 7, 8];
-var tableau_paire = tableau.filter(function(valeur) {
-    return (valeur % 2 == 0);
-});
+addCell('cells53', 'Méthode <code>filter()<code>', `
+let tableau = [0, 2, 4, 5, 6, 7, 8];
+let tableau_paire = tableau.filter(valeur => valeur % 2 == 0);
+
 console.log(tableau.toString());
 console.log(tableau_paire.toString());
-        `);
+`);
 
-        addCell('cells54', 'Méthode <code>map()<code>', `
-var tableau1 = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"];
-var tableau2 = tableau1.map(function(valeur){
+addCell('cells54', 'Méthode <code>map()<code>', `
+let tableau1 = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche'];
+
+let tableau2 = tableau1.map(function(valeur){
    return valeur.toUpperCase();
 });
+
 console.log(tableau1.toString());
 console.log(tableau2.toString());
-        `);
+`);
 
-        addCell('cells54-1', 'Méthode <code>reduce()<code>', `
+addCell('cells54-1', 'Méthode <code>reduce()<code>', `
 let tableau = [1, 2, 3, 4, 5]; // 1+2 | 3+3 | 6+4 | 10+5.
 let somme = tableau.reduce(function(accumulateur, element) {
     return accumulateur + element;
 })
+
 console.log('Mon tableau : ' + tableau.toString());
 console.log('Ma somme : ' + somme);
 
@@ -351,7 +405,7 @@ let somme_plus_5 = tableau.reduce(function(accumulateur, element) {
     return accumulateur + element;
 }, 5);
 console.log('Ma somme + 5 : ' + somme_plus_5);
-        `);
+`);
 
         addCell('cells55', 'Méthode <code>join()<code>', `
 var tableau = [0, 1, 2, 3];

@@ -14,31 +14,37 @@
             <div id="header-container">Les variables</div>
 
             <div>
-                <p>Une <b>variable</b> est un espace de mémoire qui sert à stocker une information. Elle est identifiée par un <b>nom</b>, qui doit respecter certaines règles :</p>
+                <p>
+                    Une <b>variable</b> est un espace de mémoire qui sert à stocker une information. Elle est identifiée par un <b>nom</b>, qui doit respecter certaines règles :
+                </p>
                 <ul>
-                    <li>Il peut contenir :</li>
+                    <li> Il peut contenir : </li>
                         <ul>
-                            <li>des lettres (majuscules ou minuscules),</li>
-                            <li>des chiffres,</li>
-                            <li>les caractères spéciaux <code>_</code> et <code>$</code>.</li>                                
+                            <li> des lettres (majuscules ou minuscules), </li>
+                            <li> des chiffres, </li>
+                            <li> les caractères spéciaux <code>_</code> et <code>$</code>. </li>
                         </ul>
-                    <li>❌ Le tiret <code>-</code> est interdit (il est interprété comme une soustraction).</li>
-                    <li>❌ D'autres symboles comme <code>*</code> sont aussi interdits.</li>
-                    <li>❌ On ne peut pas utiliser les <b>mots réservés</b> du langage (ex. <code>var</code>, <code>if</code>, <code>window</code>...).</li>
-                    <li>⚠️ Les noms de variables sont <b>sensibles à la casse</b> (<code>maVariable</code> et <code>mavariable</code> sont différents).</li>
+                    <li> Le tiret <code>-</code> est interdit (il est interprété comme une soustraction). </li>
+                    <li> D'autres symboles comme <code>*</code> sont aussi interdits. </li>
+                    <li> On ne peut pas utiliser les <b>mots réservés</b> du langage (ex. <code>var</code>, <code>if</code>, <code>window</code>...). </li>
+                    <li> Les noms de variables sont <b>sensibles à la casse</b> (<code>maVariable</code> et <code>mavariable</code> sont différents). </li>
                 </ul>
             </div>
 
             <h2> Déclaration </h2>
 
-            <p>La phase de création d'une variable est appelée <b>déclaration</b>. Tandis que la phase où une valeur est attribuée à une variable est appelée <b>instanciation</b>. En JavaScript, il existe 3 mots-clés pour déclarer une variable <b><code>var</code></b>, <b><code>let</code></b> et <b><code>const</code></b>.</p>
+            <p>
+                La phase de création d'une variable est appelée <b>déclaration</b>. Tandis que la phase où une valeur est attribuée à une variable est appelée <b>instanciation</b>. En JavaScript, il existe 3 mots-clés pour déclarer une variable <b><code>var</code></b>, <b><code>let</code></b> et <b><code>const</code></b>.
+            </p>
 
 <textarea class="editor" spellcheck="false">
 let compteur1 = 0;
 var compteur2 = 0, texte = "Hello", maxi;
 maxi = 100;</textarea>
 
-            <p>Les différences entre <code>var</code>, <code>let</code> et <code>const</code> résident dans la <b>portée</b> des variables (fonctionnelle ou bloc), dans leur comportement vis-à-vis du <b>hissage</b>, ainsi que dans la possibilité ou non de <b>réaffecter leur valeur</b>.</p>
+            <p>
+                Les différences entre <code>var</code>, <code>let</code> et <code>const</code> résident dans la <b>portée</b> des variables (fonctionnelle ou bloc), dans leur comportement vis-à-vis du <b>hissage</b>, ainsi que dans la possibilité ou non de <b>réaffecter leur valeur</b>.
+            </p>
 
             <div class="nota-bene-box">
                 <div class="nota-bene-header">
@@ -48,28 +54,28 @@ maxi = 100;</textarea>
                 <div class="box-content">
                     <ul>
                         <li> La <b>portée</b> d'une variable est l'ensemble des éléments du code source où la variable existe et est manipulable.</li>
-                        <li> Le phénomène de <b>hissage</b> (<i>hoisting</i> en anglais) correspond au mécanisme par lequel JavaScript place certaines déclarations (<code>var</code>, <code>function</code>) en haut de leur portée (<i>scope</i>) avant l'exécution du code. Concernant les variables, il s'agit uniquement de leur déclaration, et non de leur initialisation. </li>
+                        <li> Le phénomène de <b>hissage</b> (<i>hoisting</i> en anglais) correspond au mécanisme par lequel JavaScript place certaines déclarations (<code>var</code>, <code>function</code>) en haut de leur portée (<i>scope</i>) avant l'exécution du code. Concernant <b>les variables, il s'agit uniquement de leur déclaration</b>, et non de leur initialisation. </li>
                     </ul>
                 </div>
             </div>
             
-            <h3>Le mot-clé <code>var</code></h3>
+            <h3> Le mot-clé <code>var</code> </h3>
             
-            <p>Il permet de déclarer une variable avec une <b>portée de fonction</b>.</p>
-
-            <p>La portée de la variable dépendra du contexte dans lequel elle est déclarée:</p>
-            <ul>
-                <li>Si elle est déclarée dans une fonction, la portée est celle de la fonction, qu'importe le bloc dans lequel elle se trouve.</li>
-                <li>Si elle est délcarée hors d'une fonction, la portée sera celle du contexte global.</li>
-            </ul>
+            <p>
+                Il permet de déclarer une variable dont la <b>portée est liée à la fonction</b> dans laquelle elle est définie : si elle est déclarée dans une fonction, elle sera accessible dans toute cette fonction, quel que soit le bloc où elle apparaît.
+            </p>
             
             <div id="cells2"></div>
 
-            <p>Les variables déclarées avec <code>var</code> sont également <b>hissées</b>, mais leur valeur n'est pas encore attribuée. Elles sont donc accessibles avant leur déclaration, mais valent <code>undefined</code>.</p>
+            <p>
+                Les variables déclarées avec <code>var</code> sont également <b>hissées</b> en haut de leur portée. Par conséquent, elles sont accessibles mais valent <code>undefined</code>.
+            </p>
 
             <div id="cells3"></div>
 
-            <p>Les variables déclarées avec <code>var</code> peuvent être redéclarées.</p>
+            <p>
+                Les variables déclarées avec <code>var</code> peuvent être redéclarées.
+            </p>
 
             <div id="cells3-1"></div>
 
@@ -84,25 +90,33 @@ maxi = 100;</textarea>
                 </p>             
             </div>
 
-            <h3>Le mot-clé <code>let</code></h3>
+            <h3> Le mot-clé <code>let</code> </h3>
 
-            <p>Il permet de déclarer des variables visibles uniquement au sein du <b>bloc d'instructions</b> dans lequel la variable est définie. Un bloc en JavaScript est représenté par les instructions que l'on retrouve entre les accolades <i>e.g. if</i>, <i>while</i>...</p>
+            <p>
+                Il permet de déclarer des variables visibles uniquement au sein du <b>bloc d'instructions</b> dans lequel la variable est définie. Un bloc en JavaScript est représenté par les instructions que l'on retrouve entre les accolades <i>e.g. if</i>, <i>while</i>...
+            </p>
 
             <div id="cells5"></div>
 
-            <p>Les variables déclarées avec <code>let</code> ne peuvent pas être redéclarées.</p>
+            <p>
+                Les variables déclarées avec <code>let</code> ne peuvent pas être redéclarées.
+            </p>
 
             <div id="cells5-1"></div>
 
-            <p>Les variables déclarées avec <code>let</code> (ou <code>const</code>) sont aussi <b>hissées</b>, mais elles restent dans une <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/let#zone_morte_temporaire_temporal_dead_zone_tdz_et_les_erreurs_li%C3%A9es_%C3%A0_let">zone morte temporaire (TDZ)</a> jusqu'à leur <b>initialisation</b>.</p>
+            <p>
+                Les variables déclarées avec <code>let</code> sont aussi <b>hissées</b>, mais elles restent dans une <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Statements/let#zone_morte_temporaire_temporal_dead_zone_tdz_et_les_erreurs_li%C3%A9es_%C3%A0_let">zone morte temporaire (TDZ)</a> jusqu'à leur <b>initialisation</b>.
+            </p>
 
             <div id="cells6"></div>
 
             <div id="cells7"></div>
 
-            <h3>Le mot-clé <code>const</code></h3>
+            <h3> Le mot-clé <code>const</code> </h3>
 
-            <p>Une variable déclarée avec le mot-clé <code>const</code> se comporte de manière similaire à une variable déclarée avec <code>let</code>, à ceci près qu'elle définit <b>une constante accessible uniquement en lecture</b>. Cela ne signifie pas que la valeur stockée est immuable, mais simplement que l'identifiant ne peut pas être réaffecté. De plus, une déclaration <code>const</code> doit toujours être initialisée dès sa création.</p>
+            <p>
+                Une variable déclarée avec le mot-clé <code>const</code> se <b>comporte de manière similaire à une variable déclarée avec <code>let</code></b>, à ceci près qu'elle définit <b>une constante accessible uniquement en lecture</b>. Cela ne signifie pas que la valeur stockée est immuable, mais simplement que l'identifiant ne peut pas être réaffecté. De plus, une déclaration <code>const</code> doit toujours être initialisée dès sa création.
+            </p>
 
             <div id="cells7-1"></div>
 
@@ -110,13 +124,23 @@ maxi = 100;</textarea>
 
             <div id="cells7-3"></div>
 
+            
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                           Types de variables                            -->
+            <!-- ----------------------------------------------------------------------- -->
+
             <h2> Types de variables </h2>
 
-            <p>Le JavaScript est faiblement typé, c'est-à-dire qu'il <b>autorise une variable à contenir n'importe quel type de données</b> et à en <b>changer en cours d'exécution</b>. L'opérateur <code>typeof</code> permet d'identifier la nature d'une variable.</p>
+            <p>
+                Le JavaScript est faiblement typé, c'est-à-dire qu'il <b>autorise une variable à contenir n'importe quel type de données</b> et à en <b>changer en cours d'exécution</b>. L'opérateur <code>typeof</code> permet d'identifier la nature d'une variable.
+            </p>
 
             <div id="cells8"></div>
 
-            <p>En JavaScript, tout est objet (ou doit être au moins traité comme tel), excepté pour les <a href="https://developer.mozilla.org/en-US/docs/Glossary/Primitive">primitives</a>. Une primitive est une donnée. <b>Elle n'est pas un objet, ne possède pas de méthode et n'est pas mutable</b> (en d'autres termes, elle ne peut pas être altérée contrairement aux objets). Voici les primitives existantes :</p>
+            <p>
+                En JavaScript, tout est objet (ou doit être au moins traité comme tel), excepté pour les <a href="https://developer.mozilla.org/en-US/docs/Glossary/Primitive">primitives</a>. Une primitive est une donnée. <b>Elle n'est pas un objet, ne possède pas de méthode et n'est pas mutable</b> (en d'autres termes, elle ne peut pas être altérée contrairement aux objets). Voici les primitives existantes :
+            </p>
+
             <ul>            
                 <li> <b>undefined</b> par exemple lorsqu'une variable est déclarée sans être initialisée. </li>
                 <li> <b>number</b> englobe différents types de nombres (<code>integer</code>, <code>float</code>, etc.). </li>
@@ -133,39 +157,14 @@ maxi = 100;</textarea>
                     <span class="box-title">À savoir</span>
                 </div>
                 <div class="box-content">
-                    Les enveloppes objet <code>String</code>, <code>Number</code>, <code>Boolean</code>, <code>Symbol</code> et <code>BigInt</code> sont exploités lorsque l'on essaye d'accéder à une propriété ou à une fonction directement à partir d'une primitive.
+                   <p>
+                        Les enveloppes objet <code>String</code>, <code>Number</code>, <code>Boolean</code>, <code>Symbol</code> et <code>BigInt</code> sont exploités lorsque l'on essaye d'accéder à une propriété ou à une fonction directement à partir d'une primitive.
+                   </p>
                 </div>
             </div>
 
-            <div id="cells9"></div>
 
-            <p>L'opérateur <code><b>==</b></code> teste l'égalité de valeur entre deux variables et l'opérateur <code><b>===</b></code> teste l'égalité de valeur et de type entre deux variables.</p>
-
-            <div id="cells10"></div>
-
-            <div class="nota-bene-box">
-                <div class="nota-bene-header">
-                    <span class="box-icon">📝</span>
-                    <span class="box-title">À savoir</span>
-                </div>
-                <div class="box-content">
-                    <p>Quand on utilise <code>==</code> en JavaScript des conversions de type sont réalisées. Par exemple, si l'un des deux côtés est un booléen, JavaScript le convertit en nombre :</p>
-                    <ul>
-                        <li><code>true</code> devient 1,</li>
-                        <li><code>false</code> devient 0.</li>
-                    </ul>            
-                    <p>Par contre, <code>null</code> n'est pas converti en nombre dans ce cas-là (pourtant <code>Number(null) == 0</code>). La seule valeur avec laquelle <code>null</code> est égal via <code>==</code> est <code>undefined</code> (ou <code>null</code> lui-même).</p>
-
-                    <p>A noter que lorsqu'on utilise <code>===</code>, il n'y a jamais de conversion (type différent équivaut à <code>false</code>)</p>
-                </div>
-            </div>
-
-            <div id="cells11"></div>
-
-
-            <!-- ----------------------------------------------------------------------- -->
-            <!--                               Les nombres                               -->
-            <!-- ----------------------------------------------------------------------- -->
+            <!-- ----------------------------- Les nombres ----------------------------- -->
 
             <h3> Les nombres </h3>
 
@@ -177,26 +176,56 @@ maxi = 100;</textarea>
 
             <div id="cells15"></div>
 
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        En JavaScript, l'opérateur <code>+</code> a deux rôles :
+                    </p>
 
-            <!-- ----------------------------------------------------------- -->
-            <!--                  Les chaînes de caractères                  -->
-            <!-- ----------------------------------------------------------- -->
+                    <ul>
+                        <li> <b>Addition</b> quand les deux opérandes sont numériques. </li>
+                        <li> <b>Concaténation</b> quand au moins un des opérandes est une chaîne de caractères. </li>
+                    </ul>
+                    
+                    <div id="cells15-1"></div>
+
+                    <p>
+                        JavaScript <b>convertit le nombre en chaîne de caractères</b>, puis les colle bout à bout (concaténation). Mais attention, <b>l'ordre compte</b> :
+                    </p>
+
+                    <div id="cells15-2"></div>
+                    
+                </div>
+            </div>
+
+
+            <!-- ---------------------- Les chaînes de caractères ---------------------- -->
 
             <h3> Les chaînes de caractères </h3>
 
-            <p> Une chaîne de caractères est une succession ordonnée de caractères. Si elle ne contient aucun caractère, alors c'est une chaîne vide. Les chaînes de caractères sont des primitives ainsi <b>elles ne sont pas mutables</b> (contrairement à Python par exemple). </p>
+            <p>
+                Une chaîne de caractères est une succession ordonnée de caractères. Si elle ne contient aucun caractère, c'est une chaîne vide. Les chaînes de caractères sont des primitives ainsi <b>elles ne sont pas mutables</b> (contrairement à Python par exemple).
+            </p>
 
             <div id="cells16"></div>
 
             <h4> Conversion de types </h4>
 
-            <p> Une chaîne de caractères peut être créee à partir de tout objet JavaScript et de sa méthode de conversion vers une chaîne <code>toString()</code> (possibilité de surcharger cette méthode). </p>
+            <p>
+                Une chaîne de caractères peut être créee à partir de tout objet JavaScript et de sa méthode de conversion vers une chaîne <code>toString()</code> (possibilité de surcharger cette méthode).
+            </p>
 
             <div id="cells17"></div>
 
             <h4> Propriétés et méthodes associées à l'objet <code>String</code> </h4>
 
-            <p> Une chaîne de caractères <b>exploite les propriétés et les méthodes issues de l'objet <code>String</code></b> (vous pouvez retrouver l'ensemble des méthodes sur <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/String">developer.mozilla.org</a>). Pour cela, JavaScript crée un <i>wrapper</i> à partir de l'objet <code>String</code>. Ainsi, lorsque l'on essaye d'accéder à une propritété d'une chaîne de caractères <code>str</code> ou qu'une fonction y est appliquée alors JavaScript réalise l'opération <code>new String(str)</code> afin de créer un objet <code>String</code> initialisé à partir de la valeur de la primitive <code>str</code>. Détaillons certaines propriétés et méthodes. </p>
+            <p>
+                Une chaîne de caractères <b>exploite les propriétés et les méthodes issues de l'objet <code>String</code></b> (vous pouvez retrouver l'ensemble des méthodes sur <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/String">developer.mozilla.org</a>). Pour cela, JavaScript crée un <i>wrapper</i> à partir de l'objet <code>String</code>. Ainsi, lorsque l'on essaye d'accéder à une propritété d'une chaîne de caractères <code>str</code> ou qu'une fonction y est appliquée alors JavaScript réalise l'opération <code>new String(str)</code> afin de créer un objet <code>String</code> initialisé à partir de la valeur de la primitive <code>str</code>. Détaillons certaines propriétés et méthodes.
+            </p>
 
             <div id="cells18"></div>
 
@@ -212,7 +241,9 @@ maxi = 100;</textarea>
                     <span class="box-title">À savoir</span>
                 </div>
                 <div class="box-content">
-                    <p> Concernant la méthode <code>indexOf()</code>, si la position indiquée est supérieure à la longueur de la chaîne appelante, la méthode n’effectue aucune recherche dans cette chaîne et renvoie directement -1. </p>
+                    <p>
+                        Concernant la méthode <code>indexOf()</code>, si la position indiquée est supérieure à la longueur de la chaîne appelante, la méthode n'effectue aucune recherche dans cette chaîne et renvoie directement -1.
+                    </p>
                 </div>
             </div>
 
@@ -233,12 +264,66 @@ maxi = 100;</textarea>
                 </div>
             </div>
 
-            <button class="btn toggle-answer" data-pw="a9">
+            <button class="btn toggle-answer" data-pw="ax">
                 Afficher la réponse
             </button>
             <div class="hidden">
                 <div id="cells24"></div>
             </div>
+
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                          Opérateurs d'égalité                           -->
+            <!-- ----------------------------------------------------------------------- -->
+
+            <h2>Opérateurs d'égalité <code>==</code> et <code>===</code></h2>
+
+            <p>
+                JavaScript propose deux façons de tester l'égalité entre deux valeurs :
+            </p>
+
+            <ul>
+                <li> <code>==</code> égalité abstraite </li>
+                <li> <code>===</code> égalité stricte </li>
+            </ul>
+
+            <h3> <code>==</code> : l'égalité avec conversion implicite </h3>
+
+            <p>
+                L'opérateur <code>==</code> compare deux valeurs en essayant d'harmoniser leurs types lorsqu'ils sont différents.
+            </p>
+
+            <div id="cells25"></div>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        L'égalité <code>null == undefined</code> est un cas particulier. Selon la spécification ECMAScript, <code>null</code> n'est égal qu'à deux choses avec <code>==</code> : <code>undefined</code> et lui-même (<code>null</code>).
+                    </p>        
+                </div>
+            </div>
+
+            <p>
+                Lorsqu'un <b>tableau</b> ou un <b>objet</b> est comparé avec <code>==</code>, JavaScript tente d'abord de le convertir en une valeur primitive. Pour cela, il appelle la méthode <code>toString()</code> (ou <code>valueOf()</code> selon le cas). Ainsi, <code>[1,2].toString()</code> devient <i>"1,2"</i> et peut être comparé à une chaîne, mais aussi être converti ensuite en nombre si l'autre opérande est numérique. En effet, la règle est si l'un des deux opérandes est un nombre et l'autre une chaîne, la chaîne est convertie en nombre.
+            </p>
+
+            <div id="cells26"></div>
+
+            <h3> <code>===</code> : l'égalité stricte </h3>
+
+            <p>
+                L'opérateur <code>===</code> compare les deux valeurs sans effectuer de conversion de type. Les deux opérandes doivent donc avoir le même type et la même valeur pour que le test renvoie true.
+            </p>
+
+            <div id="cells10"></div>
+
+            <p>
+                Par défaut, <b>privilégiez <code>===</code></b>, afin d'éviter les pièges liés <b>aux conversions implicites</b>. Réservez <code>==</code> aux cas particuliers où l'on veut volontairement profiter de ses règles de conversion (par exemple, vérifier qu'une valeur est soit <code>null</code> soit <code>undefined</code> en écrivant <code>if (val == null))</code>.
+            </p>
 
         </div>
     </div>
@@ -280,25 +365,26 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
     <script>
         /* ==== Add cells ==== */
         
-        addCell('cells2', 'Portée du mot-clé <code>var</code>', `
+addCell('cells2', 'Portée du mot-clé <code>var</code>', `
 for (var i = 0; i < 2; i++) {
-    console.log(i);
+    console.log('boucle: i =', i);
 }
-console.log('La variable i = ' + i);        
-        `);
+console.log('La variable i =', i);
+`);
 
-        addCell('cells3', 'Hissage du mot-clé <code>var</code>', `
-console.log('v1: ' + v1);
+addCell('cells3', 'Hissage du mot-clé <code>var</code>', `
+console.log('v1 =', v1);
 var v1 = 0;      
 `);
 
-        addCell('cells3-1', 'Redéclarer une variable avec le mot-clé <code>var</code>', `
+addCell('cells3-1', 'Redéclarer une variable avec le mot-clé <code>var</code>', `
 var x = 'John Doe';
+console.log('x =', x);
 var x = 0;
-console.log(x);
+console.log('x =', x);
 `);
 
-        addCell('cells4', 'Question', `
+addCell('cells4', 'Question', `
 /* == Est ce que ce code contient une erreur ? == */
 
 function g() {
@@ -306,201 +392,212 @@ function g() {
 }
 g();            // Exécution de la fonction nommée g.
 console.log(h); // Affichage de la variable h ?
-        `);
-
-        addCell('cells5', 'Portée du mot-clé <code>let</code', `
-for (let i = 0; i < 2; i++) {
-    console.log(i);
-}
-console.log('La variable i = ' + i);
-        `);
-
-        addCell('cells5-1', 'Redéclarer une variable avec le mot-clé <code>let</code>', `
-let x = 'John Doe';
-let x = 0;
-console.log(x);
 `);
 
-        addCell('cells6', 'Hissage du mot-clé <code>let</code>', `
-console.log('v1: ' + v1);
-let v1 = 0;      
+addCell('cells5', 'Portée du mot-clé <code>let</code', `
+for (let i = 0; i < 2; i++) {
+    console.log('i =', i);
+}
+console.log('La variable i =', i);
         `);
 
-        addCell('cells7', 'Question', `
+addCell('cells5-1', 'Redéclarer une variable avec le mot-clé <code>let</code>', `
+let x = 'John Doe';
+console.log('x =', x);
+let x = 0;
+console.log('x =', x);
+`);
+
+addCell('cells6', 'Hissage du mot-clé <code>let</code>', `
+console.log('v1 =', v1);
+let v1 = 0;      
+`);
+
+addCell('cells7', 'Question', `
 /* == Quel sera le résultat de ce code ? == */
 
 if (true) {
     var g = 0;
     let h = 1;
 }
-console.log('Variable g = ' + g);
-console.log('Variable h = ' + h);
-        `);
+console.log('Variable g =', g);
+console.log('Variable h =', h);
+`);
 
-        addCell('cells7-1', 'let vs const (1/2)', `
+addCell('cells7-1', 'let vs const (1/2)', `
 let x = 'John Doe';
 x = 0;
-console.log(x);
-        `);
+console.log('x =', x);
+`);
 
-        addCell('cells7-2', 'let vs const (2/2)', `
+addCell('cells7-2', 'let vs const (2/2)', `
 const x = 'John Doe';
 x = 0;
-console.log(x);
-        `);
+console.log('x =', x);
+`);
 
-        addCell('cells7-3', 'Valeur muable', `
-const TABLEAU = [1,2,3];
-TABLEAU[0] = 2;
-console.log(TABLEAU.toString());
-        `);
+addCell('cells7-3', 'Valeur muable', `
+const mon_tableau = [1, 2, 3];
+mon_tableau[0] = 2;
+console.log('mon_tableau =', mon_tableau.toString());
+`);
 
-        addCell('cells8', 'Types et réaffectation', `
+addCell('cells8', 'Types et réaffectation', `
 var a = 2;
-console.log('type de la variable a :' + typeof a);
-a = a + '3';
+console.log('a = ' + a + ' et est de type ' + typeof a);
+a = '3';
 console.log('a = ' + a + ' et est de type ' + typeof a);
 var b;
-console.log('type de la variable b :' + typeof b);
-        `);
+console.log('b = ' + b + ' et est de type ' + typeof b);
+`);
 
-        addCell('cells9', 'Comparaison entre les types (1/2)', `
-console.log('null == undefined :', null == undefined); // Exception: représente tous les deux une valeur fausse (falsy).
-console.log('null === undefined :', null === undefined);
-console.log('typeof null : ', typeof null);
-const s1 = Symbol();
-const s2 = Symbol();
-console.log('s1 === s2 :', s1 === s2);
-        `);
-
-        addCell('cells10', 'Comparaison entre les types (2/2)', `
-console.log('false == 0:', false == 0);
-console.log('true == 1:', true == 1);
+addCell('cells10', 'Egalité stricte', `
+console.log("1 === '1' =", 1 === '1');
 console.log('false === 0:', false === 0);
-console.log('null == false:', null == false);
-console.log('Number(null) == false:', Number(null) == false)
-        `);
+console.log('true === 1:', true === 1);
+console.log('null === undefined :', null === undefined);
+`);
 
-        addCell('cells11', 'Question', `
-/* == Quel sera le résultat de l'instruction suivante ? == */
-
-console.log(typeof typeof 1);
-        `);
-
-        addCell('cells12', 'Opérations élémentaires', `
+addCell('cells12', 'Opérations élémentaires', `
 var a = 3 + 2;
 var b = 4 * 2;
 var c = 5 / 2;
 var d = 6 % 2;
 console.log(a + '; ' + b + '; ' + c + '; ' + d);
-        `);
+`);
 
-        addCell('cells13', 'Incrémentation et décrémentation', `
-var a = 1;
+addCell('cells13', 'Incrémentation et décrémentation', `
+var a = 2;
 a = a + 1;
 a += 1;
 a++;
 a = a - 1;
 a -= 1;
 a--;
-console.log('a = ', a);
+console.log('a =', a);
 a *= 2;
-console.log('a = ', a);
+console.log('a =', a);
 a /= 2;
-console.log('a = ', a);
-        `);
+console.log('a =', a);
+`);
 
-        addCell('cells14', 'Conversion de type', `
+addCell('cells14', 'Conversion avec <code>parseInt()</code> et <code>parseFloat()</code>', `
 var nombre = '3.14abc';
 console.log(nombre + ' est un ' + typeof nombre);
-console.log(parseInt(nombre) + " est un " + typeof parseInt(nombre));
-console.log(parseFloat(nombre) + " est un " + typeof parseFloat(nombre));
-console.log("1 == '1' =", 1 == '1'); // Conversion de '1' en 1.
-console.log("1 === '1", 1 === '1'); // Aucune conversion.
-        `);
+console.log(parseInt(nombre) + ' est un ' + typeof parseInt(nombre));
+console.log(parseFloat(nombre) + ' est un ' + typeof parseFloat(nombre));
+`);
 
-        addCell('cells15', 'Conversion de type dans les opérations', `
+addCell('cells15', 'Conversion de type dans les opérations', `
 console.log('5' - 3); // Conversion.
 console.log('5' * '2'); // Conversion.
 console.log('5' / '2'); // Conversion.
 console.log('5' + 3); // Opérateur de concaténation.
-        `);
+`);
 
-        addCell('cells16', 'Question', `
+addCell('cells15-1', "L'opérateur <code>+</code>", `
+console.log('"5" + 3 =', "5" + 3);
+console.log('3 + "5" =', 3 + "5");
+`);
+
+addCell('cells15-2', 'Evaluation séquentielle', `
+console.log('1 + 2 + "3" =', 1 + 2 + "3", '// 1 + 2 = "3" et "3" + 3 = "33"');
+console.log('"1" + 2 + 3 =', "1" + 2 + 3, '// "1" + 2 = "12" et "12" + 3 = "123"');
+`);
+
+addCell('cells16', 'Question', `
 /* == Quel sera le résultat ? == */
 
 let str = 'bonjour';
 str[0] = 'B';
 console.log(str);
-        `);
+`);
 
-        addCell('cells16', 'Déclarer une chaîne de caractères', `
+addCell('cells16', 'Déclarer une chaîne de caractères', `
 var a = "Chaîne de caractères #1.";
 var b = 'Chaîne de "caractères" #2.';
 var c = "Chaîne de \\"caractères\\" #3.";
 var d = \`Cha'î'ne de "caractères" #4.\`;
 console.log(\`a = `+'${a}'+`; b = `+'${b}'+`; c = `+'${c}'+`\`);
-console.log(d);
-        `);
+console.log('d =', d);
+`);
 
-        addCell('cells17', 'Conversion de type', `
+addCell('cells17', 'La méthode <code>toString()</code>', `
 let date = new Date();
-let nombre1 = 2;
-let nombre2 = 2 + '';
-let tableau = [1,2,3];
-console.log(date.toString() + " | " + nombre1.toString() + " | " + typeof nombre2 + " | " + tableau.toString());
+let tableau = [1, 2, 3];
+console.log('date.toString() →', date.toString());
+console.log('tableau.toString() →', tableau.toString());
 
-Date.prototype.toString = function() { // Surcharge de la méthode toString de l'objet Date.
+Date.prototype.toString = function() { // Surcharge de la méthode toString() de l'objet Date.
     return this.getFullYear();
 };
 console.log('Année :', date.toString());
-        `);
+`);
 
-        addCell('cells18', "Longueur d'une chaîne", `
+addCell('cells18', "Longueur d'une chaîne", `
 let str = 'JavaScript';
+
 /* == Quels seront les résultats de ces 3 instructions ? == */
 
 console.log(str.length);
 console.log("str".length);
 console.log("".length);
-        `);
+`);
 
-        addCell('cells19', 'Majuscules et minuscules', `
+addCell('cells19', 'Majuscules et minuscules', `
 let msg = 'JavaScript';
 console.log(msg.toUpperCase());
 console.log(msg.toLowerCase());
-        `);
+`);
 
-        addCell('cells20', 'Accéder à un caractère précis', `
+addCell('cells20', 'Accéder à un caractère précis', `
 let msg = 'Javascript !';
 console.log(msg[0]);
 console.log(msg.charAt(0));
-        `);
+`);
 
-        addCell('cells21', 'Rechercher dans une chaîne', `
+addCell('cells21', 'Rechercher dans une chaîne', `
 let msg = 'ouagadougou';
-console.log(msg.lastIndexOf("ou"));
-console.log(msg.indexOf("ou"));
-console.log(msg.indexOf("ou", 8)); // À partir d'un indice donné (ici 8).
-        `);
+console.log(msg.lastIndexOf('ou'));
+console.log(msg.indexOf('ou'));
+console.log(msg.indexOf('ou', 8)); // À partir d'un indice donné (ici 8).
+`);
 
-        addCell('cells22', 'Extraire une sous-chaîne', `
+addCell('cells22', 'Extraire une sous-chaîne', `
 let msg = 'JavaScript';
 console.log(msg.substring(0, 4));
 console.log(msg.substring(4));
-        `);
+`);
 
-        addCell('cells23', 'Nettoyer une chaîne de caractères', `
+addCell('cells23', 'Nettoyer une chaîne de caractères', `
 let msg = \` \t \n \t  JavaScript   \`;
 console.log(msg);
 console.log(msg.trim());
-        `);
+`);
 
-        addCell('cells24', 'Exercice', `
+addCell('cells24', 'Exercice', `
 let msg = 'JavaScript';
 console.log(msg[0] + '' + msg[4]);
 console.log(msg[msg.length - 1].toUpperCase());
-        `);
+`);
+
+
+addCell('cells25', 'Egalité abstraite', `
+console.log("1 == '1' =", 1 == '1'); // Conversion de '1' en 1.
+console.log('false == 0:', false == 0); // Conversion de false en 0.
+console.log('true == 1:', true == 1); // Conversion de true en 1.
+console.log('null == undefined :', null == undefined); // Spécification.
+`);
+
+addCell('cells26', 'Conversion de tableau', `
+console.log('[] == 0 → ', [] == 0);
+console.log('équivalent à [].toString() == 0');
+console.log('avec [].toString() == ""');
+console.log('au final nous avons "" == 0');
+console.log("la chaîne est convertie en nombre car l'un des deux opérandes est un nombre");
+console.log('Number("") =', Number(""));
+console.log('"" == 0 →', "" == 0);
+`);
 
 /*        
         addCell('cells00', '', `

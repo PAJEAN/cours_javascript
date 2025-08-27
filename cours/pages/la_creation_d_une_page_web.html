@@ -35,14 +35,16 @@
 &lt;/head>
 &lt;body>
     <!-- Un commentaire HTML -->
-    &lt;h1 style="color:red">Bonjour&lt;/h1>
+    &lt;h1 style="color:red">Hello World&lt;/h1>
 
     &lt;script type="text/javascript">
     // Un premier commentaire en JavaScript.
+    
     /*
         Un second commentaire en Javascript.
     */
-    console.log("Hello World");
+
+    console.log('Hello World');
     &lt;/script>
 &lt;/body>
 &lt;/html></textarea>
@@ -112,6 +114,28 @@ console.log('%cMessage stylé', 'color: white; background-color: blue; padding: 
             <p>
                 Ce message apparaîtra avec le texte blanc sur fond bleu dans la console, ce qui peut être pratique pour mettre en évidence certaines informations lors du débogage.
             </p>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        Afficher dans la console "Hello World!". Utiliser une police de taille 24px de couleur blanche et ajouter un dégradé du bleu au rouge en fond.
+                    </p>
+                </div>
+            </div>
+
+            <button class="btn toggle-answer" data-pw="ad">
+                Afficher la réponse
+            </button>
+            <div class="hidden">
+
+<textarea class="editor my" spellcheck="false">
+console.log('%cHello World', 'color: white; font-size: 24px; background-image: linear-gradient(blue, red);');</textarea>
+
+            </div>
             
         </div>
     </div>

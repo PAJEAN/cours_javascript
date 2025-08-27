@@ -13,7 +13,14 @@
         <div class="page" id="page">
             <div id="header-container">Les fonctions</div>
 
-            <p> Une fonction est un <b>ensemble d'instructions réutilisables</b> pouvant être effectuées à partir de paramètres et pouvant retourner un résultat. L'intérêt d'une fonction est de décrire une procédure que l'on peut utiliser autant de fois que l'on veut sans réécrire les mêmes lignes de code. </p>
+            <p>
+                Une fonction est un <b>ensemble d'instructions réutilisables</b> pouvant être effectuées à partir de paramètres et pouvant retourner un résultat. L'intérêt d'une fonction est de décrire une procédure que l'on peut utiliser autant de fois que l'on veut sans réécrire les mêmes lignes de code.
+            </p>
+
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                            Fonctions nommées                            -->
+            <!-- ----------------------------------------------------------------------- -->
 
             <h2> Fonctions nommées </h2>
 
@@ -27,18 +34,23 @@
 
             <div id="cells29"></div>
 
+            <div id="cells29-1"></div>
+
             <div class="nota-bene-box">
                 <div class="nota-bene-header">
                     <span class="box-icon">📝</span>
                     <span class="box-title">À savoir</span>
                 </div>
                 <div class="box-content">
-                    <p> Une variable déclarée dans le <b>contexte global</b> est visible et manipulable dans l'ensemble du script. Une variable <b>locale</b>, déclarée dans le corps d'une fonction, n'est visible que localement à l'intérieur de cette fonction. </p>
-                    <p> Au sein du code précédent, JavaScript crée une copie locale (copie par valeur pour les variables primitives et par référence pour les objets) de l'argument passé en paramètre de la fonction. Cette copie existe uniquement à l'intérieur de la fonction et elle est accessible par le nom spécifié dans la définition de la fonction. </p>
+                    <p>
+                        En JavaScript, les arguments de fonction sont toujours passés par valeur : pour les types primitifs, c'est la valeur elle-même qui est copiée, tandis que pour les objets, c'est la référence qui est copiée, ce qui permet de modifier l'objet pointé mais pas de réassigner la variable d'origine.
+                    </p>
                 </div>
             </div>
             
-            <p> Une fonction peut être déclarée avec un nombre indéfini de paramètres en entrée. La syntaxe utilise trois points placés devant le dernier paramètre (affectation par décomposition). Ces trois points (...) sont appelés <b>syntaxe de décomposition</b>. Ils permettent d'étendre un itérable (par exemple une expression de tableau ou une chaîne de caractères) en lieu et place de plusieurs arguments (pour les appels de fonctions) ou de plusieurs éléments (pour les tableaux).</p>
+            <p>
+                Une fonction peut être déclarée avec un nombre indéfini de paramètres en entrée. La syntaxe utilise trois points placés devant le dernier paramètre (affectation par décomposition). Ces trois points (...) sont appelés <b>syntaxe de décomposition</b>. Ils permettent d'étendre un itérable (par exemple une expression de tableau ou une chaîne de caractères) en lieu et place de plusieurs arguments (pour les appels de fonctions) ou de plusieurs éléments (pour les tableaux).
+            </p>
 
             <div id="cells30"></div>
 
@@ -48,63 +60,101 @@
                     <span class="box-title">À savoir</span>
                 </div>
                 <div class="box-content">
-                    <p> L'objet <code>arguments</code> est une variable locale (intrinsèque et inhérente aux fonctions) disponibles dans toutes les fonctions (qui ne sont pas des fonctions fléchées). Cet objet est semblable à un tableau, il possède une propriété <i>length</i>, mais il n'hérite pas des méthodes de l'objet <code>Array</code> (<i>e.g.</i> <code>map()</code>, <code>every()</code>, etc.). </p>
+                    <p>
+                        L'objet <code>arguments</code> est une variable locale (intrinsèque et inhérente aux fonctions) disponibles dans toutes les fonctions (qui ne sont pas des fonctions fléchées). Cet objet est semblable à un tableau, il possède une propriété <i>length</i>, mais il n'hérite pas des méthodes de l'objet <code>Array</code> (<i>e.g.</i> <code>map()</code>, <code>every()</code>, etc.).
+                    </p>
                 </div>
             </div>
 
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                           Fonctions anonymes                            -->
+            <!-- ----------------------------------------------------------------------- -->
+
             <h2> Fonctions anonymes </h2>
 
-            <p> Dans certain cas, il n'est pas utile de nommer une fonction qui ne sera pas appelée et réutilisée ailleurs dans le code. On peut donc déclarer des fonctions anonymes (qui n'ont pas de nom). L'exemple suivant exploite la fonction <code>every()</code> qui teste l'ensemble des éléments d'un tableau pour vérifier si la condition décrite par une fonction passée en argument est respectée. </p>
+            <p>
+                Dans certain cas, il n'est pas utile de nommer une fonction qui ne sera pas appelée et réutilisée ailleurs dans le code. On peut donc déclarer des fonctions anonymes (qui n'ont pas de nom). L'exemple suivant exploite la fonction <code>every()</code> qui teste l'ensemble des éléments d'un tableau pour vérifier si la condition décrite par une fonction passée en argument est respectée.
+            </p>
 
             <div id="cells31"></div>
 
-            <p> La définition d'une fonction anonyme peut également être réalisée par l'intermédiaire du mot-clé <code>function</code> sans renseigner de nom de fonction ou bien par la syntaxe des <b>fonctions fléchées</b>. </p>
+            <p>
+                La définition d'une fonction anonyme peut également être réalisée par l'intermédiaire du mot-clé <code>function</code> sans renseigner de nom de fonction ou bien par la syntaxe des <b>fonctions fléchées</b>.
+            </p>
 
-            <p> Une différence importante à souligner entre les fonctions nommées et les expressions de fonction (anonymes) réside dans leur comportement vis-à-vis du phénomène de <i>hissage</i>. </p>
+            <p>
+                Une différence importante à souligner entre les fonctions nommées et les expressions de fonction (anonymes) réside dans leur comportement vis-à-vis du phénomène de <i>hissage</i>.
+            </p>
             
             <div id="cells32"></div>
 
             <div id="cells33"></div>
 
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                           Fonctions fléchées                            -->
+            <!-- ----------------------------------------------------------------------- -->
+
             <h2> Fonctions fléchées </h2>
 
-            <p> Deux facteurs sont à l'origine de la conception des fonctions fléchées : une syntaxe plus courte vis-à-vis des expressions de fonction et l'absence de <code>this</code> spécifique à la fonction. Sur ce dernier point, cela signifie qu'une fonction fléchée ne lie pas son propre <code>this</code> au sein de la fonction. La syntaxe des fonctions fléchées est souvent utilisée pour représenter une fonction anonyme <code>(valeurEntrée) => expressionRetour</code> au sein d'une méthode. </p>
+            <p>
+                Deux facteurs sont à l'origine de la conception des fonctions fléchées : une <b>syntaxe plus courte</b> vis-à-vis des expressions de fonction et l'<b>absence de <code>this</code></b> spécifique à la fonction. Sur ce dernier point, cela signifie qu'une fonction fléchée ne lie pas son propre <code>this</code> au sein de la fonction.
+            </p>
 
             <div id="cells34"></div>
 
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                        Fonctions auto-exécutées                         -->
+            <!-- ----------------------------------------------------------------------- -->
+
             <h2> Fonctions auto-exécutées </h2>
 
-            <p> JavaScript introduit une syntaxe pour exécuter une fonction immédiatement après sa création. </p>
+            <p>
+                JavaScript introduit une syntaxe pour exécuter une fonction immédiatement après sa création.
+            </p>
 
             <div id="cells35"></div>
+
+
+            <!-- ----------------------------------------------------------------------- -->
+            <!--                         Manipuler les fonctions                         -->
+            <!-- ----------------------------------------------------------------------- -->
 
             <h2> Manipuler les fonctions </h2>
 
             <h3> Fonction de première classe </h3>
 
-            <p> En JavaScript, <b>les fonctions sont des objets</b> de type <code>Function</code> au même titre qu'un tableau est un objet de type <code>Array</code>. Cela veut dire qu'une fonction peut :</p>
+            <p>
+                Une fonction de <b>première classe</b> correspond à une <b>propriété d'un langage</b> comme le JavaScript dans lequel les fonctions sont des objets de première classe. Cela signifie qu'une fonction peut :
+            </p>
+
             <ul>
                 <li> être affectée à des variables ou des structures de données (<i>e.g.</i> on référence une fonction à une variable), </li>
                 <li> être passée comme paramètre à une fonction, </li>
                 <li> être retournée par une fonction. </li>
             </ul>
 
-            <p> Ainsi, une fonction de <b>première classe</b> correspond à une <b>propriété d'un langage</b> comme le JavaScript dans lequel les fonctions sont des objets de première classe. Cela signifie qu'on peut les stocker dans des variables, les passer en argument ou bien les retourner depuis d'autres fonctions. </p>
-
             <div id="cells36"></div>
 
             <h3> Fonctions d'ordre supérieur </h3>
 
-            <p> Cette propriété des fonctions de première classe permet des constructions intéressantes appelée <b>les fonctions d'ordre supérieur</b> (<i>high order functions</i>).
-            Une fonction d'ordre supérieur est une <b>fonction qui accepte au moins une autre fonction en paramètre, et/ou qui retourne une fonction en résultat</b>. Un exemple a été présenté précédemment avec la fonction <code>every()</code>.
+            <p>
+                Cette propriété des fonctions de première classe permet des constructions intéressantes appelée <b>les fonctions d'ordre supérieur</b> (<i>high order functions</i>). Une fonction d'ordre supérieur est une <b>fonction qui accepte au moins une autre fonction en paramètre, et/ou qui retourne une fonction en résultat</b>. Un exemple a été présenté précédemment avec la fonction <code>every()</code>.
+            </p>
 
             <div id="cells37"></div>
 
             <h3> Fonctions imbriquées et fermetures (<i>closures</i>) </h3>
 
-            <p> Il est possible d'imbriquer une fonction au sein d'une autre fonction. La fonction imbriquée (interne) est privée par rapport à la fonction (externe) qui la contient. Cela forme ce qu'on appelle une <b>fermeture</b> (ou <i>closure</i> en anglais). </p>
+            <p>
+                Il est possible d'imbriquer une fonction au sein du corps d'une autre fonction. La fonction imbriquée (interne) est privée par rapport à la fonction (externe) qui la contient. Cela forme ce qu'on appelle une <b>fermeture</b> (ou <i>closure</i> en anglais).
+            </p>
 
-            <p>Les fermetures sont des <b>fonctions qui se "souviennent" de l'environnement dans lequel elles ont été créées</b> (on dit aussi que la fonction capture son "environnement"). En d'autres termes, une <i>closure</i> est une fonction capable de capter des données (susceptibles de changer au cours du temps), de les enregistrer dans son espace fonctionnel et de les fournir en cas de besoin. </p>
+            <p>
+                Les fermetures sont des <b>fonctions qui se "souviennent" de l'environnement dans lequel elles ont été créées</b> (on dit aussi que la fonction capture son "environnement"). En d'autres termes, une <i>closure</i> est une fonction capable de capter des données (susceptibles de changer au cours du temps), de les enregistrer dans son espace fonctionnel et de les fournir en cas de besoin.
+            </p>
 
             <div class="nota-bene-box">
                 <div class="nota-bene-header">
@@ -117,14 +167,15 @@
                         <li> La fonction interne est une fermeture : la fonction interne peut utiliser les arguments et des variables de la fonction externe alors que la fonction externe ne peut pas utiliser de variables et d'arguments de la fonction interne. </li>
                     </ul>
                 </div>
-            </div>
-            
+            </div>            
 
             <div id="cells38"></div>
 
             <div id="cells39"></div>
 
-            <p> Lorsque deux arguments ou variables appartenant aux portées d'une fermeture ont le même nom, il y a un conflit de noms. La <b>portée la plus interne l'emportera</b> par rapport à la portée la plus externe. C'est ce qu'on appelle la chaîne de portée (scope chain en anglais). Le premier maillon de cette chaîne est la portée la plus interne tandis que le dernier maillon est représenté par la portée la plus externe. </p>
+            <p>
+                Lorsque deux arguments ou variables appartenant aux portées d'une fermeture ont le même nom, il y a un conflit de noms. La <b>portée la plus interne l'emportera</b> par rapport à la portée la plus externe. C'est ce qu'on appelle la chaîne de portée (<i>scope chain</i> en anglais). Le premier maillon de cette chaîne est la portée la plus interne tandis que le dernier maillon est représenté par la portée la plus externe.
+            </p>
 
             <div id="cells40"></div>
             
@@ -170,59 +221,74 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
     <script>
         /* ==== Add cells ==== */
 
-        addCell('cells25', 'Fonction nommée', `
+addCell('cells25', 'Déclarer et exécuter une fonction nommée', `
 function direBonjour() {
     console.log('Bonjour !');
 }
 direBonjour();
-        `);
+`);
         
-        addCell('cells26', 'Paramètre de fonction (1/2)', `
+addCell('cells26', 'Paramètre de fonction (1/2)', `
 function direBonjour(nom){
     return 'Bonjour ' + nom + '!';
 }
 console.log(direBonjour('Arthur'));
-        `);
+`);
 
-        addCell('cells27', 'Paramètre de fonction (2/2)', `
+addCell('cells27', 'Paramètre de fonction (2/2)', `
 function direBonjour(nom) {
     console.log('Bonjour ' + nom + '!');
 }
 
-// Est ce que JavaScript va renvoyer une erreur ?
+/* == Est ce que JavaScript va renvoyer une erreur ? == */
 
 direBonjour();
-        `);
+`);
 
-        addCell('cells28', 'Paramètre par défaut', `
+addCell('cells28', 'Paramètre par défaut', `
 function direBonjour(nom, age = 32) { // Paramètre par défaut.
     return 'Bonjour ' + nom + ', tu as ' + age + ' ans!';
 }
 console.log(direBonjour('Arthur'));
 console.log(direBonjour('Merlin', 884));
-        `);
+`);
 
-        addCell('cells29', 'Portée des variables', `
+addCell('cells29', 'Fonction et portée des variables', `
 var age = 22; // Variable globale.
+
 function direBonjour(nom, age){
     var citation = 'Pas changer assiette pour fromage !'; // Variable locale.
     age++;
     return 'Bonjour ' + nom + ', tu as ' + age + ' ans! ' + citation;
 }
+
 console.log(direBonjour('Arthur', age));
 
-// Quelle valeur a la variable globale age ?
-console.log('Variable age: ' + age);
+/* == Quelle valeur a la variable globale age ? == */
 
-console.log(direBonjour('Merlin', 884));
+console.log('Variable globale age =', age);
 
-// Selon vous, est ce que je peux afficher la variable citation ?
+/* == Selon vous, est ce que je peux afficher la variable citation ? == */
+
 console.log(citation);
-        `);
+`);
 
-        addCell('cells30', 'Décomposition', `
+addCell('cells29-1', 'Copie par référence', `
+function modifie(obj) {
+    obj.val = 42;     // Modifie l'objet pointé.
+    obj = { val: 99 }; // Réaffecte la référence locale.
+}
+
+let o = { val: 10 };
+modifie(o);
+console.log(o);
+`);
+
+
+addCell('cells30', 'Décomposition', `
 function direBonjour(nom, ...noms) {
-    console.log('Paramètre 1: ' + nom)
+    console.log('Paramètre 1 :', nom)
+
     for(let i = 0; i < noms.length; i++) {
         console.log(noms[i]);
     }
@@ -232,52 +298,46 @@ function direBonjour(nom, ...noms) {
     }
 }
 direBonjour('Arthur', 'Merlin', 'Perceval');
-        `);
+`);
 
-        addCell('cells31', 'Fonctions anonymes', `
-var tableau1 = [0,2,4,6,8];
-var tableau2 = [0,2,5,6,8];
+addCell('cells31', 'Fonctions anonymes', `
+var tableau1 = [0, 2, 4, 6, 8];
 
-// Que recherchons nous à tester ici ?
+/* == Que recherchons nous à tester ici ? == */
 
 var response1 = tableau1.every(function(valeur){
     return (valeur % 2 == 0);
 });
 
-// Même question ici ?
-
-var response2 = tableau2.every(function(valeur){
-    return (valeur % 2 == 1);
-});
-
 console.log(response1);
-console.log(response2);
-        `);
+`);
 
-        addCell('cells32', 'Phénomène de hissage (1/2)', `
+addCell('cells32', 'Phénomène de hissage (1/2)', `
 bonjour();
 function bonjour() { // Phénomène de hissage.
     console.log('Bonjour !');
 }
-        `);
+`);
         
-        addCell('cells33', 'Phénomène de hissage (2/2)', `
+addCell('cells33', 'Phénomène de hissage (2/2)', `
 console.log(bonjour); // Hissage de la déclaration et non de son initialisation.
 bonjour();
 var bonjour = function() {
     console.log('Bonjour !');
 }
-        `);
+`);
 
-        addCell('cells34', 'Fonctions fléchées', `
-var tableau1 = [0,2,4,6,8];
+addCell('cells34', 'Fonctions fléchées', `
+var tableau1 = [0, 2, 4, 6, 8];
+
 console.log(tableau1.every((valeur) => (valeur % 2 == 0)));
+
 console.log(tableau1.every(valeur => {
     return valeur % 2 == 0
 }));
-        `);
+`);
 
-        addCell('cells35', 'Fonctions auto-exécutées', `
+addCell('cells35', "Syntaxe d'une fonctions auto-exécutées", `
 // Fonction anonyme.
 (function(valeur){
     console.log(valeur % 2);
@@ -292,68 +352,66 @@ console.log(tableau1.every(valeur => {
 (function nom_fonction(valeur){
     console.log(valeur % 2);
 })(3);
-        `);
+`);
 
-        addCell('cells36', 'Objet <code>Function</code>', `
+addCell('cells36', 'Objet <code>Function</code>', `
 let ma_fonction = () => 3;
-console.log(ma_fonction instanceof Function);
+console.log('ma_fonction instanceof Function :', ma_fonction instanceof Function);
 let mon_tableau = [1, 2];
-console.log(mon_tableau instanceof Array);
-        `);
+console.log('mon_tableau instanceof Array :', mon_tableau instanceof Array);
+`);
 
-        addCell('cells37', "Fonction d'ordre supérieur", `
+addCell('cells37', "Fonction d'ordre supérieur", `
 function multiplierParDeux(nombre) {
     return nombre * 2;
 }
+
 function afficher(nombre) {
     console.log('La fonction afficher() affiche la valeur :', nombre);
     return nombre;
 }
-console.log('Les fonctions imbriquées affichent :', afficher(multiplierParDeux(4)));
 
-function afficherDouble(nombre) { // Ne prend pas de fonction en entrée.
-    return afficher(multiplierParDeux(nombre)); // Ne renvoie pas de fonction en sortie.
-}
-console.log('La fonction afficherDouble() affiche :', afficherDouble(5));
-
-// Fonction d'ordre supérieur.
-// De manière plus générique, une fonction f() exploite le retour d'une fonction g().
+// Une fonction f() exploite le retour d'une fonction g().
 function compose(f, g) { // Prend deux fonctions en entrée.
     return (nombre) => { // Renvoie une fonction en sortie.
         return f(g(nombre));
     };
 }
-var fonctionImbriquee = compose(afficher, multiplierParDeux);
-console.log('La fonction imbriquée fonctionImbriquee() affiche :', fonctionImbriquee(6));
-        `);
 
-        addCell('cells38', '<i>Closure</i> (1/2)', `
+let ma_fonction = compose(afficher, multiplierParDeux);
+ma_fonction(6);
+`);
+
+addCell('cells38', '<i>Closure</i> (1/2)', `
 function ajouteCarres(a, b) {
    function carre(x) { // La fonction interne est une closure.
       return x * x;
    }
    return carre(a) + carre(b);
 }
+
 let a = ajouteCarres(1, 2);
 let b = ajouteCarres(3, 4);
 let c = ajouteCarres(5, 6);
-console.log(a + "; "+ b + "; " + c);
-        `);
 
-        addCell('cells39', '<i>Closure</i> (2/2)', `
+console.log(a + "; "+ b + "; " + c);
+`);
+
+addCell('cells39', '<i>Closure</i> (2/2)', `
 // Définition des arguments pour la fonction externe, utilisés aussi pour la fonction interne.
 function addition(nombre1){
     return function(nombre2){
         return nombre1 + nombre2; // nombre1 est capturé dans l'environnement de la fonction retournée.
     }
 }
-var additionBase10 = addition(10);
+
+let additionBase10 = addition(10);
 console.log(additionBase10(5));
 // Ou.
 console.log(addition(3)(4));
-        `);
+`);
 
-        addCell('cells40', 'Chaîne de portée', `
+addCell('cells40', 'Chaîne de portée', `
 /* == D'après vous, que retournera la variable "resultat" ? == */
 
 function externe() {
@@ -363,11 +421,12 @@ function externe() {
     }
     return interne; // On retourne la fonction interne pour pouvoir l'exécuter.
 }
+
 var resultat = externe()(20);
 console.log(resultat);
-        `);
+`);
 
-        addCell('cells41', 'Question', `
+addCell('cells41', 'Question', `
 /* == D'après vous, que retournera la variable "resultat" ? == */
 
 function externe() {
@@ -378,9 +437,10 @@ function externe() {
     }
     return interne;
 }
-var resultat = externe()(20);
+
+let resultat = externe()(20);
 console.log(resultat(5));
-        `);
+`);
 
 
 /*        
