@@ -13,7 +13,9 @@
         <div class="page" id="page">
             <div id="header-container">Les conditions</div>
 
-            <p> Les tests conditionnels permettent d'orienter l'éxécution vers des embranchements d'instructions selon le résultat de conditions définies par le développeur. </p>
+            <p>
+                Les tests conditionnels permettent d'orienter l'éxécution vers des embranchements d'instructions selon le résultat de conditions définies par le développeur.
+            </p>
 
             <div id="cells61"></div>
 
@@ -25,7 +27,10 @@
 
             <div id="cells65"></div>
 
-            <p> Les expressions logiques étant évaluées de gauche à droite, le moteur d'exécution utilise les <b>courts-circuits</b> dans les cas suivants : </p>
+            <p>
+                Les expressions logiques étant évaluées de gauche à droite, le moteur d'exécution utilise les <b>courts-circuits</b> dans les cas suivants :
+            </p>
+            
             <ul>
                 <li> <code>false && nimportequoi</code> sera court-circuitée pour être évaluée en <code>false</code>. </li>
                 <li> <code>true || nimportequoi</code> sera court-circuitée pour être évaluée en <code>true</code>. </li>
@@ -92,63 +97,58 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
 
     <script>
         /* ==== Add cells ==== */
-    addCell('cells61', 'Condition simple', `
+
+addCell('cells61', 'Condition simple', `
 console.log("--> i = 50, limit = 50;")
 var i = 50, limit = 50;
-if(i <= limit){
+if (i <= limit) {
     console.log(i + ' inférieur ou égal à ' + limit);
 }
 
-console.log("Conversion de type réalisée par l'opérateur ==");
 console.log("--> i = '50', limit = 50;")
 var i = '50', limit = 50;
-if(i == limit) {
-    console.log('i et limit ont une valeur égale car "==" convertit la variable i en number.');
-}
 
-console.log('--> i !== limit')
-if(i !== limit){
-    console.log('i et limit ont une valeur ou un type différent.');
+if (i !== limit) {
+    console.log('i !== limit → i et limit ont une valeur ou un type différent.');
 }
-console.log("L'opérateur !== ou === n'effectue pas de conversion de type.")
 
 console.log("--> i = '000000050.0'")
 i = '000000050.0'
-if(i == limit) {
-    console.log('i et limit ont une valeur égale.');
+if (i == limit) { // Rappel: == réalise des conversions de type.
+    console.log('i == limit → i et limit ont une valeur égale.');
 }
-console.log(Number(i));
-    `);
+console.log('Number(i) =', Number(i));
+`);
 
-    addCell('cells62', 'Opérateurs logiques', `
+addCell('cells62', 'Opérateurs logiques', `
 let nom1 = 'Arthur', nom2 = 'Anne', nom3 = 'Arborer';
-if(nom1[0] == nom3[0] && nom1[nom1.length-1] == nom3[nom3.length-1]){
+if (nom1[0] == nom3[0] && nom1[nom1.length - 1] == nom3[nom3.length - 1]) {
     console.log(nom1 + ' et ' + nom3 + ' ont la première ET la dernière lettres identiques.');
 }
 
-if(nom1[0] == nom2[0] || nom1[nom1.length-1] == nom2[nom2.length-1]){
+if (nom1[0] == nom2[0] || nom1[nom1.length - 1] == nom2[nom2.length - 1]) {
     console.log(nom1 + ' et ' + nom2 + ' ont la première OU la dernière lettres identiques.');
 }
 
-console.log(!false);
-        `);
+console.log('Négation !false →', !false);
+`);
     
-    addCell('cells63', 'Test si - sinon', `
+addCell('cells63', 'Test si - sinon', `
 let i = 50, limit = 50;
-if(i < limit) {
+if (i < limit) {
     console.log(i + ' inférieur à ' + limit);
 }
-else if(i > limit) {
+else if (i > limit) {
     console.log(i + ' supérieur à ' + limit);
 }
 else {
     console.log(i + ' égal à ' + limit);
 }
-    `);
+`);
 
-    addCell('cells64', 'Syntaxe <code>switch</code>', `
-function legume(i){
-    switch(i){
+addCell('cells64', 'Syntaxe <code>switch</code>', `
+function legume(i) {
+    switch(i) {
         case 1:
             console.log(i + ' Carotte');
             break;
@@ -162,14 +162,14 @@ function legume(i){
 }
 let i = 1, j = 2, k = 3, l = 4;
 legume(i), legume(j), legume(k), legume(l);
-    `);
+`);
 
-    addCell('cells65', 'Opérateur ternaire', `
+addCell('cells65', 'Opérateur ternaire', `
 let nom = 'Arthur';
-nom[0] == 'A' ? console.log("Couhière !") : console.log("Interprèèèète !");
-    `);
+nom[0] == 'A' ? console.log('Couhière !') : console.log('Interprèèèète !');
+`);
 
-    addCell('cells66', 'Évaluation en court-circuit', `
+addCell('cells66', 'Évaluation en court-circuit', `
 function direBonjour(){
     console.log('Bonjour !');
 }
@@ -188,9 +188,9 @@ aimable || direBonjour(); // aimable == false donc on évalue le second terme (|
 console.log(4);
 aimable = true;
 aimable || direBonjour(); // aimable == true ne nécessite pas d'évaluer le second terme (||).
-    `);
+`);
 
-    addCell('cells67', '', `
+addCell('cells67', '', `
 let est_majeur = (age) => age >= 18 ? 'Majeur': 'Mineur';
 console.log(est_majeur(17));
 console.log(est_majeur(77));
@@ -203,12 +203,11 @@ console.log('Combat 1');
 a_esquive || degat();
 console.log(pv);
 
-console.log('Combat 1');
+console.log('Combat 2');
 a_esquive = true;
 a_esquive || degat();
 console.log(pv);
-
-    `);
+`);
 
 /*        
     addCell('cells00', '', `

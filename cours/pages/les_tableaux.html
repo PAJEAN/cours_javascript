@@ -107,7 +107,7 @@
             </ul>
 
             <p>
-                La valeur initiale de l’accumulateur est soit celle fournie en paramètre, soit, à défaut, le premier élément de l’itérable. Dans ce dernier cas, l’itération commence au deuxième élément.
+                La valeur initiale de l'accumulateur est soit celle fournie en paramètre, soit, à défaut, le premier élément de l'itérable. Dans ce dernier cas, l'itération commence au deuxième élément.
             </p>
 
             <p>
@@ -116,7 +116,9 @@
 
             <div id="cells54-1"></div>
             
-            <p> La méthode <code>join()</code> retourne une chaîne de caractères composées des éléments du tableau séparés par un séparateur passé en paramètre. </p>
+            <p>
+                La méthode <code>join()</code> retourne une chaîne de caractères composées des éléments du tableau séparés par un séparateur passé en paramètre.
+            </p>
 
             <div id="cells55"></div>
 
@@ -126,17 +128,23 @@
                     <span class="box-title">Exercice</span>
                 </div>
                 <div class="box-content">
-                    <p>Exercice n°1</p>
+                    <p>
+                        Exercice n°1
+                    </p>
+
                     <ul>
-                        <li> À partir du tableau suivant: let tableau = ['mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'] ajouter 'lundi' au début du tableau et 'dimanche' à la fin du tableau. </li>
+                        <li> À partir du tableau suivant: <code>let tableau = ['mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi']</code> ajouter <i>'lundi'</i> au début du tableau et <i>'dimanche'</i> à la fin du tableau. </li>
                         <li> À partir de la syntaxe de décomposition, répéter l'exercice ci-dessus en une seule étape. </li>
                         <li> Afficher la longueur en caractères de chaque jour de la semaine en une ligne de code. </li>
                     </ul>
                     
-                    <p>Exercice n°2</p>
+                    <p>
+                        Exercice n°2
+                    </p>
+
                     <ul>
-                        <li> Calculer la moyenne du tableau suivant: let tableau = [8, 15, 12, 5, 2, 18] en une ligne de code. </li>
-                        <li> Calculer la somme à partir du tableau suivant: let tableau1 =  [['a', 8], ['b', 15], ['c', 12], ['d', 5], ['e', 2], ['f', 18]]. Vous devez considérer les valeurs en position 1 de chacun des éléments. </li>
+                        <li> Calculer la moyenne du tableau suivant: <code>let tableau = [8, 15, 12, 5, 2, 18]</code> en une ligne de code. </li>
+                        <li> Calculer la somme à partir du tableau suivant: <code>let tableau1 =  [['a', 8], ['b', 15], ['c', 12], ['d', 5], ['e', 2], ['f', 18]]</code>. Vous devez considérer les valeurs en position 1 de chacun des éléments. </li>
                     </ul>
                 </div>
             </div>
@@ -150,15 +158,20 @@
                 <div id="cells57"></div>
             </div>
 
-            <p> La méthode <code>sort()</code> trie les éléments d'un tableau, dans ce même tableau, et renvoie le tableau. Par défaut, le tri s'effectue sur les <b>éléments du tableau convertis en chaînes de caractères</b> et triées selon les valeurs des unités de code UTF-16 des caractères. </p>
+            <p>
+                La méthode <code>sort()</code> trie directement les éléments d'un tableau et <b>renvoie ce même tableau</b>. Par défaut, elle compare les éléments après les avoir <b>convertis en chaînes de caractères</b>, en utilisant l'ordre des codes UTF-16.
+            </p>
 
             <div id="cells58"></div>
 
-            <p> Pour réaliser un tri numérique, une fonction est passée en paramètre de la fonction <code>sort()</code>. Elle prend deux paramètres <code>a</code> et <code>b</code> qui représentent deux éléments du tableau. Les éléments sont ensuite triés en fonction du retour de la fonction :</p>
+            <p>
+                Pour trier un tableau de nombres, on fournit une fonction de comparaison en paramètre à <code>sort()</code>. Cette fonction reçoit deux éléments, nommons-les <i>a</i> et <i>b</i>, et renvoie un nombre indiquant leur ordre relatif :
+            </p>
+
             <ul>
-                <li> Si le retour est une valeur négative alors <code>a</code> sera ordonné avant <code>b</code>. </li>
-                <li> Si le retour est égal à 0, alors l'odre de <code>a</code> et <code>b</code> ne change pas. </li>
-                <li> Si le retour est une valeur positive alors <code>b</code> sera ordonné avant <code>a</code>. </li>
+                <li> Si le retour est une valeur négative alors <i>a</i> sera ordonné avant <i>b</i>. </li>
+                <li> Si le retour est égal à 0, alors l'ordre de <i>a</i> et <i>b</i> ne change pas. </li>
+                <li> Si le retour est une valeur positive alors <i>b</i> sera ordonné avant <i>a</i>. </li>
             </ul>
 
             <div id="cells59"></div>
@@ -169,11 +182,14 @@
                     <span class="box-title">Exercice</span>
                 </div>
                 <div class="box-content">
-                    <p> Afin de mettre en pratique les différentes notions vues précédement, nous allons réaliser un CRUD (create, read, update, delete) à partir uniquement de fonctions. Construisez une liste de courses (avec l'objet <code>Array</code>) dans laquelle chaque élement de ma liste est un tableau de taille 2 dans lequel l'index 0 correspond au nom de l'élément et l'index 1 à la quantité achetée. </p>
+                    <p>
+                        Afin de mettre en pratique les différentes notions vues précédement, nous allons réaliser un CRUD (create, read, update, delete) à partir uniquement de fonctions. Construisez une liste de courses (avec l'objet <code>Array</code>) dans laquelle chaque élement de ma liste est un tableau de taille 2 dans lequel l'index 0 correspond au nom de l'élément et l'index 1 à la quantité achetée.
+                    </p>
+
                     <ul>
                         <li> Créer une fonction pour ajouter un élément à la liste. Cette fonction prend en paramètre le nom de l'élément et la quantité.
                         <li> Créer une fonction qui permet d'afficher les éléments de la liste avec leur quantité respective en les séparant avec " | ". </li>
-                        <li> Ajouter à la liste: 1 Balai, 2 Dentifrices et 3 Camemberts à partir d'une fonction auto-éxécutées (et de la fonction permettant d'ajouter un élément à la liste). </li>
+                        <li> Ajouter à la liste : 1 Balai, 2 Dentifrices et 3 Camemberts à partir d'une fonction auto-éxécutées (et de la fonction permettant d'ajouter un élément à la liste). </li>
                         <li> Créer une fonction pour modifier la quantité d'un élément de la liste en fonction de son index. </li>
                         <li> Incrémenter la quantité de Camembert acheté de 1. </li>
                         <li> Créer une fonction pour supprimer un élément de la liste en fonction de son index. </li>
@@ -407,12 +423,12 @@ let somme_plus_5 = tableau.reduce(function(accumulateur, element) {
 console.log('Ma somme + 5 : ' + somme_plus_5);
 `);
 
-        addCell('cells55', 'Méthode <code>join()<code>', `
+addCell('cells55', 'Méthode <code>join()<code>', `
 var tableau = [0, 1, 2, 3];
 console.log(tableau.join(" -*- "));
-        `);
+`);
 
-    addCell('cells56', 'Exercice n°1', `
+addCell('cells56', 'Exercice n°1', `
 let tableau = ['mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
 // Q1.
 tableau.unshift('lundi');
@@ -424,41 +440,41 @@ tableau = ['lundi', ...tableau, 'dimanche'];
 console.log(tableau.toString());
 // Q3.
 console.log(tableau.map(el => el.length).toString());
-        `);
+`);
 
-        addCell('cells57', 'Exercice n°2', `
+addCell('cells57', 'Exercice n°2', `
 // Q1.
 let tableau = [8, 15, 12, 5, 2, 18];
 console.log(tableau.reduce((acc, el) => acc + el) / tableau.length);
 //Q2.
 let tableau1 =  [['a', 8], ['b', 15], ['c', 12], ['d', 5], ['e', 2], ['f', 18]];
 console.log(tableau1.reduce((acc, el) => acc + el[1], 0));
-        `);
+`);
 
-    addCell('cells58', 'Méthodes <code>sort()<code> et <code>toSorted()<code>', `
-var tableau = ['mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
-tableau.sort();
-console.log(tableau.toString());
+addCell('cells58', 'Méthodes <code>sort()<code> et <code>toSorted()<code>', `
+let mon_tableau = ['mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+mon_tableau.sort();
+console.log('mon_tableau.sort() →', mon_tableau.toString());
 
-var tableau = [4, 5, 3, 1, 22];
-var tableau1 = tableau.toSorted();
+let tableau = [4, 5, 3, 1, 22];
+let tableau1 = tableau.toSorted();
 console.log('- Fonction toSorted()');
 console.log('tableau : ' + tableau.toString());
 console.log('tableau1 : ' + tableau1.toString());
 console.log('- Fonction sort()');
 tableau.sort();
 console.log(tableau.toString());
-        `);
+`);
 
-        addCell('cells59', 'Tri numérique', `
+addCell('cells59', 'Tri numérique', `
 let tableau = [4, 5, 3, 1, 22];
 tableau.sort((a, b) => {
     return a - b;
 });
 console.log(tableau.toString());
-        `);
+`);
 
-        addCell('cells60', 'Réponses', `
+addCell('cells60', 'Réponses', `
 // Q1.
 let liste = [];
 
@@ -505,7 +521,7 @@ function total(){
 	return somme;
 }
 console.log(total());
-        `);
+`);
 
 /*        
         addCell('cells00', '', `

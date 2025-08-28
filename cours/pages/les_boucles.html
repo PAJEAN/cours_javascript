@@ -13,15 +13,21 @@
         <div class="page" id="page">
             <div id="header-container">Les boucles</div>
 
-            <p> Une boucle en programmation est un traitement répété plusieurs fois grâce à un bloc d'instructions codé une seule fois. </p>
+            <p>
+                Une boucle en programmation est un traitement répété plusieurs fois grâce à un bloc d'instructions codé une seule fois.
+            </p>
 
             <div id="cells68"></div>
 
-            <p> L’instruction <code>for...of</code> permet d’itérer sur les valeurs d’un <code>objet itérable</code> (comme un <code>Array</code>, une <code>Map</code> ou un <code>Set</code>), mais ne fonctionne pas sur les objets classiques <code>{}</code>. </p>
+            <p>
+                L'instruction <code>for...of</code> permet d'itérer sur les valeurs d'un <code>objet itérable</code> (comme un <code>Array</code>, une <code>Map</code> ou un <code>Set</code>), mais ne fonctionne pas sur les objets classiques <code>{}</code>.
+            </p>
 
             <div id="cells69"></div>
 
-            <p> La boucle <code>for...in</code> parcourt les clés (ou noms de propriétés) d’un objet. </p>
+            <p>
+                La boucle <code>for...in</code> parcourt les clés (ou noms de propriétés) d'un objet.
+            </p>
 
             <div id="cells70"></div>
 
@@ -90,13 +96,13 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
    
     addCell('cells68', 'Boucle <code>for</code>', `
 let tableau = [];
-for(let i = 0; i < 10; i++) {
+for (let i = 0; i < 10; i++) {
     if (i == 0) {
-        continue;
+        continue; // Tour suivant.
     }
 
-    if(i > 5) {
-        break;
+    if (i > 5) {
+        break; // Interrompt la boucle.
     }
         
     tableau.push(i);
@@ -104,30 +110,32 @@ for(let i = 0; i < 10; i++) {
 console.log(tableau.toString());
     `);
 
-    addCell('cells69', 'Boucle <code>for...of</code>', `
+addCell('cells69', 'Boucle <code>for...of</code>', `
 let tableau = ['a', 'b', 'c', 'd'];
 for (let lettre of tableau) {
     console.log(lettre);
 }
-    `);
+`);
 
-    addCell('cells70', 'Boucle <code>for...in</code>', `
-console.log('--> Tableau.');
+addCell('cells70', 'Boucle <code>for...in</code>', `
+console.log('--> Tableau (indexes).');
 let tableau = ['a', 'b', 'c', 'd'];
 for (let lettre in tableau) {
     console.log(lettre); // Index du tableau.
 }
+
 console.log('--> Dictionnaire (objet).');
+
 let objet = {'a': 1, 'b': 2};
 for (let key in objet) {
     console.log(key); // Clé de l'objet.
 }
-    `);
+`);
 
-    addCell('cells71', 'Boucle <code>while</code>', `
+addCell('cells71', 'Boucle <code>while</code>', `
 let i = 0, recherche = true, tableau = [];
-while(i < 10 && recherche) {
-    if(i > 5) {
+while (i < 10 && recherche) {
+    if (i > 5) {
         recherche = false;
     }
     else {
@@ -136,23 +144,23 @@ while(i < 10 && recherche) {
     }
 }
 console.log(tableau.toString());
-    `);
+`);
 
-    addCell('cells72', 'Boucle <code>do{}while()</code>', `
+addCell('cells72', 'Boucle <code>do{}while()</code>', `
 let i = 0, recherche = true, tableau = [];
 do {
     tableau.push(i);
     i++;
-} while(i <= 5);
+} while (i <= 5);
 console.log(tableau.toString());
-    `);
+`);
 
-    addCell('cells73', 'Réponse', `
+addCell('cells73', 'Réponse', `
 let str = 'ouagadougou';
 let pattern = 'ou';
 let nb = 0;
 let index = 0;
-while(index != -1) {
+while (index != -1) {
     index = str.indexOf(pattern, index);
     if (index != -1) {
         nb++;
@@ -160,8 +168,7 @@ while(index != -1) {
     }
 }
 console.log(nb);
-
-    `);
+`);
 
 /*        
     addCell('cells00', '', `

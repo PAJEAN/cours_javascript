@@ -13,11 +13,7 @@
         <div class="page" id="page">
             <div id="header-container">Le dessin et les canvas</div>
 
-
-            
-
             <h2> Le dessin et les canvas </h2>
-
             
             <p> 
                 Depuis HTML5, le navigateur met à disposition l'élément <code>&lt;canvas></code>, qui offre une "toile blanche" sur laquelle on peut dessiner directement en JavaScript. Cet outil est utilisé dans de nombreux domaines : graphiques interactifs, animations, visualisations de données, ou encore petits jeux vidéo.
@@ -26,7 +22,7 @@
             <h3> L'élément <code>&lt;canvas></code> </h3>
 
             <p>
-                Un <code>canvas</code> est une simple zone rectangulaire de la page, définie par ses attributs width et height (en pixels). Par défaut, il est vide : c'est JavaScript qui se charge d'y dessiner. Pour dessiner, on doit d'abord obtenir un contexte de rendu à partir du canvas. Cela se fait avec la méthode :
+                Un <code>canvas</code> est une simple zone rectangulaire de la page, définie par ses attributs <i>width</i> et <i>height</i> (en pixels). Par défaut, il est vide : c'est JavaScript qui se charge d'y dessiner. Pour dessiner, on doit d'abord obtenir un contexte de rendu à partir du canvas. Cela se fait avec la méthode :
             </p>
 
 <textarea class="editor mt" spellcheck="false">
@@ -34,16 +30,16 @@ const canvas = document.getElementById('monCanvas');
 const ctx = canvas.getContext('2d');</textarea>
 
             <ul>
-                <li> Le premier paramètre ('2d') indique le type de rendu souhaité. Dans ce cours, nous travaillerons sur le contexte 2D. </li>
+                <li> Le premier paramètre ('2d') indique le type de rendu souhaité. Dans ce cours, nous nous concentrons sur le contexte 2D. </li>
                 <li> Le second paramètre (optionnel) permet de définir certains attributs du contexte (par exemple l'utilisation ou non d'un canal alpha pour la transparence). </li>
             </ul>
 
             <p>
-                Le contexte 2D (objet <code>CanvasRenderingContext2D</code>) fournit ensuite toutes les méthodes de dessin : tracer des formes, écrire du texte, afficher des images, gérer des couleurs, etc.
+                Le contexte 2D (objet <code>CanvasRenderingContext2D</code>) fournit ensuite toutes les méthodes de dessin : tracer des formes, écrire du texte, afficher des images, gérer des couleurs, <i>etc.</i>..
             </p>
 
             <p>
-                Le repérage des positions dans un canvas exploite des coordonnées cartésiennes <i>(x, y)</i> et l'origine du point <i>(0, 0)</i> est située en <b>haut à gauche de l'élément</b>.
+                Le repérage des positions dans un canvas exploite des coordonnées cartésiennes <i>(x, y)</i> et <b>l'origine du point</b> <i>(0, 0)</i> est située en <b>haut à gauche de l'élément</b>.
             </p>
 
             <div style="width:100%;text-align:center;">
@@ -67,14 +63,14 @@ const ctx = canvas.getContext('2d');</textarea>
             </p>
 
             <ul>
-                <li> La méthode <code>moveTo(Integer x, Integer y)</code> à partir d'un objet <code>CanvasRenderingContext2D</code> permet de déplacer le pointeur vers la position <li>(x, y)</li> sans tracer de trait. </li>
+                <li> La méthode <code>moveTo(Integer x, Integer y)</code> à partir d'un objet <code>CanvasRenderingContext2D</code> permet de déplacer le pointeur vers la position <i>(x, y)</i> sans tracer de trait. </li>
                 <li> La méthode <code>lineTo(Integer x, Integer y)</code> ajoute un nouveau point en <code>(x, y)</code> et dessine une ligne entre ce point et la dernière position spécifiée au sein du contexte de canvas. </li>
                 <li> La méthode <code>closePath()</code> ferme le chemin en traçant une dernière ligne entre la position actuelle du contexte et la position à l'initialisation du chemin (si on veut boucler avec le point initial). </li>
             </ul>
 
 
             <p>
-                Enfin, la méthode *stroke()* permet d'afficher les ligne du chemin à l'écran.
+                Enfin, la méthode <b><code>stroke()</code> permet d'afficher les lignes du chemin à l'écran</b>.
             </p>
 
             <div class="exercise-box">
@@ -84,7 +80,7 @@ const ctx = canvas.getContext('2d');</textarea>
                 </div>
                 <div class="box-content">
                     <p>
-                        À partir des fonctions précédentes, construisez un carré de 100px de largeur en partant de la position <i>(10, 10)</i>.
+                        À partir des fonctions précédentes, construisez un carré de 100px de largeur en partant de la position <i>(0, 0)</i>.
                     </p>
                 </div>
             </div>
@@ -93,6 +89,7 @@ const ctx = canvas.getContext('2d');</textarea>
                 Afficher la réponse
             </button>
             <div class="hidden">
+
 <textarea class="editor mt" spellcheck="false">
 let canvas = document.getElementById('mycanvas')
 let context = canvas.getContext('2d');
@@ -104,6 +101,7 @@ context.lineTo(100,100);
 context.lineTo(0,100);
 context.closePath();
 context.stroke();</textarea>
+
             </div>
 
             <p>
@@ -152,6 +150,7 @@ context.stroke();</textarea>
                 Afficher la réponse
             </button>
             <div class="hidden">
+
 <textarea class="editor mt" spellcheck="false">
 let canvas = document.getElementById('mycanvas')
 let context = canvas.getContext('2d');
@@ -166,6 +165,7 @@ context.stroke();
 context.beginPath();
 context.arc(100, 100, 25, 1.5*Math.PI, Math.PI);
 context.stroke();</textarea>
+
             </div>
 
             <h4> Le rectangle </h4>
@@ -185,7 +185,6 @@ context.fillStyle = '#0f0';
 context.fillStyle = 'rgb(0, 255, 0)';
 context.fillStyle = 'rgb(0, 255, 0, 0.5)';
 </textarea>
-
 
             <h4> Écrire du texte </h4>
 
@@ -217,12 +216,9 @@ context.fillStyle = 'rgb(0, 255, 0, 0.5)';
             </div>
 
             <p>
-                Par défaut, les échelles <code>x</code> et <code>y</code> du canvas correspondent à une unité égale à un pixel. Modifier le facteur d’échelle revient donc à changer la taille de cette unité. Par exemple, un facteur de <code>0.5</code> réduit l’unité à un demi-pixel, et les formes sont alors dessinées deux fois plus petites. À l’inverse, un facteur de <code>2.0</code> fait correspondre une unité à deux pixels, et les formes apparaissent deux fois plus grandes.
+                Par défaut, les échelles <code>x</code> et <code>y</code> du canvas correspondent à une unité égale à un pixel. Modifier le facteur d'échelle revient donc à changer la taille de cette unité. Par exemple, un facteur de <code>0.5</code> réduit l'unité à un demi-pixel, et les formes sont alors dessinées deux fois plus petites. À l'inverse, un facteur de <code>2.0</code> fait correspondre une unité à deux pixels, et les formes apparaissent deux fois plus grandes.
             </p>
-
-
-
-
+            
         </div>
     </div>
 

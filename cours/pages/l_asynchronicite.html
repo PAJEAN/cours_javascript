@@ -14,13 +14,13 @@
             <div id="header-container">L'asynchronicité</div>
 
             <p> 
-            JavaScript est un langage <b>monothread</b> : il n'exécute qu'une seule instruction à la fois. Si une opération longue (comme un appel réseau ou la lecture d'un fichier) bloquait le fil d'exécution, l'application entière deviendrait inutilisable. Pour éviter cela, JavaScript repose sur l'<b>asynchronicité</b> : certaines opérations sont exécutées en arrière-plan, et leur résultat est traité plus tard, sans bloquer l'interface.
+                JavaScript est un langage <b>monothread</b> : il n'exécute qu'une seule instruction à la fois. Si une opération longue (comme un appel réseau ou la lecture d'un fichier) bloquait le fil d'exécution, l'application entière deviendrait inutilisable. Pour éviter cela, JavaScript repose sur l'<b>asynchronicité</b> : certaines opérations sont exécutées en arrière-plan, et leur résultat est traité plus tard, sans bloquer l'interface.
             </p>
 
             <h2> Les promesses (<i>Promises</i>) </h2>
 
             <p>
-            Une <b>promesse</b> est un objet qui représente la valeur d'une opération asynchrone, mais qui n'est pas encore disponible au moment de sa création. Elle peut être dans l'un des trois états suivants :
+                Une <b>promesse</b> est un objet qui représente la valeur d'une opération asynchrone, mais qui n'est pas encore disponible au moment de sa création. Elle peut être dans l'un des trois états suivants :
             </p>
 
             <ul>
@@ -30,13 +30,13 @@
             </ul>
 
             <p>
-            Lorsqu'une promesse est résolue (<code>fulfilled</code> ou <code>rejected</code>), on peut accéder à son résultat via les méthodes <code>.then()</code> (succès) et <code>.catch()</code> (erreur).
+                Lorsqu'une promesse est résolue (<code>fulfilled</code> ou <code>rejected</code>), on peut accéder à son résultat via les méthodes <code>.then()</code> (succès) et <code>.catch()</code> (erreur).
             </p>
 
             <div id="cells90"></div>
 
             <p>
-            Les promesses sont aujourd'hui la base de l'asynchronicité en JavaScript. Elles sont utilisées par de nombreuses API modernes, comme <code>fetch()</code>. Elles peuvent aussi être utilisées avec <code>async/await</code> pour convertir une opération asynchrone en code synchrone.
+                Les promesses sont aujourd'hui la base de l'asynchronicité en JavaScript. Elles sont utilisées par de nombreuses API modernes, comme <code>fetch()</code>. Elles peuvent aussi être utilisées avec <code>async/await</code> pour convertir une opération asynchrone en code synchrone.
             </p>
 
             <p>
@@ -47,13 +47,19 @@
 
             <h2> Les appels AJAX </h2>
 
-            <p>Les appels AJAX (<i>Asynchronous JavaScript & XML</i>) permettent de communiquer entre le <b>client</b> et le <b>serveur</b> de manière asynchrone, c'est-à-dire sans rechargement complet de la page. Historiquement, on utilisait pour cela l'objet <code>XMLHttpRequest</code> (XHR), mais dans les applications modernes, on préfère la méthode <code>fetch()</code>, <a href="https://www.greatfrontend.com/questions/quiz/what-are-the-differences-between-xmlhttprequest-and-fetch">plus simple et plus puissante</a>. </p>
+            <p>
+                Les appels AJAX (<i>Asynchronous JavaScript & XML</i>) permettent de communiquer entre le <b>client</b> et le <b>serveur</b> de manière asynchrone, c'est-à-dire sans rechargement complet de la page. Historiquement, on utilisait pour cela l'objet <code>XMLHttpRequest</code> (XHR), mais dans les applications modernes, on préfère la méthode <code>fetch()</code>, <a href="https://www.greatfrontend.com/questions/quiz/what-are-the-differences-between-xmlhttprequest-and-fetch">plus simple et plus puissante</a>.
+            </p>
 
-            <p> La méthode <code>fetch(url, options)</code> permet d'envoyer une requête HTTP. Elle renvoie une <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Global_Objects/Promise">promesse</a> qui sera résolue lorsque la réponse du serveur est disponible. Par défaut, <code>fetch()</code> effectue une requête <code>GET</code>, mais il est possible de configurer d'autres méthodes (<code>POST</code>, <code>PUT</code>, <code>DELETE</code>…) via l'objet <code>options</code>. </p>
+            <p>
+                La méthode <code>fetch(url, options)</code> permet d'envoyer une requête HTTP. Elle renvoie une promesse qui sera résolue lorsque la réponse du serveur est disponible. Par défaut, <code>fetch()</code> effectue une requête <code>GET</code>, mais il est possible de configurer d'autres méthodes (<code>POST</code>, <code>PUT</code>, <code>DELETE</code>…) via l'objet <code>options</code>.
+            </p>
 
             <div id="cells92"></div>
 
-            <p> L'objet <code>Response</code> ne contient pas directement le corps de la réponse en JSON mais <b>fournit une représentation de l'ensemble de la réponse HTTP</b>. Aussi, pour extraire le corps en JSON de l'objet Response, on utilise la méthode <code>json()</code>, qui renvoie une deuxième promesse dont la résolution fournit le résultat de l'analyse du corps de la réponse au format JSON (<a href="https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch">developer.mozilla.org</a>). </p>
+            <p>
+                L'objet <code>Response</code> ne contient pas directement le corps de la réponse en JSON mais <b>fournit une représentation de l'ensemble de la réponse HTTP</b>. Aussi, pour extraire le corps en JSON de l'objet <code>Response</code>, on utilise la méthode <code>json()</code>, qui renvoie une deuxième promesse dont la résolution fournit le résultat de l'analyse du corps de la réponse au format JSON (<a href="https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch">developer.mozilla.org</a>).
+            </p>
 
             <div class="exercise-box">
                 <div class="exercise-header">
@@ -77,7 +83,49 @@
             <div class="hidden">
                 <div id="cells93"></div>
             </div>
+
+            <h2> Les Web Workers </h2>
+
+            <p>
+                Les Web Workers permettent de déléguer des calculs lourds à un autre thread, laissant le thread principal fluide pour l'utilisateur. Il fonctionne dans un environnement isolé et n'a pas accès directement au DOM (document, window…). L'échange avec la page principale se fait via un système de messages.
+            </p>
             
+            <p>
+                Fichier <i>worker.js</i>.
+            </p>
+
+<textarea class="editor mt" spellcheck="false">
+onmessage = function(event) {
+    console.log('Message reçu dans le worker :', event.data);
+    // Exemple : on fait un calcul simple.
+    let result = event.data * 2;
+    // On renvoie le résultat au script principal.
+    postMessage(result);
+};</textarea>
+
+            <p>
+                Fichier <i>main.js</i>.
+            </p>
+
+<textarea class="editor mt" spellcheck="false">
+// Création du worker à partir du fichier.
+let worker = new Worker('worker.js');
+
+// Envoi d'un message au worker.
+worker.postMessage(21);
+
+// Réception d'un message du worker.
+worker.onmessage = function(event) {
+    console.log('Message reçu du worker :', event.data); // Affiche 42.
+};</textarea>
+
+        <p>
+            Si on doit arrêter un worker immédiatement, on pourra utiliser la méthode <code>terminate</code> depuis le thread principal.
+        </p>
+
+<textarea class="editor mt" spellcheck="false">
+monWorker.terminate();</textarea>        
+
         </div>
     </div>
 
@@ -117,7 +165,7 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
     <script>
         /* ==== Add cells ==== */
 
-    addCell('cells90', "L'objet <code>Promise</code>", `
+addCell('cells90', "L'objet <code>Promise</code>", `
 /* /!\\ async/await est utilisé uniquement pour le bon fonctionnement de la cellule. */
 
 async function getData() {
@@ -136,9 +184,9 @@ async function getData() {
 await getData()
     .then(result => console.log(result))   // "Données reçues !" si succès.
     .catch(error => console.error(error)); // "Une erreur est survenue." si échec.
-    `);
+`);
 
-    addCell('cells91', 'La fonction <code>Promise.all([])</code>', `
+addCell('cells91', 'La fonction <code>Promise.all([])</code>', `
 /* /!\\ await est utilisé uniquement pour le bon fonctionnement de la cellule. */
 
 function attendre(ms, message) {
@@ -164,9 +212,9 @@ await Promise.all([p1, p2, p3])
     .catch(erreur => {
         console.error("Une promesse a échoué :", erreur);
     });
-    `);
+`);
 
-    addCell('cells92', 'La fonction <code>fetch()</code>', `
+addCell('cells92', 'La fonction <code>fetch()</code>', `
 /* /!\\ await est utilisé uniquement pour le bon fonctionnement de la cellule. */
 
 await fetch('https://api.chucknorris.io/jokes/random', {
@@ -175,7 +223,7 @@ await fetch('https://api.chucknorris.io/jokes/random', {
     })
     .then(response => {
         if (!response.ok) {
-        throw new Error("Erreur HTTP: " + response.status);
+            throw new Error("Erreur HTTP: " + response.status);
         }
         return response.json(); // conversion de la réponse en JSON
     })
@@ -185,9 +233,9 @@ await fetch('https://api.chucknorris.io/jokes/random', {
     .catch(error => {
         console.error('Une erreur est survenue :', error);
     });
-    `);
+`);
 
-    addCell('cells93', 'Réponse', `
+addCell('cells93', 'Réponse', `
 /* /!\\ await est utilisé uniquement pour le bon fonctionnement de la cellule. */
 
 const urls = [
@@ -208,7 +256,7 @@ async function chargerDonnees(urls) {
         }));
     }
 
-    await Promise.all(promises)
+    await Promise.all(promises) // Attend les promesses renvoyées par tes fetch(...).then(...).
     .then(data => {
         console.log('Données reçues :', data);
     })
@@ -218,7 +266,7 @@ async function chargerDonnees(urls) {
 }
 
 await chargerDonnees(urls);	
-    `);
+`);
 
 
 /*        

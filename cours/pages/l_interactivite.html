@@ -15,7 +15,9 @@
             
             <h2> Les évènements </h2>
 
-            <p> Le JavaScript est un langage événementiel, c'est-à-dire qu'il détecte les événements qui surviennent sur la page, y réagit et déclenche de nouveaux traitements. Un événement est un changement d'état qui survient sur la page (mouvements de souris, clic sur un élément, chargement d'un élément de la page, *etc.*). </p>
+            <p>
+                Le JavaScript est un langage événementiel, c'est-à-dire qu'il détecte les événements qui surviennent sur la page, y réagit et déclenche de nouveaux traitements. Un événement est un changement d'état qui survient sur la page (mouvements de souris, clic sur un élément, chargement d'un élément de la page, <i>etc.</i>).
+            </p>
 
             <div style="width:100%;text-align:center;">
                 <img src="../../images/javascript-events.png" alt="Événements" style="border-radius: 15px"/>
@@ -51,11 +53,11 @@
 
             <button onclick="alert('Pas changer assiette pour fromage !');"> ARTHOUUUUR </button>
             <button onclick="compteur++; alert(compteur);"> Je sais compter </button>
-            <button id="button3" onclick="colorChange();"> Poème </button>
+            <button id="button3" onclick="colorChange2();"> Poème </button>
             
             <script type="text/javascript">
                 var compteur = 0;
-                function colorChange(){
+                function colorChange2(){
                     color = document.getElementById("button3").style.color;
                     switch(color){
                         case "red":
@@ -73,18 +75,24 @@
                 }
             </script>
 
-            <p> Cette manière de déclarer des événements par attribut est rapide mais présente l'inconvénient de mélanger le traitement JavaScript à la mise en forme des données via HTML. </p>
+            <p>
+                Cette manière de déclarer des événements par attribut est rapide mais présente l'inconvénient de mélanger le traitement JavaScript à la mise en forme des données via HTML.
+            </p>
 
             <h2> La détection par le gestionnaire d'événements </h2>
 
-            <p> Le gestionnaire d'événements permet de centraliser la déclaration des événements dans un bloc JavaScript sans modifier le code HTML gardant ainsi la séparation entre traitements et données. </p>
+            <p>
+                Le gestionnaire d'événements permet de centraliser la déclaration des événements dans un bloc JavaScript sans modifier le code HTML gardant ainsi la séparation entre traitements et données.
+            </p>
 
-            <b><code>target.addEventListener(String myEvent, Function toDo, [options]);</code></b>
+            <p>
+                <b><code>target.addEventListener(String myEvent, Function toDo, [options]);</code></b>
+            </p>
 
             <ul>
                 <li> <i>target</i> : correspond à l'élément ciblé dans le code HTML. </li>
                 <li> <i>myEvent</i> : le type d'événement à détecter. </li>
-                <li> <i>toDo</i> : une fonction qui reçoit en paramètre l'objet de type *Event* détecté. </li>
+                <li> <i>toDo</i> : une fonction qui reçoit en paramètre l'objet de type <code>Event</code> détecté. </li>
                 <li> Le paramètre facultatif <i>options</i> spécifie les caractéristiques de l'écouteur d'évènements (<i>e.g.</i> <code>{"once": true}</code> supprime automatiquement le <i>listener</i> après son premier appel. </li>
             </ul>
 
@@ -135,7 +143,9 @@
                 button1.addEventListener("click", colorChange); // {"once": true}
             </script>
 
-            <p> La fonction <code>colorChange()</code> reçoit en paramètre <code>evt</code> un objet de type <code>Event</code>. Un objet <code>Event</code> contient deux propriétés de cible. La propriété *currentTarget* référence l'objet sur lequel l'événement a été attaché et la propriété <code>target</code> référence l'objet sur lequel l'événement s'est produit. </p>
+            <p>
+                La fonction <code>colorChange()</code> reçoit en paramètre <code>evt</code> un objet de type <code>Event</code>. Un objet <code>Event</code> contient deux propriétés de cible. La propriété <code>currentTarget</code> référence l'objet sur lequel l'événement a été attaché et la propriété <code>target</code> référence l'objet sur lequel l'événement s'est produit.
+            </p>
 
 <textarea class="editor" spellcheck="false">
 <ul id="ul1">
@@ -147,12 +157,12 @@
 <div id="maDiv"> Cliquez sur un nom! </div>
 
 <script type="text/javascript">
-    var ul1 = document.getElementById("ul1");
-    ul1.addEventListener("click", direBonjour);
+    var ul1 = document.getElementById('ul1');
+    ul1.addEventListener('click', direBonjour);
     function direBonjour(evt){
-        if(evt.target.nodeName == "LI"){ // Évite de considérer UL dans le retour.
-            document.getElementById("maDiv").innerHTML = "Bonjour " + evt.target.innerHTML +
-                " (" + (evt.currentTarget.id) + ") !";
+        if(evt.target.nodeName == 'LI') { // Évite de considérer UL dans le retour.
+            document.getElementById('maDiv').innerHTML = 'Bonjour ' + evt.target.innerHTML +
+                ' (' + (evt.currentTarget.id) + ') !';
         }
     }
 </script></textarea>
@@ -176,15 +186,21 @@
                 }
             </script>
 
-            <p> La fonction <b><code>target.removeEventListener(String myEvent, Function toDo, [options]);</code></b> permet de supprimer l'événement de type <code>myEvent</code> associé à la fonction <code>toDo</code>. </p>
+            <p>
+                La fonction <b><code>target.removeEventListener(String myEvent, Function toDo, [options]);</code></b> permet de supprimer l'événement de type <code>myEvent</code> associé à la fonction <code>toDo</code>.
+            </p>
 
             <h2> La manipulation du document </h2>
 
             <h3> Le DOM </h3>
 
-            <p> Le DOM (<i>Document Object Model</i>) est une organisation hiérarchisée en arborescence de l'ensemble des éléments du document. Chaque élément forme un noeud (<code>node</code>) dans le document.
+            <p>
+                Le DOM (<i>Document Object Model</i>) est une organisation hiérarchisée en arborescence de l'ensemble des éléments du document. Chaque élément forme un noeud (<code>node</code>) dans le document.
+            </p>
 
-            <p> L'objet <code>document</code> représente la page HTML chargée dans le navigateur. Il constitue l'objet racine du DOM et permet d'accéder à l'ensemble des éléments de la page, ainsi que de les rechercher, les manipuler et d'en créer de nouveaux. </p>
+            <p>
+                L'objet <code>document</code> représente la page HTML chargée dans le navigateur. Il constitue l'objet racine du DOM et permet d'accéder à l'ensemble des éléments de la page, ainsi que de les rechercher, les manipuler et d'en créer de nouveaux.
+            </p>
 
             <div style="width:100%;text-align:center;">
                 <img src="../../images/pic_htmltree.gif" alt="DOM" style="border-radius: 15px"/>
@@ -193,14 +209,16 @@
 
             <h3> Trouver les éléments du document </h3>
 
-            Il existe plusieurs méthodes permettant de rechercher des éléments au sein du DOM qui se basent sur la nature des balises ou de leurs attributs.
+            <p>
+                Il existe plusieurs méthodes permettant de rechercher des éléments au sein du DOM qui se basent sur la nature des balises ou de leurs attributs.
+            </p>
 
-            <li> La méthode <code>getElementById(String param)</code> de <code>document</code> retourne le premier élément HTML du DOM ayant l'attribut <i>id</i> passé en paramètre. </li>
-            <li> La méthode <code>getElementsByClassName(String param)</code> retourne une liste d'éléments dont la classe CSS correspond au nom de classe passé en paramètre. </li>
-            <li> La méthode <code>getElementsByTagName(String param)</code> retourne une liste d'éléments dont la balise correspond à la balise passée en paramètre. </li>
-            <li> La méthode <code>getElementsByName(String param)</code> retourne une liste  d'éléments dont l'attribut <i>name</i> correspond au nom passé en paramètre (l'attibut <i>name</i> est généralement utilisé pour envoyer des données côté serveur par l'intermédiaire d'un formulaire). </li>
-            <li> La méthode <code>querySelectorAll(String param)</code> retourne tous les éléments trouvés dans le DOM répondant au sélecteur CSS (la notation CSS pour accéder aux éléments) passé en paramètre. Cette méthode permet notamment de réaliser des requêtes plus précises par rapport à <code>getElementsByClassName()</code>. </li>
-            <li> La méthode <code>querySelector(String param)</code> retourne le premier élément trouvé dans le DOM répondant au sélecteur CSS passé en paramètre. </li>
+            <li> <code>getElementById(String param)</code> retourne le premier élément HTML du DOM ayant l'attribut <i>id</i> passé en paramètre. </li>
+            <li> <code>getElementsByClassName(String param)</code> retourne une liste d'éléments dont la classe CSS correspond au nom de classe passé en paramètre. </li>
+            <li> <code>getElementsByTagName(String param)</code> retourne une liste d'éléments dont la balise correspond à la balise passée en paramètre. </li>
+            <li> <code>getElementsByName(String param)</code> retourne une liste  d'éléments dont l'attribut <i>name</i> correspond au nom passé en paramètre (l'attibut <i>name</i> est généralement utilisé pour envoyer des données côté serveur par l'intermédiaire d'un formulaire). </li>
+            <li> <code>querySelectorAll(String param)</code> retourne tous les éléments trouvés dans le DOM répondant au sélecteur CSS (la notation CSS pour accéder aux éléments) passé en paramètre. Cette méthode permet notamment de réaliser des requêtes plus précises par rapport à <code>getElementsByClassName()</code>. </li>
+            <li> <code>querySelector(String param)</code> retourne le premier élément trouvé dans le DOM répondant au sélecteur CSS passé en paramètre. </li>
 
             <div class="nota-bene-box">
                 <div class="nota-bene-header">
@@ -212,15 +230,21 @@
                 </div>
             </div>
 
-            <p> Voir <a href="../../exemples/dom/manipulation.html"> l'exemple</a>. </p>
+            <p>
+                Voir <a href="../../exemples/dom/manipulation.html"> l'exemple</a>.
+            </p>
 
             <h3> Créer de nouveaux éléments </h3>
 
-            <p> JavaScript permet de créer, d'ajouter ou bien de supprimer des éléments HTML. </p>
+            <p>
+                JavaScript permet de créer, d'ajouter ou bien de supprimer des éléments HTML.
+            </p>
 
             <h4> La méthode <code>createElement()</code> </h4>
 
-            <p> La création d'un nouvel élément est réalisée avec la méthode <code>document.createElement(String typeElement)</code>. Le paramètre <i>typeElement</i> est une chaîne désignant la balise de l'élément à créer. </p>
+            <p>
+                La création d'un nouvel élément est réalisée avec la méthode <code>document.createElement(String typeElement)</code>. Le paramètre <i>typeElement</i> est une chaîne désignant la balise de l'élément à créer.
+            </p>
 
 <textarea class="editor" spellcheck="false">
 var new_div = document.createElement("div");
@@ -228,22 +252,28 @@ new_div.innerHTML = "Je suis une nouvelle div.";</textarea>
 
             <h4> Ajouter des éléments dans le document </h4>
 
-            <p> À ce moment, la <code>div</code> n'est pas encore sur le document. Il n'est qu'un objet JavaScript en mémoire. La seconde étape est de l'ajouter à l'endroit voulu au sein du DOM. La méthodes <b><code>parent.appendChild(HTMLElement enfant)</code></b> permet d'ajouter la balise à l'élément <code>parent</code>. </p>
+            <p>
+                À ce moment, la <code>div</code> n'est pas encore sur le document. Il n'est qu'un objet JavaScript en mémoire. La seconde étape est de l'ajouter à l'endroit voulu au sein du DOM. La méthodes <b><code>parent.appendChild(HTMLElement enfant)</code></b> permet d'ajouter la balise à l'élément <code>parent</code>.
+            </p>
 
             <h4> Supprimer un élément HTML </h4>
 
-            <p> La méthode <code>removeChild()</code> retire du DOM l'élement enfant de son élément parent. Voir <a href="../../exemples/dom/elements.html">l'exemple</a>. </p>
+            <p>
+                La méthode <code>removeChild()</code> retire du DOM l'élement enfant de son élément parent. Voir <a href="../../exemples/dom/elements.html">l'exemple</a>.
+            </p>
 
             <h3> Accéder aux attributs </h3>
 
             <h4> Les attributs simples </h4>
 
-            <p> Le JavaScript dispose de méthodes pour accéder aux attributs d'un élément HTML. </p>
+            <p>
+                Le JavaScript dispose de méthodes pour accéder aux attributs d'un élément HTML.
+            </p>
 
             <ul>
-                <li> La méthode <code>hasAttribute(String nomAttribut)</code> retourne <code>true</code> si l'attribut passé en paramètre est présent dans la balise. </li>
-                <li> La méthode <code>getAttribute(String nomAttribut)</code> retourne le contenu de l'attribut passé en paramètre. </li>
-                <li> La méthode <code>setAttribute(String nomAttribut, String valeur)</code> modifie le contenu d'un attribut. </li>
+                <li> <code>hasAttribute(String nomAttribut)</code> retourne <code>true</code> si l'attribut passé en paramètre est présent dans la balise. </li>
+                <li> <code>getAttribute(String nomAttribut)</code> retourne le contenu de l'attribut passé en paramètre. </li>
+                <li> <code>setAttribute(String nomAttribut, String valeur)</code> modifie le contenu d'un attribut. </li>
             </ul>
 
             <div class="exercise-box">
@@ -271,7 +301,9 @@ all_div.forEach(div => {
 
             <h4> Les attributs de données </h4>
 
-            <p> La norme HTML du W3C définit strictement les attributs et les noms autorisés par balise. Cependant, il est possible de stocker directement dans le DOM des données via des attributs. Pour respecter la norme HTML, les noms des attributs doivent commencer par <code>data-</code> suivi d'un nom au choix (c'est une convention). Par exemple, il est possible de créer la balise <code>&lt;div data-clics="0">Nombre de clics&lt;/div></code>. </p>
+            <p>
+                La norme HTML du W3C définit strictement les attributs et les noms autorisés par balise. Cependant, il est possible de stocker directement dans le DOM des données via des attributs. Pour respecter la norme HTML, les noms des attributs doivent commencer par <code>data-</code> suivi d'un nom au choix (c'est une convention). Par exemple, il est possible de créer la balise <code>&lt;div data-clics="0">Nombre de clics&lt;/div></code>.
+            </p>
 
             <div class="exercise-box">
                 <div class="exercise-header">
@@ -281,6 +313,13 @@ all_div.forEach(div => {
                 <div class="box-content">
                     <p> À partir de la balise suivante <i>&lt;div id="mydiv">Cliquer.&lt;/div></i> ajouter l'attribut de données <i>data-clics</i> et <i>data-last-clics</i> qui permet respectivement de stocker le nombre de fois où l'utilisateur a cliqué sur la balise et la date de son dernier clic. Vous pouvez utiliser la méthode <i>new Date().getTime()</i> (= nombre de millisecondes écoulées depuis le 1er janvier 1970). </p>
                 </div>
+            </div>
+
+            <button class="btn toggle-answer" data-pw="ar">
+                Afficher la réponse
+            </button>
+            <div class="hidden">
+                <div id="cells1"></div>
             </div>
 
             <div class="exercise-box">
@@ -555,11 +594,21 @@ Y88b  d88P Y88b.    888     888 888 d88P Y88b.
     <script src="../js/main.js"></script>
 
     <script>
-        /* ==== Add cells ==== */
-   
-    // addCell('cells00', '', `
-
-    // `);
+        /* ==== Add cells ==== */        
+addCell('cells1', '', `
+let div = document.querySelector('#mydiv');
+if (div) {
+    div.setAttribute('data-clics', 0);
+    div.setAttribute('data-last-clics', new Date().toString());
+    
+    div.addEventListener('click', () => {
+        div.setAttribute('data-clics', parseInt(div.getAttribute('data-clics')) + 1);
+        div.setAttribute('data-last-clics', new Date().toString());
+    });
+} else {
+    console.log('div not found');
+}
+`);
 
 
 /*        
