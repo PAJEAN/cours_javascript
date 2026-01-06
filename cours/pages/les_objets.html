@@ -124,7 +124,7 @@
                 </div>
             </div>
             
-            <h3> Méthodes statiques </h3>
+            <h3> Attributs et méthodes statiques </h3>
 
             <p>
                 Le mot-clé <code>static</code> permet de définir une méthode statique d'une classe. Les méthodes statiques ne sont pas disponibles sur les instances d'une classe mais sont appelées sur la classe elle-même. Les méthodes statiques sont généralement des fonctions utilitaires (qui peuvent permettre de créer ou de cloner des objets par exemple).
@@ -486,7 +486,7 @@ console.log(chien1.nom);
 chien1.manger();
 `);
 
-addCell('cells85', 'Attribut et méthode statiques', `
+addCell('cells85', 'Attributs et méthodes statiques', `
 class Animal {
     static cost = 100;
 
@@ -571,6 +571,7 @@ console.log(animal1.nom + ' ' + animal2.nom);
 `);
 
 addCell('cells89', '', `
+window.name = 'John'; // Objet global.
 let pierre = { name: 'Pierre' };
 let mathilde = {name: 'Mathilde', age: 32 };
 
@@ -583,6 +584,7 @@ mathilde.bonjour = disBonjour;
 
 pierre.bonjour();
 mathilde.bonjour();
+disBonjour();
 `);
     
 /*        
