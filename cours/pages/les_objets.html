@@ -50,7 +50,7 @@
             <h2> Héritage et la chaîne de prototypage </h2>
 
             <p>
-                JavaScript est un langage orienté prototype, une forme particulière de programmation orientée objet. Dans ce modèle, les objets peuvent hériter directement d'autres objets grâce au <b>mécanisme des prototypes</b>.
+                JavaScript est <b>un langage orienté prototype</b>, une forme particulière de programmation orientée objet. Dans ce modèle, les <b>objets peuvent hériter directement d'autres objets</b> grâce au <b>mécanisme des prototypes</b>.
             </p>
 
             <h3> Propriétés héritées </h3>
@@ -61,7 +61,7 @@
 
             <ul>
                 <li> Elle sert à créer une chaîne de prototypes pour l'héritage. </li>
-                <li> Lorsqu'on utilise une propriété sur un objet, JavaScript la cherche dans l'objet → puis dans son <code>[[Prototype]]</code> → puis dans le <code>[[Prototype]]</code> de celui-ci, etc., jusqu'à arriver à <code>null</code>. </li>
+                <li> Lorsqu'on utilise une propriété sur un objet, <b>JavaScript la cherche dans l'objet → puis dans son <code>[[Prototype]]</code> → puis dans le <code>[[Prototype]]</code> de celui-ci</b>, etc., jusqu'à arriver à <code>null</code>. </li>
             </ul>
 
             <p>
@@ -75,7 +75,7 @@
             </p>
 
             <p>
-                En JavaScript, chaque fonction possède une propriété spéciale appelée prototype, utilisée comme base pour créer des objets héritiers avec <code>new</code>.
+                Chaque fonction possède une propriété spéciale appelée prototype, utilisée comme base pour créer des objets héritiers avec <code>new</code>.
             </p>
 
             <div id="cells78"></div>            
@@ -127,7 +127,7 @@
             <h3> Attributs et méthodes statiques </h3>
 
             <p>
-                Le mot-clé <code>static</code> permet de définir une méthode statique d'une classe. Les méthodes statiques ne sont pas disponibles sur les instances d'une classe mais sont appelées sur la classe elle-même. Les méthodes statiques sont généralement des fonctions utilitaires (qui peuvent permettre de créer ou de cloner des objets par exemple).
+                Le mot-clé <code>static</code> permet de définir un attribut ou une méthode statique d'une classe. Les attributs ou les méthodes statiques ne sont pas disponibles sur les instances d'une classe mais sont appelés sur la classe elle-même. Les méthodes statiques sont généralement des fonctions utilitaires (qui peuvent permettre de créer ou de cloner des objets par exemple).
             </p>
 
             <div id="cells85"></div>
@@ -135,38 +135,70 @@
             <h3> La copie d'un objet </h3>
 
             <p>
-                Les <b>objets en JavaScript sont muables</b>. La copie d'un objet <b>s'effectue par référence</b> et non par valeur.
+                Les objets en JavaScript sont mutables : <b>lorsqu'on affecte un objet à une variable, celle-ci contient une référence vers l'objet</b>, et non une copie de sa valeur.
             </p>
 
             <div id="cells86"></div>
 
-            <div id="cells87"></div>
-
             <p>
-                La méthode <code>Object.assign()</code> peut être utilisée afin de copier les valeurs de toutes les propriétés propres d'un objet qui sont énumérables sur une autre objet.
+                La méthode <code>Object.assign()</code> peut être utilisée afin de copier <b>les valeurs de toutes les propriétés propres d'un objet</b> qui sont énumérables sur un autre objet.
             </p>
 
             <div id="cells88"></div>
 
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        <code>structuredClone()</code> est une méthode native moderne de JavaScript qui permet de cloner l'état d'un objet, mais pas son comportement : les méthodes et la chaîne de prototypes ne sont pas conservées.
+                    </p>
+                </div>
+            </div>
+
+            <div id="cells88_1"></div>
+
             <h3> Le mot-clé <code>this</code> </h3>
 
             <p>
-                Lorsque l'on manipule des objets, le mot-clé <code>this</code> est utilisé avec les méthodes de l'objet pour accéder à des informations stockées dans l'objet. Le mot-clé <code>this</code> va dans ce cas être substitué par l'objet utilisant la méthode lors de son appel.
-            </p>
-
-            <p>
-                Pour aller plus loin, vous devez savoir qu'en JavaScript, à la différence de la plupart des langages, le mot-clé <code>this</code> <b>n'est pas lié à un objet en particulier</b>. En effet, la valeur de <code>this</code> va être évaluée au moment de l'appel de la méthode dans laquelle il est présent en JavaScript.
-            </p>
-
-            <p>
-                Ainsi, la valeur de <code>this</code> ne va pas dépendre de l'endroit où la méthode a été déclarée mais de l'objet qui l'appelle. Cela permet notamment à une méthode d'être réutilisée par différents objets.
+                À la différence de la plupart des langages, le mot-clé <code>this</code> <b>n'est pas lié à un objet en particulier</b>. Sa valeur ne dépend pas de l'endroit où la fonction a été déclarée mais de la façon dont elle est appelée. Cela permet notamment à une méthode d'être réutilisée par différents objets.
             </p>
 
             <div id="cells89"></div>
 
-            <p>
-                <code>this</code> est un opérateur qui permet de retourner une valeur en fonction de son contexte <i>confer</i> <a href="../../exemples/this/this.html">l'exemple suivant</a>.
-            </p>
+            <div id="cells89_1"></div>
+
+            <div id="cells89_2"></div>
+
+            <div id="cells89_3"></div>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        Une <b>fonction classique possède un <code>this</code> dynamique</b>, déterminé au moment de l'appel : lorsqu'elle est invoquée comme méthode, <code>this</code> référence l'objet appelant. Ainsi, lorsqu'elle est appelée sans objet, <code>this</code> ne référence pas l'objet englobant mais l'objet global <code>window</code> (ou <code>undefined</code> en mode strict).
+                    </p>
+                </div>
+            </div>
+
+            <div id="cells89_4"></div>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        Les <b>fonctions fléchées</b> se distinguent des fonctions classiques en ce qu'elles <b>ne lient pas leur propre <code>this</code></b>. Elles ne créent donc pas de nouveau contexte de liaison pour <code>this</code>, mais <b>réutilisent la valeur de <code>this</code> du contexte lexical dans lequel elles sont définies</b>. Ainsi, lorsque le mot-clé <code>this</code> est utilisé dans une fonction fléchée, le moteur JavaScript le résout en remontant la chaîne des portées lexicales.
+                    </p>
+                </div>
+            </div>
 
             <div class="exercise-box">
                 <div class="exercise-header">
@@ -393,7 +425,7 @@ console.log(obj.__proto__ === Object.prototype);
 `);
 
 addCell('cells80', 'Chaîne de prototypage (2/2)', `
-let un_objet = function(){
+let un_objet = function() {
     this.a = 1;
     this.b = 2;
 }
@@ -410,6 +442,8 @@ console.log('o1.b ' + o1.b);
 Je remonte la chaîne de prototypage, est ce que le prototype de mon constructeur (un_objet) a cette propriété ?
 Oui la propriété est présente, je l'affiche */
 console.log('o1.c ' + o1.c);
+// __proto__ est un getter pour accéder à un_objet.prototype.
+console.log('o1.__proto__.b ' + o1.__proto__.b);
 `);
 
 addCell('cells82', 'Extension du prototype', `
@@ -488,7 +522,7 @@ chien1.manger();
 
 addCell('cells85', 'Attributs et méthodes statiques', `
 class Animal {
-    static cost = 100;
+    static count = 0;
 
     constructor(nom, age) {
         this.nom = nom;
@@ -505,10 +539,7 @@ class Animal {
     }
 }
 
-console.log(Animal.cost);
-
-Animal.count = 0; // Déclaration de l'attribut statique.
-
+console.log(Animal.count);
 var animal1 = new Animal('Flipper', 8);
 console.log(Animal.Count());
 var animal2 = new Animal('Snoopy', 10);
@@ -538,40 +569,76 @@ animal2.nom = "Beethoven";
 console.log(animal1.nom + ' ' + animal2.nom);
 `);
 
-addCell('cells87', 'Copie par valeur', `
-var str1 = 'Hello';
-// Adressage par valeur.
-var str2 = str1;
-
-// Quel sera le résultat ?
-console.log(str1);
-console.log(str2);
-
-str2 = 'World';
-
-console.log(str1);
-console.log(str2);
-`);
-
 addCell('cells88', 'Méthode <code>assign()</code>', `
 function Animal(nom, age) { // Création d'une fonction constructeur.
     this.nom = nom;
     this.age = age;
+    this.taille_poids = [120, 50];
+}
+
+Animal.prototype.getAge = function() {
+    return this.nom + ' a ' + this.age + ' ans';
 }
 
 var animal1 = new Animal('Flipper', 8);
-var animal2 = Object.assign(Animal, animal1);
+
+// Création d'un nouvel objet en utilisant le prototype d'animal1.
+
+var animal2 = Object.assign(Object.create(Animal.prototype), animal1);
+
+animal2.nom = 'Beethoven';
+animal2.age = 12;
+animal2.taille_poids[0] = 1000;
 
 /* == Quel sera le résultat ? == */
-console.log(animal1.nom + ' ' + animal2.nom);
 
-animal2.nom = "Beethoven";
+console.log(animal1.getAge());
+console.log(animal2.getAge());
 
-console.log(animal1.nom + ' ' + animal2.nom);
+/* == Quel sera le résultat ? == */
+
+console.log(animal1.taille_poids, animal2.taille_poids);
+
+var animal3 = Object.assign(Object.create(Animal.prototype), structuredClone(animal1));
+
+animal3.taille_poids[0] = 4;
+
+console.log(animal1.taille_poids, animal3.taille_poids);
 `);
 
-addCell('cells89', '', `
-window.name = 'John'; // Objet global.
+addCell('cells88_1', 'Syntaxe alternative', `
+class Animal {
+    constructor(nom, age) {
+        this.nom = nom;
+        this.age = age;
+        this.taille_poids = [100, 50];
+    }
+    
+    manger() {
+        console.log(this.nom + ' est en train de manger.');
+    }
+}
+
+var animal1 = new Animal('Flipper', 8);
+var animal2 = Object.assign(new Animal(), animal1);
+
+animal2.nom = 'Beethoven';
+animal2.age = 12;
+animal2.taille_poids[0] = 1000;
+
+animal1.manger();
+animal2.manger();
+
+console.log(animal1.taille_poids, animal2.taille_poids);
+
+var animal3 = Object.assign(new Animal(), structuredClone(animal1));
+
+animal3.taille_poids[0] = 4;
+
+console.log(animal1.taille_poids, animal3.taille_poids);
+`);
+
+addCell('cells89', 'Le mot clé <code>this</code>', `
 let pierre = { name: 'Pierre' };
 let mathilde = {name: 'Mathilde', age: 32 };
 
@@ -584,7 +651,49 @@ mathilde.bonjour = disBonjour;
 
 pierre.bonjour();
 mathilde.bonjour();
-disBonjour();
+`);
+
+addCell('cells89_1', 'Appel sans un objet', `
+function getThis() {
+    console.log(this);
+};
+getThis();
+`);
+
+addCell('cells89_2', 'Appel avec un objet', `
+var objet = {
+    id: 'Mon objet',
+    getContext: function() {
+        console.log(this);
+    }
+}
+objet.getContext(); // Fonction appelée comme méthode via l'objet.
+`);
+
+addCell('cells89_3', "Fonction imbriquée au sein d'une méthode", `
+let objet = {
+    id: 'Mon objet',
+    getContext: function() {
+        let innerFunction = function() {
+            console.log(this);
+        }
+        innerFunction(); // Fonction appelée seule.
+    }
+}
+objet.getContext();
+`);
+
+addCell('cells89_4', "Fonction fléchée", `
+let objet = {
+    id: 'Mon objet',
+    getContext: function() {
+        let innerFunction = () => {
+            console.log(this);
+        }
+        innerFunction();
+    }
+}
+objet.getContext();
 `);
     
 /*        
