@@ -14,7 +14,7 @@
             <div id="header-container">L'asynchronicité</div>
 
             <p> 
-                JavaScript est un langage <b>monothread</b> : il n'exécute qu'une seule instruction à la fois. Si une opération longue (comme un appel réseau ou la lecture d'un fichier) bloquait le fil d'exécution, l'application entière deviendrait inutilisable. Pour éviter cela, JavaScript repose sur l'<b>asynchronicité</b> : certaines opérations sont exécutées en arrière-plan, et leur résultat est traité plus tard, sans bloquer l'interface.
+                JavaScript est un langage <b>monothread</b> : il n'exécute qu'une seule instruction à la fois. Si une opération longue (comme un appel réseau ou la lecture d'un fichier) bloque le fil d'exécution, l'application entière devient inutilisable. Pour éviter cela, JavaScript repose sur l'<b>asynchronicité</b> : certaines opérations sont exécutées en arrière-plan, et leur résultat est traité plus tard, sans bloquer l'interface.
             </p>
 
             <h2> Les promesses (<i>Promises</i>) </h2>
@@ -67,7 +67,9 @@
                     <span class="box-title">Exercice</span>
                 </div>
                 <div class="box-content">
-                    <p> A partir d'une liste d'URLs d'API publiques (<i>"https://jsonplaceholder.typicode.com/todos/1", "https://jsonplaceholder.typicode.com/todos/2" et "https://jsonplaceholder.typicode.com/todos/3"</i>) : </p>
+                    <p>
+                        A partir d'une liste d'URLs d'API publiques (<i>"https://jsonplaceholder.typicode.com/todos/1", "https://jsonplaceholder.typicode.com/todos/2" et "https://jsonplaceholder.typicode.com/todos/3"</i>) :
+                    </p>
                     <ul>
                         <li> Écrire une fonction <code>chargerDonnees(urls)</code> qui prend en paramètre le tableau d'URLs. </li>
                         <li> Utiliser <code>fetch</code> pour récupérer les données de chaque URL. </li>
@@ -87,7 +89,7 @@
             <h2> Les Web Workers </h2>
 
             <p>
-                Les Web Workers permettent de déléguer des calculs lourds à un autre thread, laissant le thread principal fluide pour l'utilisateur. Il fonctionne dans un environnement isolé et n'a pas accès directement au DOM (document, window…). L'échange avec la page principale se fait via un système de messages.
+                Les Web Workers permettent de déléguer des calculs lourds à un autre thread, laissant le thread principal fluide pour l'utilisateur. Il fonctionne dans un environnement isolé et n'a pas accès directement au DOM (<code>document</code>, <code>window</code>…). L'échange avec la page principale se fait via un système de messages.
             </p>
             
             <p>
@@ -171,12 +173,12 @@ addCell('cells90', "L'objet <code>Promise</code>", `
 async function getData() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-        const ok = Math.random() > 0.5; // Succès ou erreur aléatoire.
-        if (ok) {
-            resolve('Données reçues !');
-        } else {
-            reject('Une erreur est survenue.');
-        }
+            const ok = Math.random() > 0.5; // Succès ou erreur aléatoire.
+            if (ok) {
+                resolve('Données reçues !');
+            } else {
+                reject("Les données n'ont pas pu être reçues.");
+            }
         }, 1000); // Exécution après 1 seconde.
     });
 }

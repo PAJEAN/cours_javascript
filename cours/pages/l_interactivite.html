@@ -16,7 +16,7 @@
             <h2> Les évènements </h2>
 
             <p>
-                Le JavaScript est un langage événementiel, c'est-à-dire qu'il détecte les événements qui surviennent sur la page, y réagit et déclenche de nouveaux traitements. Un événement est un changement d'état qui survient sur la page (mouvements de souris, clic sur un élément, chargement d'un élément de la page, <i>etc.</i>).
+                Le JavaScript est un langage événementiel, c'est-à-dire qu'<b>il est capable de détecter les événements</b> qui surviennent sur la page, y réagir et déclencher de nouveaux traitements. Un événement est <b>un changement d'état</b> qui survient sur la page (mouvements de souris, clic sur un élément, chargement d'un élément de la page, <i>etc.</i>).
             </p>
 
             <div style="width:100%;text-align:center;">
@@ -82,7 +82,7 @@
             <h2> La détection par le gestionnaire d'événements </h2>
 
             <p>
-                Le gestionnaire d'événements permet de centraliser la déclaration des événements dans un bloc JavaScript sans modifier le code HTML gardant ainsi la séparation entre traitements et données.
+                Le gestionnaire d'événements permet de <b>centraliser la déclaration des événements</b> dans un bloc JavaScript sans modifier le code HTML gardant ainsi la séparation entre traitements et données.
             </p>
 
             <p>
@@ -144,7 +144,7 @@
             </script>
 
             <p>
-                La fonction <code>colorChange()</code> reçoit en paramètre <code>evt</code> un objet de type <code>Event</code>. Un objet <code>Event</code> contient deux propriétés de cible. La propriété <code>currentTarget</code> référence l'objet sur lequel l'événement a été attaché et la propriété <code>target</code> référence l'objet sur lequel l'événement s'est produit.
+                La fonction <code>colorChange()</code> reçoit en paramètre <code>evt</code> un objet de type <code>Event</code>. Un objet <code>Event</code> contient deux propriétés de cible. La propriété <b><code>currentTarget</code> refréférence l'objet sur lequel l'événement a été attaché</b> et la propriété <b><code>target</code> référence l'objet sur lequel l'événement s'est produit</b>.
             </p>
 
 <textarea class="editor" spellcheck="false">
@@ -161,19 +161,20 @@
     ul1.addEventListener('click', direBonjour);
     function direBonjour(evt){
         if(evt.target.nodeName == 'LI') { // Évite de considérer UL dans le retour.
-            document.getElementById('maDiv').innerHTML = 'Bonjour ' + evt.target.innerHTML +
-                ' (' + (evt.currentTarget.id) + ') !';
+            document.getElementById('maDiv').innerHTML = 'Bonjour ' + evt.target.innerHTML + ' (' + (evt.currentTarget.id) + ') !';
         }
     }
 </script></textarea>
             
-            <ul id="ul1" style="cursor: pointer;">
-                <li> Arthur </li>
-                <li> Perceval </li>
-                <li> Merlin </li>
-            </ul>
-            
-            <div id="maDiv"> <b>Cliquez sur un nom ci-dessus!</b> </div>
+            <div style="border: 1px dashed black; border-radius: 15px; padding: 1rem;">
+                <ul id="ul1" style="cursor: pointer;">
+                    <li> Arthur </li>
+                    <li> Perceval </li>
+                    <li> Merlin </li>
+                </ul>
+                
+                <div id="maDiv" style="text-align: center;"> <b>Cliquez sur un nom ci-dessus!</b> </div>
+            </div>
             
             <script type="text/javascript">
                 var ul1 = document.getElementById("ul1");
@@ -195,11 +196,11 @@
             <h3> Le DOM </h3>
 
             <p>
-                Le DOM (<i>Document Object Model</i>) est une organisation hiérarchisée en arborescence de l'ensemble des éléments du document. Chaque élément forme un noeud (<code>node</code>) dans le document.
+                Le DOM (<i>Document Object Model</i>) est <b>une organisation hiérarchisée en arborescence de l'ensemble des éléments du document</b>. Chaque élément forme un noeud (<code>node</code>) dans le document.
             </p>
 
             <p>
-                L'objet <code>document</code> représente la page HTML chargée dans le navigateur. Il constitue l'objet racine du DOM et permet d'accéder à l'ensemble des éléments de la page, ainsi que de les rechercher, les manipuler et d'en créer de nouveaux.
+                L'objet <code>document</code> représente la page HTML chargée dans le navigateur. Il constitue <b>l'objet racine</b> du DOM et permet d'accéder à l'ensemble des éléments de la page, ainsi que de les rechercher, les manipuler et d'en créer de nouveaux.
             </p>
 
             <div style="width:100%;text-align:center;">
@@ -229,6 +230,50 @@
                     Les fonctions ci-dessus retournent des éléments de type <i>HTMLCollection</i> ou de type <i>NodeList</i>. Ces types <b>n'héritent pas</b> du type <i>Array</i> et des méthodes attachées <i>e.g. map()</i>.
                 </div>
             </div>
+
+<textarea class="editor" spellcheck="false">
+<span class="colorized1">My span (#1)</span>
+<span class="colorized1">My span (#2)</span>
+<span  name="tagP"       >My span (#3)</span>
+
+<button id="bonsoir">Modifie le contenu des balises &lt;span> (getElementsByTagName) !</button>
+
+<p  name="tagP">My paragraph</p>
+<p class="colorized1">My paragraph</p>
+
+<script>
+    // Retourne l'ensemble des balises ayant la classe colorized1.
+    // HTMLCollection(3) [span.colorized1, span.colorized1, p.colorized1]
+    document.getElementsByClassName("colorized1");
+    // Retourne l'ensemble des balises ayant le name tagP.
+    // NodeList(2) [span, p]
+    document.getElementsByName("tagP");
+    // Retourne l'ensemble des balises span.
+    // HTMLCollection(3) [span.colorized1, span.colorized1, span, tagP: span]
+    document.getElementsByTagName("span");
+
+    // Identifier le boutton par rapport à son identifiant.
+    var but = document.getElementById("bonsoir");
+    but.addEventListener("click", function() {
+        var tag = document.getElementsByTagName("span"); // Récupérer toutes les balises span.
+        for(var i = 0; i < tag.length; i++){
+            tag[i].innerHTML = "Le contenu de cet élément span a bien été modifié !"; // Modifie le contenu des spans.
+        }
+    });
+
+    // Retourne l'ensemble des balises span ayant la classe colorized1.
+    var qsa = document.querySelectorAll("span.colorized1");
+
+    /* Permet d'exploiter les méthodes de l'objet Array */
+    [...qsa].map(function(valeur) {
+        console.log(valeur.innerHTML);
+    });
+
+    Array.from(qsa).map(function(valeur) {
+        console.log(valeur.innerHTML);
+    });
+</script>
+</textarea>        
 
             <p>
                 Voir <a href="../../exemples/dom/manipulation.html"> l'exemple</a>.
@@ -282,7 +327,9 @@ new_div.innerHTML = "Je suis une nouvelle div.";</textarea>
                     <span class="box-title">Exercice</span>
                 </div>
                 <div class="box-content">
-                    <p> À partir de la balise suivante <code>&lt;div id="mydiv">My div.&lt;/div></code> vérifier si l'attribut <i>id</i> est bien présent et modifier sa valeur par <i>mynewdiv</i>. </p>
+                    <p>
+                        Ajoutez la balise <code>&lt;div id="mydiv">My div&lt;/div></code> à votre page HTML, puis parcourez l’ensemble des balises <code>&lt;div></code> afin d’identifier celle dont l’attribut <i>id</i> vaut <i>mydiv</i> et de le remplacer par <i>mynewdiv</i>.
+                    </p>
                 </div>
             </div>
 
