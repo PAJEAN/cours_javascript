@@ -234,7 +234,7 @@
 <textarea class="editor" spellcheck="false">
 <span class="colorized1">My span (#1)</span>
 <span class="colorized1">My span (#2)</span>
-<span  name="tagP"       >My span (#3)</span>
+<span  name="tagP"      >My span (#3)</span>
 
 <button id="bonsoir">Modifie le contenu des balises &lt;span> (getElementsByTagName) !</button>
 
@@ -242,15 +242,15 @@
 <p class="colorized1">My paragraph</p>
 
 <script>
+    document.getElementsByClassName("colorized1");
     // Retourne l'ensemble des balises ayant la classe colorized1.
     // HTMLCollection(3) [span.colorized1, span.colorized1, p.colorized1]
-    document.getElementsByClassName("colorized1");
+    document.getElementsByName("tagP");
     // Retourne l'ensemble des balises ayant le name tagP.
     // NodeList(2) [span, p]
-    document.getElementsByName("tagP");
+    document.getElementsByTagName("span");
     // Retourne l'ensemble des balises span.
     // HTMLCollection(3) [span.colorized1, span.colorized1, span, tagP: span]
-    document.getElementsByTagName("span");
 
     // Identifier le boutton par rapport à son identifiant.
     var but = document.getElementById("bonsoir");

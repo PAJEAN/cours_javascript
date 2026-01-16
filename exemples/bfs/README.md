@@ -1,6 +1,6 @@
 # Algorithme de parcours en largeur (BFS - *Breadth-first search*)
 
-L'algorithme de parcours en largeur permet le parcours d'un graphe ou d'un arbre de la manière suivante : on commence par explorer un nœud source, puis ses successeurs, puis les successeurs non explorés des successeurs, etc. L'algorithme de parcours en largeur permet de calculer les distances de tous les nœuds depuis un nœud source dans un graphe non pondéré (orienté ou non orienté). Ce dernier point constitue l'objectif de ce TP.
+L'algorithme de parcours en largeur permet le parcours d'un graphe ou d'un arbre de la manière suivante : on commence par explorer un nœud source, puis ses successeurs, puis les successeurs non explorés des successeurs, etc. L'algorithme de parcours en largeur permet de **calculer les distances de tous les nœuds** depuis un nœud source dans un graphe non pondéré (orienté ou non orienté). Ce dernier point constitue l'objectif de ce TP.
 À partir de la représentation matricielle d'un graphe orienté (dont les arêtes sont associées à une direction), vous allez devoir déterminer la distance, c'est-à-dire le nombre de noeuds (sommets), qui sépare un noeud source à tous les autres noeuds du graphe.
 
 ![BFS](images/Animated_BFS.gif "BFS")
@@ -9,7 +9,7 @@ L'algorithme de parcours en largeur permet le parcours d'un graphe ou d'un arbre
 
 # Représentation du graphe
 
-Le graphe sera représenté par une matrice d'adjacence de taille n x n où n correspond au nombre de noeuds au sein du graphe. Au sein de cette matrice, les lignes correspondent aux noeuds sources et les colonnes aux noeuds cibles. La valeur 0 correspond à l'abscence d'une arête entre un noeud source et un noeud cible et la valeur 1 à la présence d'une arête dirigée entre le noeud source et le noeud cible.
+Le graphe sera représenté par une matrice d'adjacence de taille *n x n* où *n* correspond au nombre de noeuds au sein du graphe. Au sein de cette matrice, les lignes correspondent aux noeuds sources et les colonnes aux noeuds cibles. La valeur 0 correspond à l'abscence d'une arête entre un noeud source et un noeud cible et la valeur 1 à la présence d'une arête dirigée entre le noeud source et le noeud cible.
 
 Par exemple la matrice:
 
@@ -73,7 +73,7 @@ BFS.html
 </html>
 ```
 
-Les librairies graphiques nécessaires sont présentes dans le dossier exemples/librairies. Elles exploitent le Dot language. Pour construire un graphe dirigé, on utilise le mot-clé <code>digraph</code>. Les arêtes se représentent avec la syntaxe *a -> b*. Si l’on souhaite que le lien soit bidirectionnel, on précise l’attribut *[dir="both"]*, ce qui donnera par exemple :
+Les librairies graphiques nécessaires sont présentes dans le dossier exemples/librairies. Elles exploitent le *Dot language*. Pour construire un graphe dirigé, on utilise le mot-clé <code>digraph</code>. Les arêtes se représentent avec la syntaxe *a -> b*. Si l’on souhaite que le lien soit bidirectionnel, on précise l’attribut *[dir="both"]*, ce qui donnera par exemple :
 
 ```
 // Graphe orienté avec 3 sommets a, b et c et 2 arêtes : a vers b (bidirectionnelle) et b vers c.

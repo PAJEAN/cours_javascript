@@ -26,7 +26,7 @@
             <div id="cells74"></div>
 
             <p>
-                Une façon alternative est de créer une instance de <code>Object</code> au travers de son constructeur est d'exploiter le mot-clé <code>new</code>.
+                Une façon alternative est de créer une instance de <code>Object</code> au travers de son constructeur et d'exploiter le mot-clé <code>new</code>.
             </p>
 
             <div id="cells75"></div>
@@ -50,38 +50,34 @@
             <h2> Héritage et la chaîne de prototypage </h2>
 
             <p>
+                L'héritage en programmation orientée objet permet à une classe de <b>récupérer les propriétés et méthodes d'une autre classe</b> afin de réutiliser et étendre le code.
+            </p>
+
+            <p>
                 JavaScript est <b>un langage orienté prototype</b>, une forme particulière de programmation orientée objet. Dans ce modèle, les <b>objets peuvent hériter directement d'autres objets</b> grâce au <b>mécanisme des prototypes</b>.
             </p>
 
             <h3> Propriétés héritées </h3>
 
             <p>
-                En JavaScript, chaque objet possède en interne une propriété cachée appelée <b><code>[[Prototype]]</code></b> (qu'on ne voit pas directement dans le code).
+                Chaque objet JavaScript possède <b>un lien interne</b> vers un autre objet, qui est consulté lorsque la propriété demandée n'est pas trouvée sur l'objet lui-même (l'objet <code>prototype</code> de son constructeur). Ce mécanisme est appelé <code>[[Prototype]]</code> dans la spécification et la propriété <code>__proto__</code> (ou <code>Object.getPrototypeOf(obj)</code>) permet d'y accéder.
             </p>
 
-            <ul>
-                <li> Elle sert à créer une chaîne de prototypes pour l'héritage. </li>
-                <li> Lorsqu'on utilise une propriété sur un objet, <b>JavaScript la cherche dans l'objet → puis dans son <code>[[Prototype]]</code> → puis dans le <code>[[Prototype]]</code> de celui-ci</b>, etc., jusqu'à arriver à <code>null</code>. </li>
-            </ul>
-
             <p>
-                Pour y accéder, il existe la propriété <code>__proto__</code> qui est simplement un raccourci pour lire ou modifier <code>[[Prototype]]</code>.
+                Lorsqu'une propriété n'est pas trouvée sur un objet, JavaScript la <b>cherche dans son <code>prototype</code>, puis dans le <code>prototype</code> de ce <code>prototype</code></b>, et ainsi de suite, jusqu'à la fin de la chaîne (<code>null</code>).
+                Le premier <code>prototype</code> de la chaîne correspond à la propriété <code>prototype</code> de la classe de notre objet.
             </p>
 
             <div id="cells78-1"></div>
 
             <p>
-                Ici <code>obj.__proto__</code> permet de voir le prototype réel de <code>obj</code>, qui est <code>Object.prototype</code>. Mais <code>__proto__</code> n'est pas une "vraie" propriété de l'objet lui-même : c'est un accesseur défini sur <code>Object.prototype</code> qui permet d'accéder à la propriété interne <code>[[Prototype]]</code> d'un objet.
+                Lorsqu'une fonction est utilisée avec <code>new</code>, <b>sa propriété <code>prototype</code> permet de définir le <code>prototype</code> des objets créés</b>.
             </p>
 
-            <p>
-                Chaque fonction possède une propriété spéciale appelée prototype, utilisée comme base pour créer des objets héritiers avec <code>new</code>.
-            </p>
-
-            <div id="cells78"></div>            
+            <div id="cells78"></div>
 
             <p>
-                Les propriétés directement rattachées à un objet sont appelées propriétés propres (<i>own properties</i>). Lorsqu'on tente d'accéder aux propriétés d'une instance d'un objet, la propriété sera recherchée tout d'abord sur ses propriétés propres puis sur son prototype, puis sur le prototype du prototype et ainsi de suite jusqu'à ce qu'elle soit trouvée ou que la fin de la chaîne de prototype ait été atteinte.
+                Les propriétés directement rattachées à un objet sont appelées <b>propriétés propres</b> (<i>own properties</i>). Lorsqu'elles sont définies avec <code>this</code> dans le constructeur, elles ne font pas partie du <code>prototype</code> : elles appartiennent directement à chaque instance. Le <code>prototype</code>, c'est pour les <b>propriétés partagées</b> (les méthodes).
             </p>
 
             <div id="cells80"></div>
@@ -89,7 +85,7 @@
             <h3> Méthodes héritées </h3>
 
             <p>
-                En JavaScript, toute fonction associée à un objet est également une propriété. Par conséquent, une fonction héritée se comportera comme n'importe quelle autre propriété.
+                Toute fonction associée à un objet est également une propriété. Par conséquent, une fonction héritée se comportera comme n'importe quelle autre propriété.
             </p>
 
             <p>
@@ -103,13 +99,13 @@
             <div id="cells82"></div>
 
             <p>
-                Voici un exemple complet d'héritage avant la version ES6. Il est possible d'utiliser la fonction <code>call()</code> de l'objet <code>Function</code> pour chaîner le constructeur d'un objet.
+                Voici un exemple complet d'héritage avant la version ES6. Il est possible d'utiliser <b>la fonction <code>call()</code> de l'objet <code>Function</code> pour chaîner le constructeur d'un objet</b>.
             </p>
 
             <div id="cells83"></div>
 
             <p>
-                Voici un exemple complet d'héritage après la version ES6. Le sucre syntaxique ajouté lors de la version ES6 exploite le mot-clé <code>extends</code> pour hériter des attributs et des méthodes d'une classe.
+                Voici un exemple complet d'héritage après la version ES6. Le sucre syntaxique ajouté lors de la version ES6 exploite <b>le mot-clé <code>extends</code></b> pour hériter des attributs et des méthodes d'une classe.
             </p>
 
             <div id="cells84"></div>
@@ -127,7 +123,7 @@
             <h3> Attributs et méthodes statiques </h3>
 
             <p>
-                Le mot-clé <code>static</code> permet de définir un attribut ou une méthode statique d'une classe. Les attributs ou les méthodes statiques ne sont pas disponibles sur les instances d'une classe mais sont appelés sur la classe elle-même. Les méthodes statiques sont généralement des fonctions utilitaires (qui peuvent permettre de créer ou de cloner des objets par exemple).
+                Le mot-clé <code>static</code> permet de définir <b>un attribut ou une méthode statique</b> d'une classe. Les attributs ou les méthodes statiques ne sont pas disponibles sur les instances d'une classe mais <b>sont appelés sur la classe elle-même</b>. Les méthodes statiques sont généralement des fonctions utilitaires (qui peuvent permettre de créer ou de cloner des objets par exemple).
             </p>
 
             <div id="cells85"></div>
@@ -163,10 +159,16 @@
             <h3> Le mot-clé <code>this</code> </h3>
 
             <p>
-                À la différence de la plupart des langages, le mot-clé <code>this</code> <b>n'est pas lié à un objet en particulier</b>. Sa valeur ne dépend pas de l'endroit où la fonction a été déclarée mais de la façon dont elle est appelée. Cela permet notamment à une méthode d'être réutilisée par différents objets.
+                <code>this</code> <b>permet à une fonction d'accéder au contexte dans lequel elle est utilisée</b>, c'est-à-dire l'objet “courant” sur lequel elle agit.
+            </p>
+
+            <p>
+                À la différence de la plupart des langages, le mot-clé <code>this</code> <b>n'est pas lié à un objet en particulier</b>. Sa valeur ne dépend pas de l'endroit où la fonction a été déclarée mais de la <b>façon dont elle est appelée</b>. Cela permet notamment à une méthode d'être réutilisée par différents objets.
             </p>
 
             <div id="cells89"></div>
+
+            Lorsqu'une fonction est appelée seule, sans objet devant, <code>this</code> est automatiquement lié à l'objet global.
 
             <div id="cells89_1"></div>
 
@@ -206,7 +208,7 @@
                     <span class="box-title">Exercice</span>
                 </div>
                 <div class="box-content">
-                    <p> Rendez-vous au lien suivant: <b>https://github.com/PAJEAN/cours_javascript/tree/master/exemples/bfs</b> pour réaliser le TP sur le parcours en largeur de graphe. </p>
+                    <p> Rendez-vous au lien suivant: <a href="https://github.com/PAJEAN/cours_javascript/tree/master/exemples/bfs"><b>https://github.com/PAJEAN/cours_javascript/tree/master/exemples/bfs</b></a> pour réaliser le TP sur le parcours en largeur de graphe. </p>
                 </div>
             </div>
 
@@ -447,18 +449,12 @@ console.log('o1.__proto__.b ' + o1.__proto__.b);
 `);
 
 addCell('cells82', 'Extension du prototype', `
-function Animal(nom, age) { // Création d'une fonction constructeur.
-    this.nom = nom;
-    this.age = age;
+Array.prototype.manger = function() { 
+    console.log('Il est beau mon tableau.');
 }
 
-Animal.prototype.manger = function() { 
-    console.log(this.nom + ' est en train de manger.');
-}
-
-var animal1 = new Animal('Flipper', 4);
-animal1.manger();
-/* La propriété (méthode) manger() n'est pas présent dans les propriétés propres, on remonte vers le prototype de Animal */
+var mon_tableau = [1, 2, 3];
+mon_tableau.manger();
 `);
 
 addCell('cells83', 'Héritage', `
