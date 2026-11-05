@@ -1,0 +1,119 @@
+:root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --panel-2: #172033;
+    --border: #334155;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --accent: #38bdf8;
+    --ok: #4ade80;
+    --ko: #f87171;
+    --warn: #fbbf24;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+}
+
+a { color: var(--accent); }
+code, pre, textarea, kbd { font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+code { background: rgba(148, 163, 184, .18); padding: .05em .35em; border-radius: 4px; font-size: .92em; }
+pre { background: #0b1220; border: 1px solid var(--border); border-radius: 8px; padding: .8rem 1rem; overflow-x: auto; }
+pre code { background: none; padding: 0; }
+kbd { background: #0b1220; border: 1px solid var(--border); border-radius: 4px; padding: 0 .35em; }
+.muted { color: var(--muted); }
+
+#game { max-width: 1200px; margin: 0 auto; padding: 1rem; }
+
+/* ---- En-tête ---- */
+.mg-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    padding: .5rem 0 1rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem;
+}
+.mg-top h1 { margin: 0; font-size: 1.4rem; }
+.site-title { text-align: center; padding: 1.5rem 1rem .5rem; }
+.site-title h1 { margin: 0; font-size: 2rem; }
+.site-title p { margin: .25rem 0 0; color: var(--muted); }
+
+/* ---- Accueil ---- */
+.mg-intro { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 1.5rem; }
+.mg-intro h2 { margin-top: 0; }
+.mg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+.mg-card {
+    position: relative; display: block; text-decoration: none; color: var(--text);
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.2rem 1rem 3.4rem;
+    transition: transform .12s, border-color .12s;
+}
+.mg-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+.mg-card.complete { border-color: var(--ok); }
+.mg-card .num {
+    position: absolute; left: 1rem; top: 1rem; width: 1.9rem; height: 1.9rem; border-radius: 50%;
+    background: var(--accent); color: #082f49; font-weight: 700; display: grid; place-items: center;
+}
+.mg-card h3 { margin: 0 0 .3rem; }
+.mg-card p { margin: 0 0 .8rem; color: var(--muted); font-size: .92rem; }
+.bar { height: 8px; background: #0b1220; border-radius: 4px; overflow: hidden; margin-bottom: .3rem; }
+.bar div { height: 100%; background: var(--ok); }
+.mg-tools { margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between; color: var(--muted); }
+
+/* ---- Chapitre ---- */
+.mg-layout { display: grid; grid-template-columns: 250px 1fr; gap: 1.5rem; align-items: start; }
+@media (max-width: 800px) { .mg-layout { grid-template-columns: 1fr; } }
+
+.mg-levels { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: .8rem 1rem; position: sticky; top: 1rem; }
+.mg-levels h2 { margin: 0 0 .5rem; font-size: 1rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.mg-levels ol { list-style: none; margin: 0; padding: 0; }
+.mg-levels li { margin: .15rem 0; }
+.mg-levels li a, .mg-levels li span { display: block; padding: .3rem .5rem; border-radius: 6px; text-decoration: none; color: var(--text); }
+.mg-levels li a:hover { background: var(--panel-2); }
+.mg-levels li.current a { background: #0c4a6e; }
+.mg-levels li.locked span { color: var(--muted); opacity: .6; }
+
+.mg-level h2 { margin-top: 0; }
+.mg-level h3 { margin: 0 0 .4rem; font-size: 1.05rem; }
+.mg-level section, .mg-level details {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: .8rem 1.2rem; margin-bottom: 1rem;
+}
+.mg-level section p:first-of-type { margin-top: 0; }
+.mg-mission { border-left: 4px solid var(--accent) !important; }
+.mg-concepts summary { cursor: pointer; font-weight: 600; }
+.mg-concepts > div { margin-top: .5rem; }
+.mg-hints { display: flex; flex-direction: column; align-items: flex-start; gap: .6rem; background: none !important; border: none !important; padding: 0 !important; }
+.mg-hints .mg-hint-list { align-self: stretch; }
+.mg-hint { background: #422006; border: 1px solid #854d0e; border-radius: 8px; padding: .6rem 1rem; margin-top: .5rem; }
+.mg-hint-list[hidden] { display: none; }
+
+.mg-editor textarea {
+    width: 100%; background: #0b1220; color: #e2e8f0; border: 1px solid var(--border); border-radius: 8px;
+    padding: .8rem; font-size: .95rem; line-height: 1.5; resize: vertical; tab-size: 2;
+}
+.mg-editor textarea:focus { outline: 2px solid var(--accent); }
+.mg-actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .6rem; }
+
+.mg-btn {
+    display: inline-block; cursor: pointer; border: none; border-radius: 8px; padding: .55rem 1rem; font: inherit; font-weight: 600;
+    background: var(--accent); color: #082f49; text-decoration: none;
+}
+.mg-btn:hover { filter: brightness(1.1); }
+.mg-btn:disabled { opacity: .5; cursor: wait; }
+.mg-btn.secondary { background: var(--panel); color: var(--text); border: 1px solid var(--border); }
+.mg-btn small { font-weight: 400; opacity: .75; }
+
+.mg-output:empty { display: none; }
+.mg-tests { list-style: none; padding: 0; margin: .5rem 0; }
+.mg-tests li { padding: .35rem .6rem; border-radius: 6px; margin-bottom: .3rem; background: var(--panel-2); }
+.mg-tests li.ok { border-left: 3px solid var(--ok); }
+.mg-tests li.ko { border-left: 3px solid var(--ko); }
+.mg-tests .detail { margin: .2rem 0 0 1.4rem; color: var(--muted); font-size: .9rem; }
+.mg-tests .detail.console { color: var(--warn); }
+.mg-error { background: #450a0a; border: 1px solid #991b1b; border-radius: 8px; padding: .6rem 1rem; margin: .5rem 0; }
+.mg-success { background: #052e16; border: 1px solid #166534; border-radius: 8px; padding: .6rem 1rem; margin-top: .8rem; }
+.mg-success p { margin: .3rem 0 .6rem; }
+.mg-wait { color: var(--muted); }
