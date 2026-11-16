@@ -25,7 +25,7 @@
 
             <div id="cells44"></div>
 
-            <h2> Méthodes associées à l'objet <code>Array</code> </h2>
+            <h2 id="methodes-array"> Méthodes associées à l'objet <code>Array</code> </h2>
 
             <p>
                 Vous pouvez retrouver l'ensemble des fonctions sur <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Array">developer.mozilla.org</a>.
@@ -82,6 +82,12 @@
             </p>
 
             <div id="cells52"></div>
+
+            <p>
+                À l'inverse, <code>some()</code> teste si <b>au moins un</b> élément respecte la condition. La méthode <code>find()</code> retourne le <b>premier élément</b> qui la respecte (ou <code>undefined</code>), <code>includes()</code> teste la présence d'une valeur, et <code>forEach()</code> exécute une fonction pour chaque élément du tableau.
+            </p>
+
+            <div id="cells52-1"></div>
 
             <p>
                 La méthode <code>filter()</code> retourne un nouveau tableau contenant tous les éléments du tableau initial qui remplissent la condition définie dans la fonction passée en paramètre.
@@ -386,6 +392,19 @@ let response = tableau.every(function(valeur) {
 });
 
 console.log(response);
+`);
+
+addCell('cells52-1', 'Méthodes <code>some()</code>, <code>find()</code>, <code>includes()</code> et <code>forEach()</code>', `
+let tableau = [3, 8, 12, 5];
+
+console.log(tableau.some(valeur => valeur > 10));   // true
+console.log(tableau.find(valeur => valeur > 5));    // 8
+console.log(tableau.find(valeur => valeur > 100));  // undefined
+console.log(tableau.includes(5));                   // true
+
+tableau.forEach((valeur, index) => {
+    console.log('Index', index, ':', valeur);
+});
 `);
 
 addCell('cells53', 'Méthode <code>filter()<code>', `

@@ -17,7 +17,7 @@
                 Un objet est un <b>ensemble de propriétés</b>, où chaque propriété associe un <b>nom (ou clé) à une valeur</b>. Si cette valeur est une fonction, la propriété est alors appelée méthode. Le nom d'une propriété peut être une chaîne de caractères ou un nombre.
             </p>
 
-            <h2> Création d'un objet </h2>
+            <h2 id="creation-d-un-objet"> Création d'un objet </h2>
 
             <p>
                 Il y a plusieurs façon de créer un objet (notamment depuis ES6).
@@ -47,7 +47,7 @@
 
             <div id="cells77"></div>
 
-            <h2> Héritage et la chaîne de prototypage </h2>
+            <h2 id="heritage-et-prototypes"> Héritage et la chaîne de prototypage </h2>
 
             <p>
                 L'héritage en programmation orientée objet permet à une classe de <b>récupérer les propriétés et méthodes d'une autre classe</b> afin de réutiliser et étendre le code.
@@ -57,7 +57,7 @@
                 JavaScript est <b>un langage orienté prototype</b>, une forme particulière de programmation orientée objet. Dans ce modèle, les <b>objets peuvent hériter directement d'autres objets</b> grâce au <b>mécanisme des prototypes</b>.
             </p>
 
-            <h3> Propriétés héritées </h3>
+            <h3 id="proprietes-heritees"> Propriétés héritées </h3>
 
             <p>
                 Chaque objet JavaScript possède <b>un lien interne</b> vers un autre objet, qui est consulté lorsque la propriété demandée n'est pas trouvée sur l'objet lui-même (l'objet <code>prototype</code> de son constructeur). Ce mécanisme est appelé <code>[[Prototype]]</code> dans la spécification et la propriété <code>__proto__</code> (ou <code>Object.getPrototypeOf(obj)</code>) permet d'y accéder.
@@ -82,7 +82,7 @@
 
             <div id="cells80"></div>
 
-            <h3> Méthodes héritées </h3>
+            <h3 id="methodes-heritees"> Méthodes héritées </h3>
 
             <p>
                 Toute fonction associée à un objet est également une propriété. Par conséquent, une fonction héritée se comportera comme n'importe quelle autre propriété.
@@ -120,7 +120,7 @@
                 </div>
             </div>
             
-            <h3> Attributs et méthodes statiques </h3>
+            <h3 id="attributs-et-methodes-statiques"> Attributs et méthodes statiques </h3>
 
             <p>
                 Le mot-clé <code>static</code> permet de définir <b>un attribut ou une méthode statique</b> d'une classe. Les attributs ou les méthodes statiques ne sont pas disponibles sur les instances d'une classe mais <b>sont appelés sur la classe elle-même</b>. Les méthodes statiques sont généralement des fonctions utilitaires (qui peuvent permettre de créer ou de cloner des objets par exemple).
@@ -128,7 +128,7 @@
 
             <div id="cells85"></div>
 
-            <h3> La copie d'un objet </h3>
+            <h3 id="copie-d-un-objet"> La copie d'un objet </h3>
 
             <p>
                 Les objets en JavaScript sont mutables : <b>lorsqu'on affecte un objet à une variable, celle-ci contient une référence vers l'objet</b>, et non une copie de sa valeur.
@@ -156,7 +156,7 @@
 
             <div id="cells88_1"></div>
 
-            <h3> Le mot-clé <code>this</code> </h3>
+            <h3 id="mot-cle-this"> Le mot-clé <code>this</code> </h3>
 
             <p>
                 <code>this</code> <b>permet à une fonction d'accéder au contexte dans lequel elle est utilisée</b>, c'est-à-dire l'objet “courant” sur lequel elle agit.

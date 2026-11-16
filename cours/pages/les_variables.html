@@ -31,7 +31,7 @@
                 </ul>
             </div>
 
-            <h2> Déclaration </h2>
+            <h2 id="declaration"> Déclaration </h2>
 
             <p>
                 La phase de création d'une variable est appelée <b>déclaration</b>. Tandis que la phase où une valeur est attribuée à une variable est appelée <b>instanciation</b>. En JavaScript, il existe 3 mots-clés pour déclarer une variable <b><code>var</code></b>, <b><code>let</code></b> et <b><code>const</code></b>.
@@ -59,7 +59,7 @@ maxi = 100;</textarea>
                 </div>
             </div>
             
-            <h3> Le mot-clé <code>var</code> </h3>
+            <h3 id="mot-cle-var"> Le mot-clé <code>var</code> </h3>
             
             <p>
                 Il permet de déclarer une variable dont la <b>portée est liée à la fonction</b> dans laquelle elle est définie : si elle est déclarée dans une fonction, elle sera accessible dans toute cette fonction, quel que soit le bloc où elle apparaît.
@@ -90,7 +90,7 @@ maxi = 100;</textarea>
                 </p>             
             </div>
 
-            <h3> Le mot-clé <code>let</code> </h3>
+            <h3 id="mot-cle-let"> Le mot-clé <code>let</code> </h3>
 
             <p>
                 Il permet de déclarer des variables visibles uniquement au sein du <b>bloc d'instructions</b> dans lequel la variable est définie. Un bloc en JavaScript est représenté par les instructions que l'on retrouve entre les accolades <i>e.g. if</i>, <i>while</i>...
@@ -112,7 +112,7 @@ maxi = 100;</textarea>
 
             <div id="cells7"></div>
 
-            <h3> Le mot-clé <code>const</code> </h3>
+            <h3 id="mot-cle-const"> Le mot-clé <code>const</code> </h3>
 
             <p>
                 Une variable déclarée avec le mot-clé <code>const</code> se <b>comporte de manière similaire à une variable déclarée avec <code>let</code></b>, à ceci près qu'elle définit <b>une constante accessible uniquement en lecture</b>. Cela ne signifie pas que la valeur stockée est immuable, mais simplement que l'identifiant ne peut pas être réaffecté. De plus, une déclaration <code>const</code> doit toujours être initialisée dès sa création.
@@ -129,7 +129,7 @@ maxi = 100;</textarea>
             <!--                           Types de variables                            -->
             <!-- ----------------------------------------------------------------------- -->
 
-            <h2> Types de variables </h2>
+            <h2 id="types-de-variables"> Types de variables </h2>
 
             <p>
                 Le JavaScript est faiblement typé, c'est-à-dire qu'il <b>autorise une variable à contenir n'importe quel type de données</b> et à en <b>changer en cours d'exécution</b>. L'opérateur <code>typeof</code> permet d'identifier la nature d'une variable.
@@ -166,7 +166,7 @@ maxi = 100;</textarea>
 
             <!-- ----------------------------- Les nombres ----------------------------- -->
 
-            <h3> Les nombres </h3>
+            <h3 id="nombres"> Les nombres </h3>
 
             <div id="cells12"></div>
 
@@ -203,9 +203,17 @@ maxi = 100;</textarea>
             </div>
 
 
+            <h4 id="objet-math"> L'objet <code>Math</code> </h4>
+
+            <p>
+                L'objet global <code>Math</code> regroupe des constantes et des fonctions mathématiques : <code>Math.PI</code>, <code>Math.abs(x)</code> (valeur absolue), <code>Math.min(a, b, …)</code> et <code>Math.max(a, b, …)</code>, <code>Math.floor(x)</code> (arrondi à l'entier inférieur), <code>Math.ceil(x)</code> (supérieur), <code>Math.round(x)</code> (le plus proche), <code>Math.sqrt(x)</code>, ou encore <code>Math.random()</code> qui renvoie un nombre décimal aléatoire dans l'intervalle [0 ; 1[.
+            </p>
+
+            <div id="cells15-3"></div>
+
             <!-- ---------------------- Les chaînes de caractères ---------------------- -->
 
-            <h3> Les chaînes de caractères </h3>
+            <h3 id="chaines-de-caracteres"> Les chaînes de caractères </h3>
 
             <p>
                 Une chaîne de caractères est une succession ordonnée de caractères. Si elle ne contient aucun caractère, c'est une chaîne vide. Les chaînes de caractères sont des primitives ainsi <b>elles ne sont pas mutables</b> (contrairement à Python par exemple).
@@ -213,7 +221,7 @@ maxi = 100;</textarea>
 
             <div id="cells16"></div>
 
-            <h4> Conversion de types </h4>
+            <h4 id="conversion-de-types"> Conversion de types </h4>
 
             <p>
                 Une chaîne de caractères peut être créee à partir de tout objet JavaScript et de sa méthode de conversion vers une chaîne <code>toString()</code> (possibilité de surcharger cette méthode).
@@ -221,7 +229,7 @@ maxi = 100;</textarea>
 
             <div id="cells17"></div>
 
-            <h4> Propriétés et méthodes associées à l'objet <code>String</code> </h4>
+            <h4 id="methodes-string"> Propriétés et méthodes associées à l'objet <code>String</code> </h4>
 
             <p>
                 Une chaîne de caractères <b>exploite les propriétés et les méthodes issues de l'objet <code>String</code></b> (vous pouvez retrouver l'ensemble des méthodes sur <a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/String">developer.mozilla.org</a>). Pour cela, JavaScript crée un <i>wrapper</i> à partir de l'objet <code>String</code>. Ainsi, lorsque l'on essaye d'accéder à une propritété d'une chaîne de caractères <code>str</code> ou qu'une fonction y est appliquée alors JavaScript réalise l'opération <code>new String(str)</code> afin de créer un objet <code>String</code> initialisé à partir de la valeur de la primitive <code>str</code>. Détaillons certaines propriétés et méthodes.
@@ -276,7 +284,7 @@ maxi = 100;</textarea>
             <!--                          Opérateurs d'égalité                           -->
             <!-- ----------------------------------------------------------------------- -->
 
-            <h2>Opérateurs d'égalité <code>==</code> et <code>===</code></h2>
+            <h2 id="operateurs-d-egalite">Opérateurs d'égalité <code>==</code> et <code>===</code></h2>
 
             <p>
                 JavaScript propose deux façons de tester l'égalité entre deux valeurs :
@@ -287,7 +295,7 @@ maxi = 100;</textarea>
                 <li> <code>===</code> égalité stricte </li>
             </ul>
 
-            <h3> <code>==</code> : l'égalité avec conversion implicite </h3>
+            <h3 id="egalite-avec-conversion"> <code>==</code> : l'égalité avec conversion implicite </h3>
 
             <p>
                 L'opérateur <code>==</code> compare deux valeurs en essayant d'harmoniser leurs types lorsqu'ils sont différents.
@@ -313,7 +321,7 @@ maxi = 100;</textarea>
 
             <div id="cells26"></div>
 
-            <h3> <code>===</code> : l'égalité stricte </h3>
+            <h3 id="egalite-stricte"> <code>===</code> : l'égalité stricte </h3>
 
             <p>
                 L'opérateur <code>===</code> compare les deux valeurs sans effectuer de conversion de type. Les deux opérandes doivent donc avoir le même type et la même valeur pour que le test renvoie true.
@@ -504,6 +512,20 @@ console.log('3 + "5" =', 3 + "5");
 addCell('cells15-2', 'Evaluation séquentielle', `
 console.log('1 + 2 + "3" =', 1 + 2 + "3", '// 1 + 2 = "3" et "3" + 3 = "33"');
 console.log('"1" + 2 + 3 =', "1" + 2 + 3, '// "1" + 2 = "12" et "12" + 3 = "123"');
+`);
+
+addCell('cells15-3', "L'objet <code>Math</code>", `
+console.log(Math.floor(4.7), Math.ceil(4.2), Math.round(4.5)); // 4 5 5
+console.log(Math.max(3, 9, 5), Math.min(3, 9, 5));              // 9 3
+console.log(Math.abs(-12));                                      // 12
+
+// Entier aléatoire entre min et max inclus.
+let min = 1, max = 6;
+console.log(Math.floor(Math.random() * (max - min + 1)) + min);
+
+// Garder une valeur dans un intervalle (ici entre 0 et 100).
+let valeur = 130;
+console.log(Math.min(Math.max(valeur, 0), 100)); // 100
 `);
 
 addCell('cells16', 'Question', `

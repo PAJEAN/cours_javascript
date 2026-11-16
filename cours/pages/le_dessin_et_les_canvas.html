@@ -13,13 +13,13 @@
         <div class="page" id="page">
             <div id="header-container">Le dessin et les canvas</div>
 
-            <h2> Le dessin et les canvas </h2>
+            <h2 id="dessin-et-canvas"> Le dessin et les canvas </h2>
             
             <p> 
                 Depuis HTML5, le navigateur met à disposition l'élément <code>&lt;canvas></code>, qui offre une "toile blanche" sur laquelle on peut dessiner directement en JavaScript. Cet outil est utilisé dans de nombreux domaines : graphiques interactifs, animations, visualisations de données, ou encore petits jeux vidéo.
             </p>
 
-            <h3> L'élément <code>&lt;canvas></code> </h3>
+            <h3 id="element-canvas"> L'élément <code>&lt;canvas></code> </h3>
 
             <p>
                 Un <code>canvas</code> est une simple zone rectangulaire de la page, définie par ses attributs <i>width</i> et <i>height</i> (en pixels). Par défaut, il est vide : c'est JavaScript qui se charge d'y dessiner. Pour dessiner, on doit d'abord obtenir un contexte de rendu à partir du canvas. Cela se fait avec la méthode :
@@ -56,7 +56,7 @@ const ctx = canvas.getContext('2d');</textarea>
                 <span>Source: <a href="https://www.w3schools.com/tags/canvas_arc.asp">W3Schools</a>.</span>
             </div>
 
-            <h3> Tracer des lignes </h3>
+            <h3 id="tracer-des-lignes"> Tracer des lignes </h3>
 
             <p>
                 Pour tracer des lignes dans un canvas, il faut d'abord définir un chemin avec un ou plusieurs segments de ligne. Un chemin est initialisé avec l'appel à la méthode <b><code>beginPath()</code></b>. Ensuite, les méthodes <code>moveTo()</code> et <code>lineTo()</code> permettent respectivement de déplacer le curseur et d'ajouter des lignes au chemin.
@@ -125,9 +125,9 @@ context.stroke();</textarea>
                 </div>
             </div>
 
-            <h3> Tracer des formes </h3>
+            <h3 id="tracer-des-formes"> Tracer des formes </h3>
 
-            <h4> Les arcs de cercle </h4>
+            <h4 id="arcs-de-cercle"> Les arcs de cercle </h4>
 
             <p>
                 Un arc de cercle centré sur <i>(x, y)</i> et de rayon <code>r</code>, entre les angles <code>a1</code> et <code>a2</code> (exprimés en radians) est dessiné avec la méthode <code>arc(x, y, r, a1, a2)</code>. Cette méthode ne fait que compléter le chemin mais n'affiche rien dans le canvas. Pour afficher un arc de cercle, il faut commencer par initialiser le chemin avec la fonction <code>beginPath()</code> puis l'afficher avec la fonction <code>stroke()</code>.
@@ -168,13 +168,13 @@ context.stroke();</textarea>
 
             </div>
 
-            <h4> Le rectangle </h4>
+            <h4 id="rectangle"> Le rectangle </h4>
 
             <p>
                 La méthode <code>rect(x, y, largeur, hauteur)</code> permet de dessiner les contours d'un rectangle de <i>largeur x hauteur</i> dont le coin supérieur gauche est en <i>(x, y)</i>.
             </p>
 
-            <h4> Le remplissage </h4>
+            <h4 id="remplissage"> Le remplissage </h4>
 
             <p>
                 Les formes dessinées sur le canvas peuvent non seulement être tracées, mais aussi remplies grâce à la méthode <code>fill()</code>. Le style de remplissage se définit dans le contexte via la propriété <code>fillStyle</code>. La méthode <code>fillRect(x, y, largeur, hauteur)</code> permet quant à elle de dessiner directement un rectangle rempli.
@@ -186,13 +186,13 @@ context.fillStyle = 'rgb(0, 255, 0)';
 context.fillStyle = 'rgb(0, 255, 0, 0.5)';
 </textarea>
 
-            <h4> Écrire du texte </h4>
+            <h4 id="ecrire-du-texte"> Écrire du texte </h4>
 
             <p>
                 L'écriture de texte dans le canvas se fait avec la méthode <code>strokeText(String texte, Integer x, Integer y)</code> qui affiche le contour des lettres ou bien avec la méthode <code>fillText(String texte, Integer x, Integer y)</code> qui remplit les lettres. Par défaut, le point <i>(x, y)</i> est en bas à gauche. La propriété <i>textBaseline</i> indique comment le texte doit s'appuyer sur la ligne d'écriture (<i>alphabetic, middle, top, hanging, bottom</i>).
             </p>
 
-            <h3> Transformation et rotation </h3>
+            <h3 id="transformation-et-rotation"> Transformation et rotation </h3>
 
             <p>
                 Il est possible d'appliquer au contexte une matrice de transformation avec <code>setTransform(echelleX, inclineX, inclineY, echelleY, translateX, translateY)</code>. La méthode <code>rotate(angle)</code> permet d'affecter un effet de rotation au contexte.
@@ -218,6 +218,141 @@ context.fillStyle = 'rgb(0, 255, 0, 0.5)';
             <p>
                 Par défaut, les échelles <code>x</code> et <code>y</code> du canvas correspondent à une unité égale à un pixel. Modifier le facteur d'échelle revient donc à changer la taille de cette unité. Par exemple, un facteur de <code>0.5</code> réduit l'unité à un demi-pixel, et les formes sont alors dessinées deux fois plus petites. À l'inverse, un facteur de <code>2.0</code> fait correspondre une unité à deux pixels, et les formes apparaissent deux fois plus grandes.
             </p>
+
+            <h3 id="animer-un-dessin"> Animer un dessin </h3>
+
+            <p>
+                Un canvas n'est qu'une image : ce qui a été dessiné y reste tant qu'on ne l'efface pas. Pour créer une animation, on répète donc en boucle trois opérations : <b>mettre à jour</b> les données (les positions), <b>effacer</b> le canvas, puis <b>redessiner</b> toute la scène.
+            </p>
+
+            <h4 id="effacer-le-canvas"> Effacer le canvas </h4>
+
+            <p>
+                La méthode <code>clearRect(x, y, largeur, hauteur)</code> rend transparente la zone rectangulaire indiquée. Pour tout effacer, on passe les dimensions du canvas : <code>ctx.clearRect(0, 0, canvas.width, canvas.height)</code>.
+            </p>
+
+            <h4 id="request-animation-frame"> La boucle d'animation : <code>requestAnimationFrame()</code> </h4>
+
+            <p>
+                La méthode <code>requestAnimationFrame(fonction)</code> demande au navigateur d'appeler la fonction <b>juste avant le prochain affichage de l'écran</b> (généralement 60 fois par seconde). Elle ne s'exécute qu'une fois : pour obtenir une boucle, la fonction doit se rappeler elle-même. Elle retourne un identifiant qui peut être passé à <code>cancelAnimationFrame(id)</code> pour arrêter l'animation. Contrairement à <code>setInterval()</code> (voir <a href="l_asynchronicite.html#minuteurs">les minuteurs</a>), le navigateur synchronise l'appel avec l'écran et met l'animation en pause quand l'onglet n'est pas visible.
+            </p>
+
+<textarea class="editor mt" spellcheck="false">
+const canvas = document.getElementById('monCanvas');
+const ctx = canvas.getContext('2d');
+
+let x = 20, y = 50, dx = 2; // Position et vitesse (en pixels par image).
+
+function boucle() {
+    // 1. Mettre à jour.
+    x += dx;
+    if (x > canvas.width - 10 || x < 10) {
+        dx = -dx; // Rebondit sur les bords.
+    }
+
+    // 2. Effacer.
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 3. Redessiner.
+    ctx.beginPath();
+    ctx.arc(x, y, 10, 0, 2 * Math.PI);
+    ctx.fillStyle = 'tomato';
+    ctx.fill();
+
+    requestAnimationFrame(boucle); // Planifie l'image suivante.
+}
+
+boucle();</textarea>
+
+            <div style="text-align: center;">
+                <canvas id="canvas-animation" width="300" height="100" style="border: 1px solid black;"></canvas>
+                <div><button class="btn" id="btn-animation">⏸ Pause</button></div>
+            </div>
+
+            <script type="text/javascript">
+                (function() {
+                    var canvas = document.getElementById("canvas-animation");
+                    var ctx = canvas.getContext("2d");
+                    var bouton = document.getElementById("btn-animation");
+                    var x = 20, y = 50, dx = 2, id = null;
+
+                    function boucle() {
+                        x += dx;
+                        if (x > canvas.width - 10 || x < 10) {
+                            dx = -dx;
+                        }
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.beginPath();
+                        ctx.arc(x, y, 10, 0, 2 * Math.PI);
+                        ctx.fillStyle = "tomato";
+                        ctx.fill();
+                        id = requestAnimationFrame(boucle);
+                    }
+
+                    bouton.addEventListener("click", function() {
+                        if (id === null) {
+                            boucle();
+                            bouton.textContent = "⏸ Pause";
+                        } else {
+                            cancelAnimationFrame(id);
+                            id = null;
+                            bouton.textContent = "▶ Reprendre";
+                        }
+                    });
+
+                    boucle();
+                })();
+            </script>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        Ici la vitesse est exprimée en pixels <i>par image</i> : sur un écran à 144 Hz, l'animation sera plus rapide que sur un écran à 60 Hz. Pour une vitesse identique partout, on multiplie la vitesse par le temps écoulé entre deux images : <code>requestAnimationFrame</code> fournit à la fonction un paramètre, l'instant courant en millisecondes, dont on peut déduire ce temps écoulé.
+                    </p>
+                </div>
+            </div>
+
+            <div class="exercise-box">
+                <div class="exercise-header">
+                    <span class="box-icon">💡</span>
+                    <span class="box-title">Exercice</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        À partir de l'exemple précédent, faire en sorte que la balle se déplace aussi verticalement (variables <code>dx</code> et <code>dy</code>) et rebondisse sur les quatre bords du canvas.
+                    </p>
+                </div>
+            </div>
+
+            <button class="btn toggle-answer" data-pw="as">
+                Afficher la réponse
+            </button>
+            <div class="hidden">
+
+<textarea class="editor mt" spellcheck="false">
+let x = 20, y = 20, dx = 2, dy = 1.5;
+const rayon = 10;
+
+function boucle() {
+    x += dx;
+    y += dy;
+    if (x > canvas.width - rayon || x < rayon) dx = -dx;
+    if (y > canvas.height - rayon || y < rayon) dy = -dy;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.arc(x, y, rayon, 0, 2 * Math.PI);
+    ctx.fill();
+
+    requestAnimationFrame(boucle);
+}
+boucle();</textarea>
+
+            </div>
             
         </div>
     </div>

@@ -1,0 +1,88 @@
+/* Compléments au style du cours (../../../cours/css/style.css) pour les guides du projet. */
+
+/* Pseudo-code : bloc distinct du code JavaScript. */
+.pseudo {
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-left: 6px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    margin: 1em 0;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: clamp(12px, 1.4vw, 14px);
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+.pseudo::before {
+    content: "Pseudo-code";
+    display: block;
+    font-family: inherit;
+    font-weight: bold;
+    color: var(--accent);
+    margin-bottom: 0.4em;
+}
+
+/* Sous-étape numérotée (0.1, 0.2…) : le même numéro est utilisé dans les corrections. */
+.substep {
+    display: inline-block;
+    min-width: 2.4em;
+    padding: 0 0.5em;
+    margin-right: 0.4em;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.8em;
+    text-align: center;
+}
+
+/* Rappels de cours, missions bonus, checklist. */
+.course-box,
+.bonus-box {
+    padding: 1em;
+    margin: 1.5em 0;
+    border-radius: 8px;
+    border-left: 6px solid var(--accent);
+    background: var(--code-bg);
+}
+
+.bonus-box {
+    border-left-color: var(--ok);
+}
+
+.course-box .box-header,
+.bonus-box .box-header {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+
+.checklist {
+    list-style: none;
+    padding-left: 0;
+}
+
+.checklist li::before {
+    content: "☐ ";
+}
+
+details {
+    margin: 0.75em 0;
+    padding: 0.5em 0.75em;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+details summary {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.step-nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 2em 0 1em;
+}
+
+.step-nav .disabled {
+    color: var(--muted);
+}

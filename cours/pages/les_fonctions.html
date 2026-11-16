@@ -22,7 +22,7 @@
             <!--                            Fonctions nommées                            -->
             <!-- ----------------------------------------------------------------------- -->
 
-            <h2> Fonctions nommées </h2>
+            <h2 id="fonctions-nommees"> Fonctions nommées </h2>
 
             <div id="cells25"></div>
 
@@ -72,7 +72,7 @@
             <!--                           Fonctions anonymes                            -->
             <!-- ----------------------------------------------------------------------- -->
 
-            <h2> Fonctions anonymes </h2>
+            <h2 id="fonctions-anonymes"> Fonctions anonymes </h2>
 
             <p>
                 Dans certain cas, il n'est pas utile de nommer une fonction qui ne sera pas appelée et réutilisée ailleurs dans le code. On peut donc déclarer des fonctions anonymes (qui n'ont pas de nom). L'exemple suivant exploite la fonction <code>every()</code> qui teste l'ensemble des éléments d'un tableau pour <b>vérifier si la condition décrite par une fonction passée en argument est respectée</b>.
@@ -97,7 +97,7 @@
             <!--                           Fonctions fléchées                            -->
             <!-- ----------------------------------------------------------------------- -->
 
-            <h2> Fonctions fléchées </h2>
+            <h2 id="fonctions-flechees"> Fonctions fléchées </h2>
 
             <p>
                 Deux facteurs sont à l'origine de la conception des fonctions fléchées : une <b>syntaxe plus courte</b> vis-à-vis des expressions de fonction et l'<b>absence de <code>this</code></b> spécifique à la fonction. Sur ce dernier point, cela signifie qu'une fonction fléchée ne lie pas son propre <code>this</code> au sein de la fonction. 
@@ -122,7 +122,7 @@
             <!--                        Fonctions auto-exécutées                         -->
             <!-- ----------------------------------------------------------------------- -->
 
-            <h2> Fonctions auto-exécutées </h2>
+            <h2 id="fonctions-auto-executees"> Fonctions auto-exécutées </h2>
 
             <p>
                 JavaScript introduit une syntaxe pour exécuter une fonction immédiatement après sa création.
@@ -135,9 +135,9 @@
             <!--                         Manipuler les fonctions                         -->
             <!-- ----------------------------------------------------------------------- -->
 
-            <h2> Manipuler les fonctions </h2>
+            <h2 id="manipuler-les-fonctions"> Manipuler les fonctions </h2>
 
-            <h3> Fonction de première classe </h3>
+            <h3 id="fonction-de-premiere-classe"> Fonction de première classe </h3>
 
             <p>
                 Une fonction de <b>première classe</b> correspond à une <b>propriété d'un langage</b> comme le JavaScript dans lequel les fonctions sont des objets de première classe. <b>Cela signifie qu'une fonction peut</b> :
@@ -151,7 +151,7 @@
 
             <div id="cells36"></div>
 
-            <h3> Fonctions d'ordre supérieur </h3>
+            <h3 id="fonctions-d-ordre-superieur"> Fonctions d'ordre supérieur </h3>
 
             <p>
                 Cette propriété des fonctions de première classe permet des constructions intéressantes appelée <b>les fonctions d'ordre supérieur</b> (<i>high order functions</i>). Une fonction d'ordre supérieur est une <b>fonction qui accepte au moins une autre fonction en paramètre, et/ou qui retourne une fonction en résultat</b>. Un exemple a été présenté précédemment avec la fonction <code>every()</code>.
@@ -159,7 +159,7 @@
 
             <div id="cells37"></div>
 
-            <h3> Fonctions imbriquées et fermetures (<i>closures</i>) </h3>
+            <h3 id="closures"> Fonctions imbriquées et fermetures (<i>closures</i>) </h3>
 
             <p>
                 Il est possible d'imbriquer une fonction au sein du corps d'une autre fonction. La fonction imbriquée (interne) est privée par rapport à la fonction (externe) qui la contient. Cela forme ce qu'on appelle une <b>fermeture</b> (ou <i>closure</i> en anglais).

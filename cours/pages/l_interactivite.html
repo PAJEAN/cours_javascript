@@ -13,7 +13,7 @@
         <div class="page" id="page">
             <div id="header-container">L'intéractivité</div>
             
-            <h2> Les évènements </h2>
+            <h2 id="evenements"> Les évènements </h2>
 
             <p>
                 Le JavaScript est un langage événementiel, c'est-à-dire qu'<b>il est capable de détecter les événements</b> qui surviennent sur la page, y réagir et déclencher de nouveaux traitements. Un événement est <b>un changement d'état</b> qui survient sur la page (mouvements de souris, clic sur un élément, chargement d'un élément de la page, <i>etc.</i>).
@@ -24,7 +24,7 @@
                 <div style="margin:auto">Source: <a href="https://openclassrooms.com/fr/courses/1916641-dynamisez-vos-sites-web-avec-javascript/1918968-les-evenements">openclassrooms</a>.</div>
             </div>
 
-            <h2> La détection dans le code HTML </h2>
+            <h2 id="detection-dans-le-html"> La détection dans le code HTML </h2>
 
 <textarea class="editor" spellcheck="false">
 <button onclick="alert('Pas changer assiette pour fromage !');"> ARTHOUUUUR </button>
@@ -79,7 +79,7 @@
                 Cette manière de déclarer des événements par attribut est rapide mais présente l'inconvénient de mélanger le traitement JavaScript à la mise en forme des données via HTML.
             </p>
 
-            <h2> La détection par le gestionnaire d'événements </h2>
+            <h2 id="gestionnaire-d-evenements"> La détection par le gestionnaire d'événements </h2>
 
             <p>
                 Le gestionnaire d'événements permet de <b>centraliser la déclaration des événements</b> dans un bloc JavaScript sans modifier le code HTML gardant ainsi la séparation entre traitements et données.
@@ -191,9 +191,82 @@
                 La fonction <b><code>target.removeEventListener(String myEvent, Function toDo, [options]);</code></b> permet de supprimer l'événement de type <code>myEvent</code> associé à la fonction <code>toDo</code>.
             </p>
 
-            <h2> La manipulation du document </h2>
+            <h3 id="evenements-clavier"> Les événements du clavier et de la souris </h3>
 
-            <h3> Le DOM </h3>
+            <p>
+                Le clavier déclenche deux événements principaux : <code>keydown</code> (une touche est enfoncée) et <code>keyup</code> (la touche est relâchée). L'objet <code>Event</code> reçu contient la propriété <code>key</code>, le nom de la touche (<i>"a"</i>, <i>"Enter"</i>, <i>" "</i> pour la barre d'espace, <i>"ArrowLeft"</i>, <i>"ArrowRight"</i>…) et la propriété <code>repeat</code> qui vaut <code>true</code> quand la touche est maintenue (le navigateur répète alors <code>keydown</code>).
+            </p>
+
+            <p>
+                Contrairement à un bouton, une touche n'est pas liée à un élément précis : on écoute généralement l'événement sur <code>document</code>.
+            </p>
+
+<textarea class="editor" spellcheck="false">
+document.addEventListener('keydown', (evt) => {
+    console.log('Touche enfoncée :', evt.key);
+    if (evt.key === 'ArrowLeft') {
+        console.log('Vers la gauche');
+    }
+});</textarea>
+
+            <p>
+                Pour piloter un objet en continu (par exemple un personnage dans un jeu), il est préférable de <b>mémoriser l'état des touches</b> plutôt que de déplacer l'objet directement dans le gestionnaire : <code>keydown</code> passe l'état à <code>true</code>, <code>keyup</code> le repasse à <code>false</code>, et une autre partie du code lit cet état régulièrement.
+            </p>
+
+<textarea class="editor" spellcheck="false">
+const touches = { ArrowLeft: false, ArrowRight: false };
+
+document.addEventListener('keydown', (evt) => {
+    if (evt.key in touches) {
+        touches[evt.key] = true;
+        evt.preventDefault(); // Empêche le défilement de la page avec les flèches.
+    }
+});
+
+document.addEventListener('keyup', (evt) => {
+    if (evt.key in touches) {
+        touches[evt.key] = false;
+    }
+});
+
+// Plus tard, dans le code qui déplace l'objet :
+if (touches.ArrowLeft) { /* aller à gauche */ }</textarea>
+
+            <p>
+                Essayez la zone ci-dessous : cliquez dessus pour lui donner le focus puis appuyez sur des touches.
+            </p>
+
+            <div id="zone-clavier" tabindex="0" style="border: 1px dashed black; border-radius: 15px; padding: 1rem; text-align: center; outline: none;">
+                <b>Cliquez ici puis appuyez sur une touche.</b>
+            </div>
+
+            <script type="text/javascript">
+                var zone_clavier = document.getElementById("zone-clavier");
+                zone_clavier.addEventListener("keydown", function(evt) {
+                    evt.preventDefault();
+                    zone_clavier.innerHTML = "<b>Touche : « " + evt.key + " »</b>" + (evt.repeat ? " (répétée)" : "");
+                });
+                zone_clavier.addEventListener("keyup", function(evt) {
+                    zone_clavier.innerHTML = "<b>Touche relâchée : « " + evt.key + " »</b>";
+                });
+            </script>
+
+            <p>
+                La souris fonctionne de la même manière avec les événements <code>click</code>, <code>mousedown</code>, <code>mouseup</code> et <code>mousemove</code>. Les coordonnées du pointeur sont dans <code>evt.clientX</code> et <code>evt.clientY</code> (relatives à la fenêtre). Pour obtenir la position dans un élément (par exemple un <code>canvas</code>), on retranche la position de l'élément donnée par <code>element.getBoundingClientRect()</code>.
+            </p>
+
+<textarea class="editor" spellcheck="false">
+const canvas = document.getElementById('monCanvas');
+canvas.addEventListener('mousemove', (evt) => {
+    const zone = canvas.getBoundingClientRect();
+    const x = evt.clientX - zone.left;
+    const y = evt.clientY - zone.top;
+    console.log('Position dans le canvas :', x, y);
+});</textarea>
+
+            <h2 id="manipulation-du-document"> La manipulation du document </h2>
+
+            <h3 id="dom"> Le DOM </h3>
 
             <p>
                 Le DOM (<i>Document Object Model</i>) est <b>une organisation hiérarchisée en arborescence de l'ensemble des éléments du document</b>. Chaque élément forme un noeud (<code>node</code>) dans le document.
@@ -208,7 +281,7 @@
                 <div style="margin:auto">Source: <a href="https://www.w3schools.com/js/js_htmldom_navigation.asp">W3Schools</a>.</div>
             </div>
 
-            <h3> Trouver les éléments du document </h3>
+            <h3 id="trouver-les-elements"> Trouver les éléments du document </h3>
 
             <p>
                 Il existe plusieurs méthodes permettant de rechercher des éléments au sein du DOM qui se basent sur la nature des balises ou de leurs attributs.
@@ -279,13 +352,13 @@
                 Voir <a href="../../exemples/dom/manipulation.html"> l'exemple</a>.
             </p>
 
-            <h3> Créer de nouveaux éléments </h3>
+            <h3 id="creer-de-nouveaux-elements"> Créer de nouveaux éléments </h3>
 
             <p>
                 JavaScript permet de créer, d'ajouter ou bien de supprimer des éléments HTML.
             </p>
 
-            <h4> La méthode <code>createElement()</code> </h4>
+            <h4 id="createelement"> La méthode <code>createElement()</code> </h4>
 
             <p>
                 La création d'un nouvel élément est réalisée avec la méthode <code>document.createElement(String typeElement)</code>. Le paramètre <i>typeElement</i> est une chaîne désignant la balise de l'élément à créer.
@@ -295,21 +368,21 @@
 var new_div = document.createElement("div");
 new_div.innerHTML = "Je suis une nouvelle div.";</textarea>
 
-            <h4> Ajouter des éléments dans le document </h4>
+            <h4 id="ajouter-des-elements"> Ajouter des éléments dans le document </h4>
 
             <p>
                 À ce moment, la <code>div</code> n'est pas encore sur le document. Il n'est qu'un objet JavaScript en mémoire. La seconde étape est de l'ajouter à l'endroit voulu au sein du DOM. La méthodes <b><code>parent.appendChild(HTMLElement enfant)</code></b> permet d'ajouter la balise à l'élément <code>parent</code>.
             </p>
 
-            <h4> Supprimer un élément HTML </h4>
+            <h4 id="supprimer-un-element"> Supprimer un élément HTML </h4>
 
             <p>
                 La méthode <code>removeChild()</code> retire du DOM l'élement enfant de son élément parent. Voir <a href="../../exemples/dom/elements.html">l'exemple</a>.
             </p>
 
-            <h3> Accéder aux attributs </h3>
+            <h3 id="acceder-aux-attributs"> Accéder aux attributs </h3>
 
-            <h4> Les attributs simples </h4>
+            <h4 id="attributs-simples"> Les attributs simples </h4>
 
             <p>
                 Le JavaScript dispose de méthodes pour accéder aux attributs d'un élément HTML.
@@ -346,7 +419,7 @@ all_div.forEach(div => {
 });</textarea>                
             </div>
 
-            <h4> Les attributs de données </h4>
+            <h4 id="attributs-de-donnees"> Les attributs de données </h4>
 
             <p>
                 La norme HTML du W3C définit strictement les attributs et les noms autorisés par balise. Cependant, il est possible de stocker directement dans le DOM des données via des attributs. Pour respecter la norme HTML, les noms des attributs doivent commencer par <code>data-</code> suivi d'un nom au choix (c'est une convention). Par exemple, il est possible de créer la balise <code>&lt;div data-clics="0">Nombre de clics&lt;/div></code>.
@@ -367,6 +440,51 @@ all_div.forEach(div => {
             </button>
             <div class="hidden">
                 <div id="cells1"></div>
+            </div>
+
+            <h2 id="localstorage"> Conserver des données : le <code>localStorage</code> </h2>
+
+            <p>
+                Les variables disparaissent quand la page est rechargée. Pour conserver une information (un meilleur score, une préférence de thème…), le navigateur propose l'objet <code>localStorage</code>, un petit espace de stockage <b>propre au site</b> qui <b>persiste</b> même après la fermeture du navigateur. Il fonctionne par paires clé/valeur, et les valeurs sont toujours des <b>chaînes de caractères</b>.
+            </p>
+
+            <ul>
+                <li> <code>localStorage.setItem(cle, valeur)</code> : enregistre une valeur. </li>
+                <li> <code>localStorage.getItem(cle)</code> : lit une valeur, ou <code>null</code> si la clé n'existe pas. </li>
+                <li> <code>localStorage.removeItem(cle)</code> : supprime une clé. </li>
+            </ul>
+
+<textarea class="editor" spellcheck="false">
+// Lecture : on convertit en nombre et on prévoit le cas où la clé n'existe pas.
+let meilleurScore = Number(localStorage.getItem('meilleurScore')) || 0;
+
+let score = 120;
+if (score > meilleurScore) {
+    meilleurScore = score;
+    localStorage.setItem('meilleurScore', meilleurScore); // Converti en chaîne automatiquement.
+}</textarea>
+
+            <p>
+                Pour stocker un tableau ou un objet, on le transforme en chaîne JSON avec <code>JSON.stringify()</code> puis on le reconstruit avec <code>JSON.parse()</code>.
+            </p>
+
+<textarea class="editor" spellcheck="false">
+const scores = [{ nom: 'Arthur', points: 120 }, { nom: 'Merlin', points: 95 }];
+localStorage.setItem('scores', JSON.stringify(scores));
+
+const relus = JSON.parse(localStorage.getItem('scores')) || [];
+console.log(relus[0].nom); // "Arthur"</textarea>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        Les données sont visibles et modifiables par l'utilisateur (onglet <i>Application</i> des outils de développement) : n'y stockez jamais d'information sensible et ne leur faites pas confiance sans vérification.
+                    </p>
+                </div>
             </div>
 
             <div class="exercise-box">

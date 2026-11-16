@@ -17,7 +17,45 @@
                 JavaScript est un langage <b>monothread</b> : il n'exécute qu'une seule instruction à la fois. Si une opération longue (comme un appel réseau ou la lecture d'un fichier) bloque le fil d'exécution, l'application entière devient inutilisable. Pour éviter cela, JavaScript repose sur l'<b>asynchronicité</b> : certaines opérations sont exécutées en arrière-plan, et leurs résultats sont traités plus tard, sans bloquer l'interface.
             </p>
 
-            <h2> Les promesses (<i>Promises</i>) </h2>
+            <h2 id="minuteurs"> Les minuteurs (<code>setTimeout</code> et <code>setInterval</code>) </h2>
+
+            <p>
+                La façon la plus simple de différer une action est d'utiliser un minuteur. Le navigateur se charge d'attendre, puis appelle la <b>fonction de rappel</b> (<i>callback</i>) fournie, sans bloquer le reste du programme.
+            </p>
+
+            <ul>
+                <li> <code>setTimeout(fonction, delai)</code> exécute la fonction <b>une seule fois</b> après <i>delai</i> millisecondes. </li>
+                <li> <code>setInterval(fonction, delai)</code> exécute la fonction <b>de façon répétée</b>, toutes les <i>delai</i> millisecondes. </li>
+                <li> Ces deux fonctions retournent un identifiant à passer à <code>clearTimeout(id)</code> ou <code>clearInterval(id)</code> pour annuler le minuteur. </li>
+            </ul>
+
+<textarea class="editor mt" spellcheck="false">
+console.log('Début');
+setTimeout(() => console.log('Affiché après 1 seconde'), 1000);
+console.log('Fin'); // S'affiche AVANT le message du minuteur.
+
+let compteur = 0;
+const id = setInterval(() => {
+    compteur++;
+    console.log('Tic', compteur);
+    if (compteur === 3) {
+        clearInterval(id); // Arrête la répétition.
+    }
+}, 500);</textarea>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        Le délai est un <b>minimum</b> : si le thread principal est occupé, la fonction s'exécute plus tard. Pour animer un dessin à l'écran, il existe un outil plus adapté, <code>requestAnimationFrame()</code>, présenté dans le chapitre <a href="le_dessin_et_les_canvas.html#animer-un-dessin">Le dessin et les canvas</a>.
+                    </p>
+                </div>
+            </div>
+
+            <h2 id="promesses"> Les promesses (<i>Promises</i>) </h2>
 
             <p>
                 Une <b>promesse</b> est un objet qui représente la valeur d'une opération asynchrone, mais qui n'est pas encore disponible au moment de sa création. Elle peut être dans l'un des trois états suivants :
@@ -45,7 +83,7 @@
 
             <div id="cells91"></div>
 
-            <h2> Les appels AJAX </h2>
+            <h2 id="appels-ajax"> Les appels AJAX </h2>
 
             <p>
                 Les appels AJAX (<i>Asynchronous JavaScript & XML</i>) permettent de communiquer entre le <b>client</b> et le <b>serveur</b> de manière asynchrone, c'est-à-dire sans rechargement complet de la page. Historiquement, on utilisait pour cela l'objet <code>XMLHttpRequest</code> (XHR), mais dans les applications modernes, on préfère la méthode <code>fetch()</code>, <a href="https://www.greatfrontend.com/questions/quiz/what-are-the-differences-between-xmlhttprequest-and-fetch">plus simple et plus puissante</a>.
@@ -56,6 +94,18 @@
             </p>
 
             <div id="cells92"></div>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        <code>fetch()</code> permet aussi de charger un fichier de votre propre projet (par exemple <code>fetch('niveaux.json')</code>). Cela ne fonctionne <b>pas</b> si la page est ouverte directement depuis le disque (<code>file://</code>) : le navigateur bloque la requête. Il faut servir la page via un serveur local, par exemple avec l'extension VS Code <i>Live Server</i> (clic droit sur le fichier HTML puis <i>Open with Live Server</i>).
+                    </p>
+                </div>
+            </div>
 
             <p>
                 L'objet <code>Response</code> ne contient pas directement le corps de la réponse en JSON mais <b>fournit une représentation de l'ensemble de la réponse HTTP</b>. Aussi, pour extraire le corps en JSON de l'objet <code>Response</code>, on utilise la méthode <code>json()</code>, qui renvoie une deuxième promesse dont la résolution fournit le résultat de l'analyse du corps de la réponse au format JSON (<a href="https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch">developer.mozilla.org</a>).
@@ -86,7 +136,7 @@
                 <div id="cells93"></div>
             </div>
 
-            <h2> Les Web Workers </h2>
+            <h2 id="web-workers"> Les Web Workers </h2>
 
             <p>
                 Les Web Workers permettent de déléguer des calculs lourds à un autre thread, laissant le thread principal fluide pour l'utilisateur. Il fonctionne dans un environnement isolé et n'a pas accès directement au DOM (<code>document</code>, <code>window</code>…). L'échange avec la page principale se fait via un système de messages.
