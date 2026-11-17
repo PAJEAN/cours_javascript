@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casse-briques : étape 2</title>
+    <link rel="stylesheet" href="../../../cours/css/style.css">
+    <link rel="stylesheet" href="css/guide.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+
+            <div id="header-container">Étape 2 : L'état du jeu</div>
+
+            <p class="subtle"> Casse-briques · étape 2 sur 13 · durée estimée : 1 h </p>
+
+            <h2> Objectif </h2>
+
+            <p>
+                Séparer ce qui <b>change</b> pendant la partie (la position de la balle, sa vitesse, la position de la raquette) de la façon de le <b>dessiner</b>. À la fin de l'étape, la balle se déplace de plusieurs pas, mais elle laisse derrière elle une traînée : c'est voulu, et c'est ce que l'étape 3 corrigera.
+            </p>
+
+            <div class="course-box">
+                <div class="box-header">📖 Dans le cours</div>
+                <ul>
+                    <li> <a href="../../../cours/pages/les_variables.html#mot-cle-let">Les variables : le mot-clé <code>let</code></a> (une variable dont la valeur change). </li>
+                    <li> <a href="../../../cours/pages/les_fonctions.html#fonctions-nommees">Les fonctions nommées</a> (déclarer puis appeler une fonction). </li>
+                    <li> <a href="../../../cours/pages/les_boucles.html#cells68">Les boucles : <code>for</code></a> (répéter un nombre de fois connu). </li>
+                </ul>
+            </div>
+
+            <h2> Pourquoi un « état » ? </h2>
+
+            <p>
+                À l'étape 1, les positions étaient écrites directement dans les appels de dessin : impossible de les faire évoluer. Un jeu vidéo se décrit en réalité avec deux ingrédients :
+            </p>
+
+            <ul>
+                <li> l'<b>état</b> : des variables qui contiennent tout ce qui change (où est la balle ? à quelle vitesse va-t-elle ?) ; </li>
+                <li> des <b>fonctions</b> : l'une <i>lit</i> l'état pour dessiner, l'autre <i>modifie</i> l'état pour faire avancer le jeu. </li>
+            </ul>
+
+            <p>
+                Les valeurs qui ne changent jamais (<code>RAYON</code>, <code>RAQUETTE_LARGEUR</code>…) restent des constantes.
+            </p>
+
+            <h2> <span class="substep">2.1</span> Les variables d'état </h2>
+
+            <p>
+                La balle a une position <i>(x, y)</i> et une vitesse. La vitesse se donne en <b>pixels par image</b> : <code>dx</code> pour l'horizontale, <code>dy</code> pour la verticale. Rappelez-vous que l'axe des <i>y</i> descend : une vitesse verticale <b>négative</b> fait monter la balle. La raquette, elle, ne se déplace que horizontalement : seule sa position <i>x</i> change.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Dans <code>game.js</code>, après les constantes, déclarez les variables d'état. Elles se déclarent avec <code>let</code>, car leur valeur va changer : </p>
+
+            <div class="pseudo">variable balleX     = milieu de la largeur du canvas
+variable balleY     = hauteur du canvas - 30
+variable balleDX    = 2     (pixels par image, vers la droite)
+variable balleDY    = -2    (pixels par image, vers le haut)
+variable raquetteX  = (largeur du canvas - RAQUETTE_LARGEUR) / 2</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> <code>balleX</code>, <code>balleY</code> et <code>raquetteX</code> reprennent les calculs que vous aviez écrits à l'étape 1 dans les appels de dessin : on les déplace simplement dans des variables. </p>
+            </details>
+
+            <h2> <span class="substep">2.2</span> La fonction <code>dessiner()</code> </h2>
+
+            <p>
+                Maintenant que la position est dans des variables, le dessin doit les <b>utiliser</b> au lieu de répéter les calculs. On range le code de l'étape 1 dans des fonctions, ce qui évite aussi de tout mélanger : une fonction par élément, puis une fonction qui les appelle toutes.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Transformez votre code de dessin de l'étape 1 en trois fonctions, puis appelez <code>dessiner()</code> une fois à la fin du fichier pour vérifier que l'image est la même qu'avant : </p>
+
+            <div class="pseudo">fonction dessinerBalle() :
+    (le code de la balle de l'étape 1, mais le centre est (balleX, balleY))
+
+fonction dessinerRaquette() :
+    (le code de la raquette de l'étape 1, mais le coin gauche est raquetteX)
+
+fonction dessiner() :
+    appeler dessinerBalle()
+    appeler dessinerRaquette()
+
+appeler dessiner()</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Une fonction déclarée ne fait rien tant qu'on ne l'appelle pas : si le canvas est vide, vérifiez que <code>dessiner()</code> est bien appelée (avec les parenthèses). </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Le <i>y</i> de la raquette ne change pas : il reste calculé à partir de la hauteur du canvas et de <code>RAQUETTE_HAUTEUR</code>. Seul <code>raquetteX</code> est devenu une variable. </p>
+            </details>
+
+            <h2> <span class="substep">2.3</span> La fonction <code>mettreAJour()</code> </h2>
+
+            <p>
+                Faire avancer le jeu d'une image, c'est modifier l'état : la nouvelle position est l'ancienne position plus la vitesse. On écrit en une ligne « ajoute la vitesse à la position » avec l'opérateur <code>+=</code> (par exemple <code>x += 3</code> équivaut à <code>x = x + 3</code>). Cette fonction ne dessine <b>rien</b> : elle ne fait que changer des variables.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Écrivez la fonction qui fait avancer la balle d'un pas : </p>
+
+            <div class="pseudo">fonction mettreAJour() :
+    balleX augmente de balleDX
+    balleY augmente de balleDY</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Il y a deux lignes : une qui modifie la position horizontale avec la vitesse horizontale, une qui fait de même pour la verticale. Rien ne bouge à l'écran tant que la fonction n'est pas appelée : vous la testerez dans la sous-étape 2.4. </p>
+            </details>
+
+            <h2> <span class="substep">2.4</span> Tester à la main </h2>
+
+            <p>
+                Pour vérifier que les deux fonctions s'enchaînent bien, on les appelle plusieurs fois de suite, avec une boucle <code>for</code>. Chaque tour de boucle fait avancer la balle d'un pas puis la dessine à sa nouvelle position.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Remplacez l'appel unique de <code>dessiner()</code> par une répétition, et observez le résultat avec attention : </p>
+
+            <div class="pseudo">répéter 20 fois :
+    appeler mettreAJour()
+    appeler dessiner()</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Une boucle <code>for</code> avec un compteur qui va de 0 à 19 s'exécute 20 fois (voir le cours). Le compteur ne sert à rien dans le corps de la boucle : c'est normal. </p>
+            </details>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        La balle laisse une <b>traînée</b> : c'est normal. Un canvas garde tout ce qu'on y a dessiné, et rien n'efface les anciennes images de la balle. On corrigera cela à l'étape 3, en effaçant le canvas avant chaque nouveau dessin.
+                    </p>
+                </div>
+            </div>
+
+            <h2> Checklist de validation </h2>
+
+            <p> Rechargez la page, puis cochez : </p>
+
+            <ul class="checklist">
+                <li> Les variables d'état (<code>balleX</code>, <code>balleY</code>, <code>balleDX</code>, <code>balleDY</code>, <code>raquetteX</code>) sont déclarées avec <code>let</code>. </li>
+                <li> Les fonctions <code>dessinerBalle()</code>, <code>dessinerRaquette()</code>, <code>dessiner()</code> et <code>mettreAJour()</code> existent. </li>
+                <li> La balle part de la position de l'étape 1 et monte en diagonale vers la droite, en laissant une traînée de 20 disques qui se chevauchent. </li>
+                <li> La raquette est toujours au même endroit, bleue et centrée. </li>
+                <li> Le code de dessin n'utilise plus aucun calcul de position pour la balle : il lit seulement <code>balleX</code> et <code>balleY</code>. </li>
+                <li> La console ne contient aucune erreur en rouge. </li>
+            </ul>
+
+            <h2> Erreurs fréquentes </h2>
+
+            <ul>
+                <li> <b><code>Assignment to constant variable</code></b> : une variable d'état a été déclarée avec <code>const</code>. Ce qui change doit être déclaré avec <code>let</code>. </li>
+                <li> <b>La balle ne se déplace pas</b> : <code>mettreAJour()</code> n'est jamais appelée (ou elle est appelée sans parenthèses). </li>
+                <li> <b>La balle descend au lieu de monter</b> : le signe de <code>balleDY</code> est inversé. Sur le canvas, « vers le haut » signifie une vitesse négative. </li>
+                <li> <b><code>balleX is not defined</code></b> : la variable est utilisée avant d'être déclarée, ou son nom est mal orthographié (majuscules comprises : <code>balleDX</code> et non <code>balleDx</code>). </li>
+                <li> <b>On voit une seule balle, ni traînée ni mouvement</b> : la boucle appelle <code>dessiner()</code> mais pas <code>mettreAJour()</code> (ou l'inverse). </li>
+            </ul>
+
+            <div class="step-nav">
+                <a href="etape_01.html">← Étape 1 : Dessiner le décor</a>
+                <a href="etape_03.html">Étape 3 : La boucle de jeu →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="template-container"></div>
+
+    <script src="../../../cours/js/main.js"></script>
+</body>
+
+</html>

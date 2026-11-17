@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casse-briques : étape 4</title>
+    <link rel="stylesheet" href="../../../cours/css/style.css">
+    <link rel="stylesheet" href="css/guide.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+
+            <div id="header-container">Étape 4 : Les rebonds</div>
+
+            <p class="subtle"> Casse-briques · étape 4 sur 13 · durée estimée : 1 h </p>
+
+            <h2> Objectif </h2>
+
+            <p>
+                Garder la balle dans le canvas : elle rebondit sur le mur gauche, le mur droit et le plafond. Le bas, lui, est le danger : si la balle y arrive, la partie est <b>perdue</b>, un message s'affiche et l'animation s'arrête.
+            </p>
+
+            <div class="course-box">
+                <div class="box-header">📖 Dans le cours</div>
+                <ul>
+                    <li> <a href="../../../cours/pages/les_conditions.html#cells61">Les conditions : <code>if</code></a>. </li>
+                    <li> <a href="../../../cours/pages/les_conditions.html#cells62">Les opérateurs logiques</a> (<code>&amp;&amp;</code>, <code>||</code>). </li>
+                    <li> <a href="../../../cours/pages/les_conditions.html#cells63"><code>else</code> et <code>else if</code></a>. </li>
+                    <li> <a href="../../../cours/pages/le_dessin_et_les_canvas.html#ecrire-du-texte">Le dessin et les canvas : écrire du texte</a>. </li>
+                </ul>
+            </div>
+
+            <h2> Comment rebondir ? </h2>
+
+            <p>
+                Un rebond, c'est un changement de sens : la balle qui arrive sur un mur vertical repart dans l'autre sens horizontalement, mais continue de monter ou de descendre comme avant. Il suffit donc de <b>changer le signe</b> de la vitesse concernée : <code>dx</code> devient <code>-dx</code> pour un mur gauche ou droit, <code>dy</code> devient <code>-dy</code> pour le plafond.
+            </p>
+
+            <p>
+                Pour savoir si la balle touche un bord, on compare la position de son <b>bord</b> (et non de son centre) à la limite du canvas. Le bord droit de la balle est à <code>balleX + RAYON</code>, son bord gauche à <code>balleX - RAYON</code>. Faites le même raisonnement pour le haut et le bas.
+            </p>
+
+            <h2> <span class="substep">4.1</span> Rebondir sur les murs gauche et droit </h2>
+
+            <p>
+                Il y a deux cas, mais une seule conséquence : on peut donc les regrouper dans <b>une seule condition</b> avec l'opérateur « ou » (<code>||</code>). Cette condition se place dans <code>mettreAJour()</code>, après le déplacement de la balle.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Complétez <code>mettreAJour()</code> : </p>
+
+            <div class="pseudo">fonction mettreAJour() :
+    (déplacer la balle, comme avant)
+
+    si le bord droit de la balle dépasse la largeur du canvas
+       OU si le bord gauche de la balle est avant 0 :
+        inverser balleDX</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Le bord droit de la balle est à <code>balleX + RAYON</code> et doit être comparé à <code>canvas.width</code>. Le bord gauche est à <code>balleX - RAYON</code> et doit être comparé à <code>0</code>. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Pour inverser une valeur, on l'affecte à son opposé : un nombre positif devient négatif et inversement. </p>
+            </details>
+
+            <h2> <span class="substep">4.2</span> Rebondir sur le plafond </h2>
+
+            <p>
+                Même principe pour le haut, mais c'est la vitesse <b>verticale</b> que l'on inverse. Pour la suite, on va écrire plusieurs cas à la suite avec <code>if</code> puis <code>else if</code>. Dans une telle chaîne, <b>un seul bloc</b> s'exécute : le premier dont la condition est vraie, les suivants sont ignorés. L'<b>ordre</b> des cas peut donc changer le résultat, comme avec des panneaux de limitation de vitesse :
+            </p>
+
+<textarea class="editor" spellcheck="false" readonly>
+const vitesse = 140;
+
+if (vitesse > 90) {
+    console.log('Hors agglomération : amende');
+} else if (vitesse > 130) {
+    console.log('Autoroute : amende');
+}
+// Affiche seulement le premier message, même si la vitesse dépasse aussi 130.</textarea>
+
+            <p class="mt"> <b>À toi de jouer.</b> Ajoutez le cas du plafond, juste après les murs : </p>
+
+            <div class="pseudo">si le bord haut de la balle est avant 0 :
+    inverser balleDY
+sinon si (cas du sol : voir 4.3) :
+    ...</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Le bord haut de la balle est à <code>balleY - RAYON</code>. Le haut du canvas est à <code>y = 0</code>. Ce test utilise <code>if</code> ; le cas du sol viendra juste après, avec <code>else if</code>. </p>
+            </details>
+
+            <h2> <span class="substep">4.3</span> Le sol : la partie est perdue </h2>
+
+            <p>
+                Le bas du canvas ne doit <b>pas</b> faire rebondir la balle : c'est le seul endroit où l'on perd. On ajoute donc ce cas avec <code>else if</code>, à la suite du plafond. Prenez l'habitude de ce schéma : à l'étape 5, un nouveau cas (le rebond sur la raquette) viendra se glisser <b>entre le plafond et le sol</b>, et le sol restera toujours le dernier.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Pour l'instant, on se contente de noter que la partie est finie (l'affichage du message vient en 4.4). Créez une variable <code>partieEnCours</code> au début du fichier, avec les autres variables d'état, puis complétez la chaîne : </p>
+
+            <div class="pseudo">variable partieEnCours = vrai     (avec les variables d'état)
+
+dans mettreAJour(), après le cas du plafond :
+sinon si le bord bas de la balle dépasse la hauteur du canvas :
+    partieEnCours devient faux</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Le bord bas de la balle est à <code>balleY + RAYON</code> et se compare à <code>canvas.height</code>. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Attention : le sol s'écrit avec <code>else if</code> <b>collé</b> à l'accolade fermante du plafond, pas avec un <code>if</code> séparé. Pour l'instant la différence ne se voit pas, mais elle comptera à l'étape suivante. </p>
+            </details>
+
+            <h2> <span class="substep">4.4</span> Message de fin et arrêt de la boucle </h2>
+
+            <p>
+                Il reste deux choses à faire : <b>afficher</b> « PERDU » et <b>arrêter</b> l'animation. Pour afficher, on ajoute une variable <code>message</code> (vide tant que la partie continue) et une fonction qui l'écrit au centre du canvas. Pour arrêter, la boucle ne demande l'image suivante <b>que si</b> la partie est en cours : sans nouvelle demande, plus aucune image n'est calculée.
+            </p>
+
+            <p>
+                Le message est écrit avec <code>fillText</code> (voir le cours). Il est dessiné à chaque image, donc il faut bien l'appeler depuis <code>dessiner()</code>, après la balle et la raquette.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Mettez en place le message et l'arrêt : </p>
+
+            <div class="pseudo">variable message = ''     (texte vide)
+
+dans mettreAJour(), quand la balle touche le sol :
+    partieEnCours devient faux
+    message devient 'PERDU'
+
+fonction dessinerMessage() :
+    si message n'est pas vide :
+        police : gras, 40 pixels, sans-serif
+        couleur de remplissage = blanc
+        alignement du texte = centré
+        écrire message au milieu du canvas (x = largeur / 2, y = hauteur / 2)
+
+dessiner() appelle aussi dessinerMessage() (en dernier)
+
+dans boucle() :
+    ... (inchangé)
+    SI partieEnCours : demander l'image suivante</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> « Si le message n'est pas vide » s'écrit avec l'opérateur <code>!==</code> : <code>message !== ''</code>. La police se règle avec <code>ctx.font</code> (par exemple <code>'bold 40px sans-serif'</code>), l'alignement avec <code>ctx.textAlign</code>. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Dans <code>boucle()</code>, la ligne qui demande l'image suivante doit être placée <b>dans</b> un <code>if</code> qui teste <code>partieEnCours</code>. Pour tester sans attendre : mettez temporairement <code>balleDY = 5</code> pour voir arriver la fin plus vite. </p>
+            </details>
+
+            <h2> Checklist de validation </h2>
+
+            <p> Rechargez la page, puis cochez : </p>
+
+            <ul class="checklist">
+                <li> La balle rebondit sur le mur gauche <b>et</b> sur le mur droit, sans jamais dépasser du canvas. </li>
+                <li> La balle rebondit sur le plafond. </li>
+                <li> La balle ne rebondit pas sur le bas : elle y met fin à la partie. </li>
+                <li> Le message « PERDU » s'affiche au centre, lisible. </li>
+                <li> Une fois le message affiché, plus rien ne bouge (l'animation est arrêtée). </li>
+                <li> La balle rebondit au moment où <b>son bord</b> touche le mur (et non son centre). </li>
+                <li> La console ne contient aucune erreur en rouge. </li>
+            </ul>
+
+            <h2> Erreurs fréquentes </h2>
+
+            <ul>
+                <li> <b>La balle rebondit quand son centre touche le mur</b> : vous avez oublié <code>RAYON</code> dans la comparaison. La moitié de la balle disparaît dans le mur avant de repartir. </li>
+                <li> <b>La balle reste collée au mur et tremble</b> : le test est correct mais l'inversion est faite deux fois de suite (par exemple avec deux <code>if</code> séparés qui inversent la même vitesse). </li>
+                <li> <b>On ne voit pas le message « PERDU »</b> : il a été effacé car <code>dessinerMessage()</code> n'est pas appelé dans <code>dessiner()</code>, ou il est appelé avant l'effacement. </li>
+                <li> <b>Le texte n'est pas centré, ou il a la couleur du fond</b> : vérifiez <code>textAlign</code> et <code>fillStyle</code> (la couleur de remplissage est celle du dernier réglage). </li>
+                <li> <b>L'animation ne s'arrête jamais</b> : <code>requestAnimationFrame</code> est appelé sans condition. </li>
+                <li> <b>Le jeu s'arrête dès le premier pas</b> : <code>partieEnCours</code> est déclarée à <code>false</code> au lieu de <code>true</code>. </li>
+            </ul>
+
+            <div class="bonus-box">
+                <div class="box-header">⭐ Mission bonus</div>
+                <ul>
+                    <li>
+                        <b>★ Angle de départ aléatoire.</b> À chaque rechargement, la balle part dans une direction différente (voir <a href="../../../cours/pages/les_variables.html#objet-math"><code>Math.random</code></a>) :
+<div class="pseudo">convertir balleDX et balleDY respectivement en cosinus et en sinus d'un angle aléatoire compris entre -135° et -45° multiplié par la vitesse exprimée en pixels par seconde
+éviter les valeurs trop proches de 0 (la balle monterait presque tout droit)</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="step-nav">
+                <a href="etape_03.html">← Étape 3 : La boucle de jeu</a>
+                <a href="etape_05.html">Étape 5 : Piloter la raquette →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="template-container"></div>
+
+    <script src="../../../cours/js/main.js"></script>
+</body>
+
+</html>

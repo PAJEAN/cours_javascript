@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casse-briques : étape 8</title>
+    <link rel="stylesheet" href="../../../cours/css/style.css">
+    <link rel="stylesheet" href="css/guide.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+
+            <div id="header-container">Étape 8 : Score et vies</div>
+
+            <p class="subtle"> Casse-briques · étape 8 sur 13 · durée estimée : 1 h </p>
+
+            <h2> Objectif </h2>
+
+            <p>
+                Ajouter un <b>score</b> (10 points par brique cassée) et trois <b>vies</b> : perdre la balle ne termine plus la partie tout de suite, elle est remise en jeu tant qu'il reste des vies. Le score et les vies s'affichent en haut du canvas, et un écran de fin permet de rejouer. <b>À la fin de cette étape, votre jeu est complet et jouable !</b>
+            </p>
+
+            <div class="course-box">
+                <div class="box-header">📖 Dans le cours</div>
+                <ul>
+                    <li> <a href="../../../cours/pages/les_variables.html#mot-cle-let">Les variables : le mot-clé <code>let</code></a> (une variable dont la valeur change). </li>
+                    <li> <a href="../../../cours/pages/le_dessin_et_les_canvas.html#ecrire-du-texte">Le dessin et les canvas : écrire du texte</a> (<code>font</code>, <code>textAlign</code>, <code>fillText</code>). </li>
+                    <li> <a href="../../../cours/pages/les_conditions.html#cells63">Les conditions : test si - sinon</a> (<code>if</code> / <code>else</code>). </li>
+                    <li> <a href="../../../cours/pages/l_interactivite.html#evenements-clavier">L'interactivité : les événements du clavier</a> (<code>keydown</code>, <code>event.key</code>). </li>
+                </ul>
+            </div>
+
+            <h2> <span class="substep">8.1</span> Le score </h2>
+
+            <p>
+                Le score est une nouvelle donnée de l'état du jeu : une variable qui commence à 0 et augmente à chaque brique cassée. Comme le nombre de points par brique est une valeur fixe, on lui donne un nom avec <code>const</code> (pas de « nombre magique »).
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Déclarez la constante et la variable d'état, puis augmentez le score dans le parcours des briques (étape 7.2) : </p>
+
+            <div class="pseudo">constante POINTS_PAR_BRIQUE = 10
+variable  score            = 0
+
+dans le parcours des briques, quand une brique est cassée :
+    score augmente de POINTS_PAR_BRIQUE</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Une variable déclarée avec <code>let</code> peut être modifiée ; une constante non. Pour vérifier avant d'écrire l'affichage (étape 8.3), utilisez <code>console.log(score)</code> quand une brique est cassée : vous devez voir 10, 20, 30… </p>
+            </details>
+
+            <h2> <span class="substep">8.2</span> Les vies et <code>replacerBalle()</code> </h2>
+
+            <p>
+                Jusqu'ici, toucher le sol arrêtait la partie (étape 4.3). Maintenant, toucher le sol coûte <b>une vie</b> : s'il en reste, on replace la balle et la raquette à leur position de départ et le jeu continue ; sinon la partie est perdue. Comme le replacement est une action qu'on veut pouvoir nommer, on écrit une petite fonction <code>replacerBalle()</code> : elle remet les variables de la balle et de la raquette aux valeurs de départ choisies à l'étape 2.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Ajoutez les vies, la fonction <code>replacerBalle()</code> et modifiez le test du sol : </p>
+
+            <div class="pseudo">constante VIES_DEPART = 3
+variable  vies       = VIES_DEPART
+
+fonction replacerBalle() :
+    remettre balleX, balleY, balleDX, balleDY à leurs valeurs de départ
+    remettre raquetteX au centre
+
+dans mettreAJour(), à la place de l'ancien test du sol (4.3) :
+    si la balle dépasse le bas du canvas :
+        vies diminue de 1
+        si vies vaut 0 :
+            la partie n'est plus en cours
+            message = 'PERDU'
+        sinon :
+            replacerBalle()</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Les valeurs de départ sont celles que vous avez écrites dans vos variables d'état à l'étape 2.1 : copiez-les dans <code>replacerBalle()</code>. Sans la remise à zéro de la vitesse, la balle repartirait dans la direction où elle a été perdue. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Conservez la place du test du sol dans la chaîne <code>if / else if</code> de <code>mettreAJour()</code> : seul son contenu change. </p>
+            </details>
+
+            <h2> <span class="substep">8.3</span> Afficher le score et les vies </h2>
+
+            <p>
+                Le texte se dessine dans le canvas comme les autres formes, avec <code>fillText(texte, x, y)</code> (voir le cours). La police se règle avec <code>font</code> et l'alignement avec <code>textAlign</code>. Pour mélanger du texte et une valeur, on utilise la <b>concaténation</b> : <code>'Score : ' + score</code>. Comme <code>fillStyle</code>, ces réglages restent en vigueur jusqu'au prochain changement : si le message de fin les modifie, pensez à les régler à nouveau là où vous en avez besoin.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Écrivez <code>dessinerInfos()</code> et appelez-la depuis <code>dessiner()</code> : </p>
+
+            <div class="pseudo">fonction dessinerInfos() :
+    police = 14 pixels, sans-serif
+    couleur = blanc
+    alignement à gauche :
+        écrire « Score : » suivi du score en (10, 18)
+    alignement à droite :
+        écrire « Vies : » suivi du nombre de vies en (largeur du canvas - 10, 18)
+
+dans dessiner() : ajouter l'appel de dessinerInfos()</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Avec l'alignement à droite, le point donné à <code>fillText</code> est l'extrémité <b>droite</b> du texte ; avec l'alignement à gauche, c'est son extrémité gauche. Le texte apparaît donc de part et d'autre du canvas. </p>
+            </details>
+
+            <h2> <span class="substep">8.4</span> L'écran de fin </h2>
+
+            <p>
+                Quand la partie est terminée (gagnée ou perdue), le message « PERDU » ou « GAGNÉ ! » est déjà affiché. On y ajoute une consigne en dessous, et une touche pour rejouer. Pour l'instant, le plus simple est de <b>recharger la page</b> : tout repart de zéro. (L'étape 10 proposera une vraie façon de rejouer.) Vous avez déjà un gestionnaire pour <code>keydown</code> (étape 5.1) : on y ajoute un test de plus.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Complétez <code>dessinerMessage()</code> et le gestionnaire de clavier : </p>
+
+            <div class="pseudo">dans dessinerMessage(), si message n'est pas vide :
+    (message principal : déjà écrit)
+    police = 16 pixels, sans-serif
+    écrire « Appuyez sur Entrée pour rejouer » centré,
+        sous le message principal (par exemple 30 pixels plus bas)
+
+dans le gestionnaire de keydown :
+    si la touche pressée est Entrée ET que la partie n'est plus en cours :
+        recharger la page</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Le nom d'une touche, dans <code>event.key</code>, s'écrit <code>'Enter'</code>. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Pour recharger la page depuis JavaScript : <code>document.location.reload()</code>. Pensez à tester aussi que la partie est terminée, sinon appuyer sur Entrée en cours de jeu relancerait tout ! </p>
+            </details>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">🎉</span>
+                    <span class="box-title">Bravo, votre jeu est jouable !</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        Vous avez un vrai casse-briques : balle, raquette pilotée au clavier, briques cassables, score, vies, victoire et défaite. Prenez le temps d'y jouer et d'améliorer ce qui vous plaît. Les prochaines étapes réorganisent le code (étape 9) puis ajoutent un menu, une pause et un record.
+                    </p>
+                </div>
+            </div>
+
+            <h2> Checklist de validation </h2>
+
+            <p> Rechargez la page, puis jouez une partie complète : </p>
+
+            <ul class="checklist">
+                <li> Le score commence à 0 et augmente de 10 à chaque brique cassée. </li>
+                <li> Le nombre de vies commence à 3 et s'affiche en haut à droite, le score en haut à gauche. </li>
+                <li> Quand la balle touche le sol, il reste une vie de moins, la balle et la raquette retournent au centre et le jeu continue. </li>
+                <li> Quand la dernière vie est perdue, « PERDU » s'affiche, avec la consigne pour rejouer. </li>
+                <li> Quand toutes les briques sont cassées (28 briques, donc 280 points), « GAGNÉ ! » s'affiche. </li>
+                <li> La touche Entrée relance une partie uniquement quand la partie est terminée. </li>
+                <li> La console ne contient aucune erreur en rouge. </li>
+            </ul>
+
+            <h2> Erreurs fréquentes </h2>
+
+            <ul>
+                <li> <b>Le score affiche <code>NaN</code> ou <code>undefined</code></b> : la variable n'est pas initialisée ou son nom est mal orthographié (<code>score</code> et <code>Score</code> sont deux noms différents). </li>
+                <li> <b>Le score augmente à chaque image</b> : l'ajout des points est en dehors de la condition qui détecte la brique cassée. </li>
+                <li> <b>La balle repart toujours dans la même direction après une vie perdue</b> : <code>replacerBalle()</code> remet la position mais pas la vitesse. </li>
+                <li> <b>Les trois vies disparaissent d'un coup</b> : la balle n'est pas replacée (<code>replacerBalle()</code> n'est pas appelée), elle reste sous le sol et fait perdre une vie à chaque image. </li>
+                <li> <b>Le texte du score est centré, ou sa taille est celle du grand message</b> : <code>font</code> et <code>textAlign</code> gardent leur dernière valeur ; réglez-les dans chaque fonction qui écrit du texte. </li>
+                <li> <b>Entrée recharge la page pendant la partie</b> : le test <code>partieEnCours</code> manque dans la condition. </li>
+            </ul>
+
+            <div class="bonus-box">
+                <div class="box-header">⭐ Missions bonus</div>
+                <ul>
+                    <li> <b>★★</b> Ajoutez un <b>combo</b> : chaque brique cassée consécutivement sans toucher la raquette rapporte plus de points (le multiplicateur augmente de 1), et revient à 1 quand la balle touche la raquette. </li>
+                </ul>
+            </div>
+
+            <div class="step-nav">
+                <a href="etape_07.html">← Étape 7 : Casser les briques</a>
+                <a href="etape_09.html">Étape 9 : Passer en objets →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="template-container"></div>
+
+    <script src="../../../cours/js/main.js"></script>
+</body>
+
+</html>

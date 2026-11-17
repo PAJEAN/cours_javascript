@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casse-briques : étape 9</title>
+    <link rel="stylesheet" href="../../../cours/css/style.css">
+    <link rel="stylesheet" href="css/guide.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+
+            <div id="header-container">Étape 9 : Passer en objets</div>
+
+            <p class="subtle"> Casse-briques · étape 9 sur 13 · durée estimée : 1 h (classe débutante, guidée) à 2 h </p>
+
+            <h2> Objectif </h2>
+
+            <p>
+                Le jeu est jouable depuis l'étape 8, mais son code est une longue liste de variables (<code>balleX</code>, <code>balleDX</code>, <code>raquetteX</code>…) et de fonctions. Dans cette étape, vous <b>ne changez pas le jeu</b> : vous changez l'<b>organisation du code</b>. Chaque élément du jeu devient un objet qui possède ses propres données (ses <b>attributs</b>) et ses propres actions (ses <b>méthodes</b>). Le résultat à l'écran doit être <b>identique</b> à celui de l'étape 8.
+            </p>
+
+            <p>
+                Vous allez écrire quatre classes : <code>Raquette</code>, <code>Balle</code>, <code>Brique</code> et <code>Jeu</code> (qui fait travailler les trois autres ensemble).
+            </p>
+
+            <div class="course-box">
+                <div class="box-header">📖 Dans le cours</div>
+                <ul>
+                    <li> <a href="../../../cours/pages/les_objets.html#creation-d-un-objet">Les objets : création d'un objet</a> (la syntaxe <code>class</code>, le <code>constructor</code>, <code>new</code>). </li>
+                    <li> <a href="../../../cours/pages/les_objets.html#mot-cle-this">Les objets : le mot-clé <code>this</code></a> (à lire en entier, y compris les fonctions fléchées). </li>
+                    <li> <a href="../../../cours/pages/les_objets.html#attributs-et-methodes-statiques">Les objets : attributs et méthodes statiques</a> (<code>static</code>). </li>
+                    <li> <a href="../../../cours/pages/les_tableaux.html#cells52-1">Les tableaux : <code>some</code>, <code>find</code>, <code>includes</code>, <code>forEach</code></a>. </li>
+                    <li> <a href="../../../cours/pages/les_fonctions.html#fonctions-flechees">Les fonctions fléchées</a>. </li>
+                </ul>
+            </div>
+
+            <h2> Penser en objets </h2>
+
+            <p>
+                Une <b>classe</b> est un plan de fabrication ; un <b>objet</b> (une <i>instance</i>) est ce qu'on fabrique avec <code>new</code>. Le <code>constructor</code> s'exécute à la création et initialise les attributs. À l'intérieur de la classe, <code>this</code> désigne <b>l'objet courant</b> : on l'écrit devant chaque attribut ou méthode de l'objet lui-même.
+            </p>
+
+<textarea class="editor" spellcheck="false" readonly>
+class Voiture {
+    constructor(couleur) {
+        this.couleur = couleur;
+        this.position = 0;
+        this.vitesse = 2;
+    }
+
+    avancer() {
+        this.position += this.vitesse;
+    }
+
+    afficher() {
+        console.log(this.couleur + " est en " + this.position);
+        this.avancer();            // une méthode appelle une autre méthode avec this
+    }
+}
+
+const rouge = new Voiture("rouge");
+const bleue = new Voiture("bleue");
+rouge.avancer();                   // seule la voiture rouge avance</textarea>
+
+            <p class="mt">
+                Trois règles à retenir pour toute l'étape :
+            </p>
+
+            <ul>
+                <li> Dans la classe, un attribut s'écrit toujours <code>this.attribut</code> et une méthode <code>this.methode()</code> : sans <code>this.</code>, JavaScript cherche une variable ordinaire et ne la trouve pas. </li>
+                <li> Une méthode ne s'écrit <b>pas</b> avec le mot-clé <code>function</code> dans une classe : <code>avancer() { … }</code>. </li>
+                <li> Les variables <code>canvas</code> et <code>ctx</code> et les constantes de la grille (<code>LIGNES</code>, <code>COLONNES</code>, <code>BRIQUE_ESPACE</code>, <code>GRILLE_HAUT</code>, <code>VIES_DEPART</code>, <code>POINTS_PAR_BRIQUE</code>) restent <b>globales</b> et utilisables partout. Les autres constantes de l'étape 8 (<code>RAYON</code>, <code>RAQUETTE_LARGEUR</code>, <code>BRIQUE_LARGEUR</code>…) disparaissent : leurs valeurs deviennent des attributs (ou des attributs statiques pour la brique). </li>
+            </ul>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">Conseil</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        Gardez votre version de l'étape 8 dans un fichier à part (<code>game_etape8.js</code>) : vous y copierez le corps de chaque ancienne fonction dans la méthode qui la remplace, en remplaçant les noms de variables par des attributs. Testez à chaque classe terminée en créant un objet dans la console du navigateur.
+                    </p>
+                </div>
+            </div>
+
+            <h2> <span class="substep">9.1</span> La classe <code>Raquette</code> </h2>
+
+            <p>
+                Les données de la raquette (sa position, sa taille, sa vitesse) deviennent des attributs ; les fonctions qui la concernent deviennent des méthodes. Pour déplacer la raquette, elle a besoin de savoir quelles touches sont enfoncées : c'est le <code>Jeu</code> qui possède l'objet des touches, il le <b>passe en paramètre</b> à la méthode.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Écris la classe <code>Raquette</code> : </p>
+
+            <div class="pseudo">classe Raquette
+    constructeur :
+        attributs largeur, hauteur, vitesse (valeurs de l'étape 8)
+        attribut y = position verticale fixe (collée en bas du canvas)
+        replacer la raquette au centre
+    méthode reinitialiser() :
+        attribut x = raquette centrée horizontalement
+    méthode deplacer(touches) :
+        si la flèche droite est enfoncée : avancer vers la droite sans dépasser le bord
+        si la flèche gauche est enfoncée : reculer vers la gauche sans dépasser le bord
+    méthode dessiner() :
+        dessiner le rectangle bleu aux coordonnées de l'objet</div>
+
+            <details>
+                <summary>Squelette à compléter (classe débutante)</summary>
+                <p> Chaque <code>// TODO</code> correspond à du code que vous avez déjà écrit à l'étape 8 : retrouvez-le et adaptez-le avec <code>this</code>. </p>
+<textarea class="editor" spellcheck="false" readonly>
+class Raquette {
+    constructor() {
+        // TODO : this.largeur, this.hauteur, this.vitesse, this.y
+        // TODO : appeler this.reinitialiser()
+    }
+
+    reinitialiser() {
+        // TODO : this.x
+    }
+
+    deplacer(touches) {
+        // TODO : flèche droite, puis flèche gauche (bornes du canvas)
+    }
+
+    dessiner() {
+        // TODO : fillStyle et fillRect avec les attributs
+    }
+}</textarea>
+            </details>
+
+            <details>
+                <summary>Indice</summary>
+                <p> <code>touches</code> est le même objet qu'à l'étape 5 : <code>touches.ArrowRight</code> vaut <code>true</code> ou <code>false</code>. Pour borner la position, repensez à l'étape 5.2 et à <code>Math.min</code> / <code>Math.max</code>. N'oubliez pas <code>this.</code> devant <code>largeur</code> dans les calculs. </p>
+            </details>
+
+            <h2> <span class="substep">9.2</span> La classe <code>Balle</code> </h2>
+
+            <p>
+                La balle regroupe sa position <code>x</code>, <code>y</code>, sa vitesse <code>dx</code>, <code>dy</code> et son rayon. Elle sait se déplacer, rebondir sur les murs et se dessiner. Le « replacement » de l'étape 8.2 (<code>replacerBalle()</code>) devient une méthode de la balle elle-même.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Écris la classe <code>Balle</code> : </p>
+
+            <div class="pseudo">classe Balle
+    constructeur :
+        attribut rayon
+        placer la balle au point de départ
+    méthode reinitialiser() :
+        attributs x, y = point de départ (milieu, 30 px au-dessus du bas)
+        attributs dx, dy = vitesse de départ
+    méthode deplacer() :
+        ajouter dx à x et dy à y
+    méthode rebondirSurMurs() :
+        si la balle dépasse le mur gauche ou droit : inverser dx
+        si la balle dépasse le plafond : inverser dy
+    méthode dessiner() :
+        dessiner le disque blanc</div>
+
+            <details>
+                <summary>Squelette à compléter (classe débutante)</summary>
+<textarea class="editor" spellcheck="false" readonly>
+class Balle {
+    constructor() {
+        // TODO : this.rayon, puis appeler this.reinitialiser()
+    }
+
+    reinitialiser() {
+        // TODO : this.x, this.y, this.dx, this.dy
+    }
+
+    deplacer() {
+        // TODO
+    }
+
+    rebondirSurMurs() {
+        // TODO : murs gauche/droit, puis plafond (étapes 4.1 et 4.2)
+    }
+
+    dessiner() {
+        // TODO : beginPath, arc, fillStyle, fill
+    }
+}</textarea>
+            </details>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Le sol n'est <b>pas</b> géré ici : perdre une vie concerne la partie entière, donc ce sera le travail de la classe <code>Jeu</code> (9.4). La balle ne s'occupe que de ses propres rebonds sur les murs. </p>
+            </details>
+
+            <h2> <span class="substep">9.3</span> La classe <code>Brique</code> (et <code>static</code>) </h2>
+
+            <p>
+                Toutes les briques ont la même taille : cette valeur n'a pas à être recopiée dans chaque objet. Un <b>attribut statique</b> appartient à la <i>classe</i> et non aux objets : on l'écrit avec <code>static</code> dans la classe et on le lit avec le nom de la classe, par exemple <code>Brique.LARGEUR</code>. En revanche, la position (<code>x</code>, <code>y</code>) et l'état « cassée ou non » sont propres à chaque brique.
+            </p>
+
+<textarea class="editor" spellcheck="false" readonly>
+class Voiture {
+    static NB_ROUES = 4;            // commun à toutes les voitures
+
+    constructor(couleur) {
+        this.couleur = couleur;     // propre à chaque voiture
+    }
+
+    afficher() {
+        console.log(this.couleur + " : " + Voiture.NB_ROUES + " roues");
+    }
+}</textarea>
+
+            <p class="mt"> <b>À toi de jouer.</b> Écris la classe <code>Brique</code> : </p>
+
+            <div class="pseudo">classe Brique
+    attributs statiques LARGEUR et HAUTEUR (valeurs de l'étape 6)
+    constructeur(x, y) :
+        attributs x et y = coin supérieur gauche de la brique
+        attribut actif = vrai (la brique n'est pas encore cassée)
+    méthode touchePar(balle) :
+        renvoyer vrai si le centre de la balle est dans le rectangle de la brique
+    méthode dessiner() :
+        si la brique est active : dessiner son rectangle</div>
+
+            <details>
+                <summary>Squelette à compléter (classe débutante)</summary>
+<textarea class="editor" spellcheck="false" readonly>
+class Brique {
+    // TODO : static LARGEUR et static HAUTEUR
+
+    constructor(x, y) {
+        // TODO : this.x, this.y, this.actif
+    }
+
+    touchePar(balle) {
+        // TODO : reprendre la condition de l'étape 7.1 ; elle renvoie un booléen
+    }
+
+    dessiner() {
+        // TODO : seulement si la brique est active
+    }
+}</textarea>
+            </details>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Dans la classe, on lit un attribut statique avec le <b>nom de la classe</b> (<code>Brique.LARGEUR</code>), pas avec <code>this</code>. Les attributs d'un objet, eux, se lisent avec <code>this</code>. <code>touchePar</code> doit <code>return</code> le résultat de la comparaison, puis l'appelant décidera quoi en faire. </p>
+            </details>
+
+            <h2> <span class="substep">9.4</span> La classe <code>Jeu</code> </h2>
+
+            <p>
+                C'est le chef d'orchestre : elle crée la balle, la raquette et les briques, écoute le clavier, fait avancer la partie et dessine tout. Elle remplace les variables d'état de l'étape 8 (<code>score</code>, <code>vies</code>, <code>message</code>…) et la fonction <code>boucle()</code>.
+            </p>
+
+            <p>
+                <b>Une liste plate de briques.</b> Avec des objets, plus besoin de tableau 2D : une brique connaît sa propre position. On remplit un seul tableau <code>briques</code> avec deux boucles imbriquées, et on parcourt ensuite ce tableau avec un simple <code>for...of</code>. Le compteur <code>briquesRestantes</code> disparaît : pour savoir s'il reste des briques actives, on demande au tableau avec <code>some()</code> (« y en a-t-il au moins une qui vérifie la condition ? »).
+            </p>
+
+<textarea class="editor" spellcheck="false" readonly>
+const notes = [12, 8, 15];
+const unEchec = notes.some(note => note < 10);        // true
+const tousReussis = !notes.some(note => note < 10);   // false</textarea>
+
+            <p class="mt"> <b>À toi de jouer.</b> Écris la classe <code>Jeu</code>, méthode par méthode. Les méthodes du jeu appellent celles des autres objets (<code>this.balle.deplacer()</code>, <code>this.raquette.dessiner()</code>…) : </p>
+
+            <div class="pseudo">classe Jeu
+    constructeur :
+        attribut touches = { ArrowLeft: faux, ArrowRight: faux }
+        brancher les écouteurs du clavier
+        initialiser la partie
+    méthode initialiserPartie() :
+        attributs balle, raquette (nouveaux objets), briques (voir creerBriques)
+        attributs score, vies, enCours, message
+    méthode creerBriques() :
+        créer un tableau vide
+        pour chaque ligne, pour chaque colonne :
+            ajouter une nouvelle Brique à sa position dans la grille
+        renvoyer le tableau
+    méthode ecouterClavier() :
+        keydown : mémoriser que la touche est enfoncée
+        keyup : mémoriser qu'elle est relâchée
+        (Entrée quand la partie est finie : recharger la page)
+    méthode terminer(message) :
+        la partie n'est plus en cours, retenir le message
+    méthode perdreVie() :
+        vies diminue de 1
+        si plus de vies : terminer avec "PERDU"
+        sinon : remettre la balle et la raquette à leur position de départ
+    méthode mettreAJour() :
+        déplacer la raquette (en lui donnant les touches) et la balle
+        rebond de la balle sur les murs
+        si la balle touche la raquette : rebondir et diriger selon la zone touchée
+        sinon si la balle passe sous le bas du canvas : perdreVie
+        pour chaque brique active touchée : la désactiver, rebondir, ajouter les points
+        s'il n'y a plus aucune brique active (some) : terminer avec "GAGNÉ !"
+    méthode dessiner() :
+        dessiner les briques, la balle, la raquette, puis score, vies et message
+    méthode dessinerInfos() et dessinerMessage() : comme à l'étape 8
+    méthode boucle() :
+        mettre à jour, effacer le canvas, dessiner
+        si la partie est en cours : redemander une image</div>
+
+            <details>
+                <summary>Squelette à compléter (classe débutante)</summary>
+                <p> Les noms de méthodes sont imposés ; le corps de chacune reprend ce que vous aviez à l'étape 8. </p>
+<textarea class="editor" spellcheck="false" readonly>
+class Jeu {
+    constructor() {
+        // TODO : this.touches, this.ecouterClavier(), this.initialiserPartie()
+    }
+
+    initialiserPartie() {
+        // TODO : this.balle, this.raquette, this.briques, this.score, this.vies, this.enCours, this.message
+    }
+
+    creerBriques() {
+        // TODO : const briques = []; deux boucles for imbriquées ; briques.push(new Brique(...)) ; return briques
+    }
+
+    ecouterClavier() {
+        // TODO : document.addEventListener('keydown', ...) et 'keyup' avec des fonctions fléchées
+    }
+
+    terminer(message) {
+        // TODO
+    }
+
+    perdreVie() {
+        // TODO
+    }
+
+    mettreAJour() {
+        // TODO : const balle = this.balle; const raquette = this.raquette; ...
+    }
+
+    dessiner() {
+        // TODO : for (const brique of this.briques) ...
+    }
+
+    dessinerInfos() {
+        // TODO : score et vies
+    }
+
+    dessinerMessage() {
+        // TODO : seulement si this.message n'est pas vide
+    }
+
+    boucle() {
+        // TODO : mettreAJour, clearRect, dessiner, requestAnimationFrame
+    }
+}</textarea>
+            </details>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Les écouteurs d'événements s'écrivent avec des <b>fonctions fléchées</b> : à l'intérieur, <code>this</code> reste le <code>Jeu</code>, ce qui permet d'écrire <code>this.touches[...]</code>. Avec une fonction classique, <code>this</code> serait l'élément qui a reçu l'événement (voir « Erreurs fréquentes »). </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Pour la grille, chaque brique a pour coin supérieur gauche : <code>x = GRILLE_GAUCHE + colonne × (largeur + espace)</code> et <code>y = GRILLE_HAUT + ligne × (hauteur + espace)</code>. Comme <code>GRILLE_GAUCHE</code> dépendait des constantes de brique, calculez-la dans la méthode à partir de <code>Brique.LARGEUR</code>. Pour la victoire : « il n'existe aucune brique dont <code>actif</code> est vrai ». </p>
+            </details>
+
+            <h2> <span class="substep">9.5</span> Démarrer le jeu </h2>
+
+            <p>
+                Une classe ne fait rien toute seule : il faut créer un objet avec <code>new</code>, puis lancer sa méthode. Supprimez tout ce qui subsiste de l'étape 8 (anciennes variables et fonctions).
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> À la fin du fichier, après les quatre classes : </p>
+
+            <div class="pseudo">créer un objet Jeu et le mémoriser dans une constante (jeu)
+appeler sa méthode boucle()</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Les classes doivent être définies <b>avant</b> la ligne <code>new Jeu()</code> (une classe ne peut pas être utilisée avant sa déclaration). Si le jeu ne démarre pas, regardez le premier message rouge de la console : c'est lui qui indique la cause. </p>
+            </details>
+
+            <h2> Checklist de validation </h2>
+
+            <p> Le jeu doit se comporter exactement comme à l'étape 8. Cochez : </p>
+
+            <ul class="checklist">
+                <li> La balle rebondit sur les murs, le plafond et la raquette, et la raquette suit les flèches sans sortir du canvas. </li>
+                <li> Les briques s'affichent et disparaissent au contact de la balle ; le score augmente. </li>
+                <li> Perdre la balle retire une vie ; à zéro, « PERDU » apparaît ; casser toutes les briques affiche « GAGNÉ ! ». </li>
+                <li> Il ne reste plus aucune variable globale de l'étape 8 (<code>balleX</code>, <code>score</code>, <code>briques</code> en dehors de <code>Jeu</code>…) ni fonction <code>mettreAJour()</code> hors de la classe. </li>
+                <li> Il n'y a plus de tableau 2D ni de compteur <code>briquesRestantes</code> : une seule liste de briques et <code>some()</code>. </li>
+                <li> Les dimensions de brique viennent de <code>Brique.LARGEUR</code> et <code>Brique.HAUTEUR</code>. </li>
+                <li> La console ne contient aucune erreur en rouge. </li>
+            </ul>
+
+            <h2> Erreurs fréquentes </h2>
+
+            <ul>
+                <li>
+                    <b>Le jeu s'arrête après la première image, <code>Cannot read properties of undefined</code> dans <code>boucle</code></b> : l'erreur classique est de passer la méthode sans l'objet :
+                    <textarea class="editor" spellcheck="false" readonly>
+requestAnimationFrame(this.boucle);       // ERREUR : this n'est plus le Jeu au prochain appel</textarea>
+                    En passant la méthode seule à <code>requestAnimationFrame</code>, on perd l'objet : <code>this</code> n'est plus le <code>Jeu</code> lors de l'appel suivant. Entourez l'appel d'une <b>fonction fléchée</b> qui, elle, conserve le <code>this</code> du <code>Jeu</code>. Relisez la section « fonctions fléchées » du <a href="../../../cours/pages/les_objets.html#mot-cle-this">cours sur <code>this</code></a>.
+                </li>
+                <li> <b><code>x is not defined</code></b> (ou <code>balle is not defined</code>) : il manque <code>this.</code> devant un attribut ou une méthode de l'objet. </li>
+                <li> <b><code>this.balle is undefined</code> ou <code>Cannot read properties of undefined (reading 'x')</code></b> : l'attribut n'a pas été créé dans <code>initialiserPartie()</code>, ou <code>initialiserPartie()</code> n'a pas été appelé dans le constructeur. </li>
+                <li> <b>Une méthode « ne fait rien »</b> : vous avez oublié les parenthèses de l'appel (<code>this.dessiner</code> au lieu de <code>this.dessiner()</code>). </li>
+                <li> <b><code>SyntaxError</code> dans une classe</b> : dans une classe, on ne met ni <code>function</code> ni virgule entre les méthodes. </li>
+                <li> <b><code>Brique.LARGEUR</code> vaut <code>undefined</code></b> : l'attribut est déclaré sans <code>static</code>, ou lu avec <code>this.LARGEUR</code> au lieu de <code>Brique.LARGEUR</code>. </li>
+                <li> <b>Les briques cassées réapparaissent ou ne se cassent jamais</b> : vérifiez que <code>creerBriques()</code> n'est appelée que dans <code>initialiserPartie()</code> (pas à chaque image) et que <code>mettreAJour()</code> ne teste que les briques actives. </li>
+                <li> <b>Plusieurs <code>new Jeu()</code></b> : un seul suffit ; sinon le clavier est écouté plusieurs fois et la raquette va trop vite. </li>
+            </ul>
+
+            <div class="bonus-box">
+                <div class="box-header">⭐ Missions bonus</div>
+                <ul>
+                    <li> <b>★★</b> Créez une classe <code>BriqueBonus</code> qui <b>hérite</b> de <code>Brique</code> (<code>extends</code>, <code>super</code> ; voir <a href="../../../cours/pages/les_objets.html#heritage-et-prototypes">l'héritage</a>) : couleur différente et 50 points au lieu de 10. Placez-en quelques-unes dans la grille. </li>
+                </ul>
+            </div>
+
+            <div class="step-nav">
+                <a href="etape_08.html">← Étape 8 : Score et vies</a>
+                <a href="etape_10.html">Étape 10 : Menu, pause, rejouer →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="template-container"></div>
+
+    <script src="../../../cours/js/main.js"></script>
+</body>
+
+</html>

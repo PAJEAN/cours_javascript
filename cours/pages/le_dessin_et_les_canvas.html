@@ -113,24 +113,12 @@ context.stroke();</textarea>
                 <li> La propriété <code>ctx.strokeStyle</code> est une chaîne définissant la couleur du trait. </li>
             </ul>
 
-            <div class="nota-bene-box">
-                <div class="nota-bene-header">
-                    <span class="box-icon">📝</span>
-                    <span class="box-title">À savoir</span>
-                </div>
-                <div class="box-content">
-                    <p>
-                        Les fonctions <code>save()</code> et <code>restore()</code> permettent respectivement de sauvegarder le contexte et toutes les mises en forme en cours pour ensuite les reprendre.
-                    </p>
-                </div>
-            </div>
-
             <h3 id="tracer-des-formes"> Tracer des formes </h3>
 
             <h4 id="arcs-de-cercle"> Les arcs de cercle </h4>
 
             <p>
-                Un arc de cercle centré sur <i>(x, y)</i> et de rayon <code>r</code>, entre les angles <code>a1</code> et <code>a2</code> (exprimés en radians) est dessiné avec la méthode <code>arc(x, y, r, a1, a2)</code>. Cette méthode ne fait que compléter le chemin mais n'affiche rien dans le canvas. Pour afficher un arc de cercle, il faut commencer par initialiser le chemin avec la fonction <code>beginPath()</code> puis l'afficher avec la fonction <code>stroke()</code>.
+                Un arc de cercle centré sur <i>(x, y)</i> et de rayon <code>r</code>, entre les angles <code>a1</code> et <code>a2</code> (exprimés en radians) est dessiné avec la méthode <code>arc(x, y, r, a1, a2)</code>. Cette méthode ne fait que compléter le chemin mais n'affiche rien dans le canvas. Pour afficher un arc de cercle, il faut commencer par initialiser le chemin avec la fonction <code>beginPath()</code> puis l'afficher avec la fonction <code>stroke()</code> (contour) ou la fonction <code>fill()</code> (remplissage).
             </p>
 
             <div class="exercise-box">
@@ -189,8 +177,53 @@ context.fillStyle = 'rgb(0, 255, 0, 0.5)';
             <h4 id="ecrire-du-texte"> Écrire du texte </h4>
 
             <p>
-                L'écriture de texte dans le canvas se fait avec la méthode <code>strokeText(String texte, Integer x, Integer y)</code> qui affiche le contour des lettres ou bien avec la méthode <code>fillText(String texte, Integer x, Integer y)</code> qui remplit les lettres. Par défaut, le point <i>(x, y)</i> est en bas à gauche. La propriété <i>textBaseline</i> indique comment le texte doit s'appuyer sur la ligne d'écriture (<i>alphabetic, middle, top, hanging, bottom</i>).
+                L'écriture de texte dans le canvas se fait avec la méthode <code>strokeText(String texte, Integer x, Integer y)</code> qui affiche le contour des lettres ou bien avec la méthode <code>fillText(String texte, Integer x, Integer y)</code> qui remplit les lettres. Par défaut, le point <i>(x, y)</i> est en bas à gauche. La propriété <i>textBaseline</i> indique comment le texte doit s'appuyer sur la ligne d'écriture (<i>alphabetic, middle, top, hanging, bottom</i>). Pour modifier la taille et la police du texte, on utilise la propriété <i>font</i> du contexte.
             </p>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        Pour mesurer la taille d'un texte, la fonction <code>measureText(String texte)</code> retourne un objet contenant la largeur du texte et d'autres informations. La propriété <code>width</code> de cet objet donne la largeur du texte en pixels.
+                    </p>
+                </div>
+            </div>
+
+            <h4 id="ajouter-une-ombre">Ajouter une ombre</h3>
+
+            <p>
+                Le contexte possède trois propriétés pour gérer les ombres : <code>shadowColor</code> (couleur de l'ombre), <code>shadowBlur</code> (flou de l'ombre) et <code>shadowOffsetX</code> / <code>shadowOffsetY</code> (décalage de l'ombre). L'ombre est appliquée à toutes les formes dessinées après le réglage de ces propriétés.
+            </p>
+
+<textarea class="editor mt" spellcheck="false">
+ctx.shadowColor = 'rgba(255, 180, 0, 0.9)';
+ctx.shadowBlur = 10;
+ctx.shadowOffsetX = 5;
+ctx.shadowOffsetY = 5;</textarea>
+
+            <div style="text-align: center;">
+                <canvas id="canvas-shadow" width="300" height="100" style="border: 1px solid black;"></canvas>
+            </div>
+
+            <script type="text/javascript">
+                (function() {
+                    let canvas = document.getElementById('canvas-shadow');
+                    let ctx = canvas.getContext('2d');
+                    
+                    ctx.shadowColor = 'rgba(255, 180, 0, 0.9)';
+                    ctx.shadowBlur = 10;
+                    ctx.shadowOffsetX = 5;
+                    ctx.shadowOffsetY = 5;
+
+                    ctx.beginPath();
+                    ctx.arc(150, 50, 30, 0, 2 * Math.PI);
+                    ctx.fillStyle = 'tomato';
+                    ctx.fill();
+                })();
+            </script>
 
             <h3 id="transformation-et-rotation"> Transformation et rotation </h3>
 
@@ -219,7 +252,53 @@ context.fillStyle = 'rgb(0, 255, 0, 0.5)';
                 Par défaut, les échelles <code>x</code> et <code>y</code> du canvas correspondent à une unité égale à un pixel. Modifier le facteur d'échelle revient donc à changer la taille de cette unité. Par exemple, un facteur de <code>0.5</code> réduit l'unité à un demi-pixel, et les formes sont alors dessinées deux fois plus petites. À l'inverse, un facteur de <code>2.0</code> fait correspondre une unité à deux pixels, et les formes apparaissent deux fois plus grandes.
             </p>
 
-            <h3 id="animer-un-dessin"> Animer un dessin </h3>
+            <h3>Sauvegarder et restaurer le contexte</h3>
+
+            <p>
+                Le contexte du canvas peut être sauvegardé et restauré à l'aide des méthodes <code>save()</code> et <code>restore()</code>. Cela permet de conserver les paramètres actuels (styles, transformations, etc.) et de les rétablir plus tard.
+            </p>
+
+<textarea class="editor mt" spellcheck="false">
+ctx.save(); // Sauvegarde le contexte actuel.
+// Modifications du contexte (styles, transformations, etc.)
+ctx.restore(); // Restaure le contexte sauvegardé.</textarea>
+
+            <h3>Charger une image</h3>
+
+            <p>
+                Pour afficher une image dans un canvas, on utilise la méthode <code>drawImage(image, x, y)</code>, où <i>(x, y)</i> est la position du coin supérieur gauche de l'image. L'image doit être chargée avant d'être dessinée, ce qui peut être fait en utilisant l'événement <code>onload</code> de l'objet <code>Image</code>.
+            </p>
+            <p>
+                On peut aussi spécifier la largeur et la hauteur de l'image en ajoutant deux paramètres supplémentaires : <code>drawImage(image, x, y, largeur, hauteur)</code>. Il est également possible de ne dessiner qu'une partie de l'image en utilisant la version complète de la méthode : <code>drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh)</code>, où <i>(sx, sy)</i> est le coin supérieur gauche de la zone source à copier, <i>(sw, sh)</i> est la largeur et la hauteur de cette zone source, et <i>(dx, dy)</i> est le coin supérieur gauche de la zone destination dans le canvas avec <i>(dw, dh)</i> comme largeur et hauteur.
+            </p>
+            
+<textarea class="editor mt" spellcheck="false">
+    let img = new Image();
+    img.src = 'images/canvas-image.png';
+    img.onload = function() {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    };</textarea>
+
+            <div style="text-align: center;">
+                <canvas id="canvas-image" width="300" height="300" style="border: 1px solid black;"></canvas>
+            </div>
+
+            <script type="text/javascript">
+                (function() {
+                    let canvas = document.getElementById("canvas-image");
+                    let ctx = canvas.getContext("2d");
+                    
+                    let img = new Image();
+                    img.src = 'https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage/canvas_drawimage.jpg';
+                    img.onload = function() {
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    };
+                })();
+            </script>
+
+
+
+            <h3 id="animer-un-dessin"> Animation </h3>
 
             <p>
                 Un canvas n'est qu'une image : ce qui a été dessiné y reste tant qu'on ne l'efface pas. Pour créer une animation, on répète donc en boucle trois opérations : <b>mettre à jour</b> les données (les positions), <b>effacer</b> le canvas, puis <b>redessiner</b> toute la scène.
@@ -271,10 +350,10 @@ boucle();</textarea>
 
             <script type="text/javascript">
                 (function() {
-                    var canvas = document.getElementById("canvas-animation");
-                    var ctx = canvas.getContext("2d");
-                    var bouton = document.getElementById("btn-animation");
-                    var x = 20, y = 50, dx = 2, id = null;
+                    let canvas = document.getElementById("canvas-animation");
+                    let ctx = canvas.getContext("2d");
+                    let bouton = document.getElementById("btn-animation");
+                    let x = 20, y = 50, dx = 2, id = null;
 
                     function boucle() {
                         x += dx;

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casse-briques : étape 3</title>
+    <link rel="stylesheet" href="../../../cours/css/style.css">
+    <link rel="stylesheet" href="css/guide.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+
+            <div id="header-container">Étape 3 : La boucle de jeu</div>
+
+            <p class="subtle"> Casse-briques · étape 3 sur 13 · durée estimée : 1 h </p>
+
+            <h2> Objectif </h2>
+
+            <p>
+                Faire <b>vivre</b> le jeu : la balle se déplace en continu, sans laisser de traînée. Pour cela, on répète 60 fois par seconde les mêmes trois opérations : mettre à jour l'état, effacer le canvas, redessiner. C'est la <b>boucle de jeu</b>, présente dans tous les jeux vidéo.
+            </p>
+
+            <div class="course-box">
+                <div class="box-header">📖 Dans le cours</div>
+                <ul>
+                    <li> <a href="../../../cours/pages/le_dessin_et_les_canvas.html#animer-un-dessin">Le dessin et les canvas : l'animation</a>, avec en particulier <a href="../../../cours/pages/le_dessin_et_les_canvas.html#effacer-le-canvas"><code>clearRect</code></a> et <a href="../../../cours/pages/le_dessin_et_les_canvas.html#request-animation-frame"><code>requestAnimationFrame</code></a>. </li>
+                    <li> <a href="../../../cours/pages/l_asynchronicite.html#minuteurs">L'asynchronicité : les minuteurs</a> (pour comprendre pourquoi <code>requestAnimationFrame</code> est préféré à <code>setInterval</code> pour une animation). </li>
+                    <li> <a href="../../../cours/pages/les_fonctions.html#fonctions-nommees">Les fonctions nommées</a>. </li>
+                </ul>
+            </div>
+
+            <h2> Le principe </h2>
+
+            <p>
+                Vous avez vu à l'étape 2 que le canvas se souvient de tout ce qu'on y dessine. Une animation consiste donc à répéter, image après image : <b>1.</b> modifier les positions, <b>2.</b> tout effacer, <b>3.</b> tout redessiner. Le cours détaille ces trois opérations et fournit une démo animée : lisez-la avant de commencer, puis appliquez-la à votre jeu avec vos propres fonctions <code>mettreAJour()</code> et <code>dessiner()</code>.
+            </p>
+
+            <h2> <span class="substep">3.1</span> La fonction <code>boucle()</code> </h2>
+
+            <p>
+                On réunit les trois opérations dans une seule fonction, que l'on appellera à chaque image. L'<b>ordre</b> compte : si l'on efface le canvas <i>après</i> avoir dessiné, il n'y a plus rien à voir.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Supprimez la boucle <code>for</code> de l'étape 2 (sous-étape 2.4), puis écrivez la fonction <code>boucle()</code> : </p>
+
+            <div class="pseudo">fonction boucle() :
+    1. appeler mettreAJour()
+    2. effacer tout le canvas (du point (0, 0) jusqu'à sa largeur et sa hauteur)
+    3. appeler dessiner()</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Pour effacer <b>tout</b> le canvas, la zone à effacer commence en haut à gauche et a la taille du canvas : utilisez <code>canvas.width</code> et <code>canvas.height</code>, pas des nombres écrits à la main. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> La méthode d'effacement s'appelle sur le contexte (<code>ctx</code>), comme les méthodes de dessin. </p>
+            </details>
+
+            <h2> <span class="substep">3.2</span> Se rappeler soi-même avec <code>requestAnimationFrame()</code> </h2>
+
+            <p>
+                <code>boucle()</code> ne s'exécute qu'une fois quand on l'appelle. Pour qu'elle se répète, on demande au navigateur de l'appeler de nouveau <b>à la prochaine image</b>, avec <code>requestAnimationFrame(fonction)</code>. Attention : on passe la <b>fonction elle-même</b>, sans parenthèses. Avec des parenthèses, on l'<i>exécuterait</i> immédiatement au lieu de la confier au navigateur.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Ajoutez la demande de l'image suivante à <code>boucle()</code> : </p>
+
+            <div class="pseudo">fonction boucle() :
+    1. appeler mettreAJour()
+    2. effacer tout le canvas
+    3. appeler dessiner()
+    4. demander au navigateur d'appeler boucle à la prochaine image</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Où écrire la demande : à la fin de la fonction, après les trois opérations. Et rappelez-vous la différence entre <code>boucle</code> (la fonction, que l'on transmet) et <code>boucle()</code> (un appel, qui s'exécute tout de suite). </p>
+            </details>
+
+            <h2> <span class="substep">3.3</span> Lancer la boucle </h2>
+
+            <p>
+                Déclarer une fonction ne l'exécute pas : il faut la lancer une première fois, après toutes les déclarations. Ensuite, elle s'appelle toute seule, image après image.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> À la fin de <code>game.js</code>, lancez la boucle : </p>
+
+            <div class="pseudo">appeler boucle() une première fois</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Rien ne se passe ? Vérifiez que l'appel se trouve <b>en dehors</b> de la fonction, tout en bas du fichier. Si la balle sort rapidement du canvas, c'est normal : elle ne rebondit pas encore (étape 4). Rechargez la page pour la revoir démarrer. </p>
+            </details>
+
+            <h2> <span class="substep">3.4</span> Régler la vitesse </h2>
+
+            <p>
+                La vitesse de la balle est la valeur de <code>balleDX</code> et <code>balleDY</code> : le nombre de pixels parcourus à chaque image. À 60 images par seconde, une vitesse de 2 pixels par image correspond à 120 pixels par seconde.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Expérimentez : </p>
+
+            <div class="pseudo">essayer plusieurs valeurs pour balleDX et balleDY (1, 3, 5…)
+observer l'effet sur la vitesse et sur la direction
+choisir une valeur de départ qui convient (2 et -2 conviennent bien pour la suite)</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Si <code>balleDX</code> et <code>balleDY</code> sont différents, la trajectoire n'est plus à 45°. Plus l'écart est grand, plus la balle est proche de l'horizontale ou de la verticale. </p>
+            </details>
+
+            <h2> Checklist de validation </h2>
+
+            <p> Rechargez la page, puis cochez : </p>
+
+            <ul class="checklist">
+                <li> La balle se déplace de façon fluide en diagonale, sans arrêt. </li>
+                <li> Il n'y a <b>aucune traînée</b> : à chaque instant, une seule balle est visible. </li>
+                <li> La raquette reste visible et immobile (elle est redessinée à chaque image). </li>
+                <li> La balle sort du canvas par le haut : ce n'est pas un bug, c'est l'objet de l'étape 4. </li>
+                <li> Modifier <code>balleDX</code> / <code>balleDY</code> change bien la vitesse. </li>
+                <li> La console ne contient aucune erreur en rouge. </li>
+            </ul>
+
+            <h2> Erreurs fréquentes </h2>
+
+            <ul>
+                <li> <b><code>Maximum call stack size exceeded</code></b> : vous avez écrit <code>requestAnimationFrame(boucle())</code> avec des parenthèses. La fonction s'appelle elle-même sans fin, sans jamais rendre la main au navigateur. </li>
+                <li> <b>La balle fait un seul pas puis s'arrête</b> : <code>requestAnimationFrame</code> a été oublié (ou se trouve à l'extérieur de <code>boucle()</code>). </li>
+                <li> <b>Le canvas reste vide</b> : le canvas est effacé <i>après</i> le dessin, ou <code>boucle()</code> n'est jamais lancée. </li>
+                <li> <b>La traînée est toujours là</b> : <code>clearRect</code> n'est pas appelé dans la boucle, ou ses dimensions sont trop petites. </li>
+                <li> <b>La page ralentit puis plante</b> : <code>boucle()</code> est lancée plusieurs fois (par exemple appelée à la fois en bas du fichier et dans un événement). Chaque lancement crée une boucle supplémentaire. </li>
+            </ul>
+
+            <div class="bonus-box">
+                <div class="box-header">⭐ Mission bonus</div>
+                <ul>
+                    <li>
+                        <b>★★★ Vitesse indépendante de l'écran (<code>deltaTime</code>).</b> Sur un écran à 144 Hz, la balle va plus vite que sur un écran à 60 Hz, car on avance d'un pas par <i>image</i>. Corrigez cela (voir l'encadré « À savoir » à la fin de <a href="../../../cours/pages/le_dessin_et_les_canvas.html#animer-un-dessin">la section Animation du cours</a>) :
+<div class="pseudo">la vitesse s'exprime en pixels par seconde (par exemple 120)
+récupérer l'instant courant (en millisecondes), ex: <code>let instantCourant = Date.now()</code>
+écart = instant courant - instant de l'image précédente, converti en secondes
+chaque position avance de : vitesse × écart
+mémoriser l'instant courant pour l'image suivante</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="step-nav">
+                <a href="etape_02.html">← Étape 2 : L'état du jeu</a>
+                <a href="etape_04.html">Étape 4 : Les rebonds →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="template-container"></div>
+
+    <script src="../../../cours/js/main.js"></script>
+</body>
+
+</html>

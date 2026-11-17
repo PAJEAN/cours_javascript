@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casse-briques : étape 12</title>
+    <link rel="stylesheet" href="../../../cours/css/style.css">
+    <link rel="stylesheet" href="css/guide.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+
+            <div id="header-container">Étape 12 : ⭐ Niveaux</div>
+
+            <p class="subtle"> Casse-briques · étape 12 sur 13 · durée estimée : 1 h 30 à 2 h </p>
+
+            <h2> Objectif </h2>
+
+            <p>
+                Jusqu'ici, la grille de briques est décrite par deux constantes (<code>LIGNES</code> et <code>COLONNES</code>) : tous les niveaux seraient identiques. Vous allez <b>charger les niveaux depuis un fichier JSON</b>, construire les briques à partir d'une grille de nombres, ajouter des <b>briques à plusieurs coups</b>, puis <b>enchaîner les niveaux</b> jusqu'à la victoire.
+            </p>
+
+            <div class="course-box">
+                <div class="box-header">📖 Dans le cours</div>
+                <ul>
+                    <li> <a href="../../../cours/pages/l_asynchronicite.html#promesses">L'asynchronicité : les promesses</a> (<code>.then()</code>, <code>.catch()</code>). </li>
+                    <li> <a href="../../../cours/pages/l_asynchronicite.html#appels-ajax">Les appels AJAX</a> : <code>fetch()</code>, <code>response.json()</code> et l'encadré « À savoir » sur Live Server. </li>
+                    <li> <a href="../../../cours/pages/les_tableaux.html#cells44">Les tableaux imbriqués</a> (un tableau de lignes, chaque ligne étant un tableau). </li>
+                    <li> <a href="../../../cours/pages/les_tableaux.html#cells52-1"><code>forEach</code> et <code>some</code></a> sur les tableaux. </li>
+                </ul>
+            </div>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">À savoir</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        À partir de cette étape, ouvrez <b>toujours</b> la page avec <i>Live Server</i> (clic droit sur <code>index.html</code> puis <i>Open with Live Server</i>) : le navigateur refuse de charger un fichier avec <code>fetch()</code> quand la page est ouverte directement depuis le disque (<code>file://</code>).
+                    </p>
+                </div>
+            </div>
+
+            <h2> <span class="substep">12.1</span> Le format des niveaux </h2>
+
+            <p>
+                Le fichier <code>niveaux.json</code> vous est <b>fourni</b> avec le projet. Copiez-le dans le dossier de votre jeu, <b>à côté de <code>index.html</code></b> : c'est ce chemin qui sera utilisé par <code>fetch</code>. Un fichier JSON décrit des données avec la même syntaxe qu'un objet JavaScript (vous l'avez déjà rencontrée avec <code>JSON.stringify</code> à l'étape 11) : ici, un objet qui contient un tableau <code>niveaux</code>, et chaque niveau a un <code>nom</code> et une <code>grille</code>.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Avant d'écrire du code, ouvrez le fichier et comprenez-le : </p>
+
+            <div class="pseudo">copier niveaux.json à côté de index.html
+ouvrir le fichier et répondre :
+    combien y a-t-il de niveaux ?
+    une grille est un tableau de lignes : combien de lignes, de colonnes ?
+    que signifient les valeurs 0, 1 et 2 ?
+    comment lire le nombre de colonnes d'un niveau ?
+        (indice : la longueur de sa première ligne)</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> <code>0</code> = pas de brique, <code>1</code> = brique normale (un coup), <code>2</code> = brique qui résiste à deux coups. La valeur d'une case est donc le <b>nombre de coups</b> qu'il faut pour casser la brique. </p>
+            </details>
+
+            <h2> <span class="substep">12.2</span> Charger le fichier avec <code>fetch</code> </h2>
+
+            <p>
+                <code>fetch(url)</code> ne renvoie pas le fichier tout de suite : elle renvoie une <b>promesse</b>. On enchaîne les étapes avec <code>.then()</code> : la première reçoit la réponse HTTP, la seconde reçoit le contenu lu en JSON. Un <code>.catch()</code> final attrape toute erreur. Comme le jeu a besoin des niveaux pour démarrer, on ne le crée qu'<b>une fois les données arrivées</b> : c'est tout le changement de cette sous-étape.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Faites en sorte que la classe <code>Jeu</code> reçoive les niveaux et ne soit créée qu'après leur chargement : </p>
+
+            <div class="pseudo">le constructeur de Jeu reçoit un paramètre niveaux
+    et le range dans this.niveaux
+
+à la fin de game.js (à la place de « jeu = nouveau Jeu(), lancer la boucle ») :
+    déclarer jeu (variable, vide au départ)
+    demander le fichier 'niveaux.json' avec fetch
+    puis, quand la réponse arrive :
+        si la réponse n'est pas ok : lever une erreur
+        renvoyer le contenu lu en JSON
+    puis, quand les données sont lues :
+        jeu = nouveau Jeu(donnees.niveaux)
+        lancer la boucle de jeu
+    en cas d'erreur :
+        créer un paragraphe qui explique le problème
+            et rappelle d'utiliser Live Server
+        l'ajouter à la page</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Chaque <code>.then()</code> doit <b>renvoyer</b> (<code>return</code>) ce dont le suivant a besoin : la première renvoie la lecture JSON, et c'est le résultat de cette lecture que reçoit la seconde. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Pour tester le <code>.catch()</code>, ouvrez la page <b>sans</b> Live Server, ou changez le nom du fichier : le message doit s'afficher dans la page, et pas seulement dans la console. Le jeu ne doit pas encore se comporter autrement : pour l'instant, il utilise toujours <code>LIGNES</code> et <code>COLONNES</code>. </p>
+            </details>
+
+            <h2> <span class="substep">12.3</span> De la grille de nombres aux briques </h2>
+
+            <p>
+                Au lieu de répéter une même brique <code>LIGNES × COLONNES</code> fois, <code>creerBriques</code> va <b>parcourir la grille du niveau</b> : pour chaque case, une valeur supérieure à <code>0</code> crée une brique, et la position de la brique se déduit de la ligne et de la colonne de la case. Le nombre de colonnes dépend maintenant du niveau : il faut le relire à chaque fois pour centrer la grille.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Modifiez <code>creerBriques</code> pour qu'elle reçoive une grille, puis utilisez-la pour le premier niveau : </p>
+
+            <div class="pseudo">creerBriques(grille) :
+    briques = tableau vide
+    colonnes = nombre de colonnes de la grille
+    largeurGrille = colonnes × Brique.LARGEUR + (colonnes - 1) × BRIQUE_ESPACE
+    gauche = (largeur du canvas - largeurGrille) / 2
+    pour chaque ligne l de la grille (avec son numéro) :
+        pour chaque valeur c de la ligne (avec son numéro) :
+            si la valeur est supérieure à 0 :
+                ajouter une nouvelle Brique à briques :
+                    x = gauche + c × (Brique.LARGEUR + BRIQUE_ESPACE)
+                    y = GRILLE_HAUT + l × (Brique.HAUTEUR + BRIQUE_ESPACE)
+                    (pour l'instant la valeur n'est pas utilisée)
+    renvoyer briques
+
+dans initialiserPartie :
+    this.niveau = 0   (numéro du niveau en cours)
+    this.briques = creerBriques de la grille du niveau en cours
+supprimer les constantes LIGNES et COLONNES (elles ne servent plus)</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> <code>forEach</code> appelle votre fonction avec <b>la valeur et son indice</b> : <code>ligne.forEach((valeur, c) =&gt; …)</code>. Deux <code>forEach</code> imbriqués remplacent les deux boucles <code>for</code> que vous aviez. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> La grille du niveau en cours s'obtient en deux temps : le niveau <code>this.niveaux[this.niveau]</code>, puis sa propriété <code>grille</code>. Vous devez voir apparaître la grille du niveau 1 : trois lignes de sept briques. </p>
+            </details>
+
+            <h2> <span class="substep">12.4</span> Les briques à plusieurs coups </h2>
+
+            <p>
+                Une brique doit maintenant <b>retenir son nombre de coups restants</b> : un attribut <code>pv</code> (points de vie), initialisé avec la valeur de la grille. Quand la balle la touche, la brique perd un point de vie et ne disparaît qu'à zéro. Pour qu'on voie les coups restants, la couleur dépend de <code>pv</code> : un objet <code>COULEURS_BRIQUES</code> associe un nombre de coups à une couleur.
+            </p>
+
+            <p>
+                Il y a un piège. Avec une brique à un coup, on rebondit n'importe comment, elle disparaît de toute façon. Avec deux coups, une balle qui <b>entre par le côté</b> reste dans la brique à l'image suivante et la touche une deuxième fois. Il faut donc faire rebondir la balle <b>du bon côté</b> : verticalement si elle arrivait par le haut ou par le bas, horizontalement si elle arrivait par un côté. Pour le savoir, on regarde où se trouvait la balle <b>avant</b> son dernier déplacement : <code>balle.y - balle.dy</code>. Si ce <i>y</i> était au-dessus ou au-dessous de la brique, elle arrivait verticalement.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Ajoutez les points de vie, puis corrigez le rebond : </p>
+
+            <div class="pseudo">dans la classe Brique :
+    le constructeur reçoit pv (1 par défaut) et le range dans this.pv
+    toucher() :
+        retirer 1 à pv
+        si pv est à 0 (ou moins) : la brique n'est plus active
+    dessiner() : la couleur vient de COULEURS_BRIQUES[this.pv]
+
+constante COULEURS_BRIQUES : un objet { 1: une couleur, 2: une autre couleur }
+
+dans creerBriques :
+    passer la valeur de la case comme pv de la nouvelle brique
+
+dans mettreAJour, quand la balle touche une brique active :
+    yAvant = balle.y - balle.dy
+    si yAvant est au-dessus du haut de la brique OU sous le bas de la brique :
+        inverser dy
+    sinon :
+        inverser dx
+    appeler brique.toucher()
+    si la brique n'est plus active :
+        ajouter les points au score (seulement à la destruction)</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Pour une valeur par défaut, écrivez-la dans les paramètres du constructeur : <code>constructor(x, y, pv = 1)</code>. Le haut de la brique est <code>brique.y</code> ; son bas est <code>brique.y + Brique.HAUTEUR</code>. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Si une brique à deux coups disparaît d'un seul coup, le score monte de 10 à chaque touche, ou la balle traverse les briques : vérifiez d'abord que le score n'est augmenté que lorsque la brique <b>vient de</b> devenir inactive, puis que vous inversez bien <code>dx</code> ou <code>dy</code> (jamais les deux). </p>
+            </details>
+
+            <h2> <span class="substep">12.5</span> Enchaîner les niveaux </h2>
+
+            <p>
+                Quand toutes les briques du niveau sont cassées, la partie ne doit plus s'arrêter : on passe au niveau suivant, <b>sans perdre le score ni les vies</b>. Seul le dernier niveau mène à la victoire. Vous connaissez déjà <code>some</code> pour savoir s'il reste une brique active.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Créez la méthode <code>niveauTermine()</code> et appelez-la quand il n'y a plus de brique active : </p>
+
+            <div class="pseudo">niveauTermine() :
+    si ce n'est pas le dernier niveau (this.niveau + 1 &lt; nombre de niveaux) :
+        passer au niveau suivant (this.niveau augmente de 1)
+        recréer les briques avec la grille de ce niveau
+        replacer la balle et la raquette
+    sinon :
+        terminer la partie avec le message « GAGNÉ ! »
+
+dans mettreAJour :
+    si la partie est en cours ET aucune brique n'est active :
+        appeler niveauTermine()   (à la place de la victoire directe)
+
+dans dessinerInfos :
+    afficher le nom du niveau en cours (this.niveaux[this.niveau].nom)
+    au milieu du haut du canvas</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Pour le replacement, vous avez déjà ce qu'il faut : la balle et la raquette possèdent chacune une méthode <code>reinitialiser()</code> (étape 9). </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Pourquoi tester que la partie est « en cours » ? Si la dernière vie vient d'être perdue pendant cette même image, l'état est déjà passé à <code>fin</code> : on ne doit pas enchaîner un niveau sur une partie terminée. Pensez aussi à <code>textAlign</code> pour centrer le nom du niveau. </p>
+            </details>
+
+            <h2> Checklist de validation </h2>
+
+            <p> Ouvrez la page avec Live Server, puis cochez : </p>
+
+            <ul class="checklist">
+                <li> La page s'ouvre sans erreur dans la console et le nom « Niveau 1 » s'affiche en haut. </li>
+                <li> Sans Live Server (ou avec un mauvais nom de fichier), un message d'erreur clair apparaît dans la page. </li>
+                <li> Le niveau 1 affiche trois lignes de sept briques, centrées. </li>
+                <li> Au niveau 2, les briques de la rangée du haut (deux coups) changent de couleur au premier choc, puis disparaissent au second. </li>
+                <li> Une balle qui touche une brique par le côté rebondit horizontalement (elle ne traverse pas la brique et ne la touche pas deux fois). </li>
+                <li> Le score augmente de 10 seulement quand une brique disparaît. </li>
+                <li> Casser toutes les briques du niveau 1 mène au niveau 2, puis au niveau 3 ; le score et les vies sont conservés. </li>
+                <li> Casser le niveau 3 affiche « GAGNÉ ! » ; « Rejouer » repart du niveau 1. </li>
+            </ul>
+
+            <h2> Erreurs fréquentes </h2>
+
+            <ul>
+                <li> <b><code>Failed to fetch</code> / <code>CORS</code></b> : la page est ouverte en <code>file://</code>. Lancez-la avec Live Server. </li>
+                <li> <b>Erreur HTTP 404</b> : <code>niveaux.json</code> n'est pas à côté de <code>index.html</code>, ou son nom est mal orthographié. </li>
+                <li> <b><code>Cannot read properties of undefined (reading 'grille')</code></b> : le jeu est créé avant la fin du chargement, ou <code>this.niveaux</code> n'a pas été rempli par le constructeur. </li>
+                <li> <b><code>donnees</code> vaut <code>undefined</code></b> : le premier <code>.then()</code> n'a pas renvoyé (<code>return</code>) la lecture JSON. </li>
+                <li> <b>Le jeu est créé avec <code>donnees</code> au lieu de <code>donnees.niveaux</code></b> : le fichier contient un <b>objet</b> avec un tableau, pas directement un tableau. </li>
+                <li> <b>La couleur d'une brique est fausse ou noire</b> : <code>COULEURS_BRIQUES[this.pv]</code> n'a pas d'entrée pour la valeur de <code>pv</code>. </li>
+                <li> <b>Une brique à deux coups disparaît d'un coup</b> : la balle reste dans la brique et la touche à nouveau à l'image suivante ; vérifiez le choix entre rebond vertical et horizontal. </li>
+                <li> <b>Le jeu se lance deux fois</b> (vitesse doublée) : la boucle est démarrée à la fois dans <code>.then()</code> et ailleurs. </li>
+            </ul>
+
+            <div class="bonus-box">
+                <div class="box-header">⭐ Missions bonus</div>
+                <ul>
+                    <li> <b>★</b> Ajoutez un 4<sup>e</sup> niveau dans <code>niveaux.json</code> (une forme de votre choix : pyramide, damier, votre prénom…). Aucun changement de code n'est nécessaire. </li>
+                    <li> <b>★★</b> Ajoutez dans chaque niveau une propriété <code>vitesse</code> et utilisez-la pour régler la vitesse de la balle au début du niveau. </li>
+                    <li> <b>★★</b> Ajoutez une brique <b>indestructible</b> (par exemple la valeur <code>-1</code> dans la grille) : elle fait rebondir la balle mais ne compte pas dans les briques à casser. </li>
+                </ul>
+            </div>
+
+            <div class="step-nav">
+                <a href="etape_11.html">← Étape 11 : Highscore</a>
+                <a href="etape_13.html">Étape 13 : Arcade, les effets bonus →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="template-container"></div>
+
+    <script src="../../../cours/js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casse-briques : étape 10</title>
+    <link rel="stylesheet" href="../../../cours/css/style.css">
+    <link rel="stylesheet" href="css/guide.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+
+            <div id="header-container">Étape 10 : Menu, pause, rejouer</div>
+
+            <p class="subtle"> Casse-briques · étape 10 sur 13 · durée estimée : 45 min à 1 h 30 </p>
+
+            <h2> Objectif </h2>
+
+            <p>
+                Le jeu démarre aujourd'hui dès que la page s'ouvre et, pour rejouer, il faut recharger la page. Vous allez lui donner de vrais <b>écrans</b> : un écran titre avant la partie, une <b>pause</b> (touche <kbd>P</kbd> et bouton), et la possibilité de <b>rejouer</b> sans recharger la page.
+            </p>
+
+            <p>
+                Cette étape se code dans la classe <code>Jeu</code> écrite à l'étape 9 (les classes <code>Raquette</code>, <code>Balle</code> et <code>Brique</code> ne changent pas). <b>Classe débutante</b> : l'essentiel est le système d'états (10.1 à 10.4) avec le clavier ; les <b>boutons HTML</b> sont facultatifs.
+            </p>
+
+            <div class="course-box">
+                <div class="box-header">📖 Dans le cours</div>
+                <ul>
+                    <li> <a href="../../../cours/pages/l_interactivite.html#gestionnaire-d-evenements">L'interactivité : le gestionnaire d'événements</a> (<code>addEventListener</code>, <code>click</code>). </li>
+                    <li> <a href="../../../cours/pages/l_interactivite.html#evenements-clavier">Les événements du clavier</a> (<code>keydown</code>, <code>event.key</code>). </li>
+                    <li> <a href="../../../cours/pages/l_interactivite.html#trouver-les-elements">Trouver les éléments du document</a> (récupérer un bouton). </li>
+                    <li> <a href="../../../cours/pages/l_interactivite.html#attributs-simples">Les attributs simples</a> (par exemple <code>disabled</code> d'un bouton). </li>
+                    <li> <a href="../../../cours/pages/les_conditions.html#cells64"><code>switch</code></a> (une valeur, plusieurs cas). </li>
+                    <li> <a href="../../../cours/pages/le_dessin_et_les_canvas.html#ecrire-du-texte">Écrire du texte dans un canvas</a>. </li>
+                </ul>
+            </div>
+
+            <h2> Un état plutôt que des booléens </h2>
+
+            <p>
+                À l'étape 9, une seule information indique si la partie avance : <code>enCours</code> (vrai ou faux). Avec un écran titre et une pause, deux valeurs ne suffisent plus, et ajouter un booléen par situation (<code>enPause</code>, <code>enMenu</code>…) mène vite à des combinaisons impossibles (« en pause et terminé » ?). On utilise à la place <b>un seul attribut</b>, <code>etat</code>, qui contient <b>une chaîne parmi quatre</b> : <code>'menu'</code>, <code>'jeu'</code>, <code>'pause'</code> ou <code>'fin'</code>. À tout instant, le jeu est dans <b>un et un seul</b> état.
+            </p>
+
+            <p>
+                La boucle continue alors de tourner en permanence (pour pouvoir afficher le menu ou la pause), mais <b>seul l'état <code>'jeu'</code> fait avancer la partie</b>.
+            </p>
+
+            <h2> <span class="substep">10.1</span> Les états du jeu </h2>
+
+            <p>
+                Le booléen <code>enCours</code> disparaît complètement : chaque endroit qui le lisait ou le modifiait utilise maintenant <code>etat</code>. On change aussi l'affichage : selon l'état, un voile semi-transparent recouvre le jeu avec un titre et une consigne. Une fonction à <code>switch</code> choisit quoi écrire.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Dans <code>Jeu</code> : </p>
+
+            <div class="pseudo">initialiserPartie() :
+    attribut etat = 'menu'      (remplace enCours)
+
+terminer(message) :
+    etat = 'fin'                (remplace enCours = faux)
+
+boucle() :
+    si etat vaut 'jeu' : mettreAJour()
+    effacer le canvas
+    dessiner()
+    redemander une image TOUJOURS (plus de condition sur enCours)
+
+dessinerTexte(titre, sousTitre) :
+    voile noir semi-transparent sur tout le canvas
+    écrire le titre au centre, le sous-titre juste dessous
+
+dessinerEcran() :      (remplace dessinerMessage)
+    selon etat :
+        'menu'  : titre du jeu + consigne (Espace pour jouer, flèches, P pour la pause)
+        'pause' : "PAUSE" + consigne pour reprendre
+        'fin'   : le message (GAGNÉ / PERDU) + consigne pour rejouer
+        'jeu'   : rien
+
+dessiner() :
+    appeler dessinerEcran() à la place de dessinerMessage()</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Pour un voile semi-transparent, utilisez une couleur <code>rgba(0, 0, 0, 0.6)</code> : le dernier nombre est l'opacité. Dessinez-le <b>avant</b> le texte (sinon il le cacherait). Pensez à repasser <code>fillStyle</code> en blanc pour le texte. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Un <code>switch</code> sur <code>this.etat</code> avec un <code>case</code> par état, chacun terminé par <code>break</code>. Faites une recherche dans votre fichier du mot <code>enCours</code> : il ne doit plus apparaître nulle part (sauf dans un éventuel commentaire). </p>
+            </details>
+
+            <h2> <span class="substep">10.2</span> Écran titre et lancement </h2>
+
+            <p>
+                Au chargement, le jeu est dans l'état <code>'menu'</code> : la balle ne bouge pas. Il faut un <b>déclencheur</b> pour passer à <code>'jeu'</code> : la barre d'espace ou la touche Entrée, et un bouton « Jouer » dans la page (facultatif). On regroupe la logique dans une méthode <code>lancer()</code>, appelée par le clavier et par le bouton : ainsi, une même action est écrite une seule fois.
+            </p>
+
+            <p>
+                Un bouton se crée dans <code>index.html</code>, avec un <code>id</code> pour le retrouver depuis <code>game.js</code> (voir <a href="../../../cours/pages/l_interactivite.html#trouver-les-elements">le cours</a>). On lit le bouton dans le constructeur de <code>Jeu</code>, dans un attribut (par exemple <code>this.boutonJouer</code>), et l'écouteur <code>click</code> est branché dans une méthode <code>ecouterBoutons()</code>.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> </p>
+
+            <div class="pseudo">dans index.html (facultatif) :
+    sous le canvas, un bouton "Jouer" (id btn-jouer)
+
+dans Jeu :
+    constructeur : récupérer le bouton, puis ecouterBoutons()
+    méthode lancer() :
+        si etat n'est ni 'menu' ni 'fin' : ne rien faire
+        sinon : etat = 'jeu'
+    ecouterClavier() :
+        à l'appui sur Espace ou Entrée : (empêcher le défilement de la page) puis lancer()
+    ecouterBoutons() :
+        clic sur le bouton Jouer : lancer()</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Dans <code>evt.key</code>, la barre d'espace s'écrit <code>' '</code> (un espace entre guillemets) et non <code>'Space'</code>. Pour empêcher la page de défiler quand on appuie sur Espace, il faut <code>evt.preventDefault()</code>. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Le garde « ne rien faire si l'état n'est ni <code>'menu'</code> ni <code>'fin'</code> » est important : sans lui, appuyer sur Espace <b>pendant</b> la partie la relancerait. Écrivez-le en première instruction de <code>lancer()</code> avec un <code>return</code> anticipé. </p>
+            </details>
+
+            <h2> <span class="substep">10.3</span> La pause </h2>
+
+            <p>
+                La pause bascule entre deux états : <code>'jeu'</code> devient <code>'pause'</code> et inversement. Dans les autres états (menu, fin), appuyer sur <kbd>P</kbd> ne doit <b>rien</b> faire. Comme la boucle n'appelle <code>mettreAJour()</code> que dans l'état <code>'jeu'</code>, la partie se fige toute seule : il n'y a rien d'autre à écrire pour l'arrêter.
+            </p>
+
+            <p>
+                Un bouton « Pause » peut changer de texte (« Reprendre ») et être <b>désactivé</b> quand il ne sert à rien. On change le texte d'un élément avec <code>textContent</code> (comme <code>innerHTML</code> dans le cours, mais pour du texte simple), et on le désactive avec l'attribut <code>disabled</code> (<code>true</code> / <code>false</code>).
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> </p>
+
+            <div class="pseudo">dans index.html (facultatif) :
+    un bouton "Pause" (id btn-pause) à côté du bouton Jouer
+
+dans Jeu :
+    méthode basculerPause() :
+        si etat vaut 'jeu'   : etat = 'pause'
+        sinon si etat vaut 'pause' : etat = 'jeu'
+    ecouterClavier() :
+        à l'appui sur P (minuscule ou majuscule) : basculerPause()
+    ecouterBoutons() :
+        clic sur le bouton Pause : basculerPause()
+
+facultatif : méthode mettreAJourBoutons() :
+    bouton Jouer : texte "Rejouer" si etat vaut 'fin', sinon "Jouer" ; désactivé pendant 'jeu' et 'pause'
+    bouton Pause : texte "Reprendre" si etat vaut 'pause', sinon "Pause" ; désactivé en 'menu' et 'fin'
+    (à appeler à chaque changement d'état)</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> La touche <kbd>P</kbd> donne <code>'p'</code> ou <code>'P'</code> dans <code>evt.key</code> selon la touche Majuscule : testez les deux (avec <code>||</code>). </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Pour mettre à jour les boutons à chaque changement d'état, appelez <code>mettreAJourBoutons()</code> dans tous les endroits où <code>etat</code> est modifié (<code>initialiserPartie</code>, <code>lancer</code>, <code>basculerPause</code>, <code>terminer</code>). Pour une condition « texte A ou texte B », l'opérateur ternaire <code>condition ? a : b</code> est pratique (<a href="../../../cours/pages/les_conditions.html#cells65">voir le cours</a>). </p>
+            </details>
+
+            <h2> <span class="substep">10.4</span> Rejouer </h2>
+
+            <p>
+                À l'étape 8.4 (et 9.4), « rejouer » rechargeait la page. On veut maintenant repartir d'une <b>partie neuve</b> sans recharger : tout ce qui décrit une partie (balle, raquette, briques, score, vies, message) doit être recréé. Vous avez déjà une méthode qui fait exactement cela : <code>initialiserPartie()</code>.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> </p>
+
+            <div class="pseudo">lancer() :
+    si etat n'est ni 'menu' ni 'fin' : ne rien faire
+    si etat vaut 'fin' : initialiserPartie()   (partie neuve)
+    etat = 'jeu'
+
+supprimer le rechargement de la page (document.location.reload) de ecouterClavier()</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> <code>initialiserPartie()</code> remet <code>etat</code> à <code>'menu'</code> : il faut donc passer à <code>'jeu'</code> <b>après</b> l'avoir appelée. Si, au lieu de recommencer, la partie se termine tout de suite, c'est qu'un attribut (le nombre de vies, le message…) n'est pas réinitialisé dans <code>initialiserPartie()</code>. </p>
+            </details>
+
+            <h2> Checklist de validation </h2>
+
+            <p> Rechargez la page, puis cochez : </p>
+
+            <ul class="checklist">
+                <li> Au chargement, l'écran titre s'affiche avec la grille derrière et la balle <b>immobile</b>. </li>
+                <li> Espace (ou Entrée, ou le bouton) lance la partie. </li>
+                <li> <kbd>P</kbd> (ou le bouton) met le jeu en pause : tout est figé, « PAUSE » s'affiche ; <kbd>P</kbd> reprend là où on s'était arrêté. </li>
+                <li> <kbd>P</kbd> ne fait rien sur l'écran titre ni sur l'écran de fin. </li>
+                <li> Appuyer sur Espace pendant la partie ne la relance pas. </li>
+                <li> En fin de partie (gagnée ou perdue), l'écran de fin s'affiche, et Espace relance une <b>nouvelle partie complète</b> (score à zéro, toutes les vies, toutes les briques) sans recharger la page. </li>
+                <li> Le mot <code>enCours</code> n'existe plus dans le code ; un seul attribut, <code>etat</code>, décrit l'état. </li>
+                <li> La console ne contient aucune erreur en rouge. </li>
+            </ul>
+
+            <h2> Erreurs fréquentes </h2>
+
+            <ul>
+                <li> <b>La partie démarre toute seule</b> : l'état initial n'est pas <code>'menu'</code>, ou <code>mettreAJour()</code> est appelée sans tester <code>etat === 'jeu'</code>. </li>
+                <li> <b>L'écran reste vide après la fin</b> (ou le canvas ne se redessine plus) : la boucle s'arrête si <code>requestAnimationFrame</code> n'est plus appelé quand l'état n'est pas <code>'jeu'</code>. Il doit être appelé à chaque tour, dans tous les états. </li>
+                <li> <b>L'erreur <code>etat is not defined</code></b> : il manque <code>this.</code> devant <code>etat</code>. </li>
+                <li> <b>Rien ne se passe en comparant des états</b> : <code>=</code> affecte, <code>===</code> compare. <code>if (this.etat = 'jeu')</code> écrase l'état au lieu de le tester. Vérifiez aussi l'orthographe des chaînes (<code>'pause'</code> et pas <code>'Pause'</code>). </li>
+                <li> <b>Espace relance le jeu ou le met en pause « tout seul »</b> : après un clic, le bouton garde le focus et la barre d'espace le « clique » à nouveau. Appelez <code>blur()</code> sur le bouton après le clic. </li>
+                <li> <b>Espace relance la partie en pleine partie</b> : <code>lancer()</code> doit tester l'état en première instruction et sortir si on n'est ni dans <code>'menu'</code> ni dans <code>'fin'</code>. </li>
+                <li> <b>La nouvelle partie reprend avec l'ancien score ou les anciennes briques</b> : <code>initialiserPartie()</code> ne recrée pas tous les attributs. </li>
+                <li> <b>Les touches fléchées ne répondent plus après un clic sur un bouton</b> : le focus est sur le bouton ; <code>blur()</code> règle aussi ce problème. </li>
+            </ul>
+
+            <div class="bonus-box">
+                <div class="box-header">⭐ Missions bonus</div>
+                <ul>
+                    <li> <b>★★</b> Compte à rebours « 3, 2, 1 » avant de lancer la balle : ajoutez un état (par exemple <code>'compte'</code>) ou un attribut, et utilisez <code>setTimeout</code> / <code>setInterval</code> (<a href="../../../cours/pages/l_asynchronicite.html#minuteurs">voir les minuteurs</a>). Dessinez le chiffre au centre du canvas ; la partie commence quand le compte atteint zéro. </li>
+                </ul>
+            </div>
+
+            <div class="step-nav">
+                <a href="etape_09.html">← Étape 9 : Passer en objets</a>
+                <a href="etape_11.html">Étape 11 : Highscore →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="template-container"></div>
+
+    <script src="../../../cours/js/main.js"></script>
+</body>
+
+</html>

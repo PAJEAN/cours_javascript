@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casse-briques : étape 7</title>
+    <link rel="stylesheet" href="../../../cours/css/style.css">
+    <link rel="stylesheet" href="css/guide.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+
+            <div id="header-container">Étape 7 : Casser les briques</div>
+
+            <p class="subtle"> Casse-briques · étape 7 sur 13 · durée estimée : 1 h à 1 h 30 </p>
+
+            <h2> Objectif </h2>
+
+            <p>
+                Rendre les briques cassables : quand la balle touche une brique, celle-ci <b>disparaît</b> et la balle repart dans l'autre sens. Quand il ne reste plus aucune brique, la partie est gagnée. Avec cette étape, la partie a enfin un but !
+            </p>
+
+            <div class="course-box">
+                <div class="box-header">📖 Dans le cours</div>
+                <ul>
+                    <li> <a href="../../../cours/pages/les_fonctions.html#fonctions-nommees">Les fonctions : les fonctions nommées</a> (paramètres et valeur renvoyée par <code>return</code>). </li>
+                    <li> <a href="../../../cours/pages/les_conditions.html#cells62">Les conditions : les opérateurs logiques</a> (<code>&amp;&amp;</code>, <code>||</code>, <code>!</code>). </li>
+                    <li> <a href="../../../cours/pages/les_boucles.html#cells69">Les boucles : <code>for...of</code></a> (déjà utilisée pour dessiner les briques). </li>
+                    <li> <a href="../../../cours/pages/les_conditions.html#cells61">Les conditions : la condition simple</a> (<code>&lt;</code>, <code>&gt;</code>, <code>===</code>). </li>
+                </ul>
+            </div>
+
+            <h2> Savoir si un point est dans un rectangle </h2>
+
+            <p>
+                Pour savoir si la balle touche une brique, on utilise la version <b>simple</b> : on regarde seulement si le <b>centre</b> de la balle (<code>balleX</code>, <code>balleY</code>) se trouve à l'intérieur du rectangle de la brique. On ne tient pas compte du rayon : c'est moins précis, mais suffisant pour jouer.
+            </p>
+
+            <p>
+                Être « à l'intérieur » signifie être entre deux bornes, à la fois horizontalement <i>et</i> verticalement : il faut donc combiner plusieurs comparaisons avec <code>&amp;&amp;</code> (« et »). À une seule dimension, voici comment tester qu'une température est confortable :
+            </p>
+
+<textarea class="editor" spellcheck="false" readonly>
+const confort = { mini: 18, maxi: 25 };
+let temperature = 21;
+
+console.log(temperature > confort.mini && temperature < confort.maxi); // true</textarea>
+
+            <p>
+                Un rectangle, c'est la même idée appliquée deux fois (une fois pour <i>x</i>, une fois pour <i>y</i>). Rappel : le coin supérieur gauche de la brique est en <i>(x, y)</i>, et elle s'étend vers la droite et vers le <b>bas</b>.
+            </p>
+
+            <h2> <span class="substep">7.1</span> La fonction <code>balleToucheBrique()</code> </h2>
+
+            <p>
+                On isole le test dans une fonction qui reçoit une brique en paramètre et <b>renvoie</b> <code>true</code> ou <code>false</code>. C'est pratique : le reste du code pourra l'utiliser comme une condition lisible (<code>if (balleToucheBrique(brique))</code>) sans se soucier du détail du calcul.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Écrivez la fonction <code>balleToucheBrique(brique)</code> : </p>
+
+            <div class="pseudo">fonction balleToucheBrique(brique) :
+    renvoyer vrai si les quatre conditions sont vraies en même temps :
+        le centre de la balle est à droite du bord gauche de la brique
+        ET à gauche du bord droit de la brique   (bord gauche + BRIQUE_LARGEUR)
+        ET sous le bord haut de la brique
+        ET au-dessus du bord bas de la brique     (bord haut + BRIQUE_HAUTEUR)</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Les deux premières conditions portent sur <code>balleX</code>, les deux dernières sur <code>balleY</code>. Le bord gauche de la brique est son <code>x</code>, son bord droit est <code>x + BRIQUE_LARGEUR</code>. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Pour tester votre fonction avant de la brancher au jeu, appelez-la dans la console avec une brique connue, par exemple <code>console.log(balleToucheBrique(briques[0][0]))</code> : la balle étant en bas du canvas au départ, le résultat doit être <code>false</code>. </p>
+            </details>
+
+            <h2> <span class="substep">7.2</span> Parcourir les briques et casser celle qui est touchée </h2>
+
+            <p>
+                À chaque image, dans <code>mettreAJour()</code>, il faut examiner <b>chaque brique</b> du tableau 2D, exactement comme dans <code>dessinerBriques()</code> : deux boucles <code>for...of</code> imbriquées. Pour chaque brique qui est encore active, on demande à <code>balleToucheBrique()</code> si la balle la touche. Si oui, deux choses se produisent : la brique est désactivée (elle disparaîtra donc de l'écran grâce à <code>dessinerBriques()</code>) et la balle rebondit verticalement.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> À la fin de <code>mettreAJour()</code>, après les tests de rebond sur les murs, le plafond, la raquette et le sol, ajoutez le parcours des briques : </p>
+
+            <div class="pseudo">pour chaque ligne du tableau briques :
+    pour chaque brique de la ligne :
+        si la brique est active ET que balleToucheBrique(brique) est vrai :
+            désactiver la brique
+            inverser la vitesse verticale de la balle (balleDY)</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Le test de la brique active doit venir <b>en premier</b> dans la condition : sinon une brique déjà cassée (invisible) continuerait à faire rebondir la balle. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> La balle traverse les briques sans rien casser ? Vérifiez que votre parcours se trouve bien <i>dans</i> <code>mettreAJour()</code> (et pas après la fin de la fonction) et que vous l'avez écrit une seule fois. Si la balle « s'enfonce » dans une brique et la détruit sans rebondir correctement, c'est normal avec cette version simple de la collision. </p>
+            </details>
+
+            <details>
+                <summary>Squelette à trous pour les débutants</summary>
+                <p> Complétez chaque <code>// TODO</code> en vous aidant du pseudo-code ci-dessus. </p>
+<textarea class="editor" spellcheck="false" readonly>
+function balleToucheBrique(brique) {
+    return /* TODO : quatre comparaisons reliées par && */;
+}
+
+// Dans mettreAJour(), après les rebonds :
+for (const ligne of /* TODO */) {
+    for (const brique of /* TODO */) {
+        if (/* TODO : brique active ET touchée par la balle */) {
+            // TODO : désactiver la brique
+            // TODO : inverser la vitesse verticale
+            // TODO (7.3) : une brique de moins à casser
+        }
+    }
+}
+
+// TODO (7.3) : si plus aucune brique, la partie est gagnée</textarea>
+            </details>
+
+            <h2> <span class="substep">7.3</span> La victoire </h2>
+
+            <p>
+                La partie est gagnée quand toutes les briques ont été cassées. Plutôt que de re-parcourir tout le tableau à chaque image, on tient un <b>compteur</b> : une variable d'état qui commence au nombre total de briques et qui diminue de 1 à chaque brique cassée. Quand elle atteint 0, c'est gagné : on arrête la partie et on affiche un message, comme vous l'avez fait pour la défaite à l'étape 4.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Ajoutez le compteur <code>briquesRestantes</code>, mettez-le à jour dans le parcours de la sous-étape 7.2, puis testez la victoire : </p>
+
+            <div class="pseudo">avec les variables d'état :
+    briquesRestantes = LIGNES × COLONNES
+
+dans le parcours de 7.2, quand une brique est cassée :
+    briquesRestantes diminue de 1
+
+à la fin de mettreAJour() :
+    si briquesRestantes vaut 0 :
+        la partie n'est plus en cours (partieEnCours)
+        message = 'GAGNÉ !'</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Pour tester la victoire sans casser 28 briques, mettez temporairement <code>LIGNES = 1</code> et <code>COLONNES = 2</code> : il ne reste que deux briques à casser. N'oubliez pas de remettre les vraies valeurs ensuite ! </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Le message ne s'affiche pas ? La fonction <code>dessinerMessage()</code> écrite à l'étape 4 affiche déjà la variable <code>message</code> : il suffit de lui donner une valeur. La boucle dessine une dernière image avant de s'arrêter, ce qui affiche le message. </p>
+            </details>
+
+            <h2> Checklist de validation </h2>
+
+            <p> Rechargez la page, puis cochez : </p>
+
+            <ul class="checklist">
+                <li> Quand la balle touche une brique, celle-ci disparaît. </li>
+                <li> La balle rebondit (elle repart vers le bas) après avoir cassé une brique. </li>
+                <li> Une brique cassée ne fait plus rebondir la balle : la balle peut passer dans le trou laissé. </li>
+                <li> Les rebonds sur les murs, le plafond et la raquette fonctionnent toujours. </li>
+                <li> Quand la dernière brique est cassée, la balle s'arrête et le message « GAGNÉ ! » s'affiche. </li>
+                <li> La défaite (balle perdue en bas) fonctionne toujours. </li>
+                <li> La console ne contient aucune erreur en rouge. </li>
+            </ul>
+
+            <h2> Erreurs fréquentes </h2>
+
+            <ul>
+                <li> <b>La balle traverse les briques</b> : la fonction <code>balleToucheBrique()</code> renvoie toujours <code>false</code>. Vérifiez les signes <code>&gt;</code> / <code>&lt;</code> et que vous testez bien le bord <b>bas</b> (<code>y + BRIQUE_HAUTEUR</code>) et le bord <b>droit</b> (<code>x + BRIQUE_LARGEUR</code>). </li>
+                <li> <b>La fonction ne renvoie rien (<code>undefined</code>)</b> : il manque le mot <code>return</code>. </li>
+                <li> <b>Toutes les briques disparaissent d'un coup</b> : la condition ne teste pas la <i>brique courante</i> (par exemple, on utilise <code>briques[0][0]</code> au lieu de la variable de la boucle). </li>
+                <li> <b>Des briques invisibles font encore rebondir la balle</b> : on a oublié de tester <code>actif</code> avant <code>balleToucheBrique()</code>. </li>
+                <li> <b>On gagne trop tôt ou jamais</b> : le compteur est décrémenté à chaque image au lieu de l'être seulement quand une brique est cassée, ou n'est pas initialisé à <code>LIGNES * COLONNES</code>. </li>
+                <li> <b>Une brique est cassée, mais la balle continue tout droit</b> : on a oublié d'inverser <code>balleDY</code>. </li>
+            </ul>
+
+            <div class="bonus-box">
+                <div class="box-header">⭐ Missions bonus</div>
+                <ul>
+                    <li> <b>★</b> La balle accélère un peu à chaque brique cassée, avec un <b>plafond</b> pour que le jeu reste jouable (voir <a href="../../../cours/pages/les_variables.html#objet-math">l'objet <code>Math</code></a> : <code>Math.min</code>, <code>Math.abs</code>). Attention au signe des vitesses : <code>balleDX</code> et <code>balleDY</code> peuvent être négatives. </li>
+                </ul>
+            </div>
+
+            <div class="step-nav">
+                <a href="etape_06.html">← Étape 6 : Les briques</a>
+                <a href="etape_08.html">Étape 8 : Score et vies →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="template-container"></div>
+
+    <script src="../../../cours/js/main.js"></script>
+</body>
+
+</html>

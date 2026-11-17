@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casse-briques : étape 5</title>
+    <link rel="stylesheet" href="../../../cours/css/style.css">
+    <link rel="stylesheet" href="css/guide.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+
+            <div id="header-container">Étape 5 : Piloter la raquette</div>
+
+            <p class="subtle"> Casse-briques · étape 5 sur 13 · durée estimée : 1 h </p>
+
+            <h2> Objectif </h2>
+
+            <p>
+                Rendre le jeu <b>interactif</b> : la raquette se déplace avec les flèches gauche et droite, sans sortir du canvas. La balle rebondit dessus, et la zone de la raquette touchée détermine sa direction : le joueur peut enfin viser.
+            </p>
+
+            <div class="course-box">
+                <div class="box-header">📖 Dans le cours</div>
+                <ul>
+                    <li> <a href="../../../cours/pages/l_interactivite.html#evenements-clavier">L'interactivité : les événements du clavier</a> (<code>keydown</code>, <code>keyup</code>, <code>event.key</code>, mémoriser l'état des touches). </li>
+                    <li> <a href="../../../cours/pages/les_variables.html#objet-math">Les variables : l'objet <code>Math</code></a> (<code>Math.min</code>, <code>Math.max</code>, <code>Math.abs</code>). </li>
+                    <li> <a href="../../../cours/pages/les_conditions.html#cells62">Les conditions : <code>&amp;&amp;</code> et <code>||</code></a> pour combiner plusieurs tests. </li>
+                </ul>
+            </div>
+
+            <h2> <span class="substep">5.1</span> L'état des touches </h2>
+
+            <p>
+                Déplacer la raquette directement dans l'événement <code>keydown</code> donnerait un mouvement saccadé : le navigateur répète cet événement seulement après une courte pause. La méthode fiable, expliquée dans le cours, consiste à <b>mémoriser l'état des touches</b> : <code>keydown</code> note « la touche est enfoncée », <code>keyup</code> note « elle est relâchée », et la boucle de jeu lit cette information à chaque image.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Créez un objet <code>touches</code> et deux gestionnaires d'événements, sur <code>document</code> : </p>
+
+            <div class="pseudo">objet touches avec deux booléens :
+    ArrowLeft  = faux
+    ArrowRight = faux
+
+quand une touche est enfoncée (keydown) :
+    si cette touche est l'une de celles de touches :
+        la passer à vrai
+        empêcher le comportement par défaut (la page ne doit pas défiler)
+
+quand une touche est relâchée (keyup) :
+    si cette touche est l'une de celles de touches :
+        la passer à faux</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Le nom de la touche est dans <code>evt.key</code>. Les noms des flèches sont <code>"ArrowLeft"</code> et <code>"ArrowRight"</code> (respectez les majuscules). </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> La structure est celle de l'exemple « état des touches » du cours : relisez-le. Pour tester, ajoutez temporairement un <code>console.log(touches)</code> dans les gestionnaires : les valeurs doivent passer à <code>true</code> quand vous appuyez et revenir à <code>false</code> quand vous relâchez. </p>
+            </details>
+
+            <h2> <span class="substep">5.2</span> Déplacer la raquette </h2>
+
+            <p>
+                Dans <code>mettreAJour()</code>, on lit <code>touches</code> et on modifie <code>raquetteX</code>. Une vitesse de 6 pixels par image convient (plus rapide que la balle, pour que le joueur puisse la rattraper). Il faut aussi <b>borner</b> la position : la raquette doit rester entièrement dans le canvas, donc <code>raquetteX</code> ne descend jamais sous <code>0</code> et ne dépasse jamais <code>canvas.width - RAQUETTE_LARGEUR</code>. Le cours montre comment encadrer une valeur avec <code>Math.min</code> et <code>Math.max</code>.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Ajoutez une constante <code>RAQUETTE_VITESSE</code> avec les autres constantes, puis déplacez la raquette dans <code>mettreAJour()</code>, <b>avant</b> le déplacement de la balle : </p>
+
+            <div class="pseudo">constante RAQUETTE_VITESSE = 6
+
+dans mettreAJour() :
+    si touches.ArrowRight est vrai :
+        raquetteX augmente de RAQUETTE_VITESSE
+        sans jamais dépasser (largeur du canvas - RAQUETTE_LARGEUR)
+    si touches.ArrowLeft est vrai :
+        raquetteX diminue de RAQUETTE_VITESSE
+        sans jamais descendre sous 0</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Ces deux blocs sont indépendants : écrivez deux <code>if</code> (pas de <code>else</code>), pour que la raquette ne bouge pas si les deux touches sont enfoncées en même temps. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> « Ne pas dépasser un maximum » s'obtient avec la plus petite de deux valeurs (<code>Math.min</code>) ; « ne pas descendre sous un minimum » avec la plus grande (<code>Math.max</code>). </p>
+            </details>
+
+            <h2> <span class="substep">5.3</span> Rebondir sur la raquette </h2>
+
+            <p>
+                Il faut maintenant décider si la balle est « sauvée » par la raquette ou perdue. La balle rebondit sur la raquette si <b>les trois conditions</b> suivantes sont vraies en même temps :
+            </p>
+
+            <ul>
+                <li> la balle <b>descend</b> (<code>balleDY</code> positif) : sans ce test, la balle pourrait rebondir en boucle à l'intérieur de la raquette ; </li>
+                <li> le <b>bas de la balle</b> a atteint le haut de la raquette ; </li>
+                <li> le <b>centre de la balle</b> est au-dessus de la raquette, c'est-à-dire entre son bord gauche et son bord droit. </li>
+            </ul>
+
+            <p>
+                <b>L'ordre des cas est essentiel.</b> Les tests du plafond, de la raquette et du sol forment une seule chaîne <code>if</code> / <code>else if</code> / <code>else if</code>. Le cas de la raquette doit venir <b>avant</b> celui du sol : on n'arrive au sol que si la raquette a raté la balle. Le test du sol que vous avez écrit à l'étape 4 reste donc le <b>dernier</b>, et seul son enchaînement change : il passe en troisième position.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Insérez le cas de la raquette entre le plafond et le sol : </p>
+
+            <div class="pseudo">dans mettreAJour(), après les murs :
+
+si le bord haut de la balle est avant 0 :
+    inverser balleDY
+sinon si TOUTES ces conditions sont vraies :
+        balleDY est positif (la balle descend)
+        ET le bas de la balle atteint le haut de la raquette
+        ET balleX est après le bord gauche de la raquette
+        ET balleX est avant le bord droit de la raquette
+    inverser balleDY
+sinon si le bas de la balle dépasse la hauteur du canvas :
+    partie perdue (comme à l'étape 4)</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Le haut de la raquette est à la hauteur <code>canvas.height - RAQUETTE_HAUTEUR</code>. Le bord droit de la raquette est à <code>raquetteX + RAQUETTE_LARGEUR</code>. Les quatre conditions se combinent avec <code>&amp;&amp;</code>. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Si la balle traverse la raquette ou si la partie est perdue alors que la raquette est bien placée, vérifiez l'ordre de la chaîne : le plafond, puis la raquette, puis le sol. </p>
+            </details>
+
+            <h2> <span class="substep">5.4</span> Diriger la balle </h2>
+
+            <p>
+                Avec ce que vous avez écrit, la balle garde toujours le même sens horizontal : le joueur ne peut pas la diriger, et la partie est monotone. On va donc changer la direction horizontale selon l'endroit où la balle touche la raquette. On découpe la raquette en <b>trois zones</b> : à gauche, la balle repart vers la gauche ; à droite, vers la droite ; au centre, elle garde sa direction.
+            </p>
+
+            <p>
+                Pour savoir dans quelle zone la balle tombe, on calcule sa <b>position relative</b> sur la raquette : un nombre de 0 (bord gauche) à 1 (bord droit). Il s'obtient en divisant la distance entre le bord gauche de la raquette et la balle par la largeur de la raquette. Les seuils sont 0,33 et 0,66.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Dans le bloc du rebond sur la raquette (5.3), après l'inversion de <code>balleDY</code> : </p>
+
+            <div class="pseudo">position = (balleX - raquetteX) / RAQUETTE_LARGEUR    (entre 0 et 1)
+
+si position est inférieure à 0,33 :
+    la balle part vers la gauche  (balleDX devient négatif)
+sinon si position est supérieure à 0,66 :
+    la balle part vers la droite  (balleDX devient positif)
+(sinon : balleDX ne change pas)</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Ne vous contentez pas d'inverser <code>balleDX</code> : si la balle va déjà vers la gauche et tombe sur la zone gauche, elle partirait vers la droite. Il faut imposer un <b>signe</b>, quelle que soit la valeur actuelle. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> <code>Math.abs(balleDX)</code> donne la vitesse sans son signe : elle sert à garder la même valeur de vitesse. Le signe « moins » devant donne une direction vers la gauche, l'absence de signe une direction vers la droite. </p>
+            </details>
+
+            <h2> Checklist de validation </h2>
+
+            <p> Rechargez la page, puis cochez : </p>
+
+            <ul class="checklist">
+                <li> La raquette se déplace à gauche et à droite avec les flèches, de façon fluide. </li>
+                <li> Elle s'arrête contre les bords du canvas, sans les dépasser. </li>
+                <li> La page ne défile pas quand on appuie sur les flèches. </li>
+                <li> La balle rebondit sur la raquette (une seule fois par passage). </li>
+                <li> Si la raquette rate la balle, la partie est perdue et le message s'affiche. </li>
+                <li> Touchée à gauche de la raquette, la balle repart vers la gauche ; à droite, vers la droite ; au centre, elle garde sa direction. </li>
+                <li> La console ne contient aucune erreur en rouge. </li>
+            </ul>
+
+            <h2> Erreurs fréquentes </h2>
+
+            <ul>
+                <li> <b>La raquette ne bouge pas</b> : les noms de touches sont mal orthographiés (<code>"ArrowLeft"</code>, pas <code>"Left"</code> ni <code>"arrowleft"</code>), ou les gestionnaires ne sont pas sur <code>document</code>. </li>
+                <li> <b>La raquette continue d'avancer après le relâchement</b> : le gestionnaire <code>keyup</code> est absent ou ne remet pas la valeur à <code>false</code>. </li>
+                <li> <b>La page défile avec les flèches</b> : le comportement par défaut n'est pas empêché dans <code>keydown</code>. </li>
+                <li> <b>La raquette sort du canvas</b> : la borne maximale oublie <code>RAQUETTE_LARGEUR</code> (c'est le coin <i>gauche</i> qui est borné, pas le bord droit). </li>
+                <li> <b>La balle traverse la raquette, ou la partie est perdue alors que la raquette est sous la balle</b> : le cas du sol est placé avant celui de la raquette dans la chaîne <code>if</code> / <code>else if</code>. </li>
+                <li> <b>La balle « colle » à la raquette et tremble</b> : le test <code>balleDY &gt; 0</code> est absent. La balle inverse sa vitesse à chaque image tant qu'elle reste dans la zone. </li>
+                <li> <b>La balle repart toujours du même côté</b> : la zone est testée avec un signe inversé, ou on inverse <code>balleDX</code> au lieu d'imposer son signe. </li>
+            </ul>
+
+            <div class="bonus-box">
+                <div class="box-header">⭐ Missions bonus</div>
+                <ul>
+                    <li>
+                        <b>★★ Piloter à la souris.</b> En plus du clavier, la raquette suit le pointeur (voir <a href="../../../cours/pages/l_interactivite.html#evenements-clavier">la fin de la section sur le clavier et la souris</a>) :
+<div class="pseudo">quand la souris bouge sur le canvas :
+    calculer la position du pointeur DANS le canvas
+        (position dans la fenêtre - position du canvas dans la fenêtre)
+    centrer la raquette sur cette position
+    garder la raquette entièrement dans le canvas</div>
+                    </li>
+                    <li>
+                        <b>★★★ Angle de rebond continu.</b> Remplacez les trois zones par un angle qui dépend de la distance au centre de la raquette :
+<div class="pseudo">décalage = (position de la balle - centre de la raquette) / (RAQUETTE_LARGEUR / 2)    (entre -1 et 1)
+balleDX devient proportionnel à décalage (par exemple décalage × 4)
+conserver la vitesse globale : balleDY doit s'adapter pour que la vitesse reste constante</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="step-nav">
+                <a href="etape_04.html">← Étape 4 : Les rebonds</a>
+                <a href="etape_06.html">Étape 6 : Les briques →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="template-container"></div>
+
+    <script src="../../../cours/js/main.js"></script>
+</body>
+
+</html>

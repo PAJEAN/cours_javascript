@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casse-briques : étape 11</title>
+    <link rel="stylesheet" href="../../../cours/css/style.css">
+    <link rel="stylesheet" href="css/guide.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+
+            <div id="header-container">Étape 11 : Highscore</div>
+
+            <p class="subtle"> Casse-briques · étape 11 sur 13 · durée estimée : 30 min à 1 h </p>
+
+            <h2> Objectif </h2>
+
+            <p>
+                Conserver le <b>meilleur score</b> même quand on ferme ou recharge la page, et l'afficher sous le canvas ainsi que sur l'écran de fin. Pour cela, on utilise le <code>localStorage</code> du navigateur.
+            </p>
+
+            <div class="nota-bene-box">
+                <div class="nota-bene-header">
+                    <span class="box-icon">📝</span>
+                    <span class="box-title">Étape optionnelle pour la classe débutante</span>
+                </div>
+                <div class="box-content">
+                    <p>
+                        Cette étape est <b>facultative</b> si vous êtes en retard : votre jeu est déjà complet à l'étape 10. Elle est courte et ne dépend que de la classe <code>Jeu</code> ; vous pouvez la faire si vous avez du temps, ou passer directement aux missions bonus.
+                    </p>
+                </div>
+            </div>
+
+            <div class="course-box">
+                <div class="box-header">📖 Dans le cours</div>
+                <ul>
+                    <li> <a href="../../../cours/pages/l_interactivite.html#localstorage">L'interactivité : le <code>localStorage</code></a> (<code>getItem</code>, <code>setItem</code>, <code>JSON.stringify</code> / <code>JSON.parse</code>). </li>
+                    <li> <a href="../../../cours/pages/l_interactivite.html#trouver-les-elements">Trouver les éléments du document</a> (afficher une valeur dans la page). </li>
+                </ul>
+            </div>
+
+            <h2> Ce qu'il faut savoir du <code>localStorage</code> </h2>
+
+            <ul>
+                <li> Il enregistre des paires <b>clé / valeur</b> qui survivent au rechargement de la page. </li>
+                <li> Les valeurs sont <b>toujours des chaînes de caractères</b> : un nombre enregistré revient en texte, il faut le reconvertir (<code>Number</code>). </li>
+                <li> Si la clé n'existe pas encore (première partie), <code>getItem</code> renvoie <code>null</code> : le programme doit prévoir ce cas. </li>
+            </ul>
+
+            <p>
+                Vous pouvez voir ce qui est enregistré dans les outils de développement (touche <kbd>F12</kbd>, onglet <i>Application</i>, puis <i>Local Storage</i>) et même supprimer la clé pour retester la « première partie ».
+            </p>
+
+            <h2> <span class="substep">11.1</span> Lire le meilleur score </h2>
+
+            <p>
+                Au démarrage du jeu (dans le constructeur de <code>Jeu</code>, <b>pas</b> dans <code>initialiserPartie()</code> : le record ne doit pas être remis à zéro à chaque nouvelle partie), on lit le record enregistré. Le nom de la clé est une constante, pour éviter une faute de frappe qui ferait chercher à deux endroits différents.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> </p>
+
+            <div class="pseudo">constante CLE_RECORD = un nom de clé (par exemple 'casse-briques-record')
+
+dans le constructeur de Jeu :
+    attribut record = valeur enregistrée sous CLE_RECORD, convertie en nombre
+                      (0 si rien n'est enregistré)</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Le cours montre exactement ce cas : lire une valeur, la convertir avec <code>Number(...)</code> et prévoir une valeur par défaut avec <code>||</code>. Affichez <code>this.record</code> dans la console pour vérifier. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> <code>Number(null)</code> vaut <code>0</code> et <code>Number(undefined)</code> vaut <code>NaN</code> ; or <code>NaN || 0</code> vaut <code>0</code> : la valeur par défaut couvre donc aussi les cas bizarres. </p>
+            </details>
+
+            <h2> <span class="substep">11.2</span> Enregistrer un nouveau record </h2>
+
+            <p>
+                Quand la partie se termine (méthode <code>terminer()</code>, appelée aussi bien pour une victoire que pour une défaite), on compare le score au record. S'il est meilleur, c'est un nouveau record : on le mémorise dans l'objet <b>et</b> dans le <code>localStorage</code>. On retient aussi, dans un attribut <code>nouveauRecord</code>, qu'un record vient d'être battu pour pouvoir le féliciter sur l'écran de fin. Cet attribut est remis à <code>false</code> au début de chaque partie.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> </p>
+
+            <div class="pseudo">initialiserPartie() :
+    attribut nouveauRecord = faux
+
+terminer(message) :
+    (le code existant : etat = 'fin', message…)
+    si score > record :
+        record = score
+        nouveauRecord = vrai
+        enregistrer record sous CLE_RECORD</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> On enregistre <b>uniquement</b> si le score bat le record, jamais sinon : sans cette condition, un mauvais score écraserait le meilleur. <code>setItem</code> prend la clé et la valeur (le nombre est converti en chaîne automatiquement). </p>
+            </details>
+
+            <h2> <span class="substep">11.3</span> Afficher le meilleur score </h2>
+
+            <p>
+                Deux endroits : dans la page HTML, sous le canvas, une ligne « Meilleur score : … » dont la valeur est mise à jour par JavaScript (on retrouve l'élément par son <code>id</code>) ; et sur l'écran de fin dans le canvas, qui rappelle le score, le record, et félicite si <code>nouveauRecord</code> est vrai.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> </p>
+
+            <div class="pseudo">dans index.html :
+    sous les boutons, un paragraphe "Meilleur score : " avec un élément (id record) qui contiendra la valeur
+
+dans le constructeur de Jeu :
+    récupérer cet élément, l'enregistrer dans un attribut (afficheRecord)
+    afficher le record lu en 11.1 dans l'élément
+
+dans terminer(), quand un record est battu :
+    mettre à jour le texte de l'élément
+
+dans dessinerEcran(), cas 'fin' :
+    si nouveauRecord : "Nouveau record : (valeur du record) !" + consigne pour rejouer
+    sinon : "Score : (score) (record : (record))" + consigne pour rejouer</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Pour afficher une valeur dans un élément, on modifie son contenu avec <code>textContent</code> (ou <code>innerHTML</code> comme dans le cours). Comme l'élément est utilisé à plusieurs endroits, il vaut mieux le récupérer une seule fois, dans le constructeur. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Pour construire le texte, concaténez avec <code>+</code> : <code>'Score : ' + this.score</code>. Le choix entre deux textes s'écrit avec un <code>if / else</code> ou avec un ternaire. </p>
+            </details>
+
+            <h2> Checklist de validation </h2>
+
+            <p> Jouez plusieurs parties, puis rechargez la page entière : </p>
+
+            <ul class="checklist">
+                <li> Au premier chargement (ou après suppression de la clé), le meilleur score affiché est <b>0</b>. </li>
+                <li> Après une partie avec un score supérieur, le meilleur score se met à jour dans la page et l'écran de fin annonce un nouveau record. </li>
+                <li> Après rechargement (<kbd>F5</kbd>), le meilleur score est toujours là. </li>
+                <li> Une partie avec un score inférieur ne change pas le record. </li>
+                <li> Une nouvelle partie (Espace) ne remet pas le record à zéro, mais remet bien <code>nouveauRecord</code> à faux. </li>
+                <li> Le record est un <b>nombre</b> et non du texte (testez <code>jeu.record + 1</code> dans la console). </li>
+                <li> La console ne contient aucune erreur en rouge. </li>
+            </ul>
+
+            <h2> Erreurs fréquentes </h2>
+
+            <ul>
+                <li> <b>Le record « se concatène » (<code>"90" + 10</code> donne <code>"9010"</code>) ou la comparaison est fausse</b> : la valeur lue n'a pas été convertie en nombre avec <code>Number</code>. Comparer deux chaînes revient à les classer par ordre alphabétique (<code>"9" > "10"</code>). </li>
+                <li> <b>Le record affiche <code>null</code> ou <code>NaN</code></b> : première lecture sans valeur par défaut. </li>
+                <li> <b>Le record est perdu au rechargement</b> : <code>setItem</code> n'est jamais appelé, ou la clé utilisée pour lire n'est pas exactement la même que pour écrire (faute de frappe, majuscules). </li>
+                <li> <b>Le record revient à zéro à chaque nouvelle partie</b> : il est lu dans <code>initialiserPartie()</code> au lieu du constructeur. </li>
+                <li> <b>Un mauvais score écrase le record</b> : l'enregistrement n'est pas dans le <code>if (score > record)</code>. </li>
+                <li> <b><code>Cannot set properties of null (setting 'textContent')</code></b> : l'élément n'a pas été trouvé ; vérifiez l'<code>id</code> dans le HTML et dans <code>getElementById</code>. </li>
+                <li> <b>Le record est différent entre deux navigateurs, ou entre une page ouverte en <code>file://</code> et avec Live Server</b> : le <code>localStorage</code> est propre à chaque site et à chaque navigateur. C'est normal. </li>
+            </ul>
+
+            <div class="bonus-box">
+                <div class="box-header">⭐ Missions bonus</div>
+                <ul>
+                    <li> <b>★★</b> Tableau des <b>5 meilleurs scores avec pseudo</b> : demandez le pseudo en fin de partie (<code>prompt</code>), conservez un tableau d'objets <code>{ nom, points }</code> trié par score décroissant et limité à 5 entrées, enregistrez-le avec <code>JSON.stringify</code>, relisez-le avec <code>JSON.parse</code> (<a href="../../../cours/pages/l_interactivite.html#localstorage">voir le cours</a>), et affichez-le dans la page. </li>
+                </ul>
+            </div>
+
+            <div class="step-nav">
+                <a href="etape_10.html">← Étape 10 : Menu, pause, rejouer</a>
+                <a href="etape_12.html">Étape 12 : Niveaux →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="template-container"></div>
+
+    <script src="../../../cours/js/main.js"></script>
+</body>
+
+</html>

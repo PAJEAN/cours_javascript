@@ -13,10 +13,10 @@
 | `niveaux/niveaux.json` (3 niveaux, étape 12) | ✅ fait |
 | `guides/css/guide.css`, `index.html` (sommaire élèves) | ✅ fait |
 | `guides/etape_00.html` (**gabarit** des guides) | ✅ fait |
-| `guides/etape_01.html` … `etape_13.html` | ❌ **à rédiger** |
+| `guides/etape_01.html` (validé) | ✅ fait |
+| `guides/etape_02.html` … `etape_13.html` | 🟡 rédigés (17/11), **à relire** (pas ouverts dans un navigateur) |
 | `README.md` du projet (cahier des charges, badges bonus) | ❌ à écrire |
-| Liens `index.html` : passer « (bientôt) » en liens au fur et à mesure | ❌ à faire |
-| Lien de navigation « Étape suivante » dans chaque guide | ❌ à faire (étape 0 : désactivé) |
+| Liens `index.html` et navigation « Étape suivante » | ✅ fait (liens et ancres de cours vérifiés par script) |
 
 ⚠ **Rien n'est commité** : tout est non suivi / modifié dans git. Sur l'ordinateur actuel, faire `git add -A && git commit && git push` avant de changer de machine (ou copier le dossier). **Les corrections sont dans un dépôt public** : voir §6 avant de pousser (`.gitignore` ou branche privée).
 
@@ -259,7 +259,7 @@ Les numéros ci-dessous sont ceux des pastilles dans les guides et des bannière
 
 | Étape | Sous-étapes | Fichier de correction |
 |---|---|---|
-| 0 · Mettre en place la page | 0.1 Structure HTML · 0.2 Canvas et style · 0.3 Script · 0.4 Contexte + console | `etape_00.html` |
+| 0 · Mettre en place la page | 0.1 Structure HTML · 0.2 Canvas et style · 0.3 Le style (`style.css`) · 0.4 Script · 0.5 Contexte + console | `etape_00.html` |
 | 1 · Dessiner le décor | 1.1 Constantes · 1.2 Balle · 1.3 Raquette | `etape_01.html` |
 | 2 · L'état du jeu | 2.1 Variables d'état · 2.2 `dessiner()` · 2.3 `mettreAJour()` · 2.4 Test à la main (traînée) | `etape_02.html` |
 | 3 · La boucle de jeu | 3.1 `boucle()` : mettre à jour, effacer, dessiner · 3.2 `requestAnimationFrame` · 3.3 Lancer la boucle · 3.4 Régler la vitesse | `etape_03.html` |

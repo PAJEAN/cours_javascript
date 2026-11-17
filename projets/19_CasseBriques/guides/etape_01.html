@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casse-briques : étape 1</title>
+    <link rel="stylesheet" href="../../../cours/css/style.css">
+    <link rel="stylesheet" href="css/guide.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+
+            <div id="header-container">Étape 1 : Dessiner le décor</div>
+
+            <p class="subtle"> Casse-briques · étape 1 sur 13 · durée estimée : 45 min à 1 h </p>
+
+            <h2> Objectif </h2>
+
+            <p>
+                Dessiner les deux éléments du jeu dans le canvas : une <b>balle</b> (un disque blanc) et une <b>raquette</b> (un rectangle bleu collé en bas). Rien ne bouge encore : on apprend à placer des formes avec des coordonnées.
+            </p>
+
+            <div class="course-box">
+                <div class="box-header">📖 Dans le cours</div>
+                <ul>
+                    <li> <a href="../../../cours/pages/le_dessin_et_les_canvas.html#arcs-de-cercle">Le dessin et les canvas : les arcs de cercle</a> (<code>beginPath</code>, <code>arc</code>, <code>fill</code>). </li>
+                    <li> <a href="../../../cours/pages/le_dessin_et_les_canvas.html#rectangle">Le rectangle</a> et <a href="../../../cours/pages/le_dessin_et_les_canvas.html#remplissage">le remplissage</a> (<code>fillStyle</code>, <code>fillRect</code>). </li>
+                    <li> <a href="../../../cours/pages/les_variables.html#mot-cle-const">Les variables : le mot-clé <code>const</code></a>. </li>
+                    <li> <a href="../../../cours/pages/les_variables.html#nombres">Les nombres</a> (calculs avec <code>+ - * /</code>, la constante <code>Math.PI</code>). </li>
+                </ul>
+            </div>
+
+            <h2> Le repère du canvas </h2>
+
+            <p>
+                Dans un canvas, l'origine <i>(0, 0)</i> est en <b>haut à gauche</b>. L'axe des <i>x</i> va vers la droite et l'axe des <i>y</i> va vers le <b>bas</b> (et non vers le haut comme en mathématiques). Avec un canvas de 480 × 320, le coin en bas à droite est donc au point <i>(480, 320)</i> et le centre au point <i>(240, 160)</i>.
+            </p>
+
+            <p>
+                Pour ne pas dépendre de ces valeurs écrites en dur, on utilise <code>canvas.width</code> et <code>canvas.height</code> : « le milieu » s'écrit <code>canvas.width / 2</code>.
+            </p>
+
+            <h2> <span class="substep">1.1</span> Les constantes du jeu </h2>
+
+            <p>
+                Une valeur comme <code>75</code> au milieu d'un calcul ne dit pas ce qu'elle représente : on parle de « nombre magique ». On donne plutôt un nom à chaque valeur qui ne changera jamais, avec <code>const</code>. Par convention, on écrit ces noms en MAJUSCULES.
+            </p>
+
+<textarea class="editor" spellcheck="false" readonly>
+const VOITURE_LARGEUR = 60;
+const VOITURE_HAUTEUR = 30;
+const NB_ROUES = 4;</textarea>
+
+            <p class="mt"> <b>À toi de jouer.</b> Au début de <code>game.js</code>, après la récupération du canvas et du contexte, déclarez les constantes des dimensions du jeu : </p>
+
+            <div class="pseudo">constante RAYON              = 8     (rayon de la balle)
+constante RAQUETTE_LARGEUR  = 75
+constante RAQUETTE_HAUTEUR  = 10</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Une constante se déclare avec <code>const</code> et ne peut plus être réaffectée : si vous essayez, la console affiche une erreur <code>Assignment to constant variable</code>. </p>
+            </details>
+
+            <h2> <span class="substep">1.2</span> Dessiner la balle </h2>
+
+            <p>
+                Un cercle se dessine comme un <b>chemin</b> : on commence un nouveau chemin, on trace un arc de cercle, puis on le remplit. La méthode <code>arc(x, y, rayon, angleDepart, angleFin)</code> prend des angles en <b>radians</b> : un tour complet vaut <code>2 * Math.PI</code>.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Dessinez la balle : un disque blanc de rayon <code>RAYON</code>, centré horizontalement et placé à <b>30 pixels du bas</b> du canvas. </p>
+
+            <div class="pseudo">commencer un nouveau chemin
+tracer un arc complet :
+    centre x = milieu de la largeur du canvas
+    centre y = hauteur du canvas - 30
+    rayon    = RAYON
+    de l'angle 0 à l'angle d'un tour complet
+couleur de remplissage = blanc
+remplir le chemin</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Rien n'apparaît ? Vérifiez que vous appelez bien <code>fill()</code> à la fin : <code>arc</code> seul ne fait que préparer le chemin. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Le fond du canvas est sombre (<code>#111</code>) : avec la méthode <code>fillStyle</code>, vous pouvez définir la couleur de remplissage. Attention aussi à l'ordre : la couleur se règle <i>avant</i> <code>fill()</code>. </p>
+            </details>
+
+            <h2> <span class="substep">1.3</span> Dessiner la raquette </h2>
+
+            <p>
+                Un rectangle plein se dessine en une seule ligne : <code>fillRect(x, y, largeur, hauteur)</code>, où <i>(x, y)</i> est le <b>coin supérieur gauche</b>. Pour centrer un objet de largeur <i>L</i> dans une zone de largeur <i>W</i>, son coin gauche est en <code>(W - L) / 2</code> : il reste alors la même marge à gauche et à droite.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Dessinez la raquette : un rectangle bleu (<code>#0095dd</code>), centré horizontalement et <b>collé au bord bas</b> du canvas. </p>
+
+            <div class="pseudo">couleur de remplissage = #0095dd
+dessiner un rectangle plein :
+    x      = (largeur du canvas - RAQUETTE_LARGEUR) / 2
+    y      = hauteur du canvas - RAQUETTE_HAUTEUR
+    largeur = RAQUETTE_LARGEUR
+    hauteur = RAQUETTE_HAUTEUR</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> La raquette se dessine à partir de son coin <b>supérieur gauche</b>. Pour qu'elle touche le bas du canvas, son coin supérieur doit être à une hauteur de raquette au-dessus du bord bas. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Pensez aux parenthèses : <code>(a - b) / 2</code> n'est pas la même chose que <code>a - b / 2</code>. </p>
+            </details>
+
+            <h2> Checklist de validation </h2>
+
+            <p> Rechargez la page (Live Server le fait pour vous), puis cochez : </p>
+
+            <ul class="checklist">
+                <li> Un disque blanc est visible, centré horizontalement, un peu au-dessus du bas du canvas. </li>
+                <li> Un rectangle bleu est centré horizontalement et touche le bord bas. </li>
+                <li> La balle est <b>au-dessus</b> de la raquette sans la toucher. </li>
+                <li> Les dimensions (rayon, taille de la raquette) viennent des constantes et non de nombres écrits dans les appels de dessin. </li>
+                <li> La console ne contient aucune erreur en rouge. </li>
+            </ul>
+
+            <h2> Erreurs fréquentes </h2>
+
+            <ul>
+                <li> <b>La balle est une demi-lune ou un point</b> : vérifiez les angles. Un cercle complet va de <code>0</code> à <code>2 * Math.PI</code>, pas à <code>2</code>. </li>
+                <li> <b>La balle est bleue</b> (ou la raquette blanche) : <code>fillStyle</code> reste en vigueur tant qu'on ne le change pas. Réglez la couleur juste avant chaque remplissage. </li>
+                <li> <b>La raquette dépasse en bas ou est décentrée</b> : <code>fillRect</code> part du coin supérieur gauche, pas du centre de la forme. </li>
+                <li> <b><code>ctx is not defined</code></b> : le contexte est déclaré dans <code>game.js</code> à l'étape 0.5, assurez-vous de l'avoir gardé. </li>
+                <li> <b>Les formes sont floues ou déformées</b> : la taille du canvas a été donnée en CSS au lieu des attributs <code>width</code> / <code>height</code> (voir l'étape 0). </li>
+            </ul>
+
+            <div class="bonus-box">
+                <div class="box-header">⭐ Missions bonus</div>
+                <ul>
+                    <li> <b>★</b> Ajoutez à la raquette une ombre (<a href="../../../cours/pages/le_dessin_et_les_canvas.html#ajouter-une-ombre">voir la section</a>), puis restaurez le contexte à ses valeurs initiales. </li>
+                    <li> <b>★</b> Dessinez la balle avec un emoji grâce à <code>fillText</code>, ou avec une image (<code>drawImage</code>) à la place du cercle. </li>
+                </ul>
+            </div>
+
+            <div class="step-nav">
+                <a href="etape_00.html">← Étape 0 : Mettre en place la page</a>
+                <a href="etape_02.html">Étape 2 : L'état du jeu →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="template-container"></div>
+
+    <script src="../../../cours/js/main.js"></script>
+</body>
+
+</html>

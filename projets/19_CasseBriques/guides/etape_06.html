@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Casse-briques : étape 6</title>
+    <link rel="stylesheet" href="../../../cours/css/style.css">
+    <link rel="stylesheet" href="css/guide.css">
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="page" id="page">
+
+            <div id="header-container">Étape 6 : Les briques</div>
+
+            <p class="subtle"> Casse-briques · étape 6 sur 13 · durée estimée : 1 h à 1 h 30 </p>
+
+            <h2> Objectif </h2>
+
+            <p>
+                Afficher en haut du canvas une <b>grille de briques</b> : 4 lignes de 7 briques, centrée horizontalement. La balle les traverse encore (les collisions arrivent à l'étape 7), mais le décor du jeu est enfin complet. C'est l'une des deux étapes les plus difficiles du projet : prenez votre temps, et relisez bien le pseudo-code.
+            </p>
+
+            <div class="course-box">
+                <div class="box-header">📖 Dans le cours</div>
+                <ul>
+                    <li> <a href="../../../cours/pages/les_tableaux.html#cells44">Les tableaux : le tableau imbriqué</a> (un tableau dont chaque élément est lui-même un tableau). </li>
+                    <li> <a href="../../../cours/pages/les_boucles.html#cells68">Les boucles : <code>for</code></a> et <a href="../../../cours/pages/les_boucles.html#cells69"><code>for...of</code></a>. </li>
+                    <li> <a href="../../../cours/pages/les_objets.html#creation-d-un-objet">Les objets : création d'un objet</a> (<code>{ x: 10, y: 20 }</code>). </li>
+                    <li> <a href="../../../cours/pages/les_variables.html#mot-cle-const">Les variables : le mot-clé <code>const</code></a>. </li>
+                </ul>
+            </div>
+
+            <h2> Une grille dans un tableau à deux dimensions </h2>
+
+            <p>
+                Une grille a des <b>lignes</b> et des <b>colonnes</b>. En JavaScript, on la représente par un tableau de lignes, chaque ligne étant elle-même un tableau de cases : c'est un <b>tableau 2D</b> (voir le cours). On accède à une case avec deux indices, d'abord la ligne puis la colonne : <code>grille[ligne][colonne]</code>.
+            </p>
+
+            <p>
+                Pour parcourir toutes les cases, on utilise deux boucles <b>imbriquées</b> : la boucle extérieure choisit la ligne, la boucle intérieure parcourt toutes les colonnes de cette ligne. Exemple avec les sièges d'une salle de cinéma (3 rangées de 4 sièges) :
+            </p>
+
+<textarea class="editor" spellcheck="false" readonly>
+const RANGEES = 3;
+const SIEGES = 4;
+
+for (let r = 0; r < RANGEES; r++) {
+    for (let s = 0; s < SIEGES; s++) {
+        console.log('rangée ' + r + ', siège ' + s);
+    }
+}</textarea>
+
+            <p>
+                Ce programme affiche 3 × 4 = 12 lignes : pour chaque valeur de <code>r</code>, la boucle intérieure recommence complètement. Quand on <b>construit</b> un tableau 2D, il faut penser à créer chaque ligne (un tableau vide) <i>avant</i> d'y ranger des cases.
+            </p>
+
+            <h2> <span class="substep">6.1</span> Les constantes de la grille </h2>
+
+            <p>
+                Comme à l'étape 1, on nomme toutes les valeurs fixes avec <code>const</code>. La grille est définie par son nombre de lignes et de colonnes, par la taille d'une brique, par l'espace entre deux briques et par sa position. Pour la centrer, il faut calculer sa <b>marge gauche</b> : c'est la moitié de ce qui reste de libre dans le canvas une fois la grille posée (comme pour la raquette à l'étape 1).
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Après les constantes du jeu, déclarez les constantes de la grille : </p>
+
+            <div class="pseudo">constante LIGNES          = 4
+constante COLONNES        = 7
+constante BRIQUE_LARGEUR  = 55
+constante BRIQUE_HAUTEUR  = 18
+constante BRIQUE_ESPACE   = 10   (espace entre deux briques)
+constante GRILLE_HAUT     = 30   (distance entre le haut du canvas et la grille)
+constante GRILLE_GAUCHE   = marge qui centre la grille :
+    largeur de la grille = COLONNES × BRIQUE_LARGEUR + (COLONNES - 1) × BRIQUE_ESPACE
+    GRILLE_GAUCHE = (largeur du canvas - largeur de la grille) / 2</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Il y a <code>COLONNES</code> briques mais seulement <code>COLONNES - 1</code> espaces entre elles : pas d'espace avant la première brique ni après la dernière. Écrivez le calcul de la largeur de la grille en plusieurs petites étapes si vous vous perdez, en vérifiant avec <code>console.log</code>. </p>
+            </details>
+
+            <h2> <span class="substep">6.2</span> Créer le tableau de briques </h2>
+
+            <p>
+                Chaque brique est un petit <b>objet</b> qui mémorise sa position et son état : <code>x</code> et <code>y</code> (son coin supérieur gauche) et <code>actif</code>, qui vaut <code>true</code> tant que la brique est visible. Cet attribut servira à l'étape 7 : casser une brique, ce sera simplement passer <code>actif</code> à <code>false</code>.
+            </p>
+
+            <p>
+                Les briques sont rangées dans un tableau 2D nommé <code>briques</code> : <code>briques[ligne][colonne]</code> est l'objet de la brique située à cette ligne et à cette colonne. Pour calculer sa position, remarquez que chaque brique est décalée de « une largeur de brique + un espace » par rapport à sa voisine : c'est le <b>pas</b> de la grille (horizontal pour les colonnes, vertical pour les lignes).
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Après les variables d'état, créez le tableau <code>briques</code> avec deux boucles imbriquées : </p>
+
+            <div class="pseudo">briques = tableau vide
+pour chaque ligne de 0 à LIGNES - 1 :
+    briques[ligne] = tableau vide
+    pour chaque colonne de 0 à COLONNES - 1 :
+        briques[ligne][colonne] = un objet avec
+            x     = GRILLE_GAUCHE + colonne × (BRIQUE_LARGEUR + BRIQUE_ESPACE)
+            y     = GRILLE_HAUT   + ligne   × (BRIQUE_HAUTEUR + BRIQUE_ESPACE)
+            actif = vrai</div>
+
+            <details>
+                <summary>Indice 1</summary>
+                <p> Votre console affiche <code>Cannot set properties of undefined</code> ? Vous rangez une brique dans <code>briques[ligne]</code> alors que cette ligne n'existe pas encore : créez d'abord la ligne, juste avant la boucle sur les colonnes. </p>
+            </details>
+
+            <details>
+                <summary>Indice 2</summary>
+                <p> Vérifiez votre tableau dans la console : <code>console.log(briques.length)</code> doit afficher le nombre de lignes, <code>console.log(briques[0].length)</code> le nombre de colonnes, et <code>console.log(briques[1][2])</code> un objet avec <code>x</code>, <code>y</code> et <code>actif</code>. </p>
+            </details>
+
+            <details>
+                <summary>Squelette à trous pour les débutants</summary>
+                <p> Complétez chaque <code>// TODO</code> en vous aidant du pseudo-code ci-dessus. </p>
+<textarea class="editor" spellcheck="false" readonly>
+const briques = [];
+
+for (let l = 0; l < /* TODO : nombre de lignes */; l++) {
+    briques[l] = /* TODO : une ligne vide */;
+
+    for (let c = 0; c < /* TODO : nombre de colonnes */; c++) {
+        briques[l][c] = {
+            x: /* TODO : position horizontale */,
+            y: /* TODO : position verticale */,
+            actif: /* TODO */
+        };
+    }
+}
+
+function dessinerBriques() {
+    // TODO : choisir une couleur de remplissage
+    // TODO : parcourir chaque ligne de briques
+        // TODO : parcourir chaque brique de la ligne
+            // TODO : si la brique est active, dessiner un rectangle plein
+}</textarea>
+            </details>
+
+            <h2> <span class="substep">6.3</span> Dessiner les briques </h2>
+
+            <p>
+                Il reste à afficher le tableau. Comme pour la balle et la raquette, on écrit une fonction dédiée, <code>dessinerBriques()</code>, appelée depuis <code>dessiner()</code>. Elle parcourt le tableau 2D avec deux boucles <code>for...of</code> (une pour les lignes, une pour les briques de la ligne) et ne dessine que les briques encore <b>actives</b>. Ainsi, à l'étape 7, une brique cassée disparaîtra toute seule de l'écran.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Écrivez <code>dessinerBriques()</code> et appelez-la dans <code>dessiner()</code>, avant le dessin de la balle : </p>
+
+            <div class="pseudo">fonction dessinerBriques() :
+    couleur de remplissage = #e8743b
+    pour chaque ligne du tableau briques :
+        pour chaque brique de la ligne :
+            si la brique est active :
+                dessiner un rectangle plein à la position de la brique,
+                de taille BRIQUE_LARGEUR × BRIQUE_HAUTEUR
+
+dans dessiner() : ajouter l'appel de dessinerBriques()</div>
+
+            <details>
+                <summary>Indice</summary>
+                <p> Rien ne s'affiche ? Vérifiez que <code>dessinerBriques()</code> est bien <i>appelée</i> (une fonction définie mais jamais appelée ne fait rien) et que le tableau <code>briques</code> est déclaré <i>avant</i> le lancement de la boucle de jeu en fin de fichier. </p>
+            </details>
+
+            <h2> Checklist de validation </h2>
+
+            <p> Rechargez la page, puis cochez : </p>
+
+            <ul class="checklist">
+                <li> Une grille de 4 lignes × 7 colonnes de briques orange s'affiche en haut du canvas. </li>
+                <li> Les marges à gauche et à droite de la grille sont identiques. </li>
+                <li> Les briques sont séparées par un petit espace régulier, horizontalement et verticalement. </li>
+                <li> La balle et la raquette sont toujours visibles et fonctionnent comme à l'étape 5 (la balle traverse les briques sans les casser). </li>
+                <li> En changeant <code>LIGNES</code> ou <code>COLONNES</code>, la grille s'adapte (et reste centrée) sans que vous touchiez au reste du code. </li>
+                <li> La console ne contient aucune erreur en rouge. </li>
+            </ul>
+
+            <h2> Erreurs fréquentes </h2>
+
+            <ul>
+                <li> <b><code>Cannot set properties of undefined (setting '0')</code></b> : la ligne <code>briques[l]</code> n'a pas été créée avant de remplir ses colonnes. </li>
+                <li> <b><code>Cannot access 'briques' before initialization</code></b> : le tableau est déclaré <i>après</i> l'appel de <code>boucle()</code>. Déclarez-le plus haut dans le fichier. </li>
+                <li> <b>Une seule brique visible</b> : toutes les briques ont les mêmes <code>x</code> et <code>y</code>. Vérifiez que vous utilisez bien les numéros de ligne et de colonne dans le calcul des positions. </li>
+                <li> <b>Les briques sont collées ou se chevauchent</b> : on a oublié <code>BRIQUE_ESPACE</code> dans le pas, ou on a mélangé la largeur et la hauteur. </li>
+                <li> <b>Une ligne ou une colonne en trop</b> : la condition d'arrêt est <code>l &lt; LIGNES</code> (strictement inférieur), car les indices commencent à 0. </li>
+                <li> <b>La grille n'est pas centrée</b> : vérifiez les parenthèses de <code>GRILLE_GAUCHE</code> et le nombre d'espaces (<code>COLONNES - 1</code>). </li>
+            </ul>
+
+            <div class="bonus-box">
+                <div class="box-header">⭐ Missions bonus</div>
+                <ul>
+                    <li> <b>★★</b> Donnez une couleur différente à chaque <b>rangée</b> de briques (la couleur dépend du numéro de ligne). </li>
+                    <li> <b>★★</b> Créez un motif : une grille en damier (une brique sur deux est inactive) ou une pyramide (la rangée du haut est plus courte que celle du bas). Servez-vous de <code>actif</code> et d'une condition dans les boucles. </li>
+                </ul>
+            </div>
+
+            <div class="step-nav">
+                <a href="etape_05.html">← Étape 5 : Piloter la raquette</a>
+                <a href="etape_07.html">Étape 7 : Casser les briques →</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="template-container"></div>
+
+    <script src="../../../cours/js/main.js"></script>
+</body>
+
+</html>

@@ -26,10 +26,11 @@
             <div class="course-box">
                 <div class="box-header">📖 Dans le cours</div>
                 <ul>
-                    <li> <a href="../../../cours/pages/la_creation_d_une_page_web.html#anatomie-de-la-page-web">La création d'une page web : anatomie de la page web</a> (balises, <code>&lt;script&gt;</code>). </li>
+                    <li> <a href="../../../cours/pages/la_creation_d_une_page_web.html#header-container">La création d'une page web : anatomie de la page web</a> (balises, <code>&lt;script&gt;</code>). </li>
                     <li> <a href="../../../cours/pages/la_creation_d_une_page_web.html#objet-console">L'objet <code>console</code></a>. </li>
                     <li> <a href="../../../cours/pages/le_dessin_et_les_canvas.html#element-canvas">Le dessin et les canvas : l'élément <code>&lt;canvas&gt;</code></a>. </li>
                     <li> <a href="../../../cours/pages/les_variables.html#mot-cle-const">Les variables : le mot-clé <code>const</code></a>. </li>
+                    <li> <a href="../../../cours/pages/l_interactivite.html#trouver-les-elements">L'intéractivité : trouver un élément dans le DOM</a>. </li>
                 </ul>
             </div>
 
@@ -41,24 +42,7 @@
 
             <h2> <span class="substep">0.1</span> La structure de la page </h2>
 
-            <p>
-                Une page HTML commence toujours par la même ossature. Voici celle d'une page de portrait (sans rapport avec notre jeu) : repérez ce qui est obligatoire.
-            </p>
-
-<textarea class="editor" spellcheck="false" readonly>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Mon portrait</title>
-</head>
-<body>
-    <h1>Mon portrait</h1>
-    <p id="presentation">Bonjour !</p>
-</body>
-</html></textarea>
-
-            <p class="mt"> <b>À toi de jouer.</b> Dans <code>index.html</code>, écrivez l'ossature d'une page dont le titre (onglet du navigateur) et le titre affiché dans la page sont « Casse-briques ». </p>
+            <p class="mt"> Dans <code>index.html</code>, écrivez l'ossature d'une page dont le titre (onglet du navigateur) et le titre affiché dans la page sont « Casse-briques ». </p>
 
             <div class="pseudo">page HTML en français
     en-tête (head) :
@@ -100,7 +84,7 @@ dans le body, sous le titre :
 
             <details>
                 <summary>Indice 1</summary>
-                <p> En CSS, les propriétés utiles sont <code>background</code> et <code>border</code>. La taille se règle dans les <b>attributs HTML</b> <code>width</code> et <code>height</code>, pas en CSS : la taille CSS étirerait le dessin au lieu d'agrandir la zone. </p>
+                <p> La taille se règle dans les <b>attributs HTML</b> <code>width</code> et <code>height</code>, pas en CSS : la taille CSS étirerait le dessin au lieu d'agrandir la zone. </p>
             </details>
 
             <details>
@@ -108,18 +92,22 @@ dans le body, sous le titre :
                 <p> Une bordure s'écrit avec trois valeurs : épaisseur, style et couleur, par exemple <code>2px solid red</code>. </p>
             </details>
 
-            <h2> <span class="substep">0.3</span> Le script </h2>
+            <h2> <span class="substep">0.3</span> Le style </h2>
+            
+            <p>
+                Le style CSS permet de personnaliser l'apparence des éléments de la page. L'idéal est de séparer le style dans un fichier CSS externe et de l'inclure dans la page avec la balise <code>&lt;link rel="stylesheet" href="…"&gt;</code> dans le <code>&lt;head&gt;</code>.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> Créez un fichier <code>style.css</code>, ajoutez-y le style pour le canvas et reliez-le à la page. </p>
+
+            <div class="pseudo">à la fin du head, avant la fermeture de la balise :
+    balise link qui charge le fichier "style.css"</div>
+
+            <h2> <span class="substep">0.4</span> Le script </h2>
 
             <p>
                 Le code JavaScript va dans le fichier <code>game.js</code>. On le relie à la page avec une balise <code>&lt;script src="…"&gt;</code>. Cette balise se place <b>à la fin du <code>body</code></b> : le navigateur lit la page de haut en bas et le script a besoin que le canvas existe déjà quand il s'exécute.
             </p>
-
-<textarea class="editor" spellcheck="false" readonly>
-<body>
-    <p id="presentation">Bonjour !</p>
-
-    <script src="portrait.js"></script>
-</body></textarea>
 
             <p class="mt"> <b>À toi de jouer.</b> Créez un fichier <code>game.js</code> vide à côté de <code>index.html</code> et reliez-le à la page, après le canvas. </p>
 
@@ -131,15 +119,11 @@ dans le body, sous le titre :
                 <p> Si la page ne trouve pas le script, la console (<code>F12</code>, onglet <i>Console</i> ou <i>Réseau</i>) affiche une erreur 404 : vérifiez le nom du fichier et son emplacement. </p>
             </details>
 
-            <h2> <span class="substep">0.4</span> Le contexte de dessin et la console </h2>
+            <h2> <span class="substep">0.5</span> Le contexte de dessin et la console </h2>
 
             <p>
-                Pour dessiner, il faut d'abord <b>récupérer le canvas</b> dans la page, puis lui demander son <b>contexte de rendu 2D</b> : c'est l'objet qui possède toutes les méthodes de dessin. Ces deux valeurs ne changeront jamais : on les range dans des constantes. Voici la même démarche pour le paragraphe de l'exemple précédent :
+                Pour dessiner, il faut d'abord <b>récupérer le canvas</b> dans la page, puis lui demander son <b>contexte de rendu 2D</b> : c'est l'objet qui possède toutes les méthodes de dessin. Ces deux valeurs ne changeront jamais : on les range dans des constantes.
             </p>
-
-<textarea class="editor" spellcheck="false" readonly>
-const paragraphe = document.getElementById('presentation');
-console.log(paragraphe.textContent);   // Affiche : Bonjour !</textarea>
 
             <p class="mt"> <b>À toi de jouer.</b> Dans <code>game.js</code> : </p>
 
@@ -158,25 +142,13 @@ afficher dans la console : ctx</div>
                 <p> La largeur et la hauteur du canvas sont les propriétés <code>canvas.width</code> et <code>canvas.height</code>. <code>console.log</code> accepte plusieurs valeurs séparées par des virgules. </p>
             </details>
 
-            <div class="nota-bene-box">
-                <div class="nota-bene-header">
-                    <span class="box-icon">📝</span>
-                    <span class="box-title">À savoir</span>
-                </div>
-                <div class="box-content">
-                    <p>
-                        <code>ctx</code> est un nom très courant pour « contexte » (<i>context</i>), vous le retrouverez partout. Dans la suite du projet, nous l'utiliserons toujours à la place de <code>canvas.getContext('2d')</code>.
-                    </p>
-                </div>
-            </div>
-
             <h2> Checklist de validation </h2>
 
             <p> Ouvrez la page avec Live Server et la console (<code>F12</code>), puis cochez : </p>
 
             <ul class="checklist">
                 <li> L'onglet du navigateur affiche « Casse-briques ». </li>
-                <li> Un rectangle sombre avec une bordure est visible sous le titre. </li>
+                <li> Un rectangle avec une bordure est visible sous le titre. </li>
                 <li> La console affiche votre message avec 480 et 320, sans erreur en rouge. </li>
                 <li> La console affiche l'objet <code>CanvasRenderingContext2D</code>. </li>
             </ul>
@@ -187,20 +159,20 @@ afficher dans la console : ctx</div>
                 <li> <b>Rien ne s'affiche dans la console</b> : le script n'est pas relié (nom du fichier, chemin) ou la page n'a pas été rechargée. </li>
                 <li> <b><code>Cannot read properties of null</code></b> : <code>getElementById</code> n'a rien trouvé, souvent parce que l'<code>id</code> est mal orthographié, ou que le script est placé <i>avant</i> le canvas dans la page. </li>
                 <li> <b><code>getContext is not a function</code></b> : l'identifiant correspond à un autre élément que le canvas. </li>
-                <li> <b>Le dessin sera déformé plus tard</b> si la taille du canvas est donnée en CSS plutôt que dans <code>width</code> / <code>height</code>. </li>
+                <li> <b>Le dessin sera déformé plus tard</b> si la taille du canvas est donnée en CSS plutôt que dans <code>width</code> / <code>height</code>. Les propriétés <code>width</code> et <code>height</code> de la balise <code>canvas</code> : définissent la résolution du dessin. Tandis que les styles <code>width</code> et <code>height</code> en CSS définissent la taille d'affichage. </li>
             </ul>
 
             <div class="bonus-box">
                 <div class="box-header">⭐ Missions bonus</div>
                 <ul>
                     <li> <b>★</b> Centrez le canvas dans la page et choisissez un fond de page, une police et des couleurs qui vous plaisent. </li>
-                    <li> <b>★★</b> Depuis <code>game.js</code>, modifiez le texte du titre <code>&lt;h1&gt;</code> de la page (voir <a href="../../../cours/pages/l_interactivite.html#trouver-les-elements">Trouver les éléments du document</a>). </li>
+                    <li> <b>★★</b> Depuis <code>game.js</code>, modifiez le texte du titre <code>&lt;h1&gt;</code> de la page. </li>
                 </ul>
             </div>
 
             <div class="step-nav">
                 <a href="../index.html">← Sommaire</a>
-                <span class="disabled">Étape 1 : Dessiner le décor (bientôt) →</span>
+                <a href="etape_01.html">Étape 1 : Dessiner le décor →</a>
             </div>
 
         </div>
