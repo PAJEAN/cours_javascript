@@ -13,23 +13,26 @@
     <div class="wrapper">
         <div class="page" id="page">
 
-            <div id="header-container">Étape 13 : ⭐ Arcade, les effets bonus</div>
+            <div id="header-container">Étape 13 : Design patterns : le casse-briques en MVC</div>
 
-            <p class="subtle"> Casse-briques · étape 13 sur 13 · durée estimée : 2 h à 3 h </p>
+            <p class="subtle"> Casse-briques · étape 13 sur 14 · durée estimée : 2 h 30 à 3 h 30 </p>
 
             <h2> Objectif </h2>
 
             <p>
-                Dernière étape, <b>ouverte</b> : quand une brique est détruite, elle peut lâcher une <b>capsule</b> qui tombe. Si la raquette l'attrape, un effet bonus se déclenche. Vous allez construire le mécanisme commun (plusieurs balles, capsules, objet <code>EFFETS</code>), coder <b>un effet guidé</b> (la raquette large), puis choisir <b>au moins un autre effet</b> dans le catalogue, selon votre niveau.
+                Un <i>design pattern</i> (patron de conception) est une façon réutilisable d'organiser une solution à un problème fréquent. Vous allez <b>réorganiser votre casse-briques selon le patron MVC</b> (Modèle - Vue - Contrôleur). Le patron lui-même compte moins que ce qu'il vous oblige à manipuler : des <b>fonctions de première classe</b>, des <b>callbacks</b>, des <b>fermetures</b> et la valeur de <code>this</code>. Le jeu doit se comporter <b>exactement comme à l'étape 12</b> : seule l'organisation du code change.
+            </p>
+            <p>
+                Cette étape est plus <b>ouverte</b> que les précédentes : après quelques rappels sur les fonctions et de conseils vous indiquent <i>où</i> ranger chaque morceau de code, ça sera à vous de trouver <i>comment</i> les relier.
             </p>
 
             <div class="course-box">
-                <div class="box-header">📖 Dans le cours</div>
+                <div class="box-header">📖 Dans le cours et les projets</div>
                 <ul>
-                    <li> <a href="../../../cours/pages/les_fonctions.html#fonction-de-premiere-classe">Les fonctions : fonction de première classe</a> (une fonction peut être rangée dans un objet, puis appelée). </li>
-                    <li> <a href="../../../cours/pages/les_tableaux.html#cells53"><code>filter</code></a> et <a href="../../../cours/pages/les_tableaux.html#cells52-1"><code>forEach</code> / <code>some</code></a>. </li>
-                    <li> <a href="../../../cours/pages/les_variables.html#objet-math">L'objet <code>Math</code></a> (<code>random</code>, <code>floor</code>, <code>min</code>). </li>
-                    <li> <a href="../../../cours/pages/les_objets.html#attributs-et-methodes-statiques">Attributs et méthodes statiques</a> (pour les largeurs de la raquette). </li>
+                    <li> <a href="../../../cours/pages/les_fonctions.html#fonction-de-premiere-classe">Fonctions de première classe</a> et <a href="../../../cours/pages/les_fonctions.html#fonctions-d-ordre-superieur">fonctions d'ordre supérieur</a>. </li>
+                    <li> <a href="../../../cours/pages/les_fonctions.html#closures">Fermetures (<i>closures</i>)</a> et <a href="../../../cours/pages/les_objets.html#mot-cle-this">mot-clé <code>this</code></a>. </li>
+                    <li> <a href="../../../cours/pages/l_interactivite.html#gestionnaire-d-evenements">Gestionnaires d'événements</a>. </li>
+                    <li> <a href="../../MVC/README.md">Présentation de MVC</a> et <a href="../../MVC/mvc.html">exemple MVC complet</a> : lisez aussi son code source. </li>
                 </ul>
             </div>
 
@@ -40,338 +43,198 @@
                 </div>
                 <div class="box-content">
                     <p>
-                        Cette étape modifie surtout la classe <code>Jeu</code>. Comme à l'étape 12, ouvrez la page avec <i>Live Server</i>. Avancez sous-étape par sous-étape et <b>testez à chaque fois</b> : un jeu qui ne casse plus après 13.1 vous indique précisément où chercher.
+                        <b>Gardez votre version de l'étape 12</b> : copiez le dossier de votre jeu (par exemple en <code>casse-briques-mvc</code>) et travaillez dans la copie. L'étape 14 (effets bonus) pourra repartir au choix de <b>votre version MVC</b> ou de <b>l'ancienne version</b>. Comme à l'étape 12, ouvrez la page avec <i>Live Server</i>.
                     </p>
                 </div>
             </div>
 
-            <h2> <span class="substep">13.1</span> Un tableau de balles </h2>
+            <h2> <span class="substep">13.1</span> Un patron pour organiser le code : MVC </h2>
 
-            <p>
-                Pour qu'un effet puisse ajouter des balles (multi-balles), le jeu ne doit plus connaître <b>une</b> balle mais <b>une liste de balles</b>, même s'il n'y en a qu'une. La vie n'est alors perdue que quand <b>toutes</b> les balles sont tombées. Comme on ne doit pas retirer un élément d'un tableau en le parcourant, on marque la balle tombée avec un attribut <code>perdue</code>, puis on retire d'un coup les balles marquées avec <code>filter</code>.
-            </p>
-
-            <p class="mt"> <b>À toi de jouer.</b> Transformez <code>this.balle</code> en <code>this.balles</code> : </p>
-
-            <div class="pseudo">dans Balle :
-    nouvel attribut perdue = false (dans le constructeur)
-
-dans Jeu :
-    this.balles = un tableau contenant une nouvelle Balle
-        (dans initialiserPartie)
-    replacerBalle() :
-        this.balles = un tableau avec une seule nouvelle Balle
-        replacer la raquette
-    perdreVie() appelle replacerBalle() au lieu de réinitialiser la balle
-    niveauTermine() appelle aussi replacerBalle()
-
-    mettreAJourBalle(balle) :
-        tout ce qui concerne UNE balle (l'ancien corps de mettreAJour) :
-            déplacer, rebondir sur les murs, rebondir sur la raquette,
-            parcourir les briques
-        quand la balle tombe sous le canvas :
-            balle.perdue = true   (et on ne perd plus de vie ici)
-
-    mettreAJour() :
-        déplacer la raquette
-        pour chaque balle de this.balles : mettreAJourBalle(balle)
-        this.balles = les balles qui ne sont pas perdues (filter)
-        si il ne reste plus aucune balle : perdreVie()
-        (puis : test de fin de niveau, comme avant)
-
-    dessiner() : dessiner chaque balle du tableau</div>
-
-            <details>
-                <summary>Indice 1</summary>
-                <p> Procédez par étapes : d'abord <code>balles</code> avec une seule balle et <code>mettreAJourBalle</code> (le jeu doit se comporter <b>exactement comme avant</b>), ensuite seulement le <code>filter</code> et <code>perdue</code>. </p>
-            </details>
-
-            <details>
-                <summary>Indice 2</summary>
-                <p> Remplacez toutes les occurrences de <code>this.balle</code> : la console vous les signale par un <code>undefined</code>. À l'intérieur de <code>mettreAJourBalle</code>, utilisez le paramètre <code>balle</code>, pas <code>this.balles</code>. </p>
-            </details>
-
-            <h2> <span class="substep">13.2</span> La classe <code>Capsule</code> </h2>
-
-            <p>
-                Une capsule est un petit objet qui <b>tombe</b> et se <b>dessine</b> : une classe lui convient, comme pour la balle. En plus de sa position, elle a un <code>type</code> (<code>'large'</code>, <code>'vie'</code>, <code>'multi'</code>…) qui dit quel effet elle déclenche, et un attribut <code>active</code> pour pouvoir la retirer. Elle sait aussi dire si la raquette l'attrape.
-            </p>
-
-            <p> Voici la structure fournie : à vous de la compléter. </p>
-
-<textarea class="editor" spellcheck="false" readonly>
-class Capsule {
-    constructor(x, y, type) {
-        // TODO : x, y, type, un rayon, une vitesse de chute, active = true
-    }
-
-    deplacer() {
-        // TODO : la capsule descend
-    }
-
-    attrapeePar(raquette) {
-        // TODO : renvoie true si la capsule recouvre la raquette
-    }
-
-    dessiner() {
-        // TODO : un disque de couleur (une couleur fixe pour l'instant)
-    }
-}</textarea>
-
-            <p class="mt"> <b>À toi de jouer.</b> Complétez la classe, placée avant la classe <code>Jeu</code> : </p>
-
-            <div class="pseudo">constructeur :
-    mémoriser x, y et type
-    rayon = 10, vitesse = 2, active = true
-
-deplacer() :
-    y augmente de la vitesse
-
-attrapeePar(raquette) :
-    renvoyer vrai si les trois conditions sont vraies :
-        le bas de la capsule (y + rayon) a atteint le haut de la raquette
-        le haut de la capsule (y - rayon) n'a pas dépassé le bas de la raquette
-        le centre x de la capsule est entre le bord gauche et le bord droit de la raquette
-
-dessiner() :
-    un disque de couleur fixe, centré en (x, y), de rayon rayon</div>
-
-            <details>
-                <summary>Indice 1</summary>
-                <p> Le bord droit de la raquette est <code>raquette.x + raquette.largeur</code>, son bord bas <code>raquette.y + raquette.hauteur</code>. Combinez les conditions avec <code>&amp;&amp;</code>. </p>
-            </details>
-
-            <details>
-                <summary>Indice 2</summary>
-                <p> Pour tester la classe sans attendre une brique, créez provisoirement une capsule dans <code>initialiserPartie</code> (à supprimer ensuite), et dessinez-la et déplacez-la depuis <code>dessiner</code> et <code>mettreAJour</code> : elle doit tomber en bas du canvas. Le code définitif de ces appels est demandé au 13.3 et au 13.4. </p>
-            </details>
-
-            <h2> <span class="substep">13.3</span> Lâcher une capsule </h2>
-
-            <p>
-                Quand une brique est détruite, on tire un nombre au hasard : <code>Math.random()</code> renvoie un nombre entre 0 et 1 (1 exclu). Si ce nombre est inférieur à <code>CHANCE_CAPSULE</code> (par exemple <code>0.25</code>), on lâche une capsule : une chance sur quatre. Pour choisir un <b>type au hasard</b> dans un tableau, on tire un indice entier entre <code>0</code> et la longueur du tableau moins un (voir <code>Math.floor</code> dans la page du cours).
-            </p>
-
-            <p class="mt"> <b>À toi de jouer.</b> Fabriquez les capsules et affichez-les : </p>
-
-            <div class="pseudo">constante CHANCE_CAPSULE = 0.25
-constante TYPES_CAPSULES = ['large', 'vie', 'multi']
-
-dans Jeu :
-    this.capsules = tableau vide (initialiserPartie, et replacerBalle)
-
-    lacherCapsule(brique) :
-        si un nombre aléatoire entre 0 et 1 est inférieur à CHANCE_CAPSULE :
-            type = un élément au hasard de TYPES_CAPSULES
-            ajouter à this.capsules une nouvelle Capsule
-                au centre de la brique (x et y)
-                de ce type
-
-    dans mettreAJourBalle, quand une brique vient d'être détruite :
-        appeler lacherCapsule(brique)
-
-    dans dessiner() : dessiner chaque capsule
-    dans mettreAJour() : déplacer chaque capsule (provisoire, voir 13.4)</div>
-
-            <details>
-                <summary>Indice 1</summary>
-                <p> Un indice au hasard : <code>Math.floor(Math.random() * tableau.length)</code>. Pour tester souvent, mettez provisoirement <code>CHANCE_CAPSULE</code> à <code>1</code>. </p>
-            </details>
-
-            <details>
-                <summary>Indice 2</summary>
-                <p> Le centre d'une brique est son coin supérieur gauche plus la moitié de sa largeur et de sa hauteur (<code>Brique.LARGEUR</code> et <code>Brique.HAUTEUR</code>). </p>
-            </details>
-
-            <h2> <span class="substep">13.4</span> Attraper une capsule : l'objet <code>EFFETS</code> </h2>
-
-            <p>
-                Plutôt qu'un long <code>if / else if</code> sur le type de la capsule, on range dans un <b>objet</b> une fonction par type d'effet : une fonction est une valeur comme une autre (<i>fonction de première classe</i>). Le jeu n'a plus qu'à écrire « appelle la fonction qui correspond à ce type ». <b>Ajouter un effet revient à ajouter une entrée dans cet objet</b> : c'est ce que vous ferez au 13.5. Chaque entrée porte aussi la lettre et la couleur utilisées pour dessiner la capsule.
-            </p>
-
-            <p> Voici la structure fournie : </p>
-
-<textarea class="editor" spellcheck="false" readonly>
-const EFFETS = {
-    large: {
-        lettre: '?',          // TODO
-        couleur: '?',         // TODO
-        activer: (jeu) => {
-            // TODO : sera complété au 13.5
-        }
-    }
-    // TODO : une entrée par type de TYPES_CAPSULES (au 13.5)
-};</textarea>
-
-            <p class="mt"> <b>À toi de jouer.</b> Déclarez <code>EFFETS</code> (avant la classe <code>Jeu</code>, par exemple juste après <code>Capsule</code>), puis gérez la chute et la prise des capsules : </p>
-
-            <div class="pseudo">EFFETS : un objet dont chaque clé est un type de capsule
-    chaque valeur contient : lettre, couleur, activer(jeu)
-    (pour l'instant, une seule entrée complète pour tester ; les autres types
-     de TYPES_CAPSULES sont ajoutés ou retirés au 13.5)
-
-dans Capsule.dessiner() :
-    lire la couleur et la lettre dans EFFETS[this.type]
-    dessiner le disque de cette couleur
-    écrire la lettre au centre de la capsule
-
-dans Jeu :
-    mettreAJourCapsules() :
-        pour chaque capsule :
-            la déplacer
-            si elle est attrapée par la raquette :
-                appeler EFFETS[capsule.type].activer(this)
-                capsule.active = false
-            sinon, si elle est sortie en bas du canvas :
-                capsule.active = false
-        this.capsules = les capsules encore actives (filter)
-
-    appeler mettreAJourCapsules() dans mettreAJour()
-    (à la place du déplacement provisoire du 13.3)</div>
-
-            <details>
-                <summary>Indice 1</summary>
-                <p> Une entrée d'un objet se lit avec des crochets quand la clé est dans une variable : <code>EFFETS[capsule.type]</code>. L'appel d'une fonction reçue se fait avec des parenthèses : <code>EFFETS[type].activer(…)</code>. </p>
-            </details>
-
-            <details>
-                <summary>Indice 2</summary>
-                <p> Chaque type de <code>TYPES_CAPSULES</code> doit figurer dans <code>EFFETS</code> (avec exactement la même orthographe), sinon <code>EFFETS[this.type]</code> vaut <code>undefined</code> : retirez provisoirement de <code>TYPES_CAPSULES</code> les types dont l'effet n'existe pas encore. </p>
-            </details>
-
-            <h2> <span class="substep">13.5</span> Les trois effets </h2>
-
-            <p>
-                La correction propose trois effets de référence : <b>raquette large</b>, <b>vie en plus</b> et <b>multi-balles</b>. Vous codez ici le premier en détail ; ensuite, vous choisissez dans le catalogue ci-dessous <b>au moins un autre effet</b> (la vie en plus et le multi-balles en font partie). Il suffit d'une entrée dans <code>EFFETS</code>, d'une valeur dans <code>TYPES_CAPSULES</code> et, selon l'effet, de quelques lignes dans <code>Jeu</code>.
-            </p>
-
-            <h3> Effet guidé : la raquette large </h3>
-
-            <p>
-                Cet effet <b>dure quelques secondes</b>. On compte la durée en <b>images</b> et non avec <code>setTimeout</code> : le compteur ne bouge qu'en jeu, donc l'effet s'arrête aussi pendant la pause. À 60 images par seconde, 8 secondes valent <code>8 * 60</code> images. Autre détail : quand la raquette change de taille, il ne faut pas qu'elle dépasse du canvas (<code>Math.min</code>).
-            </p>
-
-            <p class="mt"> <b>À toi de jouer.</b> Implémentez l'effet : </p>
-
-            <div class="pseudo">constante DUREE_EFFET_LARGE = 8 × 60
-
-dans Raquette :
-    attributs statiques LARGEUR = 75 et LARGEUR_LARGE = 120
-    (this.largeur démarre à Raquette.LARGEUR)
-    changerLargeur(largeur) :
-        this.largeur = largeur
-        this.x = le plus petit entre this.x et (largeur du canvas - this.largeur)
-
-dans Jeu :
-    this.dureeLarge = 0 (initialiserPartie)
-    elargirRaquette() :
-        changer la largeur de la raquette pour LARGEUR_LARGE
-        this.dureeLarge = DUREE_EFFET_LARGE
-
-    dans mettreAJour(), à chaque image :
-        si dureeLarge est supérieure à 0 :
-            la diminuer de 1
-            si elle vient d'atteindre 0 :
-                remettre la largeur normale (Raquette.LARGEUR)
-
-dans EFFETS : entrée 'large'
-    lettre 'L', une couleur verte, activer(jeu) appelle jeu.elargirRaquette()</div>
-
-            <details>
-                <summary>Indice 1</summary>
-                <p> Une capsule « large » attrapée alors que l'effet est déjà actif doit <b>relancer</b> le compteur, pas l'additionner. Pensez aussi à remettre <code>dureeLarge</code> à <code>0</code> et la largeur normale quand on recommence une partie (nouvelle <code>Raquette</code> dans <code>initialiserPartie</code>). </p>
-            </details>
-
-            <details>
-                <summary>Indice 2</summary>
-                <p> Si l'effet ne s'arrête jamais : vérifiez que le compteur est bien diminué à <b>chaque image</b> (dans <code>mettreAJour</code>, pas dans <code>activer</code>) et que le test « vient d'atteindre 0 » est fait juste après la diminution. </p>
-            </details>
-
-            <h3> Catalogue : à vous de choisir </h3>
-
-            <p>
-                Chaque effet est <b>indépendant</b> : choisissez-en au moins un, plus si vous voulez. Le niveau (★ à ★★★) indique la difficulté. Pour chacun, il faut une entrée dans <code>EFFETS</code> (<code>lettre</code>, <code>couleur</code>, <code>activer</code>) et le type correspondant dans <code>TYPES_CAPSULES</code>.
-            </p>
-
+            <p> MVC sépare des responsabilités ; ce n'est pas une fonctionnalité du langage ni la seule façon d'organiser une application : </p>
             <ul>
-                <li> <b>★ Vie supplémentaire</b> : une ligne dans <code>activer</code> (<code>vies</code> augmente de 1). </li>
-                <li> <b>★ Raquette étroite (malus)</b> : comme « large », avec une largeur plus petite. </li>
-                <li> <b>★ Balle lente / rapide</b> : multiplier <code>dx</code> et <code>dy</code> des balles (pensez à ne pas changer leur sens). </li>
-                <li> <b>★★ Multi-balles (×3)</b> : ajouter deux balles au tableau <code>balles</code> à côté de la première, avec des directions différentes ; grâce à 13.1, la vie n'est perdue que quand <code>balles.length === 0</code>. </li>
-                <li> <b>★★ Balle de feu (traverse les briques)</b> : pendant l'effet, ne pas inverser la vitesse lors d'une collision (un compteur d'images, comme pour « large »). </li>
-                <li> <b>★★ Raquette collante</b> : la balle reste sur la raquette jusqu'à un clic ou une touche ; un état <code>collee</code> à gérer. </li>
-                <li> <b>★★ Mode « chaos »</b> : touches gauche et droite inversées pendant 5 secondes. </li>
-                <li> <b>★★ Sons</b> : <code>new Audio('fichier.mp3')</code> et <code>play()</code> sur les événements du jeu (rebond, brique, capsule). </li>
-                <li> <b>★★★ Laser</b> : la barre d'espace tire un projectile qui monte et casse la première brique rencontrée (tableau de projectiles, collisions). </li>
-                <li> <b>★★★ Briques explosives</b> : détruire aussi les briques voisines (parcours de la grille). </li>
-                <li> <b>★★★ Particules</b> : à la destruction d'une brique, quelques petits points s'éparpillent puis disparaissent (tableau de particules, durée de vie, <code>filter</code>). </li>
+                <li> Le <b>modèle</b> (<i>Model</i>) conserve les données et applique les règles. </li>
+                <li> La <b>vue</b> (<i>View</i>) présente les données et recueille les actions de l'utilisateur. </li>
+                <li> Le <b>contrôleur</b> (<i>Controller</i>) relie les deux : il reçoit les intentions de la vue, demande une action au modèle et coordonne l'actualisation de la vue. </li>
             </ul>
 
-            <p class="mt"> <b>À toi de jouer.</b> Choisissez au moins un effet dans le catalogue et décrivez-le d'abord en pseudo-code, dans vos mots : </p>
+            <p>
+                Dans <a href="../../MVC/mvc.html">l'exemple MVC</a>, un clic demande une nouvelle donnée ; le modèle la récupère, puis une fonction transmise par le contrôleur permet à la vue de l'afficher. Suivez le trajet : <b>clic → vue → contrôleur → modèle → contrôleur → vue</b>. Le modèle ne connaît pas la vue : il ne fait qu'appeler une fonction qu'on lui a donnée.
+            </p>
 
-            <div class="pseudo">mon effet : ...............
-déclencheur : quand la capsule est attrapée → activer(jeu)
-ce qui change dans le jeu : ...............
-combien de temps ? (aucune durée / compteur d'images) : ...............
-comment revient-on à la normale ? ...............
-que se passe-t-il si on attrape une deuxième capsule du même type ? ...............
-quand une partie se termine ou recommence : ...............</div>
+            <p class="mt"> <b>À toi de jouer.</b> Dans le code de l'exemple MVC et celui de votre jeu de l'étape 12, identifiez les responsabilités : </p>
+            <div class="pseudo">dans l'exemple MVC :
+    trouver qui écoute le clic, qui appelle fetch et qui affiche le texte
+    retrouver les fonctions transmises par le contrôleur
 
+dans votre casse-briques :
+    repérer où sont stockés score et vies, où ils changent et où ils sont dessinés
+    repérer où les touches sont écoutées et où la raquette se déplace
+    quelle classe mélange plusieurs responsabilités ?</div>
             <details>
-                <summary>Indice 1</summary>
-                <p> Si l'effet dure un certain temps, recopiez le fonctionnement de la raquette large : un compteur dans <code>Jeu</code>, décrémenté à chaque image dans <code>mettreAJour</code>, et un retour à la normale quand il atteint 0. </p>
+                <summary>Indice</summary>
+                <p> Dans le jeu, <code>Jeu</code> gère à la fois l'état, les règles, le clavier et une partie de l'affichage. Les classes de la balle, de la raquette et des briques possèdent aussi une méthode <code>dessiner</code> : le jeu n'est donc pas encore séparé en MVC. </p>
             </details>
 
+            <h2> <span class="substep">13.2</span> Transmettre une méthode et conserver <code>this</code> </h2>
+
+            <p>
+                Lorsqu'on passe une méthode comme callback, on transmet la fonction, pas automatiquement son objet. La valeur de <code>this</code> pour une méthode classique dépend de <b>la manière dont elle est appelée</b>. Deux solutions sont de créer une fonction fléchée qui appelle la méthode sur son objet, ou de créer une fonction liée avec <code>bind</code>.
+            </p>
+<textarea class="editor" spellcheck="false" readonly>
+const lampe = {
+    nom: 'Bureau',
+    allumer() { console.log(this.nom); }
+};
+
+const action = () => lampe.allumer(); // fermeture : utilise lampe
+const actionLiee = lampe.allumer.bind(lampe);
+action();      // Bureau
+actionLiee();  // Bureau
+// const actionBrute = lampe.allumer; actionBrute();
+// ne garantit pas que this soit lampe.</textarea>
+
+            <p>
+                La fonction fléchée n'a pas son propre <code>this</code> : si elle utilise <code>this</code>, elle prend celui de son contexte lexical. Dans <a href="../../MVC/mvc.html">l'exemple MVC</a>, le contrôleur utilise <code>bind(this)</code> pour que ses méthodes transmises au modèle et à la vue continuent d'accéder au contrôleur. Dans votre jeu, <code>requestAnimationFrame(() =&gt; this.boucle())</code> utilise une fonction fléchée créée dans la méthode du jeu.
+            </p>
+            <p class="mt"> <b>À toi de jouer.</b> Retrouvez dans l'exemple MVC les deux appels à <code>bind</code>. Pour chacun, indiquez qui conserve la fonction et ce qui se passerait si la méthode perdait l'accès au contrôleur. </p>
+            <details>
+                <summary>Indice</summary>
+                <p> Suivez les affectations dans <code>Model.bindDisplayCNF</code> et <code>View.bindGetCNF</code> jusqu'aux appels des fonctions enregistrées. </p>
+            </details>
+
+            <h2> <span class="substep">13.3</span> Répartir le casse-briques </h2>
+
+            <p>
+                Reprenez votre copie du jeu. Deux règles guident le découpage : <b>le modèle ne touche ni au canvas, ni au DOM</b> (il pourrait fonctionner sans navigateur), et <b>la vue ne contient aucune règle du jeu</b> (elle lit ce que le modèle lui montre). Le tableau indique où va chaque morceau de votre code actuel.
+            </p>
+
+            <table>
+                <thead>
+                    <tr><th> Partie </th><th> Ce qui lui revient </th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td> <b>Modèle</b> </td>
+                        <td>
+                            <ul>
+                                <li> Les classes <code>Raquette</code>, <code>Balle</code> et <code>Brique</code> <b>sans leur méthode <code>dessiner</code></b> : <code>deplacer</code>, <code>rebondirSurMurs</code>, <code>touchePar</code>, <code>toucher</code>, <code>reinitialiser</code>… </li>
+                                <li> Une classe <code>Modele</code> qui remplace <code>Jeu</code> : les données (<code>niveaux</code>, <code>briques</code>, <code>balle</code>, <code>raquette</code>, <code>score</code>, <code>vies</code>, <code>niveau</code>, <code>etat</code>, <code>record</code>, <code>touches</code>) et les règles (<code>initialiserPartie</code>, <code>creerBriques</code>, <code>lancer</code>, <code>basculerPause</code>, <code>perdreVie</code>, <code>niveauTermine</code>, <code>terminer</code>, <code>mettreAJour</code>). </li>
+                                <li> La sauvegarde du record dans <code>localStorage</code>. </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <b>Vue</b> </td>
+                        <td>
+                            <ul>
+                                <li> Le canvas et son contexte, les boutons et l'affichage du record dans la page. </li>
+                                <li> Le dessin : le contenu des anciennes méthodes <code>dessiner</code> de la balle, de la raquette et des briques, puis <code>dessiner</code>, <code>dessinerInfos</code>, <code>dessinerTexte</code>, <code>dessinerEcran</code> de l'ancien <code>Jeu</code>. </li>
+                                <li> <code>mettreAJourBoutons</code>. </li>
+                                <li> Les <b>écouteurs</b> d'événements : <code>ecouterClavier</code> et <code>ecouterBoutons</code>. La vue ne <i>décide</i> de rien : elle signale simplement ce que fait l'utilisateur. </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <b>Contrôleur</b> </td>
+                        <td>
+                            <ul>
+                                <li> Il reçoit un modèle et une vue, et les relie par des callbacks (voir 13.4). </li>
+                                <li> La <code>boucle</code> : mettre à jour le modèle quand la partie est en cours, demander à la vue de dessiner, programmer l'image suivante. </li>
+                                <li> Le démarrage, après le <code>fetch</code> des niveaux, assemble les trois objets. </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="mt"> <b>À toi de jouer.</b> Créez les trois parties dans cet ordre, en testant à chaque fois : </p>
+            <div class="pseudo">1. modèle : retirer tout ce qui touche au canvas et au DOM
+   (la largeur et la hauteur du jeu deviennent des constantes du modèle)
+2. vue : récupérer l'affichage et le dessin
+3. contrôleur : la boucle et les liens entre les deux
+4. démarrage : fetch → modèle, vue, contrôleur → lancer la boucle</div>
+            <details>
+                <summary>Indice 1</summary>
+                <p> Vos anciennes classes utilisent <code>canvas.width</code> et <code>canvas.height</code> : le modèle ne peut plus lire le canvas. Remplacez-les par deux constantes (<code>LARGEUR_JEU</code>, <code>HAUTEUR_JEU</code>) valant la taille du canvas. </p>
+            </details>
             <details>
                 <summary>Indice 2</summary>
-                <p> Pensez à tous les endroits où l'état de l'effet doit être remis à zéro : nouvelle partie, nouvelle vie (<code>replacerBalle</code>), changement de niveau. </p>
+                <p> Pour dessiner, la vue a besoin des données : le plus simple est que sa méthode <code>dessiner</code> <b>reçoive le modèle en paramètre</b> et le lise (sans jamais le modifier). </p>
+            </details>
+
+            <h2> <span class="substep">13.4</span> Relier les trois parties </h2>
+
+            <p>
+                C'est ici que les callbacks entrent en jeu. Il y a deux sens de communication, et <b>personne n'appelle directement l'autre côté</b> :
+            </p>
+            <ul>
+                <li> <b>Vue → Modèle</b>, via le contrôleur : jouer / rejouer (bouton ou espace), pause (bouton ou <code>P</code>), touches fléchées enfoncées ou relâchées. </li>
+                <li> <b>Modèle → Vue</b>, via le contrôleur : l'<b>état</b> de la partie a changé (les boutons doivent être mis à jour), le <b>record</b> a changé (la page doit l'afficher). </li>
+            </ul>
+
+            <p>
+                Séparez chaque partie MVC dans un fichier JavaScript (<code>modele.js</code>, <code>vue.js</code>, <code>controleur.js</code>) chargé par des balises <code>&lt;script&gt;</code> : attention à l'ordre de chargement.
+            </p>
+
+            <p class="mt"> <b>À toi de jouer.</b> À vous de définir les méthodes de liaison (sur le modèle et sur la vue) et les fonctions que le contrôleur leur transmet. Aucun <code>this.vue</code> dans le modèle, aucun <code>this.modele</code> dans la vue : </p>
+            <div class="pseudo">pour chaque évènement ci-dessus :
+    qui le détecte ? quelle fonction doit-il appeler ? qui fournit cette fonction ?
+    quelles informations passe-t-il en argument ?
+    qui exécute la règle et qui met l'affichage à jour ?
+
+au démarrage : afficher l'état initial des boutons et le record
+    (le modèle a déjà changé d'état avant d'être relié à la vue)</div>
+            <details>
+                <summary>Indice 1</summary>
+                <p> Calquez-vous sur l'exemple MVC : un attribut du type <code>this.surJouer</code>, rempli par une méthode <code>bindJouer(callback)</code>. Avant d'être relié, il peut valoir une fonction qui ne fait rien : le code ne casse pas si le contrôleur n'a pas encore tout branché. </p>
+            </details>
+            <details>
+                <summary>Indice 2</summary>
+                <p> Pour les touches, la vue peut appeler son callback avec le nom de la touche et un booléen (enfoncée ou relâchée). Le contrôleur le traduit en appel du modèle. Dans le constructeur du contrôleur, utilisez des fonctions fléchées ou <code>bind(this)</code>. </p>
+            </details>
+
+            <h2> <span class="substep">13.5</span> Tester et comparer </h2>
+
+            <p class="mt"> <b>À toi de jouer.</b> Vérifiez que le jeu se comporte comme avant, puis répondez par écrit : </p>
+            <div class="pseudo">1. quelle partie faudrait-il modifier pour changer la couleur de la balle ?
+   pour changer le nombre de vies de départ ?
+   pour accepter aussi la touche « Q » pour aller à gauche ?
+2. qu'est-ce qui rend possible de tester le modèle sans navigateur ?
+3. quel callback est une fermeture ? que garde-t-elle en mémoire ?</div>
+            <details>
+                <summary>Indice</summary>
+                <p> Une fonction fléchée écrite dans le constructeur du contrôleur et utilisant <code>this.modele</code> ou <code>this.vue</code> est une fermeture : elle se « souvient » du contrôleur qui l'a créée. </p>
             </details>
 
             <h2> Checklist de validation </h2>
-
-            <p> Ouvrez la page avec Live Server, puis cochez : </p>
-
             <ul class="checklist">
-                <li> Le jeu se comporte comme à l'étape 12 quand aucune capsule n'est lâchée (niveaux, briques à deux coups, score, vies). </li>
-                <li> Environ une brique sur quatre lâche une capsule colorée avec une lettre ; elle tombe puis disparaît en bas si on la rate. </li>
-                <li> Attraper une capsule « L » élargit la raquette pendant environ 8 secondes, puis elle redevient normale (y compris après une pause). </li>
-                <li> Au moins un deuxième effet du catalogue fonctionne, et il se termine correctement. </li>
-                <li> Perdre une vie, changer de niveau ou rejouer ne laisse aucun effet actif ni aucune capsule à l'écran. </li>
+                <li> Le jeu se comporte comme à l'étape 12 : niveaux, briques à deux coups, score, vies, pause, rejouer, record. </li>
+                <li> Le modèle ne contient aucune référence à <code>canvas</code>, à <code>ctx</code> ni à <code>document</code>. </li>
+                <li> La vue ne contient aucune règle du jeu (pas de collision, pas de calcul de score). </li>
+                <li> Ni le modèle ni la vue ne connaissent l'autre : leur seule communication passe par des callbacks fournis par le contrôleur. </li>
+                <li> Je sais expliquer la différence entre passer une fonction et l'appeler, et pourquoi un callback garde accès au <code>this</code> du contrôleur. </li>
                 <li> La console ne contient aucune erreur en rouge. </li>
             </ul>
 
             <h2> Erreurs fréquentes </h2>
-
             <ul>
-                <li> <b><code>Cannot read properties of undefined (reading 'x')</code></b> : il reste un <code>this.balle</code> (au singulier) quelque part. </li>
-                <li> <b>Une vie est perdue dès qu'une des balles tombe</b> : <code>perdreVie()</code> est appelé dans <code>mettreAJourBalle</code> au lieu de l'être quand <code>balles.length === 0</code>. </li>
-                <li> <b><code>Cannot read properties of undefined (reading 'couleur')</code></b> : le <code>type</code> de la capsule n'existe pas dans <code>EFFETS</code> (faute de frappe, ou type présent dans <code>TYPES_CAPSULES</code> sans entrée). </li>
-                <li> <b>L'effet ne s'arrête jamais, ou s'arrête trop vite</b> : le compteur n'est pas diminué à chaque image, ou deux capsules du même type s'additionnent au lieu de relancer le compteur. </li>
-                <li> <b>La raquette large dépasse du canvas</b> : oubli de <code>Math.min</code> pour recaler <code>x</code> au changement de largeur. </li>
-                <li> <b>Les capsules restent à l'écran</b> : <code>active</code> n'est jamais mis à <code>false</code>, ou le <code>filter</code> n'est pas réaffecté (<code>this.capsules = this.capsules.filter(…)</code>). </li>
-                <li> <b>Les capsules tombent pendant la pause</b> : leur déplacement est hors de <code>mettreAJour</code>. </li>
+                <li> <b><code>canvas is not defined</code></b> ou <b><code>ctx is not defined</code></b> dans une classe du modèle : un reste de l'ancienne version (taille du canvas ou <code>dessiner</code>) n'a pas été déplacé. </li>
+                <li> <b>Le callback s'exécute tout de suite</b> : vous avez passé <code>action()</code> au lieu de <code>action</code> ou d'une fonction fléchée. </li>
+                <li> <b><code>Cannot read properties of undefined</code> sur <code>this.modele</code> ou <code>this.vue</code></b> : la méthode a été transmise sans garder son <code>this</code> ; utilisez une fonction fléchée ou <code>bind</code>. </li>
+                <li> <b>Les boutons restent dans le mauvais état au démarrage</b> : le modèle s'est initialisé avant d'être relié ; affichez l'état initial dans le contrôleur. </li>
+                <li> <b>Le record n'est pas affiché ou mis à jour</b> : vérifiez la notification du modèle (changement de record) et l'affichage initial. </li>
+                <li> <b>Une touche ou un bouton ne fait rien</b> : le callback n'est pas branché avant la première action, ou le contrôleur n'appelle pas la bonne méthode du modèle. </li>
             </ul>
-
-            <div class="bonus-box">
-                <div class="box-header">⭐ Missions bonus</div>
-                <ul>
-                    <li> <b>★</b> Affichez dans le canvas un petit compte à rebours de l'effet en cours (nombre de secondes restantes). </li>
-                    <li> <b>★★</b> Donnez à chaque effet une probabilité différente d'apparition (les vies en plus plus rares que les raquettes larges). </li>
-                    <li> <b>★★★</b> Ajoutez deux ou trois effets du catalogue supplémentaires et présentez votre jeu à la classe. </li>
-                </ul>
-            </div>
 
             <div class="step-nav">
                 <a href="etape_12.html">← Étape 12 : Niveaux</a>
-                <a href="../index.html">Sommaire →</a>
+                <a href="etape_14.html">Étape 14 : Arcade, les effets bonus →</a>
             </div>
 
         </div>
     </div>
 
     <div id="template-container"></div>
-
     <script src="../../../cours/js/main.js"></script>
 </body>
-
 </html>

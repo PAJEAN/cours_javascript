@@ -2,6 +2,8 @@
 
 > Document de travail (pour l'enseignant). Il décrit le plan, l'avancement (§0) et la référence commune guides ↔ corrections (§12).
 
+> Mise à jour : l'étape 13 est désormais le **casse-briques réécrit en MVC** (échauffement sur les callbacks, fermetures et `this`, puis découpage Modèle / Vue / Contrôleur laissé largement aux élèves, sans pseudo-code détaillé) ; l'ancienne étape 13 sur les bonus devient l'étape 14. Les références à l'étape 13 et à ses sous-étapes dans le plan historique ci-dessous désignent donc les bonus de l'étape 14. Les élèves peuvent démarrer l'étape 14 de leur version MVC ou de l'ancienne version (étape 12). Corrections : `corrections/etape_13.html` = version MVC du jeu de l'étape 12 (testée : victoire, défaite, pause, rejouer, record) ; `corrections/etape_14.html` = effets bonus, restée sur l'ancienne architecture (classe `Jeu`).
+
 ## 0. REPRISE RAPIDE (à lire en premier sur un autre ordinateur)
 
 ### État au 16/11/2026

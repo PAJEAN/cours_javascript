@@ -65,6 +65,30 @@
     content: "☐ ";
 }
 
+/* Tableau de répartition (étape 13). */
+.page table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+.page th,
+.page td {
+    border: 1px solid var(--border);
+    padding: 0.5em 0.75em;
+    text-align: left;
+    vertical-align: top;
+}
+
+.page th {
+    background: var(--code-bg);
+}
+
+.page td ul {
+    margin: 0;
+    padding-left: 1.2em;
+}
+
 details {
     margin: 0.75em 0;
     padding: 0.5em 0.75em;
